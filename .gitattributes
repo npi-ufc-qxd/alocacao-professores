@@ -1,0 +1,21 @@
+# End-of-line normalization should not be attempted in text files
+* -text
+# Definitively text files
+*.xml text
+*.java text
+*.properties text
+*.xhtml text
+*.jsp text
+*.jsf text
+*.txt text
+*.c text
+*.h text
+# Ensure those won't be messed up with
+*.jpg binary
+*.png binary
+*.doc binary
+*.docx binary
+*.ods binary
+*.odt binary
+*.pdf binary
+*.asta binary
