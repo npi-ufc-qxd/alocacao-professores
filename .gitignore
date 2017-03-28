@@ -1,5 +1,7 @@
+*.mvn/
+*.settings/
+
 .metadata
-.settings
 .classpath
 .project
 target
