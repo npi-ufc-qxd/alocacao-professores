@@ -1,4 +1,4 @@
-package br.ufc.quixada.npi;
+package ufc.quixada.npi.ap;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
