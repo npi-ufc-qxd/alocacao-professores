@@ -33,7 +33,7 @@ public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/").authenticated()
-				.antMatchers("/js/**", "/css/**", "/img/**").permitAll()
+				.antMatchers("/js/**", "/css/**", "/img/**", "/plugins/**", "/bootstrap/**", "/less/**").permitAll()
 				.antMatchers("/coordenacao/**").hasAuthority("COORDENACAO")
 				.antMatchers("/direcao/**").hasAuthority("DIRECAO")
 				.anyRequest().authenticated()
