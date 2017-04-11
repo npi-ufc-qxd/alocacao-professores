@@ -3,6 +3,7 @@ package ufc.quixada.npi.ap.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class Curso {
 	
 	private String coordenador;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Turma> turmas;
 
 	public Integer getId() {

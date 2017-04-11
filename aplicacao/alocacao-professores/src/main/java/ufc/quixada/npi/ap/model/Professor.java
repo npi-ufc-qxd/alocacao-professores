@@ -49,6 +49,4 @@ public class Professor {
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
 	}
-	
-	
 }
