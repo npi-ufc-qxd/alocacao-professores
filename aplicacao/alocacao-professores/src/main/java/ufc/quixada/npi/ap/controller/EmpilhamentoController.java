@@ -22,9 +22,15 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path="/")
 	public ModelAndView listarEmpilhamentos(){
-		ModelAndView model = new ModelAndView("empilhamentos");
+		ModelAndView model = new ModelAndView("listar-empilhamentos");
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
 		model.addObject("empilhamentos", empilhamentos);
+		return model;
+	}
+	
+	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
+	public ModelAndView cadastrarEmpilhamento(){
+		ModelAndView model = new ModelAndView("cadastrar-empilhamento");
 		return model;
 	}
 	
@@ -32,18 +38,18 @@ public class EmpilhamentoController {
 	public String cadastrarEmpilhamento(@RequestParam Integer idTurmaA, @RequestParam Integer idDisciplinaA, 
 			@RequestParam Integer idTurmaB, @RequestParam Integer idDisciplinaB){
 		empilhamentoService.cadastarEmpilhamento(idTurmaA, idDisciplinaA, idTurmaB, idDisciplinaB);
-		return "redirect:/empilhamento/";
+		return "redirect:/empilhamentos/";
 	}
 	
 	@RequestMapping(path="/{id}/excluir")
 	public String excluirEmpilhamento(@RequestParam Integer id){
 		empilhamentoService.excluirEmpilhamento(id);
-		return "redirect:/empilhamento/";
+		return "redirect:/empilhamentos/";
 	}
 	 
 	@RequestMapping(path="/{id}/detalhar")
 	public ModelAndView visualizarEmpilhamento(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
-		ModelAndView model = new ModelAndView("empilhamento");
+		ModelAndView model = new ModelAndView("visualizar-empilhamento");
 		
 		Empilhamento empilhamento =  empilhamentoService.visualizarEmpilhamento(id);
 	

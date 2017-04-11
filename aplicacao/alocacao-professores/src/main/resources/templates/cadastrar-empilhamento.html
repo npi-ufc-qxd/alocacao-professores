@@ -1,0 +1,28 @@
+<div class="col-md-12">
+          <div class="white-box">
+            <form th:action="@{${'/empilhamentos/cadastrar'}}" method="POST">
+              <div class="form-group">
+                <label>Disciplina A</label>
+                <input class="form-control autocomplete-empilhamento-disciplina" type="text">
+                <input name="idDisciplinaA" type="hidden" />
+              </div>
+              <div class="form-group">
+                <label>Turma A</label>
+                <input class="form-control autocomplete-empilhamento-turma" type="text">
+                <input name="idTurmaA" type="hidden" />
+              </div>
+              <div class="form-group">
+                <label>Disciplina B</label>
+                <input class="form-control autocomplete-empilhamento-disciplina" type="text">
+                <input name="idDisciplinaB" type="hidden" />
+              </div>
+              <div class="form-group">
+                <label>Turma B</label>
+                <input class="form-control autocomplete-empilhamento-turma" type="text">
+                <input name="idTurmaB" type="hidden" />
+              </div>
+              <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
+              <button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+            </form>
+          </div>  
+        </div>      
