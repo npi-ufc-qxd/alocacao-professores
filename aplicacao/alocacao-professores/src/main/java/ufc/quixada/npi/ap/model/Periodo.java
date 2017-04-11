@@ -1,9 +1,17 @@
 package ufc.quixada.npi.ap.model;
 
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Periodo {
@@ -16,9 +24,11 @@ public class Periodo {
 	
 	private String semestre;
 	
-	// TODO: status
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
-	// Discutir sobre a relação entre Oferta e Periodo, e Turma e Periodo
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Oferta> ofertas;
 
 	public Integer getId() {
 		return id;
@@ -42,6 +52,43 @@ public class Periodo {
 
 	public void setSemestre(String semestre) {
 		this.semestre = semestre;
-	}
+	}	
 	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public List<Oferta> getOfertas() {
+		return ofertas;
+	}
+
+	public void setOfertas(List<Oferta> ofertas) {
+		this.ofertas = ofertas;
+	}
+
+	enum Status{
+		ABERTA("Aberta"), EM_ANALISE("Em análise"), CONSOLIDADA("consolidada");
+		
+		private String nome;
+		private static Map<Status, String> map;
+		
+		Status(String nome){
+			this.nome = nome;
+		}
+		
+		public Map<Status, String> toMap(){
+			if (map == null){
+				map = new TreeMap<Status, String>();
+				
+				for (Status s : Status.values())
+					map.put(s, s.nome);
+			}
+			
+			return map;
+		}
+	}
 }

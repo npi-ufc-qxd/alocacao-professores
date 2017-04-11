@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Oferta {
@@ -30,87 +31,92 @@ public class Oferta {
 	@ManyToOne
 	private Disciplina disciplina;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
-	private List<Professor> professores;
-	
 	@ManyToOne
 	private Turma turma;
 	
-	// Tirar duvida com o líder de projeto sobre Turma e Oferta
+	@ManyToOne
+	private Periodo periodo;
 	
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
 	
-	// TODO: compartilhamentos
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
+	private List<Professor> professores;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Compartilhamento> compartilhamentos;
 
 	public Integer getId() {
 		return id;
 	}
 
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public int getVagas() {
 		return vagas;
 	}
 
-
 	public void setVagas(int vagas) {
 		this.vagas = vagas;
 	}
-
 
 	public String getObservacao() {
 		return observacao;
 	}
 
-
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-
 
 	public Disciplina getDisciplina() {
 		return disciplina;
 	}
 
-
 	public void setDisciplina(Disciplina disciplina) {
 		this.disciplina = disciplina;
 	}
-
-
-	public List<Professor> getProfessores() {
-		return professores;
-	}
-
-
-	public void setProfessores(List<Professor> professores) {
-		this.professores = professores;
-	}	
-	
 
 	public Turma getTurma() {
 		return turma;
 	}
 
-
 	public void setTurma(Turma turma) {
 		this.turma = turma;
 	}
 
+	public Periodo getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(Periodo periodo) {
+		this.periodo = periodo;
+	}
 
 	public Turno getTurno() {
 		return turno;
 	}
 
-
 	public void setTurno(Turno turno) {
 		this.turno = turno;
+	}
+
+	public List<Professor> getProfessores() {
+		return professores;
+	}
+
+	public void setProfessores(List<Professor> professores) {
+		this.professores = professores;
+	}
+
+	public List<Compartilhamento> getCompartilhamentos() {
+		return compartilhamentos;
+	}
+
+	public void setCompartilhamentos(List<Compartilhamento> compartilhamentos) {
+		this.compartilhamentos = compartilhamentos;
 	}
 
 	enum Turno{
@@ -127,8 +133,8 @@ public class Oferta {
 			if (map == null) {
 				map = new TreeMap<Turno, String>(); // Usar TreeMap para ficar ordenado
 				
-				for (Turno c : Turno.values()) {
-					map.put(c, c.nome);
+				for (Turno t : Turno.values()) {
+					map.put(t, t.nome);
 				}
 			}
 			
