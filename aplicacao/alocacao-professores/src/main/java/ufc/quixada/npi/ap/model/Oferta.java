@@ -20,6 +20,10 @@ import javax.persistence.OneToMany;
 @Entity
 public class Oferta {
 	
+	//TODO: periodo nome
+	//TODO: variavel de periodo pra oferta ou vice versa (NO MODEL),
+	//TODO: consertar as onetomany
+	//TODO: turma compartilhamento, turma deve ter lista de compartilhamentos ou vice versa?(NO MODEL E CODIGO)	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -40,12 +44,12 @@ public class Oferta {
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
-	private List<Professor> professores;
+	//@ManyToMany(fetch = FetchType.EAGER)
+	//@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
+	//private List<Professor> professores;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<Compartilhamento> compartilhamentos;
+	//@OneToMany(fetch = FetchType.EAGER)
+	//private List<Compartilhamento> compartilhamentos;
 
 	public Integer getId() {
 		return id;
@@ -103,7 +107,7 @@ public class Oferta {
 		this.turno = turno;
 	}
 
-	public List<Professor> getProfessores() {
+	/*public List<Professor> getProfessores() {
 		return professores;
 	}
 
@@ -117,7 +121,7 @@ public class Oferta {
 
 	public void setCompartilhamentos(List<Compartilhamento> compartilhamentos) {
 		this.compartilhamentos = compartilhamentos;
-	}
+	}*/
 
 	enum Turno{
 		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite"), MESMO_DIA("Mesmo dia");
