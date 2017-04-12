@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @ComponentScan(basePackages = { "br.ufc.quixada.npi.ldap" })
 public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
 	
-	// Utilizado para autenticação via banco de dados
+	// Utilizado para autenticação via banco de dados -
 //	@Autowired
 //	private UserDetailsService userDetailsService;
 	
