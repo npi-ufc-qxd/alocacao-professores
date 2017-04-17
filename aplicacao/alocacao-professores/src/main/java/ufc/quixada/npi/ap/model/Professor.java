@@ -1,9 +1,14 @@
 package ufc.quixada.npi.ap.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Professor {
@@ -17,6 +22,10 @@ public class Professor {
 	private String cpf;
 	
 	private String apelido;
+	
+	@ManyToMany
+	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "professor_id"), inverseJoinColumns = @JoinColumn(name = "oferta_id"))
+	private List<Oferta> ofertas;
 
 	public Integer getId() {
 		return id;
@@ -49,4 +58,14 @@ public class Professor {
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
 	}
+
+	public List<Oferta> getOfertas() {
+		return ofertas;
+	}
+
+	public void setOfertas(List<Oferta> ofertas) {
+		this.ofertas = ofertas;
+	}
+	
+	
 }

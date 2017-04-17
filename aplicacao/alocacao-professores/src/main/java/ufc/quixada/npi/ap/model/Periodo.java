@@ -7,7 +7,6 @@ import java.util.TreeMap;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +26,7 @@ public class Periodo {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "periodo")
 	private List<Oferta> ofertas;
 
 	public Integer getId() {
@@ -69,6 +68,8 @@ public class Periodo {
 	public void setOfertas(List<Oferta> ofertas) {
 		this.ofertas = ofertas;
 	}
+	
+	
 
 	enum Status{
 		ABERTA("Aberta"), EM_ANALISE("Em análise"), CONSOLIDADA("consolidada");

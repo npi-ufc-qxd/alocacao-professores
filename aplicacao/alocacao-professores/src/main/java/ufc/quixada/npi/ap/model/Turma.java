@@ -1,11 +1,14 @@
 package ufc.quixada.npi.ap.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Turma {
@@ -18,7 +21,10 @@ public class Turma {
 	@JoinColumn(name = "curso_id")
 	private Curso curso;
 	
-	private String semestre;
+	private int semestre;
+	
+	@OneToMany(mappedBy = "turma")
+	private List<Compartilhamento> compartilhamentos;
 
 	public Integer getId() {
 		return id;
@@ -36,12 +42,20 @@ public class Turma {
 		this.curso = curso;
 	}
 
-	public String getSemestre() {
+	public int getSemestre() {
 		return semestre;
 	}
 
-	public void setSemestre(String semestre) {
+	public void setSemestre(int semestre) {
 		this.semestre = semestre;
 	}
+
+	public List<Compartilhamento> getCompartilhamentos() {
+		return compartilhamentos;
+	}
+
+	public void setCompartilhamentos(List<Compartilhamento> compartilhamentos) {
+		this.compartilhamentos = compartilhamentos;
+	}	
 		
 }

@@ -3,11 +3,9 @@ package ufc.quixada.npi.ap.model;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,7 +20,6 @@ public class Curso {
 	private String codigo;
 	
 	private String coordenador;
-	
 	
 	@OneToMany(mappedBy = "curso")
 	private List<Turma> turmas;
@@ -66,5 +63,6 @@ public class Curso {
 	public void setTurmas(List<Turma> turmas) {
 		this.turmas = turmas;
 	}	
+	
 	
 }
