@@ -1,5 +1,8 @@
 package ufc.quixada.npi.ap.model;
 
-public class Empilhamento {
+import javax.persistence.Entity;
 
+@Entity
+public class Empilhamento {
+	public String teste;
 }

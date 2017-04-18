@@ -24,24 +24,35 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 	@Override
 	public Empilhamento cadastarEmpilhamento(Integer idTurmaA, Integer idDisciplinaA, Integer idTurmaB, Integer idDisciplinaB) {
 		Empilhamento empilhamento = new Empilhamento();
-		// TODO Buscar Disciplinas e Turmas e inserir no empilhamento
+		
+	/*	Turma turmaA = turmaRepository.findOne(idTurmaA);
+		Turma turmaB = turmaRepository.findOne(idTurmaB);
+		Disciplina disciplinaA = disciplinaRepository.findOne(idDisciplinaA);
+		Disciplina disciplinaB = disciplinaRepository.findOne(idDisciplinaB);
+		
+		empilhamento.setTurmaA(turmaA);
+		empilhamento.setTurmaB(turmaB);
+		empilhamento.setDisciplinaA(disciplinaA);
+		empilhamento.setDisciplinaB(disciplinaB);*/
 		
 		return empilhamentoRepository.save(empilhamento);
 	}
 
 	@Override
 	public List<Empilhamento> listarEmpilhamentos() {
-		return (List<Empilhamento>) empilhamentoRepository.findAll();
+		//return (List<Empilhamento>) empilhamentoRepository.findAll();
+		return null;
 	}
 
 	@Override
 	public void excluirEmpilhamento(Integer idEmpilhamento) {
-		empilhamentoRepository.delete(idEmpilhamento);
+		//empilhamentoRepository.delete(idEmpilhamento);
 	}
 
 	@Override
 	public Empilhamento visualizarEmpilhamento(Integer idEmpilhamento) {
-		return empilhamentoRepository.findOne(idEmpilhamento);
+		//return empilhamentoRepository.findOne(idEmpilhamento);
+		return null;
 	}
 
 }

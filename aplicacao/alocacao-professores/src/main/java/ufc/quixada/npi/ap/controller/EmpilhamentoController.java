@@ -1,5 +1,6 @@
 package ufc.quixada.npi.ap.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,13 @@ public class EmpilhamentoController {
 	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
 	public ModelAndView cadastrarEmpilhamento(){
 		ModelAndView model = new ModelAndView("cadastrar-empilhamento");
+		
+		List<Empilhamento> disciplinas = new ArrayList<Empilhamento>();
+		List<Empilhamento> turmas = new ArrayList<Empilhamento>();
+		
+		model.addObject("disciplinas", disciplinas);
+		model.addObject("turmas", turmas);
+		
 		return model;
 	}
 	
