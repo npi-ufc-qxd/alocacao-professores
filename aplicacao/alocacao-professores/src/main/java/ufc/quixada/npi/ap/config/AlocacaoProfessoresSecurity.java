@@ -36,6 +36,7 @@ public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers("/js/**", "/css/**", "/img/**", "/plugins/**", "/bootstrap/**", "/less/**").permitAll()
 //				.antMatchers("/coordenacao/**").hasAuthority("COORDENACAO")
 //				.antMatchers("/direcao/**").hasAuthority("DIRECAO")
+				.antMatchers("/compartilhamentos/**").permitAll()
 				.anyRequest().authenticated()
 				.and().formLogin()
 				.loginProcessingUrl(login).loginPage(login).permitAll().and().logout()
