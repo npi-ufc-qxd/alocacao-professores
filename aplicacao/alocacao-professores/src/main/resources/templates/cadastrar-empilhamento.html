@@ -1,48 +1,165 @@
-<!DOCTYPE html>  
-<html lang="ptBR"
-	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="base/base">
+
 <head>
-<meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content=""/>
-<meta name="author" content=""/>
-<link rel="icon" type="image/png" sizes="16x16" th:href="@{plugins/images/favicon.png}"/>
-<title>Elite Admin Template - The Ultimate Multipurpose admin template</title>
-<!-- Bootstrap Core CSS -->
-<link th:href="@{bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-<!-- animation CSS -->
-<link th:href="@{css/animate.css}" rel="stylesheet"/>
-<!-- Custom CSS -->
-<link th:href="@{css/style.css}" rel="stylesheet"/>
-<!-- color CSS -->
-<link th:href="@{css/colors/default.css}" id="theme"  rel="stylesheet"/>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script th:src="@{https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script th:src="@{https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-19175540-9', 'auto');
-  ga('send', 'pageview');
-
-</script>
+    <title>Clínicas - Material</title>
 </head>
 
-<body class="fix-sidebar">
-<!-- Preloader -->
-<div class="preloader">
-  <div class="cssload-speeding-wheel"></div>
-</div>
-<div id="wrapper">
+<section layout:fragment="conteudo" th:with="acao_url=${acao == 'ADICIONAR'? 'adicionar' :'editar' }">
+	<div class="row">
+	
+		<div class="col s12 breadcrumbs valign-wrapper">
+            <a th:href="@{/}" class="breadcrumb blue-grey-text">
+                <i class="material-icons left">home</i>
+            </a>
+            
+            <a th:href="@{/material/listar}" class="breadcrumb blue-grey-text">Material</a>
+            
+            <a th:if="${acao == 'ADICIONAR'}" class="breadcrumb blue-grey-text">Cadastrar</a>
+            <a th:if="${acao == 'EDITAR'}" class="breadcrumb blue-grey-text">Editar</a>
+        </div>
+	
+	    <div class="col s12">
+	
+	        <form class="card form_ajax" data-model="material" th:attr="data-action=${acao_url}" method="post" th:action="@{${'/material/api/'+acao_url}}" th:object="${material}">
+	        
+	        	<div class="card-image indigo lighten-1 center-align">
+	        		<a th:if="${acao == 'ADICIONAR'}" class="card-title-large blue-grey-text text-lighten-5">Cadastrar Material</a>
+            		<a th:if="${acao == 'EDITAR'}" class="card-title-large blue-grey-text text-lighten-5">Editar Material</a>
+				</div>
+
+				<div class="card-content">     
+	         		<input th:if="${acao == 'EDITAR'}" type="hidden" th:field="*{id}"/>
+	             	<div class="row">
+	             	<input name="id-m" type="hidden" th:field="*{id}"/>
+	                    <div class="input-field col s12">
+	                        <input id="name" type="text" autocomplete="off" th:field="*{nome}" class="validate"/>
+	                        <label for="name">Nome</label>
+	                    </div>
+	                    
+	                </div>
+	                <div th:if="${acao} == 'ADICIONAR'" class="materiaisBanco horizontal-list grey lighten-3">
+                		<div  id="material-item-template" class="itens card waves-effect"> 
+                			<div class="card-content">
+                				<div class="col s12 row no-padding">
+									<div class="col s12 no-padding">
+										<span class="val-nome-material light-text grey-text text-darken-2" ></span>
+										<br/>
+										<div class="valign-wrapper">
+											<i class="mdi mdi-ruler code-icon"></i>
+											<span class="val-unidade-medida light-text grey-text text-darken-2"></span>
+										</div>
+										<div class="valign-wrapper">
+											<i class="mdi mdi-microscope code-icon"></i>
+											<span class="val-codigo-interno-material light-text grey-text text-darken-2"></span>
+										</div>
+										
+										<input name="id-m" class="val-id-material" type="hidden" id="selected-material-id"/>
+									</div>
+								</div>
+                			</div> 
+                		</div>
+	                </div>
+	                <div class="row">
+						<div class="input-field col s12">
+	                		<input id="desc" type="text" autocomplete="off" name="descricao" th:value="*{descricao}" class="validate"/>
+	                    		<label for="desc">Descriçao</label>
+	                    </div>
+	                </div>
+					<div class="row">			
+						<div class="input-field col s4">							
+							<select th:field="*{unidadeMedida}">								     	          
+		     					<option th:each="medida : ${unidadesMedida}" th:text="${medida.nome}" th:value="${medida.id}"></option>
+		    				</select>
+		    				<label>Unidade de Medida</label>
+						</div>
+											
+						<div class="input-field col s4">		
+							<select th:field="*{grupo}">        	
+		     					<option th:each="grupo : ${gruposMaterial}" th:text="${grupo.nome}" th:value="${grupo.id}"></option>
+		     				</select>
+		     				<label>Grupo do Material</label>
+						</div>
+						<div class="input-field col s4">
+	                        <input id="cinterno" type="text" name="codigoInterno" th:value="*{codigoInterno}" class="validate"/>
+	                        <label for="cinterno">Código Interno</label>
+	                    </div>
+					</div>
+					
+					 <div class="row">
+	                    
+	                    <!-- 	
+	                    	Temporariamente comentado                    	
+		                    <div class="input-field col s6">
+		                        <input id="estoque" type="number" th:field="*{estoque}" step="1" class="validate"/>
+		                        <label for="estoque">Estoque</label>
+		                    </div>
+	                     -->
+	                </div>
+	                <div class="row">
+	                	<div class="input-field input-field-cbarras col s11">
+	                        <input id="cbarras"  type="text" name="codigos" class="validate" />
+	                        <label for="cbarras">Código de Barras</label>
+	                    </div>
+	                    <!-- 
+	                    <div class="col s1">
+	                    	<button type="button" class="dl-add btn-floating btn-large waves-effect grey lighten-3"><i class="material-icons cyan-text">add</i></button>
+	                    </div>
+		                  -->
+		                <div class="col s12">
+			                <div class="dl dl-container row grey lighten-3">
+			                	
+			                	<div class="codBarrasList dl-el col s4">
+			                		<div class="card">
+				                		<div class="card-content valign-wrapper">
+				                			<i class="mdi mdi-barcode code-icon"></i>
+				                			<span class="bar-code truncate"></span>
+				                			
+				                			<button type="button" class="dl-delete btn-floating waves-effect btn-delete-barcode">
+				                				<i class="material-icons">delete</i>
+				                			</button>
+				                		</div>
+				                	</div>
+			                	</div>
+			                	
+			                </div>
+			            </div>
+		                 
+	                </div>	
+	            </div>	              
+				
+	            <div class="card-action right-align">
+	            	<a th:href="@{/material/listar/}" type="button" class="btn-flat waves-effect">Cancelar</a>
+                    <button th:if="${acao == 'ADICIONAR'}" type="submit" value="keep_add" class="btn waves-effect white-text">SALVAR E ADICIONAR OUTRO</button>
+                    <button th:if="${acao == 'ADICIONAR'}" type="submit" value="exit" class="btn waves-effect white-text">SALVAR E SAIR</button>
+                    <button th:if="${acao == 'EDITAR'}" type="submit" value="exit" class="btn waves-effect white-text">SALVAR</button>                                      
+	            </div>
+	             
+	        </form>
+	    </div>	        	   
+	</div>
+	<!--end container-->
+</section>
+<section layout:fragment="js">
+	<script type="text/javascript">		
+		$("#disciplinaASelect").select2();
+		$("#disciplinaBSelect").select2();
+		$("#turmaASelect").select2();
+		$("#turmaBSelect").select2();
+	</script>
+</section>
+</html>
+
+
+
+
+
+
+
+
 
 
 
@@ -89,34 +206,14 @@
 			<button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
 		</form>
 	</div>  
-</div>      
+</div> 
 
 
 
-
-</div>
-<!-- jQuery -->
-<script th:src="@{plugins/bower_components/jquery/dist/jquery.min.js}"></script>
-<!-- Bootstrap Core JavaScript -->
-<script th:src="@{bootstrap/js/bootstrap.min.js}"></script>
-<!-- Menu Plugin JavaScript -->
-<script th:src="@{plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js}"></script>
 
 <script>
-	$("#disciplinaASelect").select2();
-	$("#disciplinaBSelect").select2();
-	$("#turmaASelect").select2();
-	$("#turmaBSelect").select2();
+	
 </script>
 
 
-<!--slimscroll JavaScript -->
-<script th:src="@{js/jquery.slimscroll.js}"></script>
-<!--Wave Effects -->
-<script th:src="@{js/waves.js}"></script>
-<!-- Custom Theme JavaScript -->
-<script th:src="@{js/custom.min.js}"></script>
-<!--Style Switcher -->
-<script th:src="@{/plugins/bower_components/styleswitcher/jQuery.style.switcher.js}"></script>
-</body>
-</html>
+
