@@ -3,7 +3,7 @@
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    
+
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,7 @@
 		<meta name="author" content="" />
 
 		<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
-		<title>Cadastrar Compartilhamento | Aloca&ccedil;&atilde;o Professores</title>
+		<title>Editar Compartilhamento | Aloca&ccedil;&atilde;o Professores</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
@@ -251,7 +251,7 @@
 										<li><a href="form-mask.html">Form Mask</a></li>
 										<li><a href="form-img-cropper.html">Image Cropping</a></li>
 										<li><a href="form-validation.html">Form Validation</a></li>
-	
+
 									</ul>
 								</li>
 								<li class="col-sm-3">
@@ -268,7 +268,7 @@
 												wysihtml5</a></li>
 										<li><a href="form-tinymce-wysihtml5.html">Tinymce
 												wysihtml5</a></li>
-	
+
 									</ul>
 								</li>
 								<li class="col-sm-3">
@@ -353,7 +353,7 @@
 								</li>
 							</ul></li>
 						<!-- /.Megamenu -->
-	
+
 						<li class="right-side-toggle"><a
 							class="waves-effect waves-light" href="javascript:void(0)"><i
 								class="ti-settings"></i></a></li>
@@ -367,7 +367,7 @@
 			<!-- End Top Navigation -->
 			<!-- Left navbar-header -->
 			<div class="navbar-default sidebar" role="navigation">
-	
+
 				<div class="sidebar-nav navbar-collapse slimscrollsidebar">
 					<div class="user-profile">
 						<div class="dropdown user-pro-body">
@@ -391,7 +391,7 @@
 							</ul>
 						</div>
 					</div>
-	
+
 					<ul class="nav" id="side-menu">
 						<li class="sidebar-search hidden-sm hidden-md hidden-lg">
 							<!-- input-group -->
@@ -415,7 +415,7 @@
 								</a>
 						</li>
 						<li>
-								<a href = "#" class = "waves-effect active">
+								<a href = "#" class = "waves-effect">
 									<i class = "linea-icon linea-basic fa-fw" data-icon = "v"></i>
 									<span class = "hide-menu">
 											Compartilhamentos
@@ -423,8 +423,8 @@
 									</span>
 								</a>
 								<ul class = "nav nav-second-level">
-										<li><a th:href = "@{/compartilhamentos}" class = "waves-effect">Listar</a></li>
-										<li><a th:href = "@{/compartilhamentos/cadastrar}" class = "waves-effect active">Cadastrar</a></li>
+									<li><a th:href = "@{/compartilhamentos}" class = "waves-effect">Listar</a></li>
+									<li><a th:href = "@{/compartilhamentos/cadastrar}" class = "waves-effect">Cadastrar</a></li>
 								</ul>
 						</li>
 						<li>
@@ -461,13 +461,13 @@
 				<div class="container-fluid">
 					<div class="row bg-title">
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-							<h4 class="page-title">Cadastrar compartilhamento</h4>
+							<h4 class="page-title">Editar compartilhamento</h4>
 						</div>
 						<div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
 							<ol class="breadcrumb">
 								<li><a href="javascript:void(0);">Dashboard</a></li>
 								<li><a th:href = "@{/compartilhamentos}">Compartilhamentos</a></li>
-								<li class="active">Cadastrar compartilhamento</li>
+								<li class="active">Editar compartilhamento</li>
 							</ol>
 						</div>
 						<!-- /.col-lg-12 -->
@@ -485,7 +485,7 @@
 					<div class="row">
 						<div class = "col-lg-12 col-md-12">
 								<div class = "white-box">
-										<form class = "form-horizontal" th:action = "@{/compartilhamentos/cadastrar}" method = "POST">
+										<form class = "form-horizontal" th:action = "@{'/compartilhamentos/editar'}" method = "POST">
 												<div class = "form-group">
 													<label for="turma" class="col-lg-12 col-md-12">Turma</label>
 													<select id="turma" name = "turma" class="form-control select2" required="required">
@@ -633,18 +633,18 @@
 										class="green-dark-theme">8</a></li>
 									<li><a href="javascript:void(0)" theme="gray-dark"
 										class="yellow-dark-theme">9</a></li>
-	
+
 									<li><a href="javascript:void(0)" theme="blue-dark"
 										class="blue-dark-theme">10</a></li>
 									<li><a href="javascript:void(0)" theme="purple-dark"
 										class="purple-dark-theme">11</a></li>
 									<li><a href="javascript:void(0)" theme="megna-dark"
 										class="megna-dark-theme">12</a></li>
-	
+
 								</ul>
 								<ul class="m-t-20 all-demos">
 									<li><b>Choose other demos</b></li>
-	
+
 								</ul>
 								<ul class="m-t-20 chatonline">
 									<li><b>Chat option</b></li>

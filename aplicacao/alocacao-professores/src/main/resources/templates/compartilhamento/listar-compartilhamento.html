@@ -3,7 +3,7 @@
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    
+
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,7 @@
 		<meta name="author" content="" />
 
 		<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
-		<title>Cadastrar Compartilhamento | Aloca&ccedil;&atilde;o Professores</title>
+		<title>Compartilhamentos | Aloca&ccedil;&atilde;o Professores</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
@@ -251,7 +251,7 @@
 										<li><a href="form-mask.html">Form Mask</a></li>
 										<li><a href="form-img-cropper.html">Image Cropping</a></li>
 										<li><a href="form-validation.html">Form Validation</a></li>
-	
+
 									</ul>
 								</li>
 								<li class="col-sm-3">
@@ -268,7 +268,7 @@
 												wysihtml5</a></li>
 										<li><a href="form-tinymce-wysihtml5.html">Tinymce
 												wysihtml5</a></li>
-	
+
 									</ul>
 								</li>
 								<li class="col-sm-3">
@@ -353,7 +353,7 @@
 								</li>
 							</ul></li>
 						<!-- /.Megamenu -->
-	
+
 						<li class="right-side-toggle"><a
 							class="waves-effect waves-light" href="javascript:void(0)"><i
 								class="ti-settings"></i></a></li>
@@ -367,7 +367,7 @@
 			<!-- End Top Navigation -->
 			<!-- Left navbar-header -->
 			<div class="navbar-default sidebar" role="navigation">
-	
+
 				<div class="sidebar-nav navbar-collapse slimscrollsidebar">
 					<div class="user-profile">
 						<div class="dropdown user-pro-body">
@@ -391,7 +391,7 @@
 							</ul>
 						</div>
 					</div>
-	
+
 					<ul class="nav" id="side-menu">
 						<li class="sidebar-search hidden-sm hidden-md hidden-lg">
 							<!-- input-group -->
@@ -424,7 +424,7 @@
 								</a>
 								<ul class = "nav nav-second-level">
 										<li><a th:href = "@{/compartilhamentos}" class = "waves-effect">Listar</a></li>
-										<li><a th:href = "@{/compartilhamentos/cadastrar}" class = "waves-effect active">Cadastrar</a></li>
+										<li><a th:href = "@{/compartilhamentos/cadastrar}" class = "waves-effect">Cadastrar</a></li>
 								</ul>
 						</li>
 						<li>
@@ -448,8 +448,8 @@
 						</li>
 						<li>
 								<a href="faq.html" class="waves-effect">
-										<i class="fa fa-circle-o text-success"></i>
-										<span class="hide-menu">Faqs</span>
+									<i class="fa fa-circle-o text-success"></i>
+									<span class="hide-menu">Faqs</span>
 								</a>
 						</li>
 					</ul>
@@ -460,127 +460,47 @@
 			<div id="page-wrapper">
 				<div class="container-fluid">
 					<div class="row bg-title">
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-							<h4 class="page-title">Cadastrar compartilhamento</h4>
+						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+							<h4 class="page-title">Compartilhamentos</h4>
 						</div>
-						<div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+						<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 							<ol class="breadcrumb">
-								<li><a href="javascript:void(0);">Dashboard</a></li>
-								<li><a th:href = "@{/compartilhamentos}">Compartilhamentos</a></li>
-								<li class="active">Cadastrar compartilhamento</li>
+								<li><a href="#">Dashboard</a></li>
+								<li class="active">Compartilhamentos</li>
 							</ol>
 						</div>
 						<!-- /.col-lg-12 -->
 					</div>
-					<div th:if="${param.sucessoCadastro}" class = "row">
-						<div class = "col-lg-12 col-md-12 white-box">
-							Cadastro realizado com sucesso!
-						</div>
-					</div>
-					<div th:if="${param.sucessoEdicao}" class = "row">
-						<div class = "col-lg-12 col-md-12 white-box">
-							Edi&ccedil;&atilde;o realizada com sucesso!
-						</div>
-					</div>
 					<div class="row">
-						<div class = "col-lg-12 col-md-12">
-								<div class = "white-box">
-										<form class = "form-horizontal" th:action = "@{/compartilhamentos/cadastrar}" method = "POST">
-												<div class = "form-group">
-													<label for="turma" class="col-lg-12 col-md-12">Turma</label>
-													<select id="turma" name = "turma" class="form-control select2" required="required">
-														<option value = "">Selecione uma turma</option>
-														<optgroup label="Ci&ecirc;ncia da Computa&ccedil;&atilde;o">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Design Digital">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Engenharia da Computa&ccedil;&atilde;o">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Engenharia de Software">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Redes de Computadores">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Sistemas de Informa&ccedil;&atilde;o">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-													</select>
-												</div>
-												<div class = "form-group">
-													<label for="oferta" class = "col-lg-12 col-md-12">Oferta</label>
-													<select id="oferta" name = "oferta" class="form-control select2" required = "required">
-														<option value = "">Selecione uma oferta</option>
-														<optgroup label="Ci&ecirc;ncia da Computa&ccedil;&atilde;o">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Design Digital">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Engenharia da Computa&ccedil;&atilde;o">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Engenharia de Software">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Redes de Computadores">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-														<optgroup label="Sistemas de Informa&ccedil;&atilde;o">
-															<option value = "1">QXD0001 Matemática Básica para
-																Computa&ccedil;&atilde;o</option>
-															<option value = "2">QXD0002 Fundamentos de
-																Programa&ccedil;&atilde;o</option>
-														</optgroup>
-													</select>
-												</div>
-												<div class = "form-group">
-													<label class = "col-lg-12 col-md-12" for = "numeroVagas">N&uacute;mero de Vagas</label>
-													<input type = "number" placeholder = "Vagas" id = "numeroVagas" name = "numeroVagas" class = "form-control" required="required"/>
-												</div>
-												<div class = "form-group">
-													<button type = "submit" name = "action" class = "btn btn-primary waves-effect">
-														Cadastrar
-													</button>
-												</div>
-										</form>
+						<div class="col-md-12">
+							<div class="white-box">
+									<div class = "table-responsive">
+										<table class = "table color-bordered-table inverse-bordered-table">
+												<thead>
+													<tr>
+														<th>Curso</th>
+														<th>Semestre</th>
+														<th>Turno</th>
+														<th>Disciplina</th>
+														<th>Vagas</th>
+														<th></th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+															<td>Ci&ecirc;ncia da Computa&ccedil;&atilde;o</td>
+															<td>3&ordm; Semestre</td>
+															<td>Manh&atilde;</td>
+															<td>Projeto e Análise de Algoritmos</td>
+															<td>15</td>
+															<td><a href = "editar-compartilhamento.html" class = "btn btn-default waves-effect">Editar</a></td>
+															<td><a href = "detalhar-compartilhamento.html" class = "btn btn-info waves-effect">Detalhes</a></td>
+													</tr>
+												</tbody>
+										</table>
 								</div>
+							</div>
 						</div>
 					</div>
 					<!-- .right-sidebar -->
@@ -633,18 +553,18 @@
 										class="green-dark-theme">8</a></li>
 									<li><a href="javascript:void(0)" theme="gray-dark"
 										class="yellow-dark-theme">9</a></li>
-	
+
 									<li><a href="javascript:void(0)" theme="blue-dark"
 										class="blue-dark-theme">10</a></li>
 									<li><a href="javascript:void(0)" theme="purple-dark"
 										class="purple-dark-theme">11</a></li>
 									<li><a href="javascript:void(0)" theme="megna-dark"
 										class="megna-dark-theme">12</a></li>
-	
+
 								</ul>
 								<ul class="m-t-20 all-demos">
 									<li><b>Choose other demos</b></li>
-	
+
 								</ul>
 								<ul class="m-t-20 chatonline">
 									<li><b>Chat option</b></li>
@@ -699,7 +619,7 @@
 		<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 		<!-- Menu Plugin JavaScript -->
 		<script th:src="@{/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js}"></script>
-		
+
 		<!--slimscroll JavaScript -->
 		<script th:src="@{/js/jquery.slimscroll.js}"></script>
 		<!--Wave Effects -->
