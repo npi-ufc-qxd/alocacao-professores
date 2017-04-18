@@ -1,8 +1,6 @@
 package ufc.quixada.npi.ap.model;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -74,22 +72,15 @@ public class Periodo {
 	enum Status{
 		ABERTA("Aberta"), EM_ANALISE("Em análise"), CONSOLIDADA("consolidada");
 		
-		private String nome;
-		private static Map<Status, String> map;
+		private String descricao;
 		
-		Status(String nome){
-			this.nome = nome;
+		Status(String descricao){
+			this.descricao = descricao;
+		}
+
+		public String getDescricao() {
+			return descricao;
 		}
 		
-		public Map<Status, String> toMap(){
-			if (map == null){
-				map = new TreeMap<Status, String>();
-				
-				for (Status s : Status.values())
-					map.put(s, s.nome);
-			}
-			
-			return map;
-		}
 	}
 }

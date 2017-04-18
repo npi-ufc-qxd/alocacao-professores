@@ -1,8 +1,6 @@
 package ufc.quixada.npi.ap.model;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -126,23 +124,14 @@ public class Oferta {
 	enum Turno{
 		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite"), MESMO_DIA("Mesmo dia");
 		
-		private String nome;
-		private static Map<Turno, String> map;
+		private String descricao;
 		
-		Turno(String nome){
-			this.nome = nome;
+		Turno(String descricao){
+			this.descricao = descricao;
 		}
-		
-		public static Map<Turno, String> toMap() {
-			if (map == null) {
-				map = new TreeMap<Turno, String>(); // Usar TreeMap para ficar ordenado
-				
-				for (Turno t : Turno.values()) {
-					map.put(t, t.nome);
-				}
-			}
-			
-			return map;
+
+		public String getDescricao() {
+			return descricao;
 		}
 	}
 }
