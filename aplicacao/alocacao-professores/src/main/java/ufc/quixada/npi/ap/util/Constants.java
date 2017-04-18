@@ -23,4 +23,6 @@ public class Constants {
 	public static final String PAGINA_ERRO_403 = "/error/403";
 	public static final String PAGINA_ERRO_500 = "/error/500";
 
+	// Paginas - Disciplina
+	public static final String FORMULARIO_CADASTRAR_DISCIPLINA = "disciplina/cadastrar_disciplina"; 
 }
