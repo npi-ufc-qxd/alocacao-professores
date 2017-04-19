@@ -18,4 +18,11 @@ public class DisciplinaController {
 		
 		return model;
 	} 
+	
+	@RequestMapping(value="/editar", method = RequestMethod.GET)
+	public ModelAndView editarDisciplina(){
+		ModelAndView model = new ModelAndView(FORMULARIO_EDITAR_DISCIPLINA);
+		
+		return model;
+	}
 }

@@ -25,4 +25,5 @@ public class Constants {
 
 	// Paginas - Disciplina
 	public static final String FORMULARIO_CADASTRAR_DISCIPLINA = "disciplina/cadastrar_disciplina"; 
+	public static final String FORMULARIO_EDITAR_DISCIPLINA = "disciplina/editar_disciplina";
 }
