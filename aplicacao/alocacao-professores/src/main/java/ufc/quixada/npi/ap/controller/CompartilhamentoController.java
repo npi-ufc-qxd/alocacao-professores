@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import ufc.quixada.npi.ap.util.Constants;
+
 
 @Controller
 @RequestMapping(path = "/compartilhamentos")
@@ -12,40 +16,42 @@ public class CompartilhamentoController {
 	
 	@RequestMapping(path = {""}, method = RequestMethod.GET)
 	public String listarCompartilhamentos(){
-		return "compartilhamento/listar-compartilhamento";
+		return Constants.PAGINA_LISTAR_COMPARTILHAMENTO;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
 	public String cadastrarCompartilhamentos(){
-		return "compartilhamento/cadastrar-compartilhamento";
+		return Constants.PAGINA_FORM_CADASTRAR_COMPARTILHAMENTO;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.POST)
 	public ModelAndView cadastrarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
-		ModelAndView model = new ModelAndView("redirect:/compartilhamentos?sucessoCadastro");
+		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO);
 		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/detalhar"}, method = RequestMethod.GET)
 	public String detalharCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
 		
-		return "compartilhamento/detalhar-compartilhamento";
+		return Constants.PAGINA_DETALHAR_COMPARTILHAMENTO;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
-		return "compartilhamento/editar-compartilhamento";
+	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id, final RedirectAttributes redirectAttributes){
+		redirectAttributes.addFlashAttribute("sucessoEdicao", "Edição realizada com sucesso!");
+		return Constants.PAGINA_FORM_EDITAR_COMPARTILHAMENTO;
 	}
 	
 	@RequestMapping(path = {"/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
-		ModelAndView model = new ModelAndView("redirect:/compartilhamentos?sucessoEdicao");
+		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO);
 		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
-	public String excluirCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
-		return "compartilhamento/excluir-compartilhamento";
+	public ModelAndView excluirCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
+		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO);
+		return model;
 	}
 	
 }

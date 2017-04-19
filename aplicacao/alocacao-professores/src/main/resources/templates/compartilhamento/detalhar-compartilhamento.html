@@ -12,7 +12,7 @@
 		<meta name="author" content="" />
 
 		<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
-		<title>Compartilhamentos | Aloca&ccedil;&atilde;o Professores</title>
+		<title>Detalhes Compartilhamento | Aloca&ccedil;&atilde;o Professores</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
@@ -424,7 +424,7 @@
 								</a>
 								<ul class = "nav nav-second-level">
 										<li><a th:href = "@{/compartilhamentos}" class = "waves-effect">Listar</a></li>
-										<li><a th:href = "@{/compartilhamentos/cadastrar}" class = "waves-effect">Cadastrar</a></li>
+										<li><a th:href = "@{/compartilhamentos/cadastrar}" class = "waves-effect active">Cadastrar</a></li>
 								</ul>
 						</li>
 						<li>
@@ -448,8 +448,8 @@
 						</li>
 						<li>
 								<a href="faq.html" class="waves-effect">
-									<i class="fa fa-circle-o text-success"></i>
-									<span class="hide-menu">Faqs</span>
+										<i class="fa fa-circle-o text-success"></i>
+										<span class="hide-menu">Faqs</span>
 								</a>
 						</li>
 					</ul>
@@ -460,47 +460,23 @@
 			<div id="page-wrapper">
 				<div class="container-fluid">
 					<div class="row bg-title">
-						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-							<h4 class="page-title">Compartilhamentos</h4>
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+							<h4 class="page-title">Detalhes compartilhamento</h4>
 						</div>
-						<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+						<div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
 							<ol class="breadcrumb">
-								<li><a href="#">Dashboard</a></li>
-								<li class="active">Compartilhamentos</li>
+								<li><a href="javascript:void(0);">Dashboard</a></li>
+								<li><a th:href = "@{/compartilhamentos}">Compartilhamentos</a></li>
+								<li class="active">Detalhes compartilhamento</li>
 							</ol>
 						</div>
 						<!-- /.col-lg-12 -->
 					</div>
 					<div class="row">
-						<div class="col-md-12">
-							<div class="white-box">
-									<div class = "table-responsive">
-										<table class = "table color-bordered-table inverse-bordered-table">
-												<thead>
-													<tr>
-														<th>Curso</th>
-														<th>Semestre</th>
-														<th>Turno</th>
-														<th>Disciplina</th>
-														<th>Vagas</th>
-														<th></th>
-														<th></th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-															<td>Ci&ecirc;ncia da Computa&ccedil;&atilde;o</td>
-															<td>3&ordm; Semestre</td>
-															<td>Manh&atilde;</td>
-															<td>Projeto e Análise de Algoritmos</td>
-															<td>15</td>
-															<td><a th:href = "@{'/compartilhamentos/1/editar'}" class = "btn btn-default waves-effect">Editar</a></td>
-															<td><a th:href = "@{'/compartilhamentos/1/detalhar'}" class = "btn btn-info waves-effect">Detalhes</a></td>
-													</tr>
-												</tbody>
-										</table>
+						<div class = "col-lg-12 col-md-12">
+								<div class = "white-box">
+										DETALHES
 								</div>
-							</div>
 						</div>
 					</div>
 					<!-- .right-sidebar -->
