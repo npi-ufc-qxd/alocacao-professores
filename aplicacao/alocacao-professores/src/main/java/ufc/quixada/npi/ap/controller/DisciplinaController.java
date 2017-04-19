@@ -25,4 +25,12 @@ public class DisciplinaController {
 		
 		return model;
 	}
+	
+	@RequestMapping(value="/listar", method = RequestMethod.GET)
+	public ModelAndView listarDisciplina(){
+		ModelAndView model = new ModelAndView(LISTAR_DISCIPLINAS);
+		
+		return model;
+	}
+	
 }
