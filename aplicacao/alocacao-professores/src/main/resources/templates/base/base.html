@@ -63,30 +63,20 @@
 		        <!-- /.col-lg-12 -->
 		      </div>
 		      <div class="row">
+		      	
+		      	<div th:each="alert : ${alertas}" th:attr="data-type=${alert.type},data-delay=${alert.delay}" class="alert alert-danger alert-dismissable">
+              		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              		<p th:text="${alert.message}"></p>
+              	</div>
+		      
 		        <div class="col-md-12">
 		          <div class="white-box">
-		            <h3 class="box-title">Blank Starter page</h3>
+		            <section class="" layout:fragment="conteudo"></section>
 		          </div>
 		        </div>
 		      </div>
 		    </div>
-		 
-		 
-		 
-			<main class="sidenav-opened"> 
-		        <div class="main-container">
-		        	<section class="" layout:fragment="conteudo"></section>
-		        </div>
-		        <!-- MENSAGENS DE ALERTA -->
-			 	<div th:each="alert : ${alertas}" 
-					class="alert-message" 
-					th:attr="data-type=${alert.type},data-delay=${alert.delay}" 
-					th:text="${alert.message}"></div> 
-		    </main>   
-		 
-		 
-		 
-		    <footer class="footer text-center"> 2017 &copy; Elite Admin brought to you by themedesigner.in </footer>
+		    <footer class="footer text-center"> 2017 &copy; NPI - UFC Quixadá</footer>
 		</div>
 	</div>    
     
