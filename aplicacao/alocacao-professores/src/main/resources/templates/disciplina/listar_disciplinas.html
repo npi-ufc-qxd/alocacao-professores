@@ -17,6 +17,8 @@
 <link th:href="@{https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css}" rel="stylesheet" type="text/css" ></link>
 <!-- Menu CSS -->
 <link th:href="@{../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css}" rel="stylesheet"></link>
+<!--alerts CSS -->
+<link th:href="@{../plugins/bower_components/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
 <!-- animation CSS -->
 <link th:href="@{../css/animate.css}" rel="stylesheet"></link>
 <!-- Custom CSS -->
@@ -295,8 +297,32 @@
                   <td>64</td>
                   <td>0</td>                                                     					
                   <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
-                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Arquivar</button></td>                                      
-                </tr>                
+                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right" id="sa-warning">Arquivar</button></td>                                      
+                </tr>
+                <tr>
+                  <td>Cálculo II</td>
+                  <td>4</td>
+                  <td>64</td>
+                  <td>0</td>                                                     					
+                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
+                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right" id="sa-warning">Arquivar</button></td>                                      
+                </tr>
+                <tr>
+                  <td>Cálculo I</td>
+                  <td>4</td>
+                  <td>64</td>
+                  <td>0</td>                                                     					
+                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
+                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right" id="sa-warning">Arquivar</button></td>                                      
+                </tr>         
+                <tr>
+                  <td>Discreta</td>
+                  <td>4</td>
+                  <td>64</td>
+                  <td>0</td>                                                     					
+                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
+                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right" id="sa-warning">Arquivar</button></td>                                      
+                </tr>       
               </tbody>
             </table>
             </div>
@@ -411,6 +437,10 @@
 <script th:src="@{../js/custom.min.js}"></script>
 <!--Style Switcher -->
 <script th:src="@{../plugins/bower_components/styleswitcher/jQuery.style.switcher.js}"></script>
+
+<!-- Sweet-Alert  -->
+<script th:src="@{../plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
 
 </body>
 </html>
