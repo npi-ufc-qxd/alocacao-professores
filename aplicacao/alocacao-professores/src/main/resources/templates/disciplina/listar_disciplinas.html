@@ -10,9 +10,11 @@
 <meta name="description" content=""></meta>
 <meta name="author" content=""></meta>
 <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png"></link>
-<title>Cadastrar Disciplina</title>
+<title>Lista de Disciplinas</title>
 <!-- Bootstrap Core CSS -->
 <link th:href="@{../bootstrap/css/bootstrap.min.css}" rel="stylesheet"></link>
+<link th:href="@{../plugins/bower_components/datatables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css" ></link>
+<link th:href="@{https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css}" rel="stylesheet" type="text/css" ></link>
 <!-- Menu CSS -->
 <link th:href="@{../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css}" rel="stylesheet"></link>
 <!-- animation CSS -->
@@ -279,15 +281,21 @@
             <table id="myTable" class="table table-striped">
               <thead>
                 <tr>
-                  <th>Disciplina</th>                                                      
-                  <th>Opções</th>                                      
+                  <th>Disciplina</th>
+                  <th>Créditos</th>
+                  <th>Teórica</th>
+                  <th>Prática</th>                                                                 
+                  <th></th>                                      
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Tiger Nixon</td>                                    
-
-                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Arquivar</button></td>                                      
+                  <td>Cálculo III</td>
+                  <td>4</td>
+                  <td>64</td>
+                  <td>0</td>                                                     					
+                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
+                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Arquivar</button></td>                                      
                 </tr>                
               </tbody>
             </table>
@@ -380,13 +388,13 @@
 <script th:src="@{../plugins/bower_components/datatables/jquery.dataTables.min.js}"></script>
 
 <!-- start - This is for export functionality only -->
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+<script th:src="@{https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js}"></script>
+<script th:src="@{https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js}"></script>
+<script th:src="@{https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js}"></script>
+<script th:src="@{https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js}"></script>
+<script th:src="@{https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js}"></script>
+<script th:src="@{https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js}"></script>
 <!-- end - This is for export functionality only -->
 
 <script>
