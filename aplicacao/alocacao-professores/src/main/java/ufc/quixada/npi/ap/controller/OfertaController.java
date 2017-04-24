@@ -11,7 +11,7 @@ import ufc.quixada.npi.ap.util.Constants;
 @RequestMapping(path = "/ofertas")
 public class OfertaController {
 	
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "")
 	public ModelAndView listar(){
 		ModelAndView mv = new ModelAndView(Constants.LISTAR_OFERTA);
 
