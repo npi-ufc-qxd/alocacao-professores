@@ -1,0 +1,169 @@
+<!DOCTYPE html>  
+<html lang="ptBR"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content=""/>
+<meta name="author" content=""/>
+<link rel="icon" type="image/png" sizes="16x16" th:href="@{../plugins/images/favicon.png}"/>
+<title>cadastrar</title>
+<!-- Bootstrap Core CSS -->
+<link th:href="@{../bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+<!-- animation CSS -->
+<link th:href="@{../css/animate.css}" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link th:href="@{../css/style.css}" rel="stylesheet"/>
+<!-- color CSS -->
+<link th:href="@{../css/colors/default.css}" id="theme"  rel="stylesheet"/>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script th:src="@{https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script th:src="@{https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-19175540-9', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body class="fix-sidebar">
+    <!-- Preloader -->
+  <div class="preloader">
+      <div class="cssload-speeding-wheel"></div>
+  </div>
+  <div id="wrapper">
+    <!-- Top Navigation -->
+    <nav class="navbar navbar-default navbar-static-top m-b-0">
+      <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+        <ul class="nav navbar-top-links navbar-left hidden-xs">
+          <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- End Top Navigation -->
+
+    <!-- Left navbar-header -->
+    <div class="navbar-default sidebar" role="navigation">
+      <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+        <ul class="nav" id="side-menu">
+          <li class="sidebar-search hidden-sm hidden-md hidden-lg">
+            <!-- input-group -->
+            <div class="input-group custom-search-form">
+              <input type="text" class="form-control" placeholder="Search..."></input>
+              <span class="input-group-btn">
+              <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
+              </span> </div>
+            <!-- /input-group -->
+          </li>
+
+          <li class="nav-small-cap m-t-10">--- Menu Principal</li>
+          <li> <a href="/ofertas/cadastrar" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu"> Cadastrar <span class="fa arrow"></span></span></a></li>
+          <li> <a href="/ofertas/editar" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu"> Editar <span class="fa arrow"></span></span></a></li>
+          <li> <a href="/ofertas/listar" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Listar<span class="fa arrow"></span></span></a></li>
+          <li> <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Excluir<span class="fa arrow"></span></span></a></li>
+
+          <li> <a href="calendar.html" class="waves-effect"><i data-icon="A" class="linea-icon linea-elaborate fa-fw"></i> <span class="hide-menu">Calendário</span></a></li>
+
+          <li><a href="#" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Sair</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- Page Content -->
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <div class="row bg-title">
+          <div class="col-sm-12">
+            <h4 class="page-title">Cadastro de Oferta de Disciplinas</h4>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="white-box">
+              <h3 class="box-title m-b-0">Cadastrar Nova Oferta de Disciplina</h3>
+              <p class="text-muted m-b-30 font-13"></p>
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-md-12">Disciplina</label>
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" value=""></input>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-12">Turma</label>
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" value=""></input>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-12">Professor</label>
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" value=""></input>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-12">Vagas</label>
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" value=""></input>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12">Turno</label>
+                  <div class="col-sm-12">
+                    <select class="form-control">
+                      <option></option>
+                      <option>MANHÃ</option>
+                      <option>TARDE</option>
+                      <option>NOITE</option>
+                      <option>MESMO_DIA</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                      <label class="col-md-12">Observações</label>
+                      <div class="col-md-12">
+                        <textarea class="form-control" rows="5"></textarea>
+                      </div>
+                  </div>
+                </div>
+                </form>
+          <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
+          <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+          <!-- /.container-fluid -->
+        <footer class="footer text-center"> Universidade Federal do Ceará - Campus Quixadá </footer>
+    </div>
+      <!-- /#page-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+  <!-- jQuery -->
+<script th:src="@{../plugins/bower_components/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script th:src="@{../bootstrap/js/bootstrap.min.js}"></script>
+<!-- Menu Plugin JavaScript -->
+<script th:src="@{../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js}"></script>
+
+<!--slimscroll JavaScript -->
+<script th:src="@{../js/jquery.slimscroll.js}"></script>
+<!--Wave Effects -->
+<script th:src="@{../js/waves.js}"></script>
+<!-- Custom Theme JavaScript -->
+<script th:src="@{../js/custom.min.js}"></script>
+<!--Style Switcher -->
+<script th:src="@{../plugins/bower_components/styleswitcher/jQuery.style.switcher.js}"></script>
+</body>
+</html>
+  

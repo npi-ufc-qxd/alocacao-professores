@@ -22,5 +22,13 @@ public class Constants {
 	public static final String PAGINA_ERRO_404 = "/error/404";
 	public static final String PAGINA_ERRO_403 = "/error/403";
 	public static final String PAGINA_ERRO_500 = "/error/500";
+	
+	// Ofertas
+	public static final String FORM_CADASTRAR_OFERTA = "/ofertas/cadastrar-oferta";
+	public static final String FORM_EDITAR_OFERTA = "/ofertas/editar-oferta";
+	public static final String LISTAR_OFERTA = "/ofertas/listar-oferta";
+	public static final String DETALHAR_OFERTA = "/ofertas/detalhar-oferta";
+	public static final String EXCLUIR_OFERTA = "/ofertas/excluir-oferta";
+
 
 }
