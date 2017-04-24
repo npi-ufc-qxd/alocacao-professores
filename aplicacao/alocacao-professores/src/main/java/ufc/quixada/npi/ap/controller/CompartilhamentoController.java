@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ufc.quixada.npi.ap.util.Constants;
 
@@ -32,13 +31,11 @@ public class CompartilhamentoController {
 	
 	@RequestMapping(path = {"/{id}/detalhar"}, method = RequestMethod.GET)
 	public String detalharCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
-		
 		return Constants.PAGINA_DETALHAR_COMPARTILHAMENTO;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id, final RedirectAttributes redirectAttributes){
-		redirectAttributes.addFlashAttribute("sucessoEdicao", "Edição realizada com sucesso!");
+	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
 		return Constants.PAGINA_FORM_EDITAR_COMPARTILHAMENTO;
 	}
 	
