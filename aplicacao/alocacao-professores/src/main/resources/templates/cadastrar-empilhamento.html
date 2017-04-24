@@ -5,10 +5,10 @@
     layout:decorator="base/base">
 
 <head>
-    <title>Clínicas - Material</title>
+    <title>Cadastrar Empilhamento</title>
 </head>
 
-<section layout:fragment="conteudo" th:with="acao_url=${acao == 'ADICIONAR'? 'adicionar' :'editar' }">
+<section layout:fragment="conteudo">
 	<form th:action="@{${'/empilhamentos/cadastrar'}}" method="POST">
 		<div class="form-group">
             	<label>Disciplina A</label>
