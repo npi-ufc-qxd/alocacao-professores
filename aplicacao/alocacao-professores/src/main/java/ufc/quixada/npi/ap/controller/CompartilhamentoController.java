@@ -35,14 +35,13 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
+	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){		
 		return Constants.PAGINA_FORM_EDITAR_COMPARTILHAMENTO;
 	}
 	
-	@RequestMapping(path = {"/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
-		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO);
-		return model;
+	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
+	public String editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
+		return Constants.REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO;
 	}
 	
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
