@@ -21,7 +21,7 @@ public class EmpilhamentoController {
 	@Autowired
 	EmpilhamentoService empilhamentoService;
 	
-	@RequestMapping(path="/")
+	@RequestMapping(path="")
 	public ModelAndView listarEmpilhamentos(){
 		ModelAndView model = new ModelAndView("listar-empilhamentos");
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();

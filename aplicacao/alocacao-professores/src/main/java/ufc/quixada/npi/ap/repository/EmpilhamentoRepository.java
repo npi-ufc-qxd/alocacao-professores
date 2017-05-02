@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import ufc.quixada.npi.ap.model.Empilhamento;
 
-@Repository
-public interface EmpilhamentoRepository  extends CrudRepository<Empilhamento, Integer> {
+//@Repository
+public interface EmpilhamentoRepository  /*extends CrudRepository<Empilhamento, Integer>*/ {
 
 }

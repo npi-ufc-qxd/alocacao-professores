@@ -12,8 +12,8 @@ import ufc.quixada.npi.ap.service.EmpilhamentoService;
 @Service
 public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 
-	@Autowired
-	EmpilhamentoRepository empilhamentoRepository;
+	//@Autowired
+	//EmpilhamentoRepository empilhamentoRepository;
 	
 	//@Autowired
 	//DisciplinaRepository disciplinaRepository;
@@ -35,7 +35,8 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 		empilhamento.setDisciplinaA(disciplinaA);
 		empilhamento.setDisciplinaB(disciplinaB);*/
 		
-		return empilhamentoRepository.save(empilhamento);
+		//return empilhamentoRepository.save(empilhamento);
+		return null;
 	}
 
 	@Override
