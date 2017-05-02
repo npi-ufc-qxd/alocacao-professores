@@ -23,4 +23,12 @@ public class Constants {
 	public static final String PAGINA_ERRO_403 = "/error/403";
 	public static final String PAGINA_ERRO_500 = "/error/500";
 
+	// Periodo
+	public static final String FORM_CADASTRAR_PERIODO = "/periodos/cadastrar-periodo";
+	public static final String FORM_DETALHAR_PERIODO = "/periodos/detalhar-periodo";
+	public static final String FORM_EDITAR_PERIODO = "/periodos/editar-periodo";
+	public static final String EXCLUIR_PERIODO = "/periodos/excluir-periodo";
+	public static final String INDEX_PERIODO  = "/periodos/index-periodo";
+	
+
 }
