@@ -19,4 +19,11 @@ public class DisciplinaServiceImpl implements DisciplinaService{
 	
 	}
 
+	@Override
+	public void atualizar(Disciplina disciplina) {
+		
+		disciplinaRepository.save(disciplina);
+		
+	}
+
 }

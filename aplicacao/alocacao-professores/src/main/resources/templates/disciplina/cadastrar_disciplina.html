@@ -276,6 +276,7 @@
 <!-- Modelo do Formulario -->
 <form class="form-horizontal" th:action="@{/disciplinas/cadastrar}" th:object="${disciplina}" method="post" >
 				
+			  <input type="hidden" th:field="*{id}"></input>
               <div class="form-group">
                 <label class="col-md-12">Nome da Disciplina</label>
                 <div class="col-md-12">
