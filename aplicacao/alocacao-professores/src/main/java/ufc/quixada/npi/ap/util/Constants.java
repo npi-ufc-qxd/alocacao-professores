@@ -31,12 +31,11 @@ public class Constants {
 	public static final String EXCLUIR_OFERTA = "/ofertas/excluir-oferta";
 	
 	// Compartilhamento
-	
-	public static final String PAGINA_FORM_CADASTRAR_COMPARTILHAMENTO = "compartilhamento/cadastrar-compartilhamento";
-	public static final String PAGINA_FORM_EDITAR_COMPARTILHAMENTO = "compartilhamento/editar-compartilhamento";
-	public static final String PAGINA_LISTAR_COMPARTILHAMENTO = "compartilhamento/listar-compartilhamento";
-	public static final String PAGINA_DETALHAR_COMPARTILHAMENTO = "compartilhamento/detalhar-compartilhamento";
-
+	public static final String COMPARTILHAMENTO_CADASTRAR = "compartilhamento/cadastrar-compartilhamento";
+	public static final String COMPARTILHAMENTO_EDITAR = "compartilhamento/editar-compartilhamento";
+	public static final String COMPARTILHAMENTO_LISTAR = "compartilhamento/listar-compartilhamento";
+	public static final String COMPARTILHAMENTO_DETALHAR = "compartilhamento/detalhar-compartilhamento";
+	public static final String COMPARTILHAMENTO_REDIRECT_LISTAR = "redirect:/compartilhamentos";
 
 	// Periodo
 	public static final String FORM_CADASTRAR_PERIODO = "/periodos/cadastrar-periodo";
@@ -50,7 +49,4 @@ public class Constants {
 	public static final String FORMULARIO_CADASTRAR_DISCIPLINA = "disciplina/cadastrar_disciplina"; 
 	public static final String FORMULARIO_EDITAR_DISCIPLINA = "disciplina/editar_disciplina";
 	public static final String LISTAR_DISCIPLINAS = "disciplina/listar_disciplinas";
-	
-	// Redirects
-	public static final String REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO = "redirect:/compartilhamentos";
 }
