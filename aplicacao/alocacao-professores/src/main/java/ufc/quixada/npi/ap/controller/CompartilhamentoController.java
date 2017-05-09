@@ -20,13 +20,17 @@ public class CompartilhamentoController {
 	private CompartilhamentoService compartilhamentoService;
 	
 	@RequestMapping(path = {""}, method = RequestMethod.GET)
-	public String listarCompartilhamentos(){
-		return Constants.COMPARTILHAMENTO_LISTAR;
+	public ModelAndView listarCompartilhamentos(){
+		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
+		
+		return model;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
-	public String cadastrarCompartilhamentos(){
-		return Constants.COMPARTILHAMENTO_CADASTRAR;
+	public ModelAndView cadastrarCompartilhamentos(){
+		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
+
+		return model;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.POST)
@@ -39,23 +43,30 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/detalhar"}, method = RequestMethod.GET)
-	public String detalharCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
-		return Constants.COMPARTILHAMENTO_DETALHAR;
+	public ModelAndView detalharCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
+		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_DETALHAR);
+		
+		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){		
-		return Constants.COMPARTILHAMENTO_EDITAR;
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){		
+		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
+		
+		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public String editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
-		return Constants.COMPARTILHAMENTO_REDIRECT_LISTAR;
+	public ModelAndView editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
+		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
+		
+		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
 	public ModelAndView excluirCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+		
 		return model;
 	}
 	
