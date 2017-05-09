@@ -46,10 +46,10 @@ public class Constants {
 	public static final String INDEX_PERIODO  = "/periodos/index-periodo";
 	
 
-	// Paginas - Disciplina
-	public static final String FORMULARIO_CADASTRAR_DISCIPLINA = "disciplina/cadastrar_disciplina"; 
-	public static final String FORMULARIO_EDITAR_DISCIPLINA = "disciplina/editar_disciplina";
-	public static final String LISTAR_DISCIPLINAS = "disciplina/listar_disciplinas";
+	// Disciplina
+	public static final String CADASTRAR_DISCIPLINA = "disciplina/cadastrar-disciplina"; 
+	public static final String DISCIPLINA_EDITAR = "disciplina/editar-disciplina";
+	public static final String DISCIPLINA_LISTAR = "disciplina/listar-disciplinas";
 	
 	// Redirects
 	public static final String REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO = "redirect:/compartilhamentos";

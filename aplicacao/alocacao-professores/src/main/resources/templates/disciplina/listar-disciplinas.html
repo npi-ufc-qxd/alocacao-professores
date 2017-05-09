@@ -278,51 +278,32 @@
       <!-- /row -->
       <div class="row">
         <div class="col-sm-12">
-          <div class="white-box">            
+          <div class="white-box">         
+            <h3 class="box-title m-b-0">Disciplinas</h3>            
             <div class="table-responsive">
             <table id="myTable" class="table table-striped">
               <thead>
                 <tr>
                   <th>Disciplina</th>
                   <th>Créditos</th>
-                  <th>Teórica</th>
-                  <th>Prática</th>                                                                 
+                  <th>Carga horária Teórica</th>
+                  <th>Carga horária Prática</th>                                                                 
                   <th></th>                                      
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Cálculo III</td>
-                  <td>4</td>
-                  <td>64</td>
-                  <td>0</td>                                                     					
-                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
-                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right" id="sa-warning">Arquivar</button></td>                                      
-                </tr>
-                <tr>
-                  <td>Cálculo II</td>
-                  <td>4</td>
-                  <td>64</td>
-                  <td>0</td>                                                     					
-                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
-                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right" id="sa-warning">Arquivar</button></td>                                      
-                </tr>
-                <tr>
-                  <td>Cálculo I</td>
-                  <td>4</td>
-                  <td>64</td>
-                  <td>0</td>                                                     					
-                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
-                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right" id="sa-warning">Arquivar</button></td>                                      
-                </tr>         
-                <tr>
-                  <td>Discreta</td>
-                  <td>4</td>
-                  <td>64</td>
-                  <td>0</td>                                                     					
-                  <td><button class="fcbtn btn btn-info btn-outline btn-1b pull-right">Editar</button>
-                  <button class="fcbtn btn btn-info btn-outline btn-1b pull-right" id="sa-warning">Arquivar</button></td>                                      
-                </tr>       
+                <tr th:each="disciplina : ${disciplinas}">
+                  <td th:text="${disciplina.nome}"></td>
+                  <td th:text="${disciplina.creditos}"></td>
+                  <td th:text="${disciplina.cargaHorariaTeorica}"></td>
+                  <td th:text="${disciplina.cargaHorariaPratica}"></td>                                                     					
+                  <td>
+                  <div class="text-right">
+                    <button type="submit" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </button>
+                    <button type="submit" class="btn btn-danger waves-effect waves-light m-r-10 gp-btn-desvincular" id="sa-warning"> Arquivar </button>
+                  </div>
+                  </td>                                      
+                </tr>                                   
               </tbody>
             </table>
             </div>
