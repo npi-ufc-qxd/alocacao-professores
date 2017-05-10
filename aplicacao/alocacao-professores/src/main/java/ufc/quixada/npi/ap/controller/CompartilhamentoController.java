@@ -61,20 +61,28 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){		
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
+		ModelAndView model;
 		
 		Compartilhamento compartilhamento = compartilhamentoService.findCompartilhamento(id);
 		
-		if (compartilhamento != null)
-			model.addObject("compartilhamento");
+		
+		if (compartilhamento != null){
+			model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
+			model.addObject("compartilhamento", compartilhamento);
+		}
+		else{
+			model = new ModelAndView(Constants.PAGINA_ERRO_404);
+		}
 		
 		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
+	public ModelAndView editarCompartilhamento(Compartilhamento compartilhamento){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+		
+		compartilhamentoService.salvar(compartilhamento);
 		
 		return model;
 	}

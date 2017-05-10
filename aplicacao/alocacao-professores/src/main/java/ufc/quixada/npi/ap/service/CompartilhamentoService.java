@@ -10,5 +10,4 @@ public interface CompartilhamentoService {
 	public List<Compartilhamento> findAllCompartilhamentos();
 	
 	public void salvar(Compartilhamento compartilhamento);
-	
 }
