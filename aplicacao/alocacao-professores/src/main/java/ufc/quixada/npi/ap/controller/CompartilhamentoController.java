@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,10 @@ public class CompartilhamentoController {
 	@RequestMapping(path = {""}, method = RequestMethod.GET)
 	public ModelAndView listarCompartilhamentos(){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
+		
+		List<Compartilhamento> compartilhamentos = compartilhamentoService.findAllCompartilhamentos();
+		
+		model.addObject("compartilhamentos", compartilhamentos);
 		
 		return model;
 	}
@@ -46,6 +52,11 @@ public class CompartilhamentoController {
 	public ModelAndView detalharCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_DETALHAR);
 		
+		Compartilhamento compartilhamento = compartilhamentoService.findCompartilhamento(id);
+		
+		if (compartilhamento != null)
+			model.addObject("compartilhamento");
+		
 		return model;
 	}
 	
@@ -53,12 +64,17 @@ public class CompartilhamentoController {
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){		
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
 		
+		Compartilhamento compartilhamento = compartilhamentoService.findCompartilhamento(id);
+		
+		if (compartilhamento != null)
+			model.addObject("compartilhamento");
+		
 		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
+		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
 		
 		return model;
 	}
@@ -69,5 +85,5 @@ public class CompartilhamentoController {
 		
 		return model;
 	}
-	
+
 }

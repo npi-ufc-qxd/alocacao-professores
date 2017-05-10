@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,11 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 	@Override
 	public Compartilhamento findCompartilhamento(Integer id) {
 		return compartilhamentoRepository.findOne(id);
+	}
+	
+	@Override
+	public List<Compartilhamento> findAllCompartilhamentos() {
+		return compartilhamentoRepository.findAll();
 	}
 	
 	@Override
