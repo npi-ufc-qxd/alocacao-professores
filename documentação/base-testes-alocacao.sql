@@ -281,9 +281,6 @@ INSERT INTO disciplina( carga_horaria_pratica, carga_horaria_teorica, codigo, no
 INSERT INTO disciplina( carga_horaria_pratica, carga_horaria_teorica, codigo, nome, creditos)  VALUES ( 0, 0, 'QXD0173', 'TOPICOS ESPECIAIS IV CC', 0); 
 INSERT INTO disciplina( carga_horaria_pratica, carga_horaria_teorica, codigo, nome, creditos)  VALUES ( 48, 16, 'PRG0003', 'EDUCAÇAO AMBIENTAL', 0);
 
-
-
-
 -- PERIODOS
 -- INSERT INTO periodo( id, ano, semestre, status) VALUES (?, ?, ?, ?);
 
