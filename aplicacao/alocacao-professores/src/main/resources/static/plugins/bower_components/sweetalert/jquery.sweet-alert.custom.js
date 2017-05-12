@@ -36,6 +36,27 @@
             swal("Deleted!", "Your imaginary file has been deleted.", "success"); 
         });
     });
+    
+    $(".gp-btn-desvincular").on("click", function(event) {
+    	event.preventDefault();
+
+    	var botaoDesvincular = $(event.currentTarget);
+    	var urlDesvincular = botaoDesvincular.attr("href");
+
+      swal({
+          title: "Você tem certeza?",
+          text: "Não será possível recurepar",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Sim, deletar!",
+          closeOnConfirm: false
+      }, function(){
+          swal("Deletado!", "Foi deletado com sucesso.", "success");
+      });
+
+
+    });
 
     //Parameter
     $('#sa-params').click(function(){
