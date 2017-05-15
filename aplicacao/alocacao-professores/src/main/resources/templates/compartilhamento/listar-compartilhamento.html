@@ -484,6 +484,7 @@
 									<table id = "myTable" class = "table table-striped">
 										<thead>
 											<tr>
+												<th>Código</th>
 												<th>Disciplina</th>
 												<th>Curso</th>
 												<th>Semestre</th>
@@ -494,6 +495,9 @@
 										</thead>
 										<tbody>
 											<tr th:each="compartilhamento : ${compartilhamentos}" th:unless="${#lists.isEmpty(compartilhamentos)}">
+												<td th:unless = "${compartilhamento.oferta.disciplina} == null" th:text = "${compartilhamento.oferta.disciplina.codigo}"></td>
+												<td th:if = "${compartilhamento.oferta.disciplina} == null">(Vazio)</td>
+												
 												<td th:unless = "${compartilhamento.oferta.disciplina} == null" th:text = "${compartilhamento.oferta.disciplina.nome}"></td>
 												<td th:if = "${compartilhamento.oferta.disciplina} == null">(Vazio)</td>
 												

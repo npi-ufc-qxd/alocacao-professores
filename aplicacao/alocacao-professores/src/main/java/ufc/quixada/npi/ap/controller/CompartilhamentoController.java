@@ -34,7 +34,7 @@ public class CompartilhamentoController {
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
 	public ModelAndView cadastrarCompartilhamentos(){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
+		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
 		
 		return model;
 	}
