@@ -1,10 +1,12 @@
 package ufc.quixada.npi.ap.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +41,11 @@ public class PeriodoController {
 		return mv;
 	}
 	
+	@ModelAttribute
+	public List<Periodo.Status> todosStatus(){
+		return Arrays.asList(Periodo.Status.values());
+	}
+	
 	@RequestMapping(path="/cadastrar", method=RequestMethod.POST)
 	public ModelAndView adicionarPeriodo(Periodo periodo){
 		ModelAndView mv = new ModelAndView(Constants.INDEX_PERIODO);
@@ -46,6 +53,7 @@ public class PeriodoController {
 		
 		return mv;
 	}
+	
 	
 	
 	@RequestMapping(path="/{id}/detalhar")
