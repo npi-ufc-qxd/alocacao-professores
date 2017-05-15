@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/*
+ INSERT INTO public.disciplina (carga_Horaria_Pratica, carga_Horaria_Teorica, codigo, nome, creditos) VALUES ( 0, 0, 'QXD0095', 'PROJETO INTEGRADO EM REDES DE COMPUTADORES', 0); 
+ */
+
 @Entity
 public class Disciplina {
 	
@@ -18,6 +22,10 @@ public class Disciplina {
 	private int cargaHorariaTeorica;
 	
 	private int cargaHorariaPratica;
+	
+	String codigo;
+	
+	String nome;
 
 	public Integer getId() {
 		return id;
@@ -50,6 +58,21 @@ public class Disciplina {
 	public void setCargaHorariaPratica(int cargaHorariaPratica) {
 		this.cargaHorariaPratica = cargaHorariaPratica;
 	}
-	
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 	
 }

@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.ap.model.Curso;
+import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Empilhamento;
+import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
 
 @Controller
@@ -21,6 +24,9 @@ public class EmpilhamentoController {
 
 	@Autowired
 	EmpilhamentoService empilhamentoService;
+	
+	//@Autowired
+	//DisciplinaService disciplinaService;
 	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
@@ -34,18 +40,31 @@ public class EmpilhamentoController {
 	public ModelAndView cadastrarEmpilhamento(){
 		ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_CADASTRAR_EMPILHAMENTO);
 		
-		List<Empilhamento> disciplinas = new ArrayList<Empilhamento>();
-		List<Empilhamento> turmas = new ArrayList<Empilhamento>();
+		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
+		List<Turma> turmas = new ArrayList<Turma>();
+		
+		Disciplina d = new Disciplina();
+		d.setNome("Discreta");
+		disciplinas.add(d);
+		
+		Curso c = new Curso();
+		c.setNome("Engenharia de Software");
+		
+		Turma t = new Turma();
+		t.setCurso(c);
+		t.setSemestre(2);
+		
 		
 		model.addObject("disciplinas", disciplinas);
 		model.addObject("turmas", turmas);
+		model.addObject("empilhamento", new Empilhamento());
 		
 		return model;
 	}
 	
 	@RequestMapping(path={"/cadastrar"}, method=RequestMethod.POST)
-	public String cadastrarEmpilhamento(@RequestParam Integer idTurmaA, @RequestParam Integer idDisciplinaA, 
-			@RequestParam Integer idTurmaB, @RequestParam Integer idDisciplinaB){
+	public String cadastrarEmpilhamento(Integer idTurmaA, Integer idDisciplinaA, 
+			Integer idTurmaB, Integer idDisciplinaB){
 		empilhamentoService.cadastarEmpilhamento(idTurmaA, idDisciplinaA, idTurmaB, idDisciplinaB);
 		return Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO;
 	}

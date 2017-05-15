@@ -14,7 +14,7 @@
 				<h3 class="box-title m-b-0">Cadastrar Empilhamento</h3>
             	<label>Disciplina A</label>
             	<div class="col-md-12">
-	              	<select th:field="*{idDisciplinaA}" id="disciplinaASelect" class="js-example-basic-multiple"7 name="idDisciplinaA">
+	              	<select th:field="*{empilhamento.primeiraDisciplina}" id="disciplinaASelect" class="js-example-basic-multiple" name="primeiraDisciplina">
 	             		<option value=""></option>
 	                	<option th:each ="disciplina : ${disciplinas}" 
 	                	    th:value = "${disciplina.id}"
@@ -25,7 +25,7 @@
              <div class="form-group">
               <label>Turma A</label>
               <div class="col-md-12">
-	              <select th:field="*{idTurmaA}" id="turmaASelect" class="js-example-basic-multiple" name="idTurmaA">
+	              <select th:field="*{empilhamento.primeiraTurma}" id="turmaASelect" class="js-example-basic-multiple" name="primeiraTurma">
 	             		<option value=""></option>
 	                	<option th:each ="turma : ${turmas}" 
 	                	    th:value = "${turma.id}"
@@ -36,7 +36,7 @@
             <div class="form-group">
               <label>Disciplina B</label>  
               <div class="col-md-12">    
-	              <select th:field="*{idDisciplinaB}" id="disciplinaBSelect" name="idDisciplinaB" class="js-example-basic-multiple">
+	              <select th:field="*{empilhamento.segundaDisciplina}" id="disciplinaBSelect" name="segundaDisciplina" class="js-example-basic-multiple">
 	             		<option value=""></option>
 	                	<option th:each ="disciplina : ${disciplinas}" 
 	                	    th:value = "${disciplina.id}"
@@ -47,7 +47,7 @@
             <div class="form-group">
               <label>Turma B</label>
               <div class="col-md-12">
-	              <select th:field="*{idTurmaB}" id="turmaBSelect" class="js-example-basic-multiple" name="idTurmaB">
+	              <select th:field="*{empilhamento.segundaTurma}" id="turmaBSelect" class="js-example-basic-multiple" name="segundaTurma">
 	             		<option value=""></option>
 	                	<option th:each ="turma : ${turmas}" 
 	                	    th:value = "${turma.id}"
