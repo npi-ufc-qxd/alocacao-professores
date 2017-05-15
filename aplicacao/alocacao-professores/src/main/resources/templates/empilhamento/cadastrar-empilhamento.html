@@ -5,49 +5,60 @@
     layout:decorator="base/base">
 
 <head>
-    <title>Cadastrar Empilhamento</title>
+    <title>Detalhar Empilhamento | Alocação Professores</title>
 </head>
 
 <section layout:fragment="conteudo">
 	<form th:action="@{${'/empilhamentos/cadastrar'}}" method="POST">
 		<div class="form-group">
+				<h3 class="box-title m-b-0">Cadastrar Empilhamento</h3>
             	<label>Disciplina A</label>
-              	<select id="disciplinaASelect" class="js-example-basic-multiple" multiple="multiple" name="idDisciplinaA">
-             		<option value=""></option>
-                	<option th:each ="disciplina : ${disciplinas}" 
-                	    th:value = "${disciplina.id}"
-                        th:text = "${disciplina.nome}"></option>
-				</select>
+            	<div class="col-md-12">
+	              	<select th:field="*{idDisciplinaA}" id="disciplinaASelect" class="js-example-basic-multiple"7 name="idDisciplinaA">
+	             		<option value=""></option>
+	                	<option th:each ="disciplina : ${disciplinas}" 
+	                	    th:value = "${disciplina.id}"
+	                        th:text = "${disciplina.nome}"></option>
+					</select>
+				</div>
              </div>
              <div class="form-group">
               <label>Turma A</label>
-              <select id="turmaASelect" cclass="js-example-basic-multiple" multiple="multiple" name="idTurmaA">
-             		<option value=""></option>
-                	<option th:each ="turma : ${turmas}" 
-                	    th:value = "${turma.id}"
-                        th:text = "${turma.nome}"></option>
-				</select>
+              <div class="col-md-12">
+	              <select th:field="*{idTurmaA}" id="turmaASelect" class="js-example-basic-multiple" name="idTurmaA">
+	             		<option value=""></option>
+	                	<option th:each ="turma : ${turmas}" 
+	                	    th:value = "${turma.id}"
+	                        th:text = "${turma.nome}"></option>
+					</select>
+				</div>
              </div>
             <div class="form-group">
-              <label>Disciplina B</label>      
-              <select id="disciplinaBSelect" name="idDisciplinaB" class="js-example-basic-multiple" multiple="multiple">
-             		<option value=""></option>
-                	<option th:each ="disciplina : ${disciplinas}" 
-                	    th:value = "${disciplina.id}"
-                        th:text = "${disciplina.nome}"></option>
-				</select>
+              <label>Disciplina B</label>  
+              <div class="col-md-12">    
+	              <select th:field="*{idDisciplinaB}" id="disciplinaBSelect" name="idDisciplinaB" class="js-example-basic-multiple">
+	             		<option value=""></option>
+	                	<option th:each ="disciplina : ${disciplinas}" 
+	                	    th:value = "${disciplina.id}"
+	                        th:text = "${disciplina.nome}"></option>
+					</select>
+				</div>
             </div>
             <div class="form-group">
               <label>Turma B</label>
-              <select id="turmaBSelect" class="js-example-basic-multiple" multiple="multiple" name="idTurmaB">
-             		<option value=""></option>
-                	<option th:each ="turma : ${turmas}" 
-                	    th:value = "${turma.id}"
-                        th:text = "${turma.nome}"></option>
-				</select>
+              <div class="col-md-12">
+	              <select th:field="*{idTurmaB}" id="turmaBSelect" class="js-example-basic-multiple" name="idTurmaB">
+	             		<option value=""></option>
+	                	<option th:each ="turma : ${turmas}" 
+	                	    th:value = "${turma.id}"
+	                        th:text = "${turma.nome}"></option>
+					</select>
+				</div>
              </div>
-		<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
-		<button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+              <div class="text-right">
+				<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
+				<button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+			</div>
 	</form>
 	<!--end container-->
 </section>
