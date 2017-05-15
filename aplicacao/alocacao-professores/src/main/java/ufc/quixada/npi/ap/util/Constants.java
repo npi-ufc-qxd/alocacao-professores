@@ -39,11 +39,11 @@ public class Constants {
 
 
 	// Periodo
-	public static final String FORM_CADASTRAR_PERIODO = "/periodos/cadastrar-periodo";
-	public static final String FORM_DETALHAR_PERIODO = "/periodos/detalhar-periodo";
-	public static final String FORM_EDITAR_PERIODO = "/periodos/editar-periodo";
-	public static final String EXCLUIR_PERIODO = "/periodos/excluir-periodo";
-	public static final String INDEX_PERIODO  = "/periodos/index-periodo";
+	public static final String FORM_CADASTRAR_PERIODO = "periodo/cadastrar-periodo";
+	public static final String FORM_DETALHAR_PERIODO = "periodo/detalhar-periodo";
+	public static final String FORM_EDITAR_PERIODO = "periodo/editar-periodo";
+	public static final String EXCLUIR_PERIODO = "periodo/excluir-periodo";
+	public static final String INDEX_PERIODO  = "periodo/index-periodo";
 	
 
 	// Paginas - Disciplina

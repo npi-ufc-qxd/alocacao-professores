@@ -48,13 +48,15 @@
                   				<tr>
 				                	<th>Período</th>
 				                    <th>Ano</th>
-				                    <th>Detalhes</th>
+				                    <th>Semestre</th>
+				                    <th>Status</th>				                    			                    
                   				</tr>
                 			</thead>
                 			<tbody>
-				            	<tr>
-				                	<td>2017.1</td>
-				                    <td>2017</td>
+				            	<tr th:each="periodo: ${periodos}">
+				                	<td th:text="${periodo.ano}">2017.1</td>
+				                    <td th:text="${periodo.semestre}">2017.1</td>
+				                    <td th:text="${periodo.status}">2017.1</td>
 				                    <td></td>
 				                </tr>                  
                 			</tbody>
