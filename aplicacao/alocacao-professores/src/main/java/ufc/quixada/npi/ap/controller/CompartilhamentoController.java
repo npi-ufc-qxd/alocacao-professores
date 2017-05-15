@@ -59,7 +59,7 @@ public class CompartilhamentoController {
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
-		
+
 		return model;
 	}
 	
