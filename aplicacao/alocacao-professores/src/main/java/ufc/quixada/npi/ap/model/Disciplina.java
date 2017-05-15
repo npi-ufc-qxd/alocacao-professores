@@ -13,11 +13,21 @@ public class Disciplina {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	private String nome;
+	
 	private int creditos;
 	
 	private int cargaHorariaTeorica;
 	
 	private int cargaHorariaPratica;
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
 	public Integer getId() {
 		return id;

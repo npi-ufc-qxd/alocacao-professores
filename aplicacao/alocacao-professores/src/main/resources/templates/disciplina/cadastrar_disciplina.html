@@ -274,29 +274,32 @@
           <div class="white-box">            
 
 <!-- Modelo do Formulario -->
-<form class="form-horizontal">
+<form class="form-horizontal" th:action="@{/disciplinas/cadastrar}" th:object="${disciplina}" method="post" >
+				
+			  <input type="hidden" th:field="*{id}"></input>
               <div class="form-group">
                 <label class="col-md-12">Nome da Disciplina</label>
                 <div class="col-md-12">
-                  <input class="form-control" value="" type="text"></input>
+                  <input class="form-control" type="text" id="nome" th:field="*{nome}" ></input>
+                  
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-12" >Créditos</label>
                 <div class="col-md-12">
-                  <input class="form-control" type="number"></input>
+                  <input class="form-control" type="number" id="creditos" th:field="*{creditos}" ></input>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-12">Carga horária teórica</label>
                 <div class="col-md-12">
-                  <input class="form-control" type="number"></input>
+                  <input class="form-control" type="number" id="cargaHorariaTeorica" th:field="*{cargaHorariaTeorica}"></input>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-12">Carga horária prática</label>
                 <div class="col-md-12">
-                  <input class="form-control" type="number"></input>
+                  <input class="form-control" type="number" id="cargaHorariaPratica" th:field="*{cargaHorariaPratica}"></input>
                 </div>
               </div>            
             <div class="text-right">            
