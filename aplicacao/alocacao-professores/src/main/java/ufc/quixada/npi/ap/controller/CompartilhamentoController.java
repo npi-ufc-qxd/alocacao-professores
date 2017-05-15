@@ -35,7 +35,7 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
+	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){		
 		return Constants.PAGINA_FORM_EDITAR_COMPARTILHAMENTO;
 	}
 	
