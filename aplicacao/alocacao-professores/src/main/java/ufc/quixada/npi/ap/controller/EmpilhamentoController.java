@@ -18,6 +18,7 @@ import ufc.quixada.npi.ap.model.Empilhamento;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
+import ufc.quixada.npi.ap.service.TurmaService;
 
 @Controller
 @RequestMapping(path="/empilhamentos")
@@ -29,6 +30,8 @@ public class EmpilhamentoController {
 	@Autowired
 	DisciplinaService disciplinaService;
 	
+	@Autowired 
+	TurmaService turmaService;
 	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
@@ -45,17 +48,7 @@ public class EmpilhamentoController {
 		ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_CADASTRAR_EMPILHAMENTO);
 		
 		List<Disciplina> disciplinas = disciplinaService.listar();
-		List<Turma> turmas = new ArrayList<Turma>();
-		
-		Curso c = new Curso();
-		c.setId(1);
-		c.setNome("Engenharia de Software");
-		
-		Turma t = new Turma();
-		t.setId(1);
-		t.setCurso(c);
-		t.setSemestre(2);
-		turmas.add(t);
+		List<Turma> turmas = turmaService.listarTurmas();
 		
 		model.addObject("disciplinas", disciplinas);
 		model.addObject("turmas", turmas);
