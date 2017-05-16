@@ -13,9 +13,9 @@ public class Disciplina {
 	private Integer id;
 	
 	private String nome;
-	
+
 	private String codigo;
-	
+
 	private int creditos;
 	
 	private int cargaHorariaTeorica;
