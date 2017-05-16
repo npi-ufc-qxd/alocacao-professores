@@ -22,5 +22,22 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 		
 	}
 	
+	@Override
+	public List<Disciplina> listarNaoArquivada(){
+		
+		return disciplinaRepository.findByArquivadaFalse();
+		
+	}
+
+	@Override
+	public void arquivarDisciplina(Integer id) {
+		Disciplina d = disciplinaRepository.findById(id);
+		
+		d.setArquivada(true);
+		
+		disciplinaRepository.save(d);
+		
+	}
+	
 	
 }

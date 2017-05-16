@@ -7,5 +7,7 @@ import ufc.quixada.npi.ap.model.Disciplina;
 public interface DisciplinaService {
 	
 	List<Disciplina> listar();
+	List<Disciplina> listarNaoArquivada();
+	void arquivarDisciplina(Integer id);
 	
 }

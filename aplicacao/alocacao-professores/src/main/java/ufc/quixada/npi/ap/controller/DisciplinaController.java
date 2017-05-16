@@ -38,10 +38,12 @@ public class DisciplinaController {
 	public ModelAndView listarDisciplina(){
 		ModelAndView model = new ModelAndView(DISCIPLINA_LISTAR);
 		
-		model.addObject("disciplinas", disciplinaService.listar());
+		model.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		
 		
 		return model;
 	}
+	
+	
 	
 }
