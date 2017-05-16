@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="base/base">
+
+<head>
+    <title>Cadastrar Empilhamento</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<form th:action="@{${'/empilhamentos/cadastrar'}}" method="POST">
+		<div class="form-group">
+            	<label>Disciplina A</label>
+              	<select id="disciplinaASelect" class="form-control" multiple="multiple" title="Supervisor" name="idDisciplinaA">
+             		<option value=""></option>
+                	<option th:each ="disciplina : ${disciplinas}" 
+                	    th:value = "${disciplina.id}"
+                        th:text = "${disciplina.nome}"></option>
+				</select>
+             </div>
+             <div class="form-group">
+              <label>Turma A</label>
+              <select id="turmaASelect" class="form-control" multiple="multiple" title="Supervisor" name="idTurmaA">
+             		<option value=""></option>
+                	<option th:each ="turma : ${turmas}" 
+                	    th:value = "${turma.id}"
+                        th:text = "${turma.nome}"></option>
+				</select>
+             </div>
+            <div class="form-group">
+              <label>Disciplina B</label>
+              <select id="disciplinaBSelect" class="form-control" multiple="multiple" title="Supervisor" name="idDisciplinaB">
+             		<option value=""></option>
+                	<option th:each ="disciplina : ${disciplinas}" 
+                	    th:value = "${disciplina.id}"
+                        th:text = "${disciplina.nome}"></option>
+				</select>
+            </div>
+            <div class="form-group">
+              <label>Turma B</label>
+              <select id="turmaBSelect" class="form-control" multiple="multiple" title="Supervisor" name="idTurmaB">
+             		<option value=""></option>
+                	<option th:each ="turma : ${turmas}" 
+                	    th:value = "${turma.id}"
+                        th:text = "${turma.nome}"></option>
+				</select>
+             </div>
+		<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
+		<button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+	</form>
+	<!--end container-->
+</section>
+<section layout:fragment="js">
+	<script type="text/javascript">		
+		$("#disciplinaASelect").select2();
+		$("#disciplinaBSelect").select2();
+		$("#turmaASelect").select2();
+		$("#turmaBSelect").select2();
+	</script>
+</section>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
