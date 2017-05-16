@@ -16,6 +16,7 @@ import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Empilhamento;
 import ufc.quixada.npi.ap.model.Turma;
+import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
 
 @Controller
@@ -25,14 +26,16 @@ public class EmpilhamentoController {
 	@Autowired
 	EmpilhamentoService empilhamentoService;
 	
-	//@Autowired
-	//DisciplinaService disciplinaService;
+	@Autowired
+	DisciplinaService disciplinaService;
 	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
-		ModelAndView model = new ModelAndView(Constants.PAGINA_LISTAR_EMPILHAMENTO);
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
+		
+		ModelAndView model = new ModelAndView(Constants.PAGINA_LISTAR_EMPILHAMENTO);
 		model.addObject("empilhamentos", empilhamentos);
+		
 		return model;
 	}
 	
@@ -40,17 +43,15 @@ public class EmpilhamentoController {
 	public ModelAndView cadastrarEmpilhamento(){
 		ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_CADASTRAR_EMPILHAMENTO);
 		
-		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
+		List<Disciplina> disciplinas = disciplinaService.listar();
 		List<Turma> turmas = new ArrayList<Turma>();
 		
-		Disciplina d = new Disciplina();
-		d.setNome("Discreta");
-		disciplinas.add(d);
-		
 		Curso c = new Curso();
+		c.setId(1);
 		c.setNome("Engenharia de Software");
 		
 		Turma t = new Turma();
+		t.setId(1);
 		t.setCurso(c);
 		t.setSemestre(2);
 		turmas.add(t);
@@ -63,9 +64,11 @@ public class EmpilhamentoController {
 	}
 	
 	@RequestMapping(path={"/cadastrar"}, method=RequestMethod.POST)
-	public String cadastrarEmpilhamento(Integer idTurmaA, Integer idDisciplinaA, 
-			Integer idTurmaB, Integer idDisciplinaB){
-		empilhamentoService.cadastarEmpilhamento(idTurmaA, idDisciplinaA, idTurmaB, idDisciplinaB);
+	public String cadastrarEmpilhamento(
+			Integer primeiraTurma, Integer primeiraDisciplina, 
+			Integer segundaTurma, Integer segundaDisciplina){
+		empilhamentoService.cadastarEmpilhamento(primeiraTurma, primeiraDisciplina, segundaTurma, segundaDisciplina);
+		
 		return Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO;
 	}
 	
@@ -81,20 +84,25 @@ public class EmpilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(@RequestParam Integer idTurmaA, @RequestParam Integer idDisciplinaA, 
+	public ModelAndView editarCompartilhamento(
+			@RequestParam Integer idTurmaA, 
+			@RequestParam Integer idDisciplinaA, 
 			@RequestParam Integer idTurmaB, @RequestParam Integer idDisciplinaB){
+		
+		
+		
 		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
 		return model;
 	}
 	
 	@RequestMapping(path={"/{id}/detalhar"})
 	public ModelAndView visualizarEmpilhamento(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
-		ModelAndView model = new ModelAndView(Constants.PAGINA_DETALHAR_EMPILHAMENTO);
-		
 		Empilhamento empilhamento =  empilhamentoService.visualizarEmpilhamento(id);
-	
+		
+		ModelAndView model = new ModelAndView(Constants.PAGINA_DETALHAR_EMPILHAMENTO);
 		model.addObject("empilhamento", empilhamento);
 		model.addObject("erro", erro);
+		
 		return model;
 	}
 	
