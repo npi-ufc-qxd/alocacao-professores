@@ -13,24 +13,27 @@
 	<section layout:fragment="conteudo">
 
 		<h3 class = "box-title m-b-0">Cadastrar Compartilhamento</h3>
-		<form class = "form-horizontal" th:action = "@{/compartilhamentos/cadastrar}" method = "POST" th:object = "${compartilhamento}">
-			<div class = "form-group">
-				<label for="turma" class="col-lg-12 col-md-12">Turma</label>
-				<select id="turma" name = "turma.id" class="form-control select2" required="required">
+		<form class = "form-horizontal" th:action = "@{/compartilhamentos/cadastrar}" th:object = "${compartilhamento}" method = "POST">
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
+				<label for="turma" class="control-label">Turma</label>
+				<select id="turma" th:field= "*{turma.id}" class="form-control select2">
 					<option value = "">Selecione uma turma</option>
 					<option th:value = "1">Engenharia de Software - 5º Semestre</option>
 				</select>
+				<span th:if = "${#fields.hasErrors('turma.id')}" th:errors = "*{turma.id}" class = "help-block with-errors"></span>
 			</div>
-			<div class = "form-group">
-				<label for="oferta" class = "col-lg-12 col-md-12">Oferta</label>
-				<select id="oferta" name = "oferta.id" class="form-control select2" required = "required">
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
+				<label for="oferta" class = "control-label">Oferta</label>
+				<select id="oferta" th:field="*{oferta.id}" class="form-control select2">
 					<option value = "">Selecione uma oferta</option>
-					<option th:value = "1">"QXD0001 Fundamentos de Programação" - Ciência da Computação - 2017.1"</option>
-				</select>
+					<option th:value = "1">QXD0001 Fundamentos de Programação - Ciência da Computação - 2017.1</option>
+				</select> 
+				<span th:if = "${#fields.hasErrors('oferta.id')}" th:errors = "*{oferta.id}" class = "help-block with-errors"></span>
 			</div>
-			<div class = "form-group">
-				<label class = "col-lg-12 col-md-12" for = "vagas">Número de Vagas</label>
-				<input type = "number" value = "0" min = "0" id = "vagas" name = "vagas" class = "form-control" required="required"/>
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
+				<label class = "control-label" for = "vagas">Número de Vagas</label>
+				<input type = "number" placeholder = "0" min = "0" id = "vagas" th:field = "*{vagas}" class = "form-control" />
+				<span th:if = "${#fields.hasErrors('vagas')}" th:errors = "*{vagas}" class = "help-block with-errors"></span>
 			</div>
 			<div class = "form-group">
 				<button type = "submit" name = "action" class = "btn btn-primary waves-effect">

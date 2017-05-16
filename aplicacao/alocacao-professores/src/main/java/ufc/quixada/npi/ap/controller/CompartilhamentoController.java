@@ -1,7 +1,11 @@
 package ufc.quixada.npi.ap.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,21 +31,27 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
-	public ModelAndView cadastrarCompartilhamentos(){
+	public ModelAndView cadastrarCompartilhamentos(@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
 
 		return model;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.POST)
-	public ModelAndView cadastrarCompartilhamento(Compartilhamento compartilhamento){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
-		
+	public ModelAndView cadastrarCompartilhamento(
+			@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
+				BindingResult bindingResult, ModelAndView model){
+
+		if (bindingResult.hasErrors()){
+			model.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
+			return model;
+		}
+	
 		compartilhamentoService.salvar(compartilhamento);
-		
+		model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
 		return model;
 	}
-	
+
 	@RequestMapping(path = {"/{id}/detalhar"}, method = RequestMethod.GET)
 	public ModelAndView detalharCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_DETALHAR);
