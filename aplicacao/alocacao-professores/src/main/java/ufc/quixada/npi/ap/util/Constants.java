@@ -23,7 +23,6 @@ public class Constants {
 	public static final String PAGINA_ERRO_403 = "/error/403";
 	public static final String PAGINA_ERRO_500 = "/error/500";
 	
-
 	// Ofertas
 	public static final String FORM_CADASTRAR_OFERTA = "/ofertas/cadastrar-oferta";
 	public static final String FORM_EDITAR_OFERTA = "/ofertas/editar-oferta";
@@ -32,7 +31,6 @@ public class Constants {
 	public static final String EXCLUIR_OFERTA = "/ofertas/excluir-oferta";
 	
 	// Compartilhamento
-	
 	public static final String PAGINA_FORM_CADASTRAR_COMPARTILHAMENTO = "compartilhamento/cadastrar-compartilhamento";
 	public static final String PAGINA_FORM_EDITAR_COMPARTILHAMENTO = "compartilhamento/editar-compartilhamento";
 	public static final String PAGINA_LISTAR_COMPARTILHAMENTO = "compartilhamento/listar-compartilhamento";

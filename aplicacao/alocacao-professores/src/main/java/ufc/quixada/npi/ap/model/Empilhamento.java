@@ -65,5 +65,5 @@ public class Empilhamento {
 	public void setSegundaDisciplina(Disciplina segundaDisciplina) {
 		this.segundaDisciplina = segundaDisciplina;
 	}
-	
+
 }
