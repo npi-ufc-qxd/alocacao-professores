@@ -36,7 +36,6 @@ public class Constants {
 	public static final String PAGINA_LISTAR_COMPARTILHAMENTO = "compartilhamento/listar-compartilhamento";
 	public static final String PAGINA_DETALHAR_COMPARTILHAMENTO = "compartilhamento/detalhar-compartilhamento";
 
-
 	// Periodo
 	public static final String FORM_CADASTRAR_PERIODO = "/periodos/cadastrar-periodo";
 	public static final String FORM_DETALHAR_PERIODO = "/periodos/detalhar-periodo";
@@ -44,7 +43,6 @@ public class Constants {
 	public static final String EXCLUIR_PERIODO = "/periodos/excluir-periodo";
 	public static final String INDEX_PERIODO  = "/periodos/index-periodo";
 	
-
 	// Disciplina
 	public static final String CADASTRAR_DISCIPLINA = "disciplina/cadastrar-disciplina"; 
 	public static final String DISCIPLINA_EDITAR = "disciplina/editar-disciplina";

@@ -69,6 +69,7 @@ public class Disciplina {
 	public void setCargaHorariaPratica(int cargaHorariaPratica) {
 		this.cargaHorariaPratica = cargaHorariaPratica;
 	}
+
 	
 	
 }
