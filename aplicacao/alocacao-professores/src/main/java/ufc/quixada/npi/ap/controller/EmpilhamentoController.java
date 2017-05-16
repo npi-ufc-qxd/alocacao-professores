@@ -89,8 +89,6 @@ public class EmpilhamentoController {
 			@RequestParam Integer idDisciplinaA, 
 			@RequestParam Integer idTurmaB, @RequestParam Integer idDisciplinaB){
 		
-		
-		
 		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
 		return model;
 	}
