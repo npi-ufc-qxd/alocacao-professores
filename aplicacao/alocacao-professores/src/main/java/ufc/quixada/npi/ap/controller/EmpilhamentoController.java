@@ -79,9 +79,8 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(
-			@RequestParam Integer idTurmaA, 
-			@RequestParam Integer idDisciplinaA, 
-			@RequestParam Integer idTurmaB, @RequestParam Integer idDisciplinaB){
+			Integer primeiraTurma, Integer primeiraDisciplina, 
+			Integer segundaTurma, Integer segundaDisciplina){
 		
 		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
 		return model;
