@@ -7,11 +7,11 @@
 
 
 	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
-	<title>Detalhar Empilhamento | Alocação Professores</title>
+	<title>Listar Empilhamento | Alocação Professores</title>
 
 
 	<section layout:fragment="conteudo">
-			<h3 class="box-title m-b-0">Lista de Empilhamentos</h3>
+		<h3 class="box-title m-b-0">Lista de Empilhamentos</h3>
             <p class="text-muted m-b-30">Empilhamentos</p>
             <div class="table-responsive">
             <table id="myTable" class="table table-striped">
@@ -22,9 +22,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="empilhamento_ : ${empilhamento}" >
-                  <td th:text="${empilhamento_.nome}"></td>
-                  <td th:text="${empilhamento_.nome}"></td>
+                <tr th:each="empilhamento : ${empilhamentos}" >
+                  <td th:text="${empilhamento.nome}">Shad Decker</td>
+                  <td th:text="${empilhamento.nome}">Regional Director</td>
                   <td>
                   <div class="text-right">
                     <button type="submit" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </button>
@@ -36,5 +36,4 @@
             </table>
             </div>
 	</section>
-
 </html>

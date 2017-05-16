@@ -8,15 +8,14 @@ import javax.persistence.Id;
 @Entity
 public class Disciplina {
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	private String nome;
-	
+
 	private String codigo;
-	
+
 	private int creditos;
 	
 	private int cargaHorariaTeorica;
@@ -70,6 +69,7 @@ public class Disciplina {
 	public void setCargaHorariaPratica(int cargaHorariaPratica) {
 		this.cargaHorariaPratica = cargaHorariaPratica;
 	}
+
 	
 	
 }
