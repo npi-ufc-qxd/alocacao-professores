@@ -53,7 +53,7 @@ public class EmpilhamentoController {
 		Turma t = new Turma();
 		t.setCurso(c);
 		t.setSemestre(2);
-		
+		turmas.add(t);
 		
 		model.addObject("disciplinas", disciplinas);
 		model.addObject("turmas", turmas);

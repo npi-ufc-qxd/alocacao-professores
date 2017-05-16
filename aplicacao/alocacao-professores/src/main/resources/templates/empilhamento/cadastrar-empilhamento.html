@@ -5,7 +5,7 @@
     layout:decorator="base/base">
 
 <head>
-    <title>Detalhar Empilhamento | Alocação Professores</title>
+    <title>Cadastrar Empilhamento | Alocação Professores</title>
 </head>
 
 <section layout:fragment="conteudo">
@@ -15,7 +15,7 @@
             	<label>Disciplina A</label>
             	<div class="col-md-12">
 	              	<select th:field="*{empilhamento.primeiraDisciplina}" id="disciplinaASelect" class="js-example-basic-multiple" name="primeiraDisciplina">
-	             		<option value=""></option>
+	             		
 	                	<option th:each ="disciplina : ${disciplinas}" 
 	                	    th:value = "${disciplina.id}"
 	                        th:text = "${disciplina.nome}"></option>
@@ -26,10 +26,10 @@
               <label>Turma A</label>
               <div class="col-md-12">
 	              <select th:field="*{empilhamento.primeiraTurma}" id="turmaASelect" class="js-example-basic-multiple" name="primeiraTurma">
-	             		<option value=""></option>
+	             		
 	                	<option th:each ="turma : ${turmas}" 
 	                	    th:value = "${turma.id}"
-	                        th:text = "${turma.nome}"></option>
+	                        th:inline="text">[[${turma.curso.nome}]] - [[${turma.semestre}]]</option>
 					</select>
 				</div>
              </div>
@@ -37,7 +37,7 @@
               <label>Disciplina B</label>  
               <div class="col-md-12">    
 	              <select th:field="*{empilhamento.segundaDisciplina}" id="disciplinaBSelect" name="segundaDisciplina" class="js-example-basic-multiple">
-	             		<option value=""></option>
+	             		
 	                	<option th:each ="disciplina : ${disciplinas}" 
 	                	    th:value = "${disciplina.id}"
 	                        th:text = "${disciplina.nome}"></option>
@@ -48,10 +48,11 @@
               <label>Turma B</label>
               <div class="col-md-12">
 	              <select th:field="*{empilhamento.segundaTurma}" id="turmaBSelect" class="js-example-basic-multiple" name="segundaTurma">
-	             		<option value=""></option>
+	             		
 	                	<option th:each ="turma : ${turmas}" 
 	                	    th:value = "${turma.id}"
-	                        th:text = "${turma.nome}"></option>
+	                        th:inline="text">[[${turma.curso.nome}]] - [[${turma.semestre}]]</option>
+	                  
 					</select>
 				</div>
              </div>
