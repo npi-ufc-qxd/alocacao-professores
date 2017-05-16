@@ -29,6 +29,7 @@ public class EmpilhamentoController {
 	@Autowired
 	DisciplinaService disciplinaService;
 	
+	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
