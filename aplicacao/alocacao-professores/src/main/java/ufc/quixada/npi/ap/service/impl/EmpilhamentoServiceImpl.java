@@ -44,7 +44,7 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 
 	@Override
 	public List<Empilhamento> listarEmpilhamentos() {
-		return (List<Empilhamento>) empilhamentoRepository.findAll();
+		return empilhamentoRepository.findAll();
 	}
 
 	@Override
