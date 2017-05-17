@@ -502,14 +502,7 @@
 
               </div>     
              
-              <div class="form-group">
-                <label class="col-sm-12">Status</label>
-                <div class="col-sm-12">                 
-					<select class="form-control" th:field="*{status}"   >
-					  <option th:each="statusOpcao : ${status}"  th:value="${statusOpcao}" th:text="${statusOpcao.Descricao}"> Wireframe  </option>
-					</select>				
-                </div>  
-              </div>          
+                      
 
               <div class="text-right">
                 <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancelar</button>

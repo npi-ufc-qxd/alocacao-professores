@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Periodo.Status;
 import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.util.Constants;
@@ -24,6 +25,7 @@ public class PeriodoController {
 	
 	@Autowired
 	PeriodoService periodoService;
+	
 	
 	
 	@RequestMapping(path="/")
@@ -50,6 +52,7 @@ public class PeriodoController {
 	@RequestMapping(path="/cadastrar", method=RequestMethod.POST)
 	public ModelAndView adicionarPeriodo(Periodo periodo){
 		ModelAndView mv = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_PERIODO);
+		periodo.setStatus(Status.ABERTA);
 		periodoService.salvar(periodo);
 		
 		return mv;
