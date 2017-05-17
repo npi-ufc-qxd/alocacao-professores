@@ -28,5 +28,12 @@ public class PeriodoServiceImpl implements PeriodoService{
 		periodoRepository.delete(periodo);
 	}
 	
+	public Periodo getPeriodo(Integer id){
+		return periodoRepository.findOne(id);
+	}
+	
+	public void editar(Integer id){
+		
+	}
 	
 }
