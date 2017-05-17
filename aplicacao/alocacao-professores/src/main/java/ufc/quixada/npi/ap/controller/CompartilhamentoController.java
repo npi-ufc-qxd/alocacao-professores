@@ -40,8 +40,9 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public String editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
-		return Constants.REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO;
+	public ModelAndView editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
+		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_COMPARTILHAMENTO);
+		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
