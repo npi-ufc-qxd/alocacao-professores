@@ -8,4 +8,5 @@ public interface PeriodoService {
 
 	void salvar(Periodo periodo);
 	List<Periodo> listaPeriodos();
+	void excluir(Periodo periodo);
 }

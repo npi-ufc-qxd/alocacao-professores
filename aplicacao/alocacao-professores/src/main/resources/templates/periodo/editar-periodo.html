@@ -484,40 +484,24 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
-            <h3 class="box-title m-b-0">Cadastrar Período</h3>
+            <h3 class="box-title m-b-0">Editar Período</h3>
             
             
-            <form  class="form-horizontal">
-              <div class="form-group">
-                <label class="col-md-12">Ano<span class="help"></span></label>
-                <div class="col-md-12">
-                  <input type="text" class="form-control" value="" ></input>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-12" for="example-email">Semestre <span class="help"></span></label>
-                <div class="col-md-12">
-                  <input type="text" id="semestre" name="semestre" class="form-control" ></input>
-                </div>
-              </div>     
+            <form  class="form-horizontal">           
              
               <div class="form-group">
                 <label class="col-sm-12">Status</label>
-                <div class="col-sm-12">
-                  <select class="form-control">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>                    
-                  </select>
-                </div>
-              </div>            
+                <div class="col-sm-12">                 
+					<select class="form-control" th:field="*{status}"   >
+					  <option th:each="statusOpcao : ${status}"  th:value="${statusOpcao}" th:text="${statusOpcao.Descricao}"> Wireframe  </option>
+					</select>				
+                </div>  
+              </div>        
 
               <div class="text-right">
                 <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
-                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
+                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Editar</button>
               </div>
-
-
             </form>
 
           </div>

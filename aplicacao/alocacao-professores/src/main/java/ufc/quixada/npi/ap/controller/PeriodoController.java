@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.util.Constants;
 
@@ -41,14 +42,14 @@ public class PeriodoController {
 		return mv;
 	}
 	
-	@ModelAttribute
+	@ModelAttribute("status")
 	public List<Periodo.Status> todosStatus(){
 		return Arrays.asList(Periodo.Status.values());
 	}
 	
 	@RequestMapping(path="/cadastrar", method=RequestMethod.POST)
 	public ModelAndView adicionarPeriodo(Periodo periodo){
-		ModelAndView mv = new ModelAndView(Constants.INDEX_PERIODO);
+		ModelAndView mv = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_PERIODO);
 		periodoService.salvar(periodo);
 		
 		return mv;
@@ -64,7 +65,12 @@ public class PeriodoController {
 	
 	@RequestMapping(path="/{id}/excluir")
 	public ModelAndView excluir(@PathVariable ("id") Integer id){
-		ModelAndView mv = new ModelAndView(Constants.EXCLUIR_PERIODO);
+		ModelAndView mv = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_PERIODO);
+		List<Periodo> periodos = periodoService.listaPeriodos();
+		for (Periodo periodo : periodos) {
+			if(periodo.getId()==id)
+				periodoService.excluir(periodo);
+		}
 		return mv;
 	}
 	

@@ -24,5 +24,9 @@ public class PeriodoServiceImpl implements PeriodoService{
 		return periodoRepository.findAll();
 	}
 	
+	public void excluir(Periodo periodo){
+		periodoRepository.delete(periodo);
+	}
+	
 	
 }

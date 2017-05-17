@@ -495,22 +495,21 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-12" for="example-email">Semestre <span class="help"></span></label>
+                <label class="col-md-12" >Semestre <span class="help"></span></label>
                 <div class="col-md-12">
                   <input type="text" id="semestre" name="semestre" class="form-control" th:field="*{semestre}"></input>
                 </div>
+
               </div>     
              
               <div class="form-group">
                 <label class="col-sm-12">Status</label>
-                <div class="col-sm-12">
-                  <select class="form-control">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>                    
-                  </select>
-                </div>
-              </div>            
+                <div class="col-sm-12">                 
+					<select class="form-control" th:field="*{status}"   >
+					  <option th:each="statusOpcao : ${status}"  th:value="${statusOpcao}" th:text="${statusOpcao.Descricao}"> Wireframe  </option>
+					</select>				
+                </div>  
+              </div>          
 
               <div class="text-right">
                 <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
