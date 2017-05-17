@@ -8,6 +8,6 @@ public interface DisciplinaService {
 	
 	List<Disciplina> listar();
 	List<Disciplina> listarNaoArquivada();
-	void arquivarDisciplina(Integer id);
+	boolean arquivarDisciplina(Integer id);
 	
 }
