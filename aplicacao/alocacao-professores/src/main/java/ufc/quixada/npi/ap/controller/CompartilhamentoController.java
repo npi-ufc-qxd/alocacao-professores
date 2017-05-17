@@ -14,11 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.validation.CompartilhamentoValidator;
 
 
 @Controller
 @RequestMapping(path = "/compartilhamentos")
 public class CompartilhamentoController {
+	
+	@Autowired
+	private CompartilhamentoValidator compartilhamentoValidator;
 	
 	@Autowired
 	private CompartilhamentoService compartilhamentoService;
@@ -41,14 +45,19 @@ public class CompartilhamentoController {
 	public ModelAndView cadastrarCompartilhamento(
 			@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
 				BindingResult bindingResult, ModelAndView model){
-
+		
+		compartilhamentoValidator.validate(compartilhamento, bindingResult);
+		
 		if (bindingResult.hasErrors()){
 			model.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
+			
 			return model;
 		}
 	
 		compartilhamentoService.salvar(compartilhamento);
+		
 		model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+		
 		return model;
 	}
 

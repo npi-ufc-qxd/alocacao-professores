@@ -6,8 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Compartilhamento {
@@ -16,16 +14,12 @@ public class Compartilhamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull(message = "O campo Vagas não pode ser nulo!")
-	@Min(value = 1, message = "O valor do campo Vagas deve ser maior que 0!")
 	private int vagas;
 	
-	@NotNull(message = "O campo Turma não pode ser nulo!")
 	@ManyToOne
 	@JoinColumn(name = "turma_id")
 	private Turma turma;
 	
-	@NotNull(message = "O campo Oferta não pode ser nulo!")
 	@ManyToOne
 	@JoinColumn(name = "oferta_id")
 	private Oferta oferta;
