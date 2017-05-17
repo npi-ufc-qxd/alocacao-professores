@@ -477,9 +477,9 @@
 					
 					<!-- Page Content -->
 					
-					        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" th:each="oferta : ${ofertas}">
 					          <div class="panel panel-default">
-					            <div class="panel-heading">Introdução a Ciência da Computação e Sistemas de Informação </div>
+					            <div class="panel-heading" th:text="${oferta.turma.semestre}">Introdução a Ciência da Computação e Sistemas de Informação </div>
 					            <div class="panel-wrapper collapse in">
 					              <div class="panel-body">
 					
