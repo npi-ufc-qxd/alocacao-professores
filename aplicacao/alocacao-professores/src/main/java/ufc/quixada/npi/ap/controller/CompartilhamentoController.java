@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
+import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
+import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.validation.CompartilhamentoValidator;
 
@@ -27,6 +31,9 @@ public class CompartilhamentoController {
 	@Autowired
 	private CompartilhamentoService compartilhamentoService;
 	
+	@Autowired
+	private TurmaService turmaService;
+	
 	@RequestMapping(path = {""}, method = RequestMethod.GET)
 	public ModelAndView listarCompartilhamentos(){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
@@ -37,7 +44,10 @@ public class CompartilhamentoController {
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
 	public ModelAndView cadastrarCompartilhamentos(@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
-
+		List<Turma> listaTurmas = turmaService.listarTurmas();
+		
+		model.addObject("turmas", listaTurmas);
+		
 		return model;
 	}
 	

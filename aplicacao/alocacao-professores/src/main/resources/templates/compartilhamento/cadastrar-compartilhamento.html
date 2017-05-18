@@ -12,15 +12,15 @@
 
 		<h3 class = "box-title m-b-0">Cadastrar Compartilhamento</h3>
 		<form class = "form-horizontal" th:action = "@{/compartilhamentos/cadastrar}" th:object = "${compartilhamento}" method = "POST">
-			<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('turma.id')}? has-error">
 				<label for="turma" class="control-label">Turma</label>
-				<select id="turma" th:field= "*{turma.id}" class="form-control select2">
+				<select th:field= "*{turma.id}" id="turma" class="form-control select2">
 					<option value = "">Selecione uma turma</option>
-					<option th:value = "1">Engenharia de Software - 5º Semestre</option>
+					<option th:each = "turma : ${turmas}" th:value = "${turma.id}" th:text = "${turma.curso.nome+' - '+turma.semestre+'º Semestre'}"></option>
 				</select>
 				<span th:if = "${#fields.hasErrors('turma.id')}" th:errors = "*{turma.id}" class = "help-block with-errors"></span>
 			</div>
-			<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('oferta.id')}? has-error">
 				<label for="oferta" class = "control-label">Oferta</label>
 				<select id="oferta" th:field="*{oferta.id}" class="form-control select2">
 					<option value = "">Selecione uma oferta</option>
