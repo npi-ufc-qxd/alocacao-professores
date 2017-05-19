@@ -478,23 +478,28 @@
 					<!-- Page Content -->
 					
 					        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" th:each="oferta : ${ofertas}">
+					       
 					          <div class="panel panel-default">
-					            <div class="panel-heading" th:text="${oferta.turma.semestre}">Introdução a Ciência da Computação e Sistemas de Informação </div>
+					            <div class="panel-heading" th:text="${oferta.disciplina.nome}">Introdução a Ciência da Computação e Sistemas de Informação </div>
 					            <div class="panel-wrapper collapse in">
 					              <div class="panel-body">
-					
-					                  <label class="p-t-10">Turno:</label> Manhã
-					                  <label class="p-t-10">Turma:</label> CC1
-					                  <label class="p-t-10">Vagas:</label> 40
-					                  <label class="p-t-10">Professores:</label> Fulano da Silva, Ciclano da Silva, Beltrano da Silva
-					                  <label class="p-t-10">Observações:</label> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.
+							
+					                  <label class="p-t-10">Turno:</label> <label th:text="${oferta.turno}"></label><br/>
+					                  <label class="p-t-10">Turma:</label> <label th:text="${oferta.turma.curso.nome}"></label><br/>
+					                  <label class="p-t-10">Vagas:</label> <label th:text="${oferta.vagas}"></label><br/>
+					                  <label class="p-t-10">Professores:</label>
+					                  <div th:each="professor : ${oferta.professores}">
+					                  	 <label ></label> <label th:text="${professor.nome}"></label><br/>
+					                  </div>
+					                  <label class="p-t-10">Observações:</label> <label th:text="${oferta.observacao}"></label>
 					
 					              </div>
-					              <div class="panel-footer">
+					              <div ></div>
+					              <div class="panel-footer" th:if="${oferta.periodo.status.name()} != 'CONSOLIDADA'">
 					              	<div class="button-box">
-					                	<button class="btn btn-sm btn-info waves-effect waves-light"> <i class="fa fa-link m-r-5"></i> <span>Compartilhar</span></button>
-					                  	<button class="btn btn-sm btn-warning waves-effect waves-light"> <i class="fa fa-pencil m-r-5"></i> <span>Editar</span></button>
-					                  	<a class="btn btn-sm btn-danger waves-effect waves-light gp-btn-desvincular" href="#"> <i class="fa fa-trash m-r-5"></i> <span>Excluir</span></a>
+					                	<button class="btn btn-sm btn-info waves-effect waves-light"> <i class="fa fa-link "></i> <span>Compartilhar</span></button>
+					                	<button class="btn btn-sm btn-warning waves-effect waves-light"> <i class="fa fa-pencil "></i> <span>Editar</span></button>
+						                <a class="btn btn-sm btn-danger waves-effect waves-light gp-btn-desvincular" href="#"> <i class="fa fa-trash "></i> <span>Excluir</span></a>      	
 					              	</div>
 					              </div>
 					            </div>
