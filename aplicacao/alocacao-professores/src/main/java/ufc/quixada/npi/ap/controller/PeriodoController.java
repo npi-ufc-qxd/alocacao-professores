@@ -3,6 +3,8 @@ package ufc.quixada.npi.ap.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -69,11 +71,7 @@ public class PeriodoController {
 	@RequestMapping(path="/{id}/excluir")
 	public ModelAndView excluir(@PathVariable ("id") Integer id){
 		ModelAndView mv = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_PERIODO);
-		List<Periodo> periodos = periodoService.listaPeriodos();
-		for (Periodo periodo : periodos) {
-			if(periodo.getId()==id)
-				periodoService.excluir(periodo);
-		}
+		periodoService.excluir(periodoService.getPeriodo(id));
 		return mv;
 	}
 	
@@ -85,10 +83,14 @@ public class PeriodoController {
 	}
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
-	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id){
+	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @RequestParam("status") Status status ){
 		ModelAndView mv = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_PERIODO);
+		
 		Periodo periodo = periodoService.getPeriodo(id);
-		periodoService.editar(periodo);		
+		periodo.setStatus(status);
+		
+		periodoService.salvar(periodo);		
+		
 		return mv;
 	}
 

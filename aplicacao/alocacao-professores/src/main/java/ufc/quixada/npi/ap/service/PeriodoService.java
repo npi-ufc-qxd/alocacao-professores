@@ -10,5 +10,5 @@ public interface PeriodoService {
 	List<Periodo> listaPeriodos();
 	Periodo getPeriodo(Integer id);
 	void excluir(Periodo periodo);
-	Periodo editar(Periodo periodo);
+	
 }

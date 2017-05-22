@@ -32,9 +32,6 @@ public class PeriodoServiceImpl implements PeriodoService{
 		return periodoRepository.findOne(id);
 	}
 	
-	public Periodo editar(Periodo periodo){
-		return periodoRepository.save(periodo);
-	}
 	
 }
 
