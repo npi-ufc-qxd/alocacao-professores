@@ -79,7 +79,7 @@ public class EmpilhamentoController {
 	}
 	
 	@RequestMapping(path={"/{id}/excluir"})
-	public String excluirEmpilhamento(@RequestParam Integer id){
+	public String excluirEmpilhamento(@PathVariable("id") Integer id){
 		empilhamentoService.excluirEmpilhamento(id);
 		return Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO;
 	}
