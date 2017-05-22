@@ -80,5 +80,4 @@ public class Disciplina {
 		this.arquivada = arquivada;
 	}
 	
-	
 }
