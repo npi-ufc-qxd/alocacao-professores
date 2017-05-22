@@ -1,8 +1,9 @@
-$(".gp-btn-arquivar").on("click", function(event) {
+$(".sa-btn-arquivar").on("click", function(event) {
 	event.preventDefault();
-	
+
 	var botaoArquivada = $(event.currentTarget); 
 	var urlArquivar = botaoArquivada.attr("href");
+	
 	
 	var response = $.ajax({
 	    url: urlArquivar,
@@ -10,8 +11,8 @@ $(".gp-btn-arquivar").on("click", function(event) {
 	});
 	
 
-    response.done(function(arquivada) {
-    	if(arquivada) {
+    response.done(function(resultadoArquivar) {
+    	if(resultadoArquivar) {
     		swal("Disciplina Arquivada!", "A Disciplina foi arquivada.", "success");
     	}
     	else {
@@ -24,5 +25,6 @@ $(".gp-btn-arquivar").on("click", function(event) {
     response.fail(function(e) {
     	swal("Opss!", "Fale com o administrador do sistema.", "error");
     });
+    
 
 });

@@ -300,7 +300,7 @@
                   <td>
                   <div class="text-right">
                     <button type="submit" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </button>
-                    <a th:href="@{disciplinas/id/arquivar(id=${disciplina.id})}" class="btn btn-danger waves-effect waves-light m-r-10 gp-btn-arquivar sa-arquivada"> Arquivar </a>
+                    <a th:href="@{disciplinas/{id}/arquivar(id=${disciplina.id})}" class="btn btn-danger waves-effect waves-light m-r-10 sa-btn-arquivar"> Arquivar </a>
                   </div>
                   </td>                                      
                 </tr>                                   
@@ -413,7 +413,7 @@
 
 
 <script th:src="@{../plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
+<script th:src="@{js/disciplina/disciplina.js}"></script>
 <!-- Custom Theme JavaScript -->
 <script th:src="@{../js/custom.min.js}"></script>
 <!--Style Switcher -->

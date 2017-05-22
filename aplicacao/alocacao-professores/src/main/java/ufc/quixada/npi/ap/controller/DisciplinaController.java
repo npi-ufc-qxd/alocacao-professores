@@ -47,7 +47,7 @@ public class DisciplinaController {
 	}
 	
 	@RequestMapping(value="/{id}/arquivar", method = RequestMethod.GET)
-	public boolean arquivarDisciplna(@PathVariable("id") Integer id){
+	public boolean arquivarDisciplina(@PathVariable("id") Integer id){
 		
 		return disciplinaService.arquivarDisciplina(id);
 		
