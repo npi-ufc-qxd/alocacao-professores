@@ -32,8 +32,6 @@ public class PeriodoServiceImpl implements PeriodoService{
 		return periodoRepository.findOne(id);
 	}
 	
-	public void editar(Integer id){
-		
-	}
+
 	
 }
