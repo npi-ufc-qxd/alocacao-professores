@@ -11,16 +11,21 @@ import ufc.quixada.npi.ap.service.DisciplinaService;
 
 @Service
 public class DisciplinaServiceImpl implements DisciplinaService {
-	
+
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
 
 	@Override
-	public List<Disciplina> listar() {	
-		
-		return disciplinaRepository.findAll();
-		
+	public void salvar(Disciplina disciplina) {
+		disciplinaRepository.save(disciplina);
+
 	}
-	
-	
+
+	@Override
+	public List<Disciplina> listar() {
+
+		return disciplinaRepository.findAll();
+
+	}
+
 }

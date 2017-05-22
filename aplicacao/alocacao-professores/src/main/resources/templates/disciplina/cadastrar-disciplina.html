@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+!DOCTYPE html>  
 <html lang="pt-br"
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
@@ -274,38 +274,64 @@
           <div class="white-box">            
 
 <!-- Modelo do Formulario -->
-<form class="form-horizontal">
-              <div class="form-group">
-                <label class="col-md-12">Nome da Disciplina</label>
-                <div class="col-md-12">
-                  <input class="form-control" value="" type="text"></input>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-12" >Créditos</label>
-                <div class="col-md-12">
-                  <input class="form-control" type="number"></input>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-12">Carga horária teórica</label>
-                <div class="col-md-12">
-                  <input class="form-control" type="number"></input>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-12">Carga horária prática</label>
-                <div class="col-md-12">
-                  <input class="form-control" type="number"></input>
-                </div>
-              </div>            
-            <div class="text-right">            
-              <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
-              <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancel</button>
-            </div>
-            
-                
-			</form>
+							<form class="form-horizontal"
+								th:action="@{/disciplinas/cadastrar}" th:object="${disciplina}"
+								method="post">
+
+								<div class="form-group">
+									<label class="col-md-12">Nome da Disciplina</label>
+									<div class="col-md-12">
+										<input class="form-control" type="text" id="nome"
+											th:field="*{nome}" required="required"></input> <span
+											th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
+											class="help-block with-errors"></span>
+
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12">Créditos</label>
+									<div class="col-md-12">
+										<input class="form-control" type="number" id="creditos"
+											th:field="*{creditos}" required="required"></input> <span
+											th:if="${#fields.hasErrors('creditos')}"
+											th:errors="*{creditos}" class="help-block with-errors"></span>
+
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12">Carga horária teórica</label>
+									<div class="col-md-12">
+										<input class="form-control" type="number"
+											id="cargaHorariaTeorica" th:field="*{cargaHorariaTeorica}"
+											required="required"></input> <span
+											th:if="${#fields.hasErrors('cargaHorariaTeorica')}"
+											th:errors="*{cargaHorariaTeorica}"
+											class="help-block with-errors"></span>
+
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12">Carga horária prática</label>
+									<div class="col-md-12">
+										<input class="form-control" type="number"
+											id="cargaHorariaPratica" th:field="*{cargaHorariaPratica}"
+											required="required"></input> <span
+											th:if="${#fields.hasErrors('cargaHorariaPratica')}"
+											th:errors="*{cargaHorariaPratica}"
+											class="help-block with-errors"></span>
+									</div>
+								</div>
+
+
+								<div class="text-right">
+									<button type="submit"
+										class="btn btn-inverse waves-effect waves-light">Cancel</button>
+									<button type="submit"
+										class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
+								</div>
+
+
+							</form>
           </div>
         </div>
       </div>      
