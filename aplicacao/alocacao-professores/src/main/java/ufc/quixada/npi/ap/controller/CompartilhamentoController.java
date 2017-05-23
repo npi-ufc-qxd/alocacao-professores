@@ -44,9 +44,6 @@ public class CompartilhamentoController {
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
 	public ModelAndView cadastrarCompartilhamentos(@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
-		List<Turma> listaTurmas = turmaService.listarTurmas();
-		
-		model.addObject("turmas", listaTurmas);
 		
 		return model;
 	}
@@ -97,6 +94,11 @@ public class CompartilhamentoController {
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
 		
 		return model;
+	}
+	
+	@ModelAttribute("turmas")
+	public List<Turma> todasTurmas(){
+		return turmaService.listarTurmas();
 	}
 	
 }

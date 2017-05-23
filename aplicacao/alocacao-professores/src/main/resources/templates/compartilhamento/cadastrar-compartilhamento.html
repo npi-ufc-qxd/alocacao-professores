@@ -7,14 +7,18 @@
 
 		<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
 		<title>Cadastrar Compartilhamento | Alocação Professores</title>
-
+	
+	<section layout:fragment="nome_entidade">
+		<h4 class="page-title">Compartilhamento</h4>
+	</section>
+	
 	<section layout:fragment="conteudo">
 
 		<h3 class = "box-title m-b-0">Cadastrar Compartilhamento</h3>
 		<form class = "form-horizontal" th:action = "@{/compartilhamentos/cadastrar}" th:object = "${compartilhamento}" method = "POST">
 			<div class = "form-group" th:classappend= "${#fields.hasErrors('turma.id')}? has-error">
 				<label for="turma" class="control-label">Turma</label>
-				<select th:field= "*{turma.id}" id="turma" class="form-control select2">
+				<select th:field= "*{turma.id}" id="turma" class="form-control select2" required="required">
 					<option value = "">Selecione uma turma</option>
 					<option th:each = "turma : ${turmas}" th:value = "${turma.id}" th:text = "${turma.curso.nome+' - '+turma.semestre+'º Semestre'}"></option>
 				</select>
@@ -22,7 +26,7 @@
 			</div>
 			<div class = "form-group" th:classappend= "${#fields.hasErrors('oferta.id')}? has-error">
 				<label for="oferta" class = "control-label">Oferta</label>
-				<select id="oferta" th:field="*{oferta.id}" class="form-control select2">
+				<select id="oferta" th:field="*{oferta.id}" class="form-control select2" required="required">
 					<option value = "">Selecione uma oferta</option>
 					<option th:value = "1">QXD0001 Fundamentos de Programação - Ciência da Computação - 2017.1</option>
 				</select> 
@@ -30,7 +34,7 @@
 			</div>
 			<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
 				<label class = "control-label" for = "vagas">Número de Vagas</label>
-				<input type = "number" placeholder = "0" min = "0" id = "vagas" th:field = "*{vagas}" class = "form-control" />
+				<input type = "number" min = "1" id = "vagas" th:field = "*{vagas}" class = "form-control" required="required"/>
 				<span th:if = "${#fields.hasErrors('vagas')}" th:errors = "*{vagas}" class = "help-block with-errors"></span>
 			</div>
 			<div class = "form-group">
