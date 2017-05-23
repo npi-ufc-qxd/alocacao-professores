@@ -490,14 +490,16 @@
             <form th:action="@{/periodos/cadastrar}" th:object="${periodo}" method="POST" class="form-horizontal">
               <div class="form-group">
                 <label class="col-md-12">Ano<span class="help"></span></label>
-                <div class="col-md-12">
-                  <input type="text" class="form-control" value="" th:field="*{ano}"></input>
+                <div class="col-md-12" th:classappend= "${#fields.hasErrors('ano')}? has-error">
+                  <input  type="text" class="form-control" value="" th:field="*{ano}"></input>
+                  <span th:if = "${#fields.hasErrors('ano')}" th:errors = "*{ano}" class = "help-block with-errors"></span>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-12" >Semestre <span class="help"></span></label>
-                <div class="col-md-12">
+                <div class="col-md-12" th:classappend= "${#fields.hasErrors('semestre')}? has-error">
                   <input type="text" id="semestre" name="semestre" class="form-control" th:field="*{semestre}"></input>
+                  <span th:if = "${#fields.hasErrors('semestre')}" th:errors = "*{semestre}" class = "help-block with-errors"></span>
                 </div>
 
               </div>     

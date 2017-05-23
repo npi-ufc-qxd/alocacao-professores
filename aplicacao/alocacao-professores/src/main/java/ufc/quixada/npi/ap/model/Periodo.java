@@ -17,6 +17,7 @@ public class Periodo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	
 	private String ano;
 	
 	private String semestre;
