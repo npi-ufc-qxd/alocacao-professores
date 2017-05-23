@@ -5,25 +5,27 @@ $(".sa-btn-arquivar").on("click", function(event) {
 	var urlArquivar = botaoArquivada.attr("href");
 	
 	
-	var response = $.ajax({
-	    url: urlArquivar,
-	    type: 'GET'
-	});
-	
+	swal({   
+        title: "Tem Certeza ?",   
+        text: "Você poderá desfazer essa operação posteriormente, se desejar!",   
+        type: "warning",   
+        showCancelButton: true,   
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#DD6B55",   
+        confirmButtonText: "Sim, desejo arquivar!",   
+        closeOnConfirm: false
+	}, function(isConfirm){
+		if(isConfirm){
+			var response = $.ajax({
+			    url: urlArquivar,
+			    type: 'GET'
+			});
+			swal("Disciplina Arquivada!", "A Disciplina foi arquivada.", "success");
+		}
+	}
+	);
 
-    response.done(function(resultadoArquivar) {
-    	if(resultadoArquivar) {
-    		swal("Disciplina Arquivada!", "A Disciplina foi arquivada.", "success");
-    	}
-    	else {
-        	swal("Opss!", "Disciplina não existente.", "error");
-    	}
-
-    	botaoArquivada.hide();
-    });
-
-    response.fail(function(e) {
-    	swal("Opss!", "Fale com o administrador do sistema.", "error");
+    response.done(function(resultadoArquivar){               		        	
     });
     
 
