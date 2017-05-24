@@ -23,7 +23,7 @@ public class Compartilhamento {
 	@ManyToOne
 	@JoinColumn(name = "oferta_id")
 	private Oferta oferta;
-
+	
 	public Integer getId() {
 		return id;
 	}
