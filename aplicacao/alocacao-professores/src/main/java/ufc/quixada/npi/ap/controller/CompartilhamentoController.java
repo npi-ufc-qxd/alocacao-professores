@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.util.Constants;
 
@@ -23,6 +26,10 @@ public class CompartilhamentoController {
 	@RequestMapping(path = {""}, method = RequestMethod.GET)
 	public ModelAndView listarCompartilhamentos(){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
+		
+		List<Compartilhamento> compartilhamentos = compartilhamentoService.findAllCompartilhamentos();
+		
+		model.addObject("compartilhamentos", compartilhamentos);
 		
 		return model;
 	}
