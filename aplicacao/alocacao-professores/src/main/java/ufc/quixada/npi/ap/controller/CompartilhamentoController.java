@@ -60,8 +60,15 @@ public class CompartilhamentoController {
 			
 			return model;
 		}
-	
-		compartilhamentoService.salvar(compartilhamento);
+		
+		
+		try{
+			compartilhamentoService.salvar(compartilhamento);
+		} catch(Exception e){
+			model.setViewName(Constants.PAGINA_ERRO_403);
+			
+			return model;
+		}
 		
 		model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
 		
