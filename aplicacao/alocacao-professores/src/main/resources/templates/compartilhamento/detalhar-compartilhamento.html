@@ -1,19 +1,31 @@
 <!DOCTYPE html>
-<html lang="ptBR"
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="base/base">
+	layout:decorator="base/base">
 
-	<head>
-		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="" />
-		<meta name="author" content="" />
-		<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
-		<title>Detalhes Compartilhamento | Alocação Professores</title>
-	</head>
+
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
+	<title>Detalhes Compartilhamento | Alocação Professores</title>
+	
+	<section layout:fragment="header">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h4 class="page-title">Compartilhamentos</h4>
+		</div>
+		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+			<a
+				href="https://themeforest.net/item/elite-admin-responsive-dashboard-web-app-kit-/16750820"
+				target="_blank"
+				class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Buy
+				Now</a>
+			<ol class="breadcrumb">
+				<li><a href="#">Dashboard</a></li>
+				<li class="active">Compartilhamentos</li>
+			</ol>
+		</div>
+		<!-- /.col-lg-12 -->
+	</section>
+	
 	<section layout:fragment="conteudo">
 		<div class="row">
 			<div class="col-lg-12 col-md-12">

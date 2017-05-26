@@ -1,70 +1,80 @@
 <!DOCTYPE html>
-<html lang="ptBR" 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="base/base">
 
-		<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
-		<title>Cadastrar Compartilhamento | Alocação Professores</title>
-
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
+	<title>Cadastrar Compartilhamento | Alocação Professores</title>
+	
+	<section layout:fragment="header">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h4 class="page-title">Compartilhamentos</h4>
+		</div>
+		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+			<a
+				href="https://themeforest.net/item/elite-admin-responsive-dashboard-web-app-kit-/16750820"
+				target="_blank"
+				class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Buy
+				Now</a>
+			<ol class="breadcrumb">
+				<li><a href="#">Dashboard</a></li>
+				<li class="active">Compartilhamentos</li>
+			</ol>
+		</div>
+	</section>
+	
 	<section layout:fragment="conteudo">
-
-	<form class="form-horizontal"
-		th:action="@{/compartilhamentos/cadastrar}" method="POST">
-		<div class="form-group">
-			<label for="turma" class="col-lg-12 col-md-12">Turma</label> <select
-				id="turma" name="turma" class="form-control select2"
-				required="required">
-				<option value="">Selecione uma turma</option>
-				<optgroup label="Ciência da Computação">
-					<option value="1">QXD0001 Matemática Básica para
-						Computação</option>
-					<option value="2">QXD0002 Fundamentos de
-						Programação</option>
-				</optgroup>
-				<optgroup label="Design Digital">
-					<option value="1">QXD0001 Matemática Básica para
-						Computação</option>
-					<option value="2">QXD0002 Fundamentos de
-						Programação</option>
-				</optgroup>
-				<optgroup label="Engenharia da Computação">
-					<option value="1">QXD0001 Matemática Básica para
-						Computação</option>
-					<option value="2">QXD0002 Fundamentos de
-						Programação</option>
-				</optgroup>
-				<optgroup label="Engenharia de Software">
-					<option value="1">QXD0001 Matemática Básica para
-						Computação</option>
-					<option value="2">QXD0002 Fundamentos de
-						Programação</option>
-				</optgroup>
-				<optgroup label="Redes de Computadores">
-					<option value="1">QXD0001 Matemática Básica para
-						Computação</option>
-					<option value="2">QXD0002 Fundamentos de
-						Programação</option>
-				</optgroup>
-				<optgroup label="Sistemas de Informação">
-					<option value="1">QXD0001 Matemática Básica para
-						Computação</option>
-					<option value="2">QXD0002 Fundamentos de
-						Programação</option>
-				</optgroup>
-			</select>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-12 col-md-12" for="numeroVagas">N&uacute;mero
-				de Vagas</label> <input type="number" placeholder="Vagas" id="numeroVagas"
-				name="numeroVagas" class="form-control" required="required"></input>
-		</div>
-		<div class="form-group">
-			<button type="submit" name="action"
-				class="btn btn-primary waves-effect">Cadastrar</button>
-		</div>
-	</form>
-</section>
+	
+		<form class="form-horizontal"
+			th:action="@{/compartilhamentos/cadastrar}" method="POST">
+			<div class="form-group">
+				<label for="turma" class="col-lg-12 col-md-12">Turma</label> <select
+					id="turma" name="turma" class="form-control select2"
+					required="required">
+					<option value="">Selecione uma turma</option>
+					<optgroup label="Ciência da Computação">
+						<option value="1">QXD0001 Matemática Básica para
+							Computação</option>
+						<option value="2">QXD0002 Fundamentos de Programação</option>
+					</optgroup>
+					<optgroup label="Design Digital">
+						<option value="1">QXD0001 Matemática Básica para
+							Computação</option>
+						<option value="2">QXD0002 Fundamentos de Programação</option>
+					</optgroup>
+					<optgroup label="Engenharia da Computação">
+						<option value="1">QXD0001 Matemática Básica para
+							Computação</option>
+						<option value="2">QXD0002 Fundamentos de Programação</option>
+					</optgroup>
+					<optgroup label="Engenharia de Software">
+						<option value="1">QXD0001 Matemática Básica para
+							Computação</option>
+						<option value="2">QXD0002 Fundamentos de Programação</option>
+					</optgroup>
+					<optgroup label="Redes de Computadores">
+						<option value="1">QXD0001 Matemática Básica para
+							Computação</option>
+						<option value="2">QXD0002 Fundamentos de Programação</option>
+					</optgroup>
+					<optgroup label="Sistemas de Informação">
+						<option value="1">QXD0001 Matemática Básica para
+							Computação</option>
+						<option value="2">QXD0002 Fundamentos de Programação</option>
+					</optgroup>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-12 col-md-12" for="numeroVagas">N&uacute;mero
+					de Vagas</label> <input type="number" placeholder="Vagas" id="numeroVagas"
+					name="numeroVagas" class="form-control" required="required"></input>
+			</div>
+			<div class="form-group">
+				<button type="submit" name="action"
+					class="btn btn-primary waves-effect">Cadastrar</button>
+			</div>
+		</form>
+	</section>
 
 </html>

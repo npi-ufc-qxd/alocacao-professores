@@ -9,22 +9,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 <meta name="description" content=""></meta>
 <meta name="author" content=""></meta>
-<link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png"></link>
+<link rel="icon" type="image/png" sizes="16x16" href="/plugins/images/favicon.png"></link>
 <title>Lista de Disciplinas</title>
 <!-- Bootstrap Core CSS -->
-<link th:href="@{../bootstrap/css/bootstrap.min.css}" rel="stylesheet"></link>
-<link th:href="@{../plugins/bower_components/datatables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css" ></link>
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"></link>
+<link th:href="@{/plugins/bower_components/datatables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css" ></link>
 <link th:href="@{https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css}" rel="stylesheet" type="text/css" ></link>
 <!-- Menu CSS -->
-<link th:href="@{../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css}" rel="stylesheet"></link>
+<link th:href="@{/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css}" rel="stylesheet"></link>
 <!--alerts CSS -->
-<link th:href="@{../plugins/bower_components/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
+<link th:href="@{/plugins/bower_components/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
 <!-- animation CSS -->
-<link th:href="@{../css/animate.css}" rel="stylesheet"></link>
+<link th:href="@{/css/animate.css}" rel="stylesheet"></link>
 <!-- Custom CSS -->
-<link th:href="@{../css/style.css}" rel="stylesheet"></link>
+<link th:href="@{/css/style.css}" rel="stylesheet"></link>
 <!-- color CSS -->
-<link th:href="@{../css/colors/default.css}" id="theme"  rel="stylesheet"></link>
+<link th:href="@{/css/colors/default.css}" id="theme"  rel="stylesheet"></link>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -51,7 +51,7 @@
   <!-- Top Navigation -->
   <nav class="navbar navbar-default navbar-static-top m-b-0">
     <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
-      <div class="top-left-part"><a class="logo" href="index.html"><b><!--This is dark logo icon--><img th:src="@{../plugins/images/eliteadmin-logo.png}" alt="home" class="dark-logo" ></img><!--This is light logo icon--><img th:src="@{../plugins/images/eliteadmin-logo-dark.png}" alt="home" class="light-logo" /></b><span class="hidden-xs"><!--This is dark logo text--><img th:src="@{../plugins/images/eliteadmin-text.png}" alt="home" class="dark-logo" /><!--This is light logo text--><img th:src="@{../plugins/images/eliteadmin-text-dark.png}" alt="home" class="light-logo" /></span></a></div>
+      <div class="top-left-part"><a class="logo" href="index.html"><b><!--This is dark logo icon--><img th:src="@{/plugins/images/eliteadmin-logo.png}" alt="home" class="dark-logo" ></img><!--This is light logo icon--><img th:src="@{/plugins/images/eliteadmin-logo-dark.png}" alt="home" class="light-logo" /></b><span class="hidden-xs"><!--This is dark logo text--><img th:src="@{/plugins/images/eliteadmin-text.png}" alt="home" class="dark-logo" /><!--This is light logo text--><img th:src="@{/plugins/images/eliteadmin-text-dark.png}" alt="home" class="light-logo" /></span></a></div>
       <ul class="nav navbar-top-links navbar-left hidden-xs">
         <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
         <li>
@@ -71,22 +71,22 @@
             </li>
             <li>
               <div class="message-center"> <a href="#">
-                <div class="user-img"> <img th:src="@{../plugins/images/users/pawandeep.jpg}" alt="user" class="img-circle" /> <span class="profile-status online pull-right" ></span> </div>
+                <div class="user-img"> <img th:src="@{/plugins/images/users/pawandeep.jpg}" alt="user" class="img-circle" /> <span class="profile-status online pull-right" ></span> </div>
                 <div class="mail-contnet">
                   <h5>Pavan kumar</h5>
                   <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
                 </a> <a href="#">
-                <div class="user-img"> <img th:src="@{../plugins/images/users/sonu.jpg}" alt="user" class="img-circle"></img> <span class="profile-status busy pull-right"></span> </div>
+                <div class="user-img"> <img th:src="@{/plugins/images/users/sonu.jpg}" alt="user" class="img-circle"></img> <span class="profile-status busy pull-right"></span> </div>
                 <div class="mail-contnet">
                   <h5>Sonu Nigam</h5>
                   <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
                 </a> <a href="#">
-                <div class="user-img"> <img th:src="@{../plugins/images/users/arijit.jpg}" alt="user" class="img-circle"></img> <span class="profile-status away pull-right"></span> </div>
+                <div class="user-img"> <img th:src="@{/plugins/images/users/arijit.jpg}" alt="user" class="img-circle"></img> <span class="profile-status away pull-right"></span> </div>
                 <div class="mail-contnet">
                   <h5>Arijit Sinh</h5>
                   <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
                 </a> <a href="#">
-                <div class="user-img"> <img th:src="@{../plugins/images/users/pawandeep.jpg}" alt="user" class="img-circle"></img> <span class="profile-status offline pull-right"></span> </div>
+                <div class="user-img"> <img th:src="@{/plugins/images/users/pawandeep.jpg}" alt="user" class="img-circle"></img> <span class="profile-status offline pull-right"></span> </div>
                 <div class="mail-contnet">
                   <h5>Pavan kumar</h5>
                   <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
@@ -381,18 +381,18 @@
 </div>
 <!-- /#wrapper -->
 <!-- jQuery -->
-<script th:src="@{../plugins/bower_components/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/plugins/bower_components/jquery/dist/jquery.min.js}"></script>
 <!-- Bootstrap Core JavaScript -->
-<script th:src="@{../bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <!-- Menu Plugin JavaScript -->
-<script th:src="@{../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js}"></script>
+<script th:src="@{/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js}"></script>
 <!--slimscroll JavaScript -->
-<script th:src="@{../js/jquery.slimscroll.js}"></script>
+<script th:src="@{/js/jquery.slimscroll.js}"></script>
 <!--Wave Effects -->
-<script th:src="@{../js/waves.js}"></script>
+<script th:src="@{/js/waves.js}"></script>
 <!-- Custom Theme JavaScript -->
-<script th:src="@{../js/custom.min.js}"></script>
-<script th:src="@{../plugins/bower_components/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+<script th:src="@{/plugins/bower_components/datatables/jquery.dataTables.min.js}"></script>
 
 <!-- start - This is for export functionality only -->
 <script th:src="@{https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js}"></script>
@@ -412,16 +412,16 @@
 <!--Style Switcher -->
 
 
-<script th:src="@{../plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
+<script th:src="@{/plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
 <!-- Custom Theme JavaScript -->
-<script th:src="@{../js/custom.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
 <!--Style Switcher -->
-<script th:src="@{../plugins/bower_components/styleswitcher/jQuery.style.switcher.js}"></script>
+<script th:src="@{/plugins/bower_components/styleswitcher/jQuery.style.switcher.js}"></script>
 
 <!-- Sweet-Alert  -->
-<script th:src="@{../plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
+<script th:src="@{/plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
 
 </body>
 </html>
