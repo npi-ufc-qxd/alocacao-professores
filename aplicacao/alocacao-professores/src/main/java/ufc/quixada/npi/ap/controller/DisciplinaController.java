@@ -53,10 +53,19 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping(value = "/editar/{idDisciplina}", method = RequestMethod.GET)
-	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina) {
-		ModelAndView model = new ModelAndView(CADASTRAR_DISCIPLINA);
-		model.addObject("disciplina", disciplina);
-		return model;
+	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina
+			//,BindingResult result
+			) {
+		//ModelAndView modelAndView = new ModelAndView(DISCIPLINA_LISTAR);
+		//disciplinaValidator.validate(disciplina, result);
+
+		//if (result.hasErrors()) {
+		ModelAndView modelAndView = new ModelAndView(DISCIPLINA_LISTAR);
+		//} else {
+			disciplinaService.salvar(disciplina);
+		//}
+
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
