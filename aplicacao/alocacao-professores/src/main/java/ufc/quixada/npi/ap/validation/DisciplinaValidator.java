@@ -18,20 +18,20 @@ public class DisciplinaValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		Disciplina disciplina = (Disciplina) target;
-		validateStrings(errors, disciplina.getNome(), "nome", "Campo obrigatório");
-		validateNotNull(errors, disciplina.getCargaHorariaPratica(), "cargaHorariaPratica", "Campo obrigatório");
-		validateNotNull(errors, disciplina.getCargaHorariaTeorica(), "cargaHorariaTeorica", "Campo obrigatório");
-		validateNotNull(errors, disciplina.getCreditos(), "creditos", "Campo obrigatório");
+		validateStrings(errors, disciplina.getNome(), "nome", "Campo apresenta erro");
+		validateNotNull(errors, disciplina.getCargaHorariaPratica(), "cargaHorariaPratica", "Campo apresenta erro");
+		validateNotNull(errors, disciplina.getCargaHorariaTeorica(), "cargaHorariaTeorica", "Campo apresenta erro");
+		validateNotNull(errors, disciplina.getCreditos(), "creditos", "Campo apresenta erro");
 	}
 
 	void validateStrings(Errors erros, String object, String field, String message) {
-		if (object.isEmpty() || object.matches(".*\\d+.*")) {
+		if (object.isEmpty() || object.matches(".*\\d+.*") || object.matches(".*\\W+.*")) {
 			erros.rejectValue(field, field, message);
 		}
 	}
 
 	void validateNotNull(Errors erros, Integer object, String field, String message) {
-		if (object == 0 || object.toString().isEmpty()) {
+		if (object <= 0 || object.toString().isEmpty()) {
 			erros.rejectValue(field, field, message);
 		}
 	}

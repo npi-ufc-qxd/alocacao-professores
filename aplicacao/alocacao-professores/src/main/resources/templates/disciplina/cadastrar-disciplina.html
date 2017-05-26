@@ -281,9 +281,10 @@
 								<div class="form-group">
 									<label class="col-md-12">Nome da Disciplina</label>
 									<div class="col-md-12">
-										<input class="form-control" type="text" id="nome"
-											th:field="*{nome}" required="required"></input> <span
+										<input class="form-control" type="text" id="nome" 
+											th:field="*{nome}" required="required" ></input> <span
 											th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
+											
 											class="help-block with-errors"></span>
 
 									</div>
@@ -291,8 +292,12 @@
 								<div class="form-group">
 									<label class="col-md-12">Créditos</label>
 									<div class="col-md-12">
-										<input class="form-control" type="number" id="creditos"
-											th:field="*{creditos}" required="required"></input> <span
+										<select th:field="*{creditos}">
+											<option value="2">2</option>
+											<option value="4">4</option>
+											<option value="6">6</option>
+											<option value="10">10</option>
+										</select>  <span
 											th:if="${#fields.hasErrors('creditos')}"
 											th:errors="*{creditos}" class="help-block with-errors"></span>
 
@@ -325,7 +330,7 @@
 
 								<div class="text-right">
 									<button type="submit"
-										class="btn btn-inverse waves-effect waves-light">Cancel</button>
+										class="btn btn-inverse waves-effect waves-light">Cancelar</button>
 									<button type="submit"
 										class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
 								</div>
