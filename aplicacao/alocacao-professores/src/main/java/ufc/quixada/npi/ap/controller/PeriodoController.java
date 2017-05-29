@@ -53,7 +53,7 @@ public class PeriodoController {
 	
 	@RequestMapping(path="/cadastrar", method=RequestMethod.POST)
 	public ModelAndView adicionarPeriodo(Periodo periodo){
-		ModelAndView mv = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_PERIODO);
+		ModelAndView mv = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR_PERIODO);
 		periodo.setStatus(Status.ABERTA);
 		periodoService.salvar(periodo);
 		
@@ -70,7 +70,7 @@ public class PeriodoController {
 	
 	@RequestMapping(path="/{id}/excluir")
 	public ModelAndView excluir(@PathVariable ("id") Integer id){
-		ModelAndView mv = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_PERIODO);
+		ModelAndView mv = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR_PERIODO);
 		periodoService.excluir(periodoService.getPeriodo(id));
 		return mv;
 	}
@@ -84,7 +84,7 @@ public class PeriodoController {
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
 	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @RequestParam("status") Status status ){
-		ModelAndView mv = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_PERIODO);
+		ModelAndView mv = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR_PERIODO);
 		
 		Periodo periodo = periodoService.getPeriodo(id);
 		periodo.setStatus(status);
