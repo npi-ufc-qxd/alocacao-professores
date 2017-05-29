@@ -26,19 +26,7 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 	TurmaRepository turmaRepository;
 	
 	@Override
-	public Empilhamento cadastarEmpilhamento(Integer idTurmaA, Integer idDisciplinaA, Integer idTurmaB, Integer idDisciplinaB) {
-		Empilhamento empilhamento = new Empilhamento();
-		
-		Turma turmaA = turmaRepository.findOne(idTurmaA);
-		Turma turmaB = turmaRepository.findOne(idTurmaB);
-		Disciplina disciplinaA = disciplinaRepository.findOne(idDisciplinaA);
-		Disciplina disciplinaB = disciplinaRepository.findOne(idDisciplinaB);
-		
-		empilhamento.setPrimeiraTurma(turmaA);
-		empilhamento.setSegundaTurma(turmaB);
-		empilhamento.setPrimeiraDisciplina(disciplinaA);
-		empilhamento.setSegundaDisciplina(disciplinaB);
-		
+	public Empilhamento cadastarEmpilhamento(Empilhamento empilhamento) {
 		return empilhamentoRepository.save(empilhamento);
 	}
 

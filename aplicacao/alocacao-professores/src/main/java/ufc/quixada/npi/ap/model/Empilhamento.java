@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 public class Empilhamento {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	
 	@OneToOne
