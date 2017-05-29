@@ -1,5 +1,5 @@
 /*------------------ Style tabs ------------------*/
-@import "variables.less";
+
 .sttabs {
     position: relative;
     overflow: hidden;
@@ -908,7 +908,7 @@
 .mytooltip {
     display: inline;
     position: relative;
-    z-index: 9999;
+    z-index: 1;
 }
 
 
@@ -2253,21 +2253,15 @@ table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
     top: 0;
 }
 
-
 /* Update 2.5 */
 
-.table.dataTable,
-table.dataTable {
+.table.dataTable, table.dataTable {
     width: 99.80% !important;
 }
-
-table.dataTable thead .sorting_asc::after,
-table.dataTable thead .sorting::after,
-table.dataTable thead .sorting_desc::after {
+table.dataTable thead .sorting_asc::after, table.dataTable thead .sorting::after, table.dataTable thead .sorting_desc::after {
     float: none;
     padding-left: 10px;
 }
-
 
 /* style for realestate pages */
 
@@ -2492,16 +2486,6 @@ ul.pro-amenities li span i {
 .pro-add-form .checkbox label {
     font-weight: 100;
 }
-
-/* for Plugins section */
-.plugin-details {
-    display: none;
-}
-
-.plugin-details-active {
-    display: block;
-}
-
 /*Register in steps*/
 .register-box{
     max-width: 600px;

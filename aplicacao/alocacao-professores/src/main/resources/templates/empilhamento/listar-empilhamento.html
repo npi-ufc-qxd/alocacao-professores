@@ -9,37 +9,54 @@
 	<title>Listar Empilhamento | Alocação Professores</title>
 
 	<section layout:fragment="conteudo">
-		<h3 class="box-title m-b-0">Lista de Empilhamentos</h3>
-            <p class="text-muted m-b-30">Empilhamentos</p>
-            <div class="table-responsive">
-            <table id="myTable" class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Primeira: Disciplina - Turma</th>
-                  <th>Segunda: Disciplina - Turma</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="empilhamento : ${empilhamentos}" >
-                  <td th:inline="text">
-                  	<a th:href="@{/empilhamentos/{id}/detalhar(id=${empilhamento.id})}">
-                  		[[${empilhamento.primeiraDisciplina.nome}]]<br/>
-                  		[[${empilhamento.primeiraTurma.curso.nome}]] - [[${empilhamento.primeiraTurma.semestre}]]
-                  	</a>
-                  </td>
-                 <td th:inline="text">
-                 	<a th:href="@{/empilhamentos/{id}/detalhar(id=${empilhamento.id})}">
-                  		[[${empilhamento.segundaDisciplina.nome}]]<br/>
-                  		[[${empilhamento.segundaTurma.curso.nome}]] - [[${empilhamento.segundaTurma.semestre}]]
-                  	</a>
-                  </td>
-                  <td> 
-	              	<a th:href="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}"><button type="button" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </button></a>
-	                <a th:href="@{/empilhamentos/{id}/excluir(id=${empilhamento.id})}"><button type="button" class="btn btn-danger waves-effect waves-light m-r-10 gp-btn-desvincular"><i class="fa fa-close"></i> Excluir </button></a>
-                  </td>
-                </tr> 
-              </tbody>
-            </table>
-            </div>
+
+		<div class="row bg-title">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h4 class="page-title">Empilhamentos</h4>
+			</div>
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+		    	<a href="" target="_blank" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Novo Empilhamento</a>
+			</div>
+		</div>
+		
+<div class="row">
+	<div class="col-md-12">
+		<div class="white-box">
+			<h3 class="box-title">Lista de Empilhamentos</h3>
+			<div class="table-responsive">
+	            <table id="myTable" class="table table-striped">
+	              <thead>
+	                <tr>
+	                  <th>Primeira: Disciplina - Turma</th>
+	                  <th>Segunda: Disciplina - Turma</th>
+	                </tr>
+	              </thead>
+	              <tbody>
+	                <tr th:each="empilhamento : ${empilhamentos}" >
+	                  <td th:inline="text">
+	                  	<a th:href="@{/empilhamentos/{id}/detalhar(id=${empilhamento.id})}">
+	                  		[[${empilhamento.primeiraDisciplina.nome}]]<br/>
+	                  		[[${empilhamento.primeiraTurma.curso.nome}]] - [[${empilhamento.primeiraTurma.semestre}]]
+	                  	</a>
+	                  </td>
+	                 <td th:inline="text">
+	                 	<a th:href="@{/empilhamentos/{id}/detalhar(id=${empilhamento.id})}">
+	                  		[[${empilhamento.segundaDisciplina.nome}]]<br/>
+	                  		[[${empilhamento.segundaTurma.curso.nome}]] - [[${empilhamento.segundaTurma.semestre}]]
+	                  	</a>
+	                  </td>
+	                  <td> 
+		              	<a th:href="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}"><button type="button" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </button></a>
+		                <a th:href="@{/empilhamentos/{id}/excluir(id=${empilhamento.id})}"><button type="button" class="btn btn-danger waves-effect waves-light m-r-10 gp-btn-desvincular"><i class="fa fa-close"></i> Excluir </button></a>
+	                  </td>
+	                </tr> 
+	              </tbody>
+	            </table>
+			</div>
+		</div>
+	</div>
+</div>
+		
+		
 	</section>
 </html>

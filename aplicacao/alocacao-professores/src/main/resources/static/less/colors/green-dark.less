@@ -10,19 +10,16 @@
 @sidebar-text:#a6acbc;
 @themecolor:#00c292;
 @dark-themecolor:#4F5467;
-
+@sidebar-dropdown:#393e4f;
+@sidebar-active:#444859;
 
 body{
   background:@sidebar;
 }
 
 /*Top Header Part*/
-.top-left-part{
-  background:@sidebar;
-}
-.logo b{
-   
-}
+
+
 .logo i{ color:@white;}
 
 .navbar-header{ 
@@ -64,12 +61,14 @@ body{
 }
 
 #side-menu > li > a {
+    border-color:@sidebar;
     &:hover, &:focus{
         background:rgba(0, 0, 0, 0.07);
+        border-color:@sidebar;  
     }
    &.active {
-            border-left:3px solid @themecolor;
-            color:@white;
+            border-bottom:2px solid @themecolor;
+            
             
             font-weight:500;
         i{
@@ -81,40 +80,45 @@ body{
 #side-menu ul > li > a {
     &:hover{
         color:@themecolor;
-        
+        background:none;
     }
     &.active{
      color:@white;
      font-weight:500;
     }
 }
+.sidebar #side-menu > li:hover a{
+      background:@sidebar-dropdown;
+   }
 .sidebar #side-menu .user-pro{
   .nav-second-level a:hover{
           color:@themecolor;
         }
   }
-.content-wrapper .sidebar .nav-second-level{
-  li{
-    background:#444859;
-  }
-}   
+#side-menu .nav-second-level li:hover{
+      >a {color:@themecolor;}
+}
+#side-menu .nav-second-level.two-li{
+  background:@sidebar-dropdown;
+}  
 @media(min-width:768px) {
   .content-wrapper { 
-        #side-menu ul, .sidebar #side-menu > li:hover, .sidebar .nav-second-level > li > a{
-              background:#444859;
+       #side-menu li a.active, #side-menu ul, .sidebar #side-menu > li:hover{
+              background:@sidebar-active;
          }
+
    }     
 }
-.user-profile .user-pro-body .u-dropdown{
-  color:@sidebar-text;
+.fix-sidebar .top-left-part{
+  background:@themecolor;
 }
 /*themecolor*/
 
 .bg-theme {
-  background-color: #6e8680 !important;
+  background-color: @danger !important;
 }
 .bg-theme-dark {
-  background-color: @themecolor !important;
+  background-color: @megna !important;
 }
 
 /*Chat widget*/

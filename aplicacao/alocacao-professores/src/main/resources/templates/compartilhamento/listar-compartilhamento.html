@@ -8,14 +8,19 @@
 	<head>
 		<title>Compartilhamentos | Alocação Professores</title>
 		
-		<link th:href="@{/plugins/bower_components/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
+		<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
 	</head>
 	
-	<section layout:fragment="nome_entidade">
-		<h4 class="page-title">Compartilhamento</h4>
-	</section>
-	
 	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h4 class="page-title">Titulo</h4>
+			</div>
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+		    	<a href="" target="_blank" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Nova</a>
+			</div>
+		</div>
+
 		<div class = "table-responsive">
 			<table id = "myTable" class = "table table-striped">
 				<thead>
@@ -57,9 +62,9 @@
 	</section>
 	<section layout:fragment="js">
 		<!-- Sweet-Alert  -->
-		<script th:src="@{/plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
-		<script th:src="@{/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
-		<script th:src="@{/plugins/bower_components/datatables/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+		<script th:src="@{/plugins/sweetalert/jquery.sweet-alert.custom.js}"></script>
+		<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
 		
 		<script th:src="@{/js/ordenacao-tabela.js}"></script>
 		<script th:src="@{/js/compartilhamento/compartilhamento.js}"></script>
