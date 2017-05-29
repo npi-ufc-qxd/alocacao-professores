@@ -64,10 +64,18 @@ public class CompartilhamentoController {
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id, 
-												@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){		
+												@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
+		
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
 		
 		compartilhamento = compartilhamentoService.findCompartilhamento(id);
+		
+		// Condição caso o id do compartilhamento passado na URL não exista no sistema
+		if (compartilhamento == null){
+			model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+			
+			return model;
+		}
 		
 		model.addObject("compartilhamento", compartilhamento);
 		
