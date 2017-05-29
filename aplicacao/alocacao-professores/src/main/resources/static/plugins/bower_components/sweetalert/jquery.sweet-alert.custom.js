@@ -37,6 +37,22 @@
         });
     });
 
+    //Warning Message Arquivar Disciplina
+    $('.sa-arquivada').click(function(){
+        swal({   
+            title: "Tem Certeza ?",   
+            text: "Você poderá desfazer essa operação posteriormente, se desejar!",   
+            type: "warning",   
+            showCancelButton: true,   
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Sim, desejo arquivar!",   
+            closeOnConfirm: false 
+        }, function(){   
+            swal("Disciplina Arquivada!", "A Disciplina foi arquivada.", "success"); 
+        });
+    });
+
     //Parameter
     $('#sa-params').click(function(){
         swal({   
