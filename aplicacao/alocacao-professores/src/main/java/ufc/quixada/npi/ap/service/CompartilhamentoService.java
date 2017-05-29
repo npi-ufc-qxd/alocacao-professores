@@ -10,4 +10,6 @@ public interface CompartilhamentoService {
 	public void salvar(Compartilhamento compartilhamento);
 	
 	public List<Compartilhamento> findAllCompartilhamentos();
+	
+	public void excluir(Integer id);
 }
