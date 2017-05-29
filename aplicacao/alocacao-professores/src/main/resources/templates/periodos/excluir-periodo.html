@@ -1,59 +1,20 @@
-<!DOCTYPE html>  
-<html lang="ptBR"
-	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-<meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content=""/>
-<meta name="author" content=""/>
-<link rel="icon" type="image/png" sizes="16x16" th:href="@{../../plugins/images/favicon.png}"/>
-<title>Elite Admin Template - The Ultimate Multipurpose admin template</title>
-<!-- Bootstrap Core CSS -->
-<link th:href="@{../../bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-<!-- animation CSS -->
-<link th:href="@{../../css/animate.css}" rel="stylesheet"/>
-<!-- Custom CSS -->
-<link th:href="@{../../css/style.css}" rel="stylesheet"/>
-<!-- color CSS -->
-<link th:href="@{../../css/colors/default.css}" id="theme"  rel="stylesheet"/>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script th:src="@{https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script th:src="@{https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-19175540-9', 'auto');
-  ga('send', 'pageview');
-
-</script>
-</head>
-
-<body>
+<!DOCTYPE html>
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
 
 
-<!-- jQuery -->
-<script th:src="@{../../plugins/bower_components/jquery/dist/jquery.min.js}"></script>
-<!-- Bootstrap Core JavaScript -->
-<script th:src="@{../../bootstrap/js/bootstrap.min.js}"></script>
-<!-- Menu Plugin JavaScript -->
-<script th:src="@{../../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js}"></script>
-
-<!--slimscroll JavaScript -->
-<script th:src="@{../../js/jquery.slimscroll.js}"></script>
-<!--Wave Effects -->
-<script th:src="@{../../js/waves.js}"></script>
-<!-- Custom Theme JavaScript -->
-<script th:src="@{../../js/custom.min.js}"></script>
-<!--Style Switcher -->
-<script th:src="@{../../plugins/bower_components/styleswitcher/jQuery.style.switcher.js}"></script>
-</body>
+	<link rel="icon" type="image/png" sizes="16x16"
+		th:href="@{../plugins/images/favicon.png}" />
+	<title>Periodos</title>
+	
+	
+	<section layout:fragment="header">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h4 class="page-title">Periodos</h4>
+		</div>
+	</section>
+	
+	<section layout:fragment="conteudo"></section>
 </html>
