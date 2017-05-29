@@ -20,7 +20,10 @@ $(".sa-btn-arquivar").on("click", function(event) {
 			    url: urlArquivar,
 			    type: 'GET'
 			});
-			swal("Disciplina Arquivada!", "A Disciplina foi arquivada.", "success");
+			
+			swal("Disciplina Arquivada!", "A Disciplina foi arquivada.", "success");		
+			window.location.href="disciplinas";			
+			
 		}
 	}
 	);

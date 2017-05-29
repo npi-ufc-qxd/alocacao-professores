@@ -52,7 +52,7 @@ public class DisciplinaController {
 		return disciplinaService.arquivarDisciplina(id);
 		
 	}
-	
+		
 	
 	
 }
