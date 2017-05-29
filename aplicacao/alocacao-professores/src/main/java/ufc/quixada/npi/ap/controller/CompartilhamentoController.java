@@ -46,20 +46,6 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
-	public ModelAndView cadastrarCompartilhamentos(){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
-		
-		return model;
-	}
-	
-	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.POST)
-	public ModelAndView cadastrarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
-		
-		return model;
-	}
-	
-	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
 	public ModelAndView cadastrarCompartilhamentos(@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
 		
