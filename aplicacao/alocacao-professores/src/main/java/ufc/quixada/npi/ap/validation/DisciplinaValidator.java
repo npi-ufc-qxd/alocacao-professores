@@ -25,7 +25,10 @@ public class DisciplinaValidator implements Validator {
 	}
 
 	void validateStrings(Errors erros, String object, String field, String message) {
-		if (object.isEmpty() || object.matches(".*\\d+.*") || object.matches(".*\\W+.*")) {
+		
+		if (object.isEmpty() || 
+		   
+		    !object.matches("[^-_=+\\\\|\\[{\\]};:'\",<>/@#$%]*")) {
 			erros.rejectValue(field, field, message);
 		}
 	}

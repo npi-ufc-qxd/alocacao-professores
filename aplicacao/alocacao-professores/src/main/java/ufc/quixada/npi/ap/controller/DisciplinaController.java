@@ -2,6 +2,7 @@ package ufc.quixada.npi.ap.controller;
 
 import static ufc.quixada.npi.ap.util.Constants.CADASTRAR_DISCIPLINA;
 import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_LISTAR;
+import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_EDITAR;
 
 import javax.validation.Valid;
 
@@ -54,12 +55,28 @@ public class DisciplinaController {
 
 	@RequestMapping(value = "/editar/{idDisciplina}", method = RequestMethod.GET)
 	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina) {
-		ModelAndView modelAndView = new ModelAndView(CADASTRAR_DISCIPLINA);
+		ModelAndView modelAndView = new ModelAndView(DISCIPLINA_EDITAR);
 		modelAndView.addObject("disciplina", disciplina);
 		
 		return modelAndView;
 	}
 
+	@RequestMapping(value = "/editar", method = RequestMethod.POST)
+
+	public ModelAndView editarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
+			BindingResult result) {
+		ModelAndView modelAndView = new ModelAndView(DISCIPLINA_LISTAR);
+		disciplinaValidator.validate(disciplina, result);
+
+		if (result.hasErrors()) {
+			modelAndView = new ModelAndView(DISCIPLINA_EDITAR);
+		} else {
+			disciplinaService.salvar(disciplina);
+		}
+
+		return modelAndView;
+	}
+	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView listarDisciplina() {
 		ModelAndView model = new ModelAndView(DISCIPLINA_LISTAR);
