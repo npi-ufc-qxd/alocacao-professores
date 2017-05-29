@@ -1,4 +1,4 @@
-package ufc.quixada.npi.validation;
+package ufc.quixada.npi.ap.validation;
 
 import javax.inject.Named;
 

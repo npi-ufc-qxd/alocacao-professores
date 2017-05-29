@@ -18,7 +18,7 @@ import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
-import ufc.quixada.npi.validation.CompartilhamentoValidator;
+import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 
 
 @Controller
