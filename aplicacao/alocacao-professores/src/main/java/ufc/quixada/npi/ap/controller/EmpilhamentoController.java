@@ -1,10 +1,13 @@
 package ufc.quixada.npi.ap.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.util.Constants;
-import ufc.quixada.npi.ap.model.Curso;
+import ufc.quixada.npi.ap.validation.EmpilhamentoValidator;
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Empilhamento;
 import ufc.quixada.npi.ap.model.Turma;
@@ -32,6 +35,9 @@ public class EmpilhamentoController {
 	
 	@Autowired 
 	TurmaService turmaService;
+	
+	@Autowired
+	EmpilhamentoValidator empilhamentoValidator;
 	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
@@ -58,31 +64,44 @@ public class EmpilhamentoController {
 	}
 	
 	@RequestMapping(path={"/cadastrar"}, method=RequestMethod.POST)
-	public String cadastrarEmpilhamento(
-			Integer primeiraTurma, Integer primeiraDisciplina, 
-			Integer segundaTurma, Integer segundaDisciplina){
-		empilhamentoService.cadastarEmpilhamento(primeiraTurma, primeiraDisciplina, segundaTurma, segundaDisciplina);
+	public ModelAndView cadastrarEmpilhamento(@ModelAttribute("empilhamento") @Valid Empilhamento empilhamento, BindingResult bindingResult){
+		empilhamentoValidator.validate(empilhamento, bindingResult);
 		
-		return Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO;
+		if(bindingResult.hasErrors()){
+			ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_CADASTRAR_EMPILHAMENTO);
+			return model;
+		}
+		
+		empilhamentoService.salvarEmpilhamento(empilhamento);
+		
+		ModelAndView modelRetorno = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
+		return modelRetorno;
 	}
 	
+	//
 	@RequestMapping(path={"/{id}/excluir"})
-	public String excluirEmpilhamento(@RequestParam Integer id){
+	public String excluirEmpilhamento(@PathVariable("id") Integer id){
 		empilhamentoService.excluirEmpilhamento(id);
 		return Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
-		return Constants.PAGINA_FORM_EDITAR_EMPILHAMENTO;
+	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
+		ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_EDITAR_EMPILHAMENTO);
+		model.addObject("empilhamento", empilhamentoService.visualizarEmpilhamento(id));
+		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(
-			Integer primeiraTurma, Integer primeiraDisciplina, 
-			Integer segundaTurma, Integer segundaDisciplina){
-		
+	public ModelAndView editarCompartilhamento(Empilhamento empilhamento){
+	
 		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
+		try{
+			empilhamentoService.salvarEmpilhamento(empilhamento);
+		}catch(Exception e){
+			model.addObject("erro", e.getMessage());
+		}
+		
 		return model;
 	}
 	
