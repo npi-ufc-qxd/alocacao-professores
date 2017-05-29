@@ -26,7 +26,7 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 	TurmaRepository turmaRepository;
 	
 	@Override
-	public Empilhamento cadastarEmpilhamento(Empilhamento empilhamento) {
+	public Empilhamento salvarEmpilhamento(Empilhamento empilhamento) {
 		return empilhamentoRepository.save(empilhamento);
 	}
 
