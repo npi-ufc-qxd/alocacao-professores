@@ -89,16 +89,47 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){		
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id, 
+												@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
+		
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
+		
+		compartilhamento = compartilhamentoService.findCompartilhamento(id);
+		
+		if (compartilhamento == null){
+			model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+			
+			return model;
+		}
+		
+		model.addObject("compartilhamento", compartilhamento);
 		
 		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(Integer turma, Integer oferta, Integer numeroVagas){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
-
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
+												@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
+													BindingResult bindingResult, ModelAndView model){
+		
+		compartilhamentoValidator.validate(compartilhamento, bindingResult);
+		
+		if (bindingResult.hasErrors()){
+			model.setViewName(Constants.COMPARTILHAMENTO_EDITAR);
+			
+			return model;
+		}
+		
+		try{
+			compartilhamentoService.salvar(compartilhamento);
+		} catch(Exception e){
+			model.setViewName(Constants.PAGINA_ERRO_403);
+			
+			return model;
+		}
+		
+		model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+		
 		return model;
 	}
 	
