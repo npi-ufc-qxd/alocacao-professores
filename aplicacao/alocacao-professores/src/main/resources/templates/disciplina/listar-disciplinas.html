@@ -10,43 +10,38 @@
 	
 	<section layout:fragment="header">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title">Cadastrar Disciplina</h4>
+			<h4 class="page-title">Lista de Disciplinas</h4>
 		</div>
 	</section>
 	
 	<section layout:fragment="conteudo">
-		<h3 class="box-title m-b-0">Disciplinas</h3>
-		<div class="table-responsive">
-			<table id="myTable" class="table table-striped">
-				<thead>
-					<tr>
-						<th>Disciplina</th>
-						<th>Créditos</th>
-						<th>Carga horária Teórica</th>
-						<th>Carga horária Prática</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="disciplina : ${disciplinas}">
-						<td th:text="${disciplina.nome}"></td>
-						<td th:text="${disciplina.creditos}"></td>
-						<td th:text="${disciplina.cargaHorariaTeorica}"></td>
-						<td th:text="${disciplina.cargaHorariaPratica}"></td>
-						<td>
-							<div class="text-right">
-								<button type="submit"
-									class="btn btn-inverse waves-effect waves-light">
-									<i class="fa fa-pencil"></i> Editar
-								</button>
-								<button type="submit"
-									class="btn btn-danger waves-effect waves-light m-r-10 gp-btn-desvincular">
-									Arquivar</button>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<h3 class="box-title m-b-0">Disciplinas</h3>            
+            <div class="table-responsive">
+            <table id="myTable" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Disciplina</th>
+                  <th>Créditos</th>
+                  <th>Carga horária Teórica</th>
+                  <th>Carga horária Prática</th>                                                                 
+                  <th></th>                                      
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="disciplina : ${disciplinas}">
+                  <td th:text="${disciplina.nome}"></td>
+                  <td th:text="${disciplina.creditos}"></td>
+                  <td th:text="${disciplina.cargaHorariaTeorica}"></td>
+                  <td th:text="${disciplina.cargaHorariaPratica}"></td>                                                     					
+                  <td>
+                  <div class="text-right">
+                    <button type="submit" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </button>
+                    <a th:href="@{/disciplinas/{id}/arquivar(id=${disciplina.id})}" class="btn btn-danger waves-effect waves-light m-r-10 sa-btn-arquivar"> Arquivar </a>
+                  </div>
+                  </td>                                      
+                </tr>                                   
+              </tbody>
+            </table>
+            </div>
 	</section>
 </html>
