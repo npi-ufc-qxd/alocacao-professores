@@ -15,53 +15,58 @@
 	</section>
 
 <section layout:fragment="conteudo">
-	<form th:action="" method="POST">
+	<form th:action="@{${'/empilhamentos/cadastrar'}}" method="POST" th:object = "${empilhamento}">
 		<div class="form-group">
-			<h3 class="box-title m-b-0">Editar Empilhamento</h3>
+				<h3 class="box-title m-b-0">Editar Empilhamento</h3>
             	<label>Disciplina A</label>
             	<div class="col-md-12">
-	              	<select id="disciplinaASelect" class="js-example-basic-multiple" name="idDisciplinaA">
-	             		<option value=""></option>
+	              	<select th:field="*{primeiraDisciplina.id}" id="disciplinaASelect" class="js-example-basic-multiple" name="primeiraDisciplina">             		
 	                	<option th:each ="disciplina : ${disciplinas}" 
 	                	    th:value = "${disciplina.id}"
 	                        th:text = "${disciplina.nome}"></option>
 					</select>
+					<span th:if="${#fields.hasErrors('primeiraDisciplina.id')}"
+					      th:error="*{primeiraDisciplina.id}"></span>
 				</div>
              </div>
              <div class="form-group">
               <label>Turma A</label>
               <div class="col-md-12">
-	              <select id="turmaASelect" cclass="js-example-basic-multiple" name="idTurmaA">
-	             		<option value=""></option>
+	              <select th:field="*{primeiraTurma.id}" id="turmaASelect" class="js-example-basic-multiple" name="primeiraTurma">
 	                	<option th:each ="turma : ${turmas}" 
 	                	    th:value = "${turma.id}"
-	                        th:text = "${turma.nome}"></option>
+	                        th:inline="text">[[${turma.curso.nome}]] - [[${turma.semestre}]]</option>
 					</select>
+					<span th:if="${#fields.hasErrors('primeiraTurma.id')}"
+					      th:error="*{primeiraTurma.id}"></span>
+					
 				</div>
              </div>
             <div class="form-group">
-              <label>Disciplina B</label> 
-              <div class="col-md-12">     
-	              <select id="disciplinaBSelect" name="idDisciplinaB" class="js-example-basic-multiple">
-	             		<option value=""></option>
+              <label>Disciplina B</label>  
+              <div class="col-md-12">    
+	              <select th:field="*{segundaDisciplina.id}" id="disciplinaBSelect" name="segundaDisciplina" class="js-example-basic-multiple">
 	                	<option th:each ="disciplina : ${disciplinas}" 
 	                	    th:value = "${disciplina.id}"
 	                        th:text = "${disciplina.nome}"></option>
 					</select>
+					<span th:if="${#fields.hasErrors('segundaDisciplina.id')}"
+					      th:error="*{segundaDisciplina.id}"></span>
 				</div>
             </div>
             <div class="form-group">
               <label>Turma B</label>
               <div class="col-md-12">
-	              <select id="turmaBSelect" class="js-example-basic-multiple" name="idTurmaB">
-	             		<option value=""></option>
+	              <select th:field="*{segundaTurma.id}" id="turmaBSelect" class="js-example-basic-multiple" name="segundaTurma">           		
 	                	<option th:each ="turma : ${turmas}" 
 	                	    th:value = "${turma.id}"
-	                        th:text = "${turma.nome}"></option>
+	                        th:inline="text">[[${turma.curso.nome}]] - [[${turma.semestre}]]</option>
 					</select>
+					<span th:if="${#fields.hasErrors('segundaTurma.id')}"
+					      th:error="*{segundaTurma.id}"></span>
 				</div>
              </div>
-             <div class="text-right">
+              <div class="text-right">
 				<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
 				<button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
 			</div>
@@ -77,25 +82,3 @@
 	</script>
 </section>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
