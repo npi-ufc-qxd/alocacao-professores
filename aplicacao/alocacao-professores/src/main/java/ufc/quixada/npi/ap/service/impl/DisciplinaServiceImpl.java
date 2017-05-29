@@ -16,16 +16,36 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	private DisciplinaRepository disciplinaRepository;
 
 	@Override
+	public List<Disciplina> listar() {
+
+		return disciplinaRepository.findAll();
+	}
+	
 	public void salvar(Disciplina disciplina) {
 		disciplinaRepository.save(disciplina);
+
 
 	}
 
 	@Override
-	public List<Disciplina> listar() {
+	public List<Disciplina> listarNaoArquivada() {
 
-		return disciplinaRepository.findAll();
+		return disciplinaRepository.findByArquivadaFalse();
 
 	}
 
+	@Override
+	public boolean arquivarDisciplina(Integer id) {
+
+		Disciplina disciplina = disciplinaRepository.findById(id);
+
+		if (disciplina == null) {
+			return false;
+		}
+
+		disciplina.setArquivada(true);
+		disciplinaRepository.save(disciplina);
+
+		return true;
+	}
 }

@@ -28,4 +28,9 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 	public List<Compartilhamento> findAllCompartilhamentos() {
 		return compartilhamentoRepository.findAll();
 	}
+	
+	@Override
+	public void excluir(Integer id) {
+		compartilhamentoRepository.delete(id);
+	}
 }
