@@ -22,7 +22,7 @@ public class Disciplina {
 	
 	private int cargaHorariaPratica;
 	
-	private Boolean arquivar;
+	private Boolean arquivar= false;
 
 	public Integer getId() {
 		return id;
