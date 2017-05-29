@@ -1,17 +1,19 @@
 package ufc.quixada.npi.ap.controller;
 
-import javax.validation.Valid;
 import static ufc.quixada.npi.ap.util.Constants.CADASTRAR_DISCIPLINA;
-import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_EDITAR;
 import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_LISTAR;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.validation.DisciplinaValidator;
@@ -31,7 +33,6 @@ public class DisciplinaController {
 	public ModelAndView cadastrarDisciplina(Disciplina disciplina) {
 		ModelAndView model = new ModelAndView(CADASTRAR_DISCIPLINA);
 		model.addObject("disciplina", disciplina);
-
 		return model;
 	}
 
@@ -51,17 +52,19 @@ public class DisciplinaController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/editar", method = RequestMethod.GET)
-	public ModelAndView editarDisciplina() {
-		ModelAndView model = new ModelAndView(DISCIPLINA_EDITAR);
-		return model;
+	@RequestMapping(value = "/editar/{idDisciplina}", method = RequestMethod.GET)
+	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina) {
+		ModelAndView modelAndView = new ModelAndView(CADASTRAR_DISCIPLINA);
+		modelAndView.addObject("disciplina", disciplina);
+		
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView listarDisciplina() {
 		ModelAndView model = new ModelAndView(DISCIPLINA_LISTAR);
 		model.addObject("disciplinas", disciplinaService.listar());
-		
+
 		return model;
 	}
 

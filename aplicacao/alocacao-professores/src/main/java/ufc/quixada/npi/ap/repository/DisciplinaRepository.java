@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ufc.quixada.npi.ap.model.Disciplina;
 
 public interface DisciplinaRepository extends JpaRepository<Disciplina, Integer> {
-
+	
+	Disciplina findByNome(String nome);
 }
