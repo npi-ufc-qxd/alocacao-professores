@@ -19,6 +19,11 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	public List<Disciplina> listar() {
 
 		return disciplinaRepository.findAll();
+	}
+	
+	public void salvar(Disciplina disciplina) {
+		disciplinaRepository.save(disciplina);
+
 
 	}
 
@@ -42,7 +47,5 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 		disciplinaRepository.save(disciplina);
 
 		return true;
-
 	}
-
 }
