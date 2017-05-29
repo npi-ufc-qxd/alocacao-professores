@@ -87,8 +87,15 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
 	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
+		
+		List<Disciplina> disciplinas = disciplinaService.listar();
+		List<Turma> turmas = turmaService.listarTurmas();
+		Empilhamento empilhamentos = empilhamentoService.visualizarEmpilhamento(id);
+		
 		ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_EDITAR_EMPILHAMENTO);
-		model.addObject("empilhamento", empilhamentoService.visualizarEmpilhamento(id));
+		model.addObject("empilhamento", empilhamentos);
+		model.addObject("disciplinas", disciplinas);
+		model.addObject("turmas", turmas);
 		return model;
 	}
 	
