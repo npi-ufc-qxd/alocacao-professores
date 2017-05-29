@@ -5,8 +5,7 @@
 	layout:decorator="base/base">
 
 
-	<link rel="icon" type="image/png" sizes="16x16"
-		th:href="@{../plugins/images/favicon.png}" />
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{../plugins/images/favicon.png}" />
 	<title>Periodos</title>
 	
 	
@@ -18,19 +17,25 @@
 	
 	<section layout:fragment="conteudo">
 	
-		<form class="form-horizontal">
-	
-			<div class="form-group">
-				<label class="col-md-12"><span class="help"> Status</span></label>
-				<div class="col-md-12">
-					<input class="form-control" value="" type="text"></input>
-				</div>
-			</div>
-			<button type="submit"
-				class="btn btn-success waves-effect waves-light m-r-10 ">Editar</button>
-			<button type="submit"
-				class="btn btn-inverse waves-effect waves-light ">Cancel</button>
-		</form>
+		<h3 class="box-title m-b-0">Editar Período</h3>
+            
+            
+            <form th:action="@{${'/periodos/'+periodo.id+'/editar'}}" th:object="${periodo}" method="POST" class="form-horizontal">           
+             
+              <div class="form-group">
+                <label class="col-sm-12">Status</label>
+                <div class="col-sm-12">                 
+					<select class="form-control" th:field="*{status}"   >
+					  <option th:each="statusOpcao : ${status}"  th:value="${statusOpcao}" th:text="${statusOpcao.Descricao}"> Wireframe  </option>
+					</select>				
+                </div>  
+              </div>        
+
+              <div class="text-right">
+                <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Editar</button>
+              </div>
+            </form>
 	
 	</section>
 
