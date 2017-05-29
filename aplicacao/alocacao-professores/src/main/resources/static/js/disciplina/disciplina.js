@@ -21,8 +21,22 @@ $(".sa-btn-arquivar").on("click", function(event) {
 			    type: 'GET'
 			});
 			
-			swal("Disciplina Arquivada!", "A Disciplina foi arquivada.", "success");		
-			window.location.href="disciplinas";			
+			swal({				 
+				title: "Disciplina Arquivada!",   
+		        text: "A Disciplina foi arquivada.",   
+		        type: "success",   
+		        showCancelButton: false,   
+		        cancelButtonText: "",
+		        confirmButtonColor: "#32CD32",   
+		        confirmButtonText: "Ok",   
+		        closeOnConfirm: false
+			}, function(isConfirm){
+				if(isConfirm){
+					window.location.href="/disciplinas";
+				}
+			});
+			
+			
 			
 		}
 	}
