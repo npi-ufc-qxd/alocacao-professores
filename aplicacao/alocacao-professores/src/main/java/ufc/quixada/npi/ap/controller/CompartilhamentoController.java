@@ -5,12 +5,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
@@ -101,10 +103,14 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
-	public ModelAndView excluirCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+	public @ResponseBody boolean excluirCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
+		try{
+			compartilhamentoService.excluir(id);
+		}catch(EmptyResultDataAccessException ex){
+			return false;
+		}
 		
-		return model;
+		return true;
 	}
 	
 	@ModelAttribute("turmas")
