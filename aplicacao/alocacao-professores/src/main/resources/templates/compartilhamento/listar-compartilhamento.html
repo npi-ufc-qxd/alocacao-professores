@@ -8,7 +8,7 @@
 	<head>
 		<title>Compartilhamentos | Alocação Professores</title>
 		
-		<link th:href="@{../plugins/bower_components/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
+		<link th:href="@{/plugins/bower_components/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
 	</head>
 	
 	<section layout:fragment="nome_entidade">
@@ -56,13 +56,12 @@
 		</div>
 	</section>
 	<section layout:fragment="js">
-	<script th:src="@{../plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
+	<!-- Sweet-Alert  -->
+		<script th:src="@{/plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
+		<script th:src="@{/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
 		<script th:src="@{/plugins/bower_components/datatables/jquery.dataTables.min.js}"></script>
+		
 		<script th:src="@{/js/ordenacao-tabela.js}"></script>
 		<script th:src="@{/js/compartilhamento/compartilhamento.js}"></script>
-		
-		<!-- Sweet-Alert  -->
-		<script th:src="@{../plugins/bower_components/sweetalert/sweetalert.min.js}"></script>
-		<script th:src="@{../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js}"></script>
 	</section>
 </html>
