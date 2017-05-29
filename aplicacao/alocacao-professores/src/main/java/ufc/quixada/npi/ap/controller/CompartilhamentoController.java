@@ -38,6 +38,10 @@ public class CompartilhamentoController {
 	public ModelAndView listarCompartilhamentos(){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
 		
+		List<Compartilhamento> compartilhamentos = compartilhamentoService.findAllCompartilhamentos();
+		
+		model.addObject("compartilhamentos", compartilhamentos);
+		
 		return model;
 	}
 	

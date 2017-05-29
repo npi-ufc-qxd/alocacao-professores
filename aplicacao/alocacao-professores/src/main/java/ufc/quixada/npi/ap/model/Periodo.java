@@ -69,7 +69,7 @@ public class Periodo {
 	
 	
 
-	enum Status{
+	public enum Status{
 		ABERTA("Aberta"), EM_ANALISE("Em análise"), CONSOLIDADA("consolidada");
 		
 		private String descricao;
@@ -84,3 +84,5 @@ public class Periodo {
 		
 	}
 }
+
+

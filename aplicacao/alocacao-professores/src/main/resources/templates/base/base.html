@@ -2,9 +2,28 @@
 <html 
 	lang="ptBR"
 	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="description" content=""/>
+	<meta name="author" content=""/>
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{../plugins/images/favicon.png}"/>
+	<title>Alocação de Disciplinas</title>
+	<!-- Bootstrap Core CSS -->
+	<link th:href="@{../bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+	
+	<link th:href="@{/plugins/bower_components/datatables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css" />
+	
+	<!-- animation CSS -->
+	<link th:href="@{/css/animate.css}" rel="stylesheet"/>
+	<!-- Custom CSS -->
+	<link th:href="@{/css/style.css}" rel="stylesheet"/>
+	<!-- color CSS -->
+	<link th:href="@{/css/colors/default.css}" id="theme"  rel="stylesheet"/>
 	
 	<head>
 		<meta charset="utf-8"/>
