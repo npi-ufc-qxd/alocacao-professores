@@ -5,7 +5,6 @@ import java.util.List;
 import ufc.quixada.npi.ap.model.Disciplina;
 
 public interface DisciplinaService {
-	
+	void salvar(Disciplina disciplina);
 	List<Disciplina> listar();
-	
 }

@@ -56,4 +56,5 @@ public class Constants {
 	
 	// Redirects
 	public static final String REDIRECT_PAGINA_LISTAR_EMPILHAMENTO = "redirect:/empilhamentos";
+	public static final String PERIODO_REDIRECT_LISTAR_PERIODO = "redirect:/periodos/";
 }
