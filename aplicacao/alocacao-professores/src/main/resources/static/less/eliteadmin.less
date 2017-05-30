@@ -7,9 +7,8 @@
 }
 
 body {
-  background: @sidebar;
   font-family: @basefont1;
-  margin: 0;
+  margin: 0; 
   overflow-x: hidden;
   color: @bodytext;
   font-weight:300;
@@ -132,9 +131,6 @@ hr{ border-color: @border;}
 }
 .p-l-20 {
   padding-left:20px !important;
-}
-.p-l-30 {
-  padding-left:30px !important;
 }
 
 .p-r-0 {
@@ -507,10 +503,6 @@ hr{ border-color: @border;}
   color: @bodytext !important;
 }
 
-.fw-500{
-    font-weight: 500;
-}
-
 /* Background colors */
 
 
@@ -553,22 +545,18 @@ hr{ border-color: @border;}
   background-color: @white !important;
 }
 
-.bg-light {
-  background-color: @light !important;
-}
-
 /* Labels */
 
 .label {
   letter-spacing: 0.05em;
   border-radius: 60px;
-  padding: 4px 12px 3px;
+  padding: 4px 16px 3px;
   font-weight:500;
 
 }
 .label-rounded, .label-rouded  {
   border-radius: 60px;
-  padding: 4px 12px 3px;
+  padding: 4px 16px 3px;
   font-weight:500;
 }
 .label-custom {
@@ -616,6 +604,7 @@ hr{ border-color: @border;}
 .label-default {
   background-color: @light;
 }
+
 
 
 /*Bootstrap overight*/
@@ -794,7 +783,7 @@ label{
    -moz-border-radius: @radius;
    -webkit-border-radius: @radius;
    border-radius: @radius;
-} 
+}
 
 .pagination > .active > a,
 .pagination > .active > span,
@@ -833,8 +822,10 @@ label{
 // Wrappers
 
 #wrapper {
-    width: 100%;
+    width:100%;  
     
+    margin:0 auto;
+    box-shadow:1px 0px 50px rgba(0,0,0,0.2);
 }
 
 #page-wrapper {
@@ -850,7 +841,9 @@ label{
     left: 0px;
     padding: 20px 30px;
     position:absolute; 
+    width:100%;
     
+    margin:0 auto;
     right: 0;
     background:@white;
 
@@ -860,7 +853,7 @@ label{
 // Page title
 
 .bg-title{ 
-  background:@white;
+  border-bottom:1px solid @light;
   overflow:hidden;
   padding:15px 15px 10px; 
   margin-bottom:25px;
@@ -901,14 +894,14 @@ label{
 .top-left-part{ 
     width:220px;
     float:left;
-    background:@white;
+    
     a{
     color: @white;
     font-size: 18px;
+   
     padding-left:0px;
     text-transform: uppercase;
         }
-    .light-logo{ display:none;}
     }
 .navbar-header{ 
     width:100%;
@@ -937,7 +930,7 @@ label{
 
 .navbar-top-links > li > a{
     color:@white;
-    padding: 0 14px;
+    padding: 0 12px;
     line-height:60px;
     min-height: 60px;
     &:hover{
@@ -1055,7 +1048,7 @@ label{
     padding: 12px 15px !important;
     pointer-events: none;
     margin:20px 0 0 -15px;
-
+    display:none!important;
 }
 
 .profile-pic{
@@ -1817,11 +1810,7 @@ table.dataTable thead .sorting:after {
     cursor:pointer;
   }
 }
-.fa-fw{
-  width:20px!important;
-  display:inline-block !important;
-  text-align:left !important;
-}
+
 
 /*Wave Effeects*/
 .waves-transition (@transition) {

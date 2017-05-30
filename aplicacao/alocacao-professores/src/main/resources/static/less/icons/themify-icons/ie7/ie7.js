@@ -5,6 +5,7 @@
 	<!--[if lt IE 8]><!-->
 	<script src="ie7/ie7.js"></script>
 	<!--<![endif]-->
+<script src="http://www.w3schools.com/lib/w3data.js"></script>
 */
 
 (function() {

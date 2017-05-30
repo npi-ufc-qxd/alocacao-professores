@@ -11,20 +11,14 @@
 @themecolor:#a0aec4;
 @dark-themecolor:#4F5467;
 
-
 body{
   background:@sidebar;
 }
 
 /*Top Header Part*/
 
-.top-left-part{ 
-  .light-logo{
-    display:inline-block;
-  }
-  .dark-logo{
-    display:none;
-  }
+.logo b{
+   
 }
 .logo i{ color:@white;}
 
@@ -66,13 +60,17 @@ body{
     color:@sidebar-text;
   border-left:0px solid @sidebar;
 }
-
+.nav-second-level > li > a{
+  &:hover, &:focus{
+        background-color:@extralight!important;
+    }
+}
 #side-menu > li > a {
     &:hover, &:focus{
-        background:rgba(0, 0, 0, 0.03);
+        background-color:@extralight!important;
     }
    &.active {
-            border-left:3px solid @themecolor;
+            border-bottom:2px solid @themecolor;
             color:@dark;
             
             font-weight:500;
@@ -85,7 +83,7 @@ body{
 #side-menu ul > li > a {
     &:hover{
         color:@themecolor;
-        
+        background:none;
     }
     &.active{
      color:@dark;
@@ -97,6 +95,12 @@ body{
           color:@themecolor;
         }
   }
+.fix-sidebar .top-left-part{
+  background:@themecolor;
+}
+#side-menu .nav-second-level li:hover{
+      >a {color:@themecolor;}
+}
 /*themecolor*/
 
 .bg-theme {

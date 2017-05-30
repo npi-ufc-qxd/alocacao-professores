@@ -19,13 +19,13 @@
 		<!-- Bootstrap Core CSS -->
 		<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
 		<!-- DataTable plugin CSS -->
-		<link th:href="@{/plugins/bower_components/datatables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css" />
+		<link th:href="@{/plugins/datatables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css" />
 		<!-- animation CSS -->
 		<link th:href="@{/css/animate.css}" rel="stylesheet"/>
 		<!-- Custom CSS -->
 		<link th:href="@{/css/style.css}" rel="stylesheet"/>
 		<!-- color CSS -->
-		<link th:href="@{/css/colors/default.css}" id="theme"  rel="stylesheet"/>
+		<link th:href="@{/css/colors/blue.css}" id="theme"  rel="stylesheet"/>
 		<!-- Select2 CSS -->
 		<link th:href="@{/plugins/select2/css/select2.min.css}" rel="stylesheet"/>
 		
@@ -40,12 +40,11 @@
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		
 		  ga('create', 'UA-19175540-9', 'auto');
 		  ga('send', 'pageview');
-		
 		</script>
 	</head>
+	
 	<body class="fix-sidebar">
 		<!-- Preloader -->
 		<div class="preloader">
@@ -55,42 +54,21 @@
 		<div id="wrapper">
 			<div th:replace="base/navbar-header :: navbar-header"></div>
 			<div th:replace="base/sidebar :: sidebar"></div>
+			
 			<div id="page-wrapper">
 				<div class="container-fluid">
-					<div class="row bg-title">
-						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-							<section layout:fragment="nome_entidade"></section>
-						</div>
-						<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-							<a href="https://themeforest.net/item/elite-admin-responsive-dashboard-web-app-kit-/16750820" target="_blank" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Buy Now</a>
-							<ol class="breadcrumb">
-								<li><a href="#">Dashboard</a></li>
-								<li class="active">Starter Page</li>
-							</ol>
-						</div>
-					</div>
-					<div class="row">
-						<div th:each="alert : ${alertas}" th:attr="data-type=${alert.type},data-delay=${alert.delay}" class="alert alert-danger alert-dismissable">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-							<p th:text="${alert.message}"></p>
-						</div>
-						<div class="col-md-12">
-							<div class="white-box">
-								<section class="" layout:fragment="conteudo"></section>
-							</div>
-						</div>
-					</div>
+					<section layout:fragment="conteudo"></section>
 				</div>
 				<footer class="footer text-center"> 2017 NPI - UFC Quixadá</footer>
 			</div>
 		</div>
 		
 		<!-- JQuery -->
-		<script th:src="@{/plugins/bower_components/jquery/dist/jquery.min.js}"></script>
+		<script th:src="@{/plugins/jquery/dist/jquery.min.js}"></script>
 		<!-- Bootstrap Core JavaScript -->
 		<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 		<!-- Menu Plugin JavaScript -->
-		<script th:src="@{/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js}"></script>
+		<script th:src="@{/plugins/sidebar-nav/dist/sidebar-nav.min.js}"></script>
 		<!--slimscroll JavaScript -->
 		<script th:src="@{/js/jquery.slimscroll.js}"></script>
 		<!-- Wave Effects -->
@@ -98,7 +76,7 @@
 		<!-- Custom Theme JavaScript -->
 		<script th:src="@{/js/custom.min.js}"></script>
 		<!-- Style Switcher -->
-		<script th:src="@{/plugins/bower_components/styleswitcher/jQuery.style.switcher.js}"></script>
+		<script th:src="@{/plugins/styleswitcher/jQuery.style.switcher.js}"></script>
 		<!-- Select2 JavaScript -->
 		<script th:src="@{/plugins/select2/js/select2.min.js}"></script>
 		

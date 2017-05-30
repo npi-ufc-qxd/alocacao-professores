@@ -30,8 +30,18 @@ public class DisciplinaController {
 	@Autowired
 	public DisciplinaService disciplinaService;
 
-	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
+	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
+	public ModelAndView listarDisciplina() {
+		
+		ModelAndView model = new ModelAndView(DISCIPLINA_LISTAR);
+		
+		model.addObject("disciplinas", disciplinaService.listarNaoArquivada());
+		
+		return model;
+		
+	}
 
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarDisciplina(Disciplina disciplina) {
 		ModelAndView model = new ModelAndView(CADASTRAR_DISCIPLINA);
 		model.addObject("disciplina", disciplina);
@@ -59,17 +69,6 @@ public class DisciplinaController {
 	public ModelAndView editarDisciplina() {
 		ModelAndView model = new ModelAndView(DISCIPLINA_EDITAR);
 		return model;
-	}
-
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView listarDisciplina() {
-		
-		ModelAndView model = new ModelAndView(DISCIPLINA_LISTAR);
-		
-		model.addObject("disciplinas", disciplinaService.listarNaoArquivada());
-		
-		return model;
-		
 	}
 	
 	@RequestMapping(value="/{id}/arquivar", method = RequestMethod.GET)

@@ -36,7 +36,7 @@ public class CompartilhamentoController {
 	@Autowired
 	private TurmaService turmaService;
 	
-	@RequestMapping(path = {""}, method = RequestMethod.GET)
+	@RequestMapping(path = {"", "/"}, method = RequestMethod.GET)
 	public ModelAndView listarCompartilhamentos(){
 		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
 		

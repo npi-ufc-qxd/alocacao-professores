@@ -39,7 +39,7 @@ public class EmpilhamentoController {
 	@Autowired
 	EmpilhamentoValidator empilhamentoValidator;
 	
-	@RequestMapping(path = {""})
+	@RequestMapping(path = {"", "/"})
 	public ModelAndView listarEmpilhamentos(){
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
 		
