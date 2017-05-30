@@ -14,3 +14,4 @@ import ufc.quixada.npi.ap.model.Periodo;
 public interface PeriodoRepository extends JpaRepository<Periodo, Integer>{
 
 }
+

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
       $('#myTable').DataTable();
       $(document).ready(function() {
         var table = $('#example').DataTable({
@@ -42,3 +43,7 @@ $(document).ready(function(){
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
+
+	$('table').DataTable();
+});
+
