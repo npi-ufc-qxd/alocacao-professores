@@ -9,7 +9,6 @@
 	<title>Listar Empilhamento | Alocação Professores</title>
 
 	<section layout:fragment="conteudo">
-
 		<div class="row bg-title">
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 				<h4 class="page-title">Empilhamentos</h4>
@@ -19,44 +18,45 @@
 			</div>
 		</div>
 		
-<div class="row">
-	<div class="col-md-12">
-		<div class="white-box">
-			<h3 class="box-title">Lista de Empilhamentos</h3>
-			<div class="table-responsive">
-	            <table id="myTable" class="table table-striped">
-	              <thead>
-	                <tr>
-	                  <th>Primeira: Disciplina - Turma</th>
-	                  <th>Segunda: Disciplina - Turma</th>
-	                </tr>
-	              </thead>
-	              <tbody>
-	                <tr th:each="empilhamento : ${empilhamentos}" >
-	                  <td th:inline="text">
-	                  	<a th:href="@{/empilhamentos/{id}/detalhar(id=${empilhamento.id})}">
-	                  		[[${empilhamento.primeiraDisciplina.nome}]]<br/>
-	                  		[[${empilhamento.primeiraTurma.curso.nome}]] - [[${empilhamento.primeiraTurma.semestre}]]
-	                  	</a>
-	                  </td>
-	                 <td th:inline="text">
-	                 	<a th:href="@{/empilhamentos/{id}/detalhar(id=${empilhamento.id})}">
-	                  		[[${empilhamento.segundaDisciplina.nome}]]<br/>
-	                  		[[${empilhamento.segundaTurma.curso.nome}]] - [[${empilhamento.segundaTurma.semestre}]]
-	                  	</a>
-	                  </td>
-	                  <td> 
-		              	<a th:href="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}"><button type="button" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </button></a>
-		                <a th:href="@{/empilhamentos/{id}/excluir(id=${empilhamento.id})}"><button type="button" class="btn btn-danger waves-effect waves-light m-r-10 gp-btn-desvincular"><i class="fa fa-close"></i> Excluir </button></a>
-	                  </td>
-	                </tr> 
-	              </tbody>
-	            </table>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="white-box">
+					<h3 class="box-title">Lista de Empilhamentos</h3>
+					<div class="table-responsive">
+			            <table id="myTable" class="table table-striped">
+			              <thead>
+			                <tr>
+			                  <th>Primeira Turma</th>
+			                  <th>Primeira Disciplina</th>
+			                  <th>Segunda Turma</th>
+			                  <th>Segunda Disciplina</th>
+			                  <th></th>
+			                </tr>
+			              </thead>
+			              <tbody>
+			                <tr th:each="empilhamento : ${empilhamentos}" >
+			                  <td th:inline="text">
+			                  		[[${empilhamento.primeiraTurma.curso.nome}]] - [[${empilhamento.primeiraTurma.semestre}]]
+			                  </td>
+			                  <td th:inline="text">
+			                  		[[${empilhamento.primeiraDisciplina.nome}]]
+			                  </td>
+			                 <td th:inline="text">
+			                  		[[${empilhamento.segundaTurma.curso.nome}]] - [[${empilhamento.segundaTurma.semestre}]]
+			                  </td>
+			                 <td th:inline="text">
+			                  		[[${empilhamento.segundaDisciplina.nome}]]
+			                  </td>
+			                  <td> 
+				              	<a th:href="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}"><button type="button" class="btn btn-inverse btn-sm waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </button></a>
+				                <a th:href="@{/empilhamentos/{id}/excluir(id=${empilhamento.id})}"><button type="button" class="btn btn-danger btn-sm waves-effect waves-light m-r-10 gp-btn-desvincular"><i class="fa fa-close"></i> Excluir </button></a>
+			                  </td>
+			                </tr> 
+			              </tbody>
+			            </table>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
-		
-		
 	</section>
 </html>

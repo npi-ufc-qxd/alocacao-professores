@@ -3,21 +3,17 @@ package ufc.quixada.npi.ap.controller;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Periodo.Status;
-import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.util.Constants;
 
@@ -27,10 +23,8 @@ public class PeriodoController {
 	
 	@Autowired
 	PeriodoService periodoService;
-	
-	
-	
-	@RequestMapping(path="/")
+
+	@RequestMapping(path = {"", "/"})
 	public ModelAndView index(){
 		ModelAndView mv = new ModelAndView(Constants.INDEX_PERIODO);
 		List<Periodo> periodos = periodoService.listaPeriodos();
@@ -59,9 +53,7 @@ public class PeriodoController {
 		
 		return mv;
 	}
-	
-	
-	
+
 	@RequestMapping(path="/{id}/detalhar")
 	public ModelAndView detalhar(@PathVariable ("id") Integer id){
 		ModelAndView mv = new ModelAndView(Constants.FORM_DETALHAR_PERIODO);

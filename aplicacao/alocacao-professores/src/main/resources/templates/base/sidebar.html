@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html 
+	lang="ptBR"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
 <!-- Left navbar-header -->
 <div class="navbar-default sidebar" role="navigation" th:fragment="sidebar">
    <div class="sidebar-nav navbar-collapse">
@@ -13,16 +20,17 @@
             <!-- /input-group -->
          </li>
          <li>
-            <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Ofertas <span class="fa arrow"></span> </span></a>
+            <a th:href="@{/ofertas}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Ofertas <span class="fa arrow"></span> </span></a>
          </li>
          <li>
-            <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Periodos <span class="fa arrow"></span> </span></a>
+            <a th:href="@{/periodos}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Periodos <span class="fa arrow"></span> </span></a>
          </li>
          <li>
-            <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Disciplinas <span class="fa arrow"></span> </span></a>
+            <a th:href="@{/disciplinas}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Disciplinas <span class="fa arrow"></span> </span></a>
          </li>
-         
+
       </ul>
    </div>
 </div>
 <!-- Left navbar-header end -->
+</html>
