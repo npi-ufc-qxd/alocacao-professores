@@ -38,12 +38,12 @@ public class Constants {
 	public static final String COMPARTILHAMENTO_REDIRECT_LISTAR = "redirect:/compartilhamentos";
 
 	// Periodo
-	public static final String PERIODO_CADASTRAR = "/periodos/cadastrar-periodo";
-	public static final String PERIODO_EDITAR = "/periodos/editar-periodo";
-	public static final String PERIODO_LISTAR  = "/periodos/listar-periodo";
-	public static final String PERIODO_DETALHAR = "/periodos/detalhar-periodo";
-	public static final String PERIODO_EXCLUIR = "/periodos/excluir-periodo";
-	public static final String PERIODO_REDIRECT_LISTAR = "redirect:/periodos/";
+	public static final String PERIODO_CADASTRAR = "periodo/cadastrar-periodo";
+	public static final String PERIODO_DETALHAR = "periodo/detalhar-periodo";
+	public static final String PERIODO_EDITAR = "periodo/editar-periodo";
+	public static final String PERIODO_EXCLUIR = "periodo/excluir-periodo";
+	public static final String PERIODO_LISTAR  = "periodo/listar-periodo";
+	public static final String PERIODO_REDIRECT_LISTAR = "redirect:/periodos";
 	
 	// Disciplina
 	public static final String DISCIPLINA_CADASTRAR_ = "disciplina/cadastrar-disciplina"; 
@@ -55,6 +55,6 @@ public class Constants {
 	public static final String EMPILHAMENTO_EDITAR = "empilhamento/editar-empilhamento";
 	public static final String EMPILHAMENTO_LISTAR = "empilhamento/listar-empilhamento";
 	public static final String EMPILHAMENTO_DETALHAR = "empilhamento/detalhar-empilhamento";
-	public static final String EMPILHAMENTO_REDIRECT_PAGINA_LISTAR = "redirect:/empilhamentos";
-	
+	public static final String EMPILHAMENTO_REDIRECT_LISTAR = "redirect:/empilhamentos";
+		
 }

@@ -15,7 +15,7 @@ public class Periodo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer id;	
 	
 	private String ano;
 	
@@ -78,8 +78,6 @@ public class Periodo {
 
 		public String getDescricao() {
 			return descricao;
-		}
-		
-	}
-	
+		}		
+	}	
 }

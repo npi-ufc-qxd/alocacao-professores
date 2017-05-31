@@ -74,7 +74,7 @@ public class EmpilhamentoController {
 		
 		empilhamentoService.salvarEmpilhamento(empilhamento);
 		
-		ModelAndView modelRetorno = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_PAGINA_LISTAR);
+		ModelAndView modelRetorno = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
 		return modelRetorno;
 	}
 	
@@ -102,7 +102,7 @@ public class EmpilhamentoController {
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(Empilhamento empilhamento){
 	
-		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_PAGINA_LISTAR);
+		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
 		try{
 			empilhamentoService.salvarEmpilhamento(empilhamento);
 		}catch(Exception e){
