@@ -18,12 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan(basePackages = { "br.ufc.quixada.npi.ldap" })
 public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
-	
-	// Utilizado para autenticação via banco de dados -
-//	@Autowired
-//	private UserDetailsService userDetailsService;
-	
-	// Utilizado para autenticação via ldap
+
 	@Autowired
 	@Qualifier("authenticationProviderAlocacaoProfessores")
 	private AuthenticationProvider provider;
@@ -34,22 +29,17 @@ public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/").authenticated()
 				.antMatchers("/js/**", "/css/**", "/img/**", "/plugins/**", "/bootstrap/**", "/less/**", "/**").permitAll()
-//				.antMatchers("/coordenacao/**").hasAuthority("COORDENACAO")
-//				.antMatchers("/direcao/**").hasAuthority("DIRECAO")
 				.antMatchers("/compartilhamentos/**").permitAll()
 				.anyRequest().authenticated()
 				.and().formLogin()
 				.loginProcessingUrl(login).loginPage(login).permitAll().and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl(login);
-
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// Utilizado para autenticação via ldap
 		auth.authenticationProvider(provider);
-		
-		// Utilizado para autenticação via banco de dados
-//		auth.userDetailsService(userDetailsService);
+
 	}
+	
 }

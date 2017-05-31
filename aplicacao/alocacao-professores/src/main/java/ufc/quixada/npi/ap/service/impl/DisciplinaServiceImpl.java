@@ -23,15 +23,12 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	
 	public void salvar(Disciplina disciplina) {
 		disciplinaRepository.save(disciplina);
-
-
 	}
 
 	@Override
 	public List<Disciplina> listarNaoArquivada() {
 
 		return disciplinaRepository.findByArquivadaFalse();
-
 	}
 
 	@Override
