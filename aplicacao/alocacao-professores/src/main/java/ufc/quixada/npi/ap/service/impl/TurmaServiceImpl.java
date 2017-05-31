@@ -13,7 +13,7 @@ import ufc.quixada.npi.ap.service.TurmaService;
 public class TurmaServiceImpl implements TurmaService {
 
 	@Autowired
-	TurmaRepository turmaRepository;
+	private TurmaRepository turmaRepository;
 	
 	@Override
 	public List<Turma> listarTurmas() {
