@@ -4,6 +4,6 @@ import ufc.quixada.npi.ap.model.Servidor;
 
 public interface PessoaService {
 
-	Servidor findServidor(String cpf);
+	public Servidor findServidor(String cpf);
 	
 }

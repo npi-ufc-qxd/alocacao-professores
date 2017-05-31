@@ -24,11 +24,11 @@ public class Constants {
 	public static final String PAGINA_ERRO_500 = "/error/500";
 	
 	// Ofertas
-	public static final String FORM_CADASTRAR_OFERTA = "/ofertas/cadastrar-oferta";
-	public static final String FORM_EDITAR_OFERTA = "/ofertas/editar-oferta";
-	public static final String LISTAR_OFERTA = "/ofertas/listar-oferta";
-	public static final String DETALHAR_OFERTA = "/ofertas/detalhar-oferta";
-	public static final String EXCLUIR_OFERTA = "/ofertas/excluir-oferta";
+	public static final String OFERTA_CADASTRAR = "/ofertas/cadastrar-oferta";
+	public static final String OFERTA_EDITAR = "/ofertas/editar-oferta";
+	public static final String OFERTA_LISTAR = "/ofertas/listar-oferta";
+	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";
+	public static final String OFERTA_EXCLUIR = "/ofertas/excluir-oferta";
 	
 	// Compartilhamento
 	public static final String COMPARTILHAMENTO_CADASTRAR = "compartilhamento/cadastrar-compartilhamento";
@@ -38,23 +38,23 @@ public class Constants {
 	public static final String COMPARTILHAMENTO_REDIRECT_LISTAR = "redirect:/compartilhamentos";
 
 	// Periodo
-	public static final String FORM_CADASTRAR_PERIODO = "/periodos/cadastrar-periodo";
-	public static final String FORM_DETALHAR_PERIODO = "/periodos/detalhar-periodo";
-	public static final String FORM_EDITAR_PERIODO = "/periodos/editar-periodo";
-	public static final String EXCLUIR_PERIODO = "/periodos/excluir-periodo";
-	public static final String INDEX_PERIODO  = "/periodos/index-periodo";
+	public static final String PERIODO_CADASTRAR = "/periodos/cadastrar-periodo";
+	public static final String PERIODO_EDITAR = "/periodos/editar-periodo";
+	public static final String PERIODO_LISTAR  = "/periodos/listar-periodo";
+	public static final String PERIODO_DETALHAR = "/periodos/detalhar-periodo";
+	public static final String PERIODO_EXCLUIR = "/periodos/excluir-periodo";
+	public static final String PERIODO_REDIRECT_LISTAR = "redirect:/periodos/";
 	
 	// Disciplina
-	public static final String CADASTRAR_DISCIPLINA = "disciplina/cadastrar-disciplina"; 
+	public static final String DISCIPLINA_CADASTRAR_ = "disciplina/cadastrar-disciplina"; 
 	public static final String DISCIPLINA_EDITAR = "disciplina/editar-disciplina";
 	public static final String DISCIPLINA_LISTAR = "disciplina/listar-disciplinas";
 
-	public static final String PAGINA_FORM_CADASTRAR_EMPILHAMENTO = "empilhamento/cadastrar-empilhamento";
-	public static final String PAGINA_FORM_EDITAR_EMPILHAMENTO = "empilhamento/editar-empilhamento";
-	public static final String PAGINA_LISTAR_EMPILHAMENTO = "empilhamento/listar-empilhamento";
-	public static final String PAGINA_DETALHAR_EMPILHAMENTO = "empilhamento/detalhar-empilhamento";
+	//Empilhamento
+	public static final String EMPILHAMENTO_CADASTRAR = "empilhamento/cadastrar-empilhamento";
+	public static final String EMPILHAMENTO_EDITAR = "empilhamento/editar-empilhamento";
+	public static final String EMPILHAMENTO_LISTAR = "empilhamento/listar-empilhamento";
+	public static final String EMPILHAMENTO_DETALHAR = "empilhamento/detalhar-empilhamento";
+	public static final String EMPILHAMENTO_REDIRECT_PAGINA_LISTAR = "redirect:/empilhamentos";
 	
-	// Redirects
-	public static final String REDIRECT_PAGINA_LISTAR_EMPILHAMENTO = "redirect:/empilhamentos";
-	public static final String PERIODO_REDIRECT_LISTAR_PERIODO = "redirect:/periodos/";
 }

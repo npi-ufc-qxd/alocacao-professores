@@ -5,5 +5,7 @@ import java.util.List;
 import ufc.quixada.npi.ap.model.Turma;
 
 public interface TurmaService {
-	List<Turma> listarTurmas();
+	
+	public List<Turma> listarTurmas();
+	
 }
