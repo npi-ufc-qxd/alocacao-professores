@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.util.Constants;
@@ -78,10 +80,15 @@ public class EmpilhamentoController {
 		return modelRetorno;
 	}
 	
-	@RequestMapping(path={"/{id}/excluir"})
-	public String excluirEmpilhamento(@PathVariable("id") Integer id){
-		empilhamentoService.excluirEmpilhamento(id);
-		return Constants.EMPILHAMENTO_REDIRECT_LISTAR;
+	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
+	public @ResponseBody boolean excluirEmpilhamento(@PathVariable(name = "id", required = true) Integer id){
+		try{
+			empilhamentoService.excluirEmpilhamento(id);
+		}catch(EmptyResultDataAccessException ex){
+			return false;
+		}
+		
+		return true;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
