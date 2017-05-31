@@ -56,8 +56,5 @@ public class Constants {
 	public static final String EMPILHAMENTO_LISTAR = "empilhamento/listar-empilhamento";
 	public static final String EMPILHAMENTO_DETALHAR = "empilhamento/detalhar-empilhamento";
 	public static final String EMPILHAMENTO_REDIRECT_PAGINA_LISTAR = "redirect:/empilhamentos";
-	
-	// Redirects
-	public static final String REDIRECT_PAGINA_LISTAR_EMPILHAMENTO = "redirect:/empilhamentos";
-	
+	public static final String REDIRECT_PAGINA_LISTAR_EMPILHAMENTO = "redirect:/empilhamentos";	
 }

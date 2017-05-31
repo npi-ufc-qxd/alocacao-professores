@@ -39,46 +39,32 @@ public class PeriodoController {
 		
 		return modelAndView;
 	}
-
-	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
-	public ModelAndView cadastrar(Periodo periodo){
-		ModelAndView mv = new ModelAndView(Constants.PERIODO_CADASTRAR);
-		mv.addObject("periodo", periodo);
-		
-		return mv;
-	}
-
+	
 	@ModelAttribute("status")
-	public List<Periodo.Status> todosStatus(){
+	public List<Periodo.Status> getAllStatus(){
 		return Arrays.asList(Periodo.Status.values());
 	}
-
+	
 	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
 	public ModelAndView cadastrarPeriodo(Periodo periodo){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_CADASTRAR);
-		modelAndView.addObject("periodo", periodo);
-		
+		modelAndView.addObject("periodo", periodo);		
 		return modelAndView;
 	}
-
+	
 	@RequestMapping( path="/cadastrar", method=RequestMethod.POST)
-	public ModelAndView adicionarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result, ModelAndView modelAndView){
-		
-		periodoValidator.validate(periodo, result);
-		
+	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result, ModelAndView modelAndView){		
+		periodoValidator.validate(periodo, result);		
 		if (result.hasErrors()){
-			modelAndView.setViewName(Constants.PERIODO_CADASTRAR);
-			
+			modelAndView.setViewName(Constants.PERIODO_CADASTRAR);			
 			return modelAndView;
-		}
-		
+		}		
 		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
 		periodo.setStatus(Status.ABERTA);
-		periodoService.salvar(periodo);
-		
+		periodoService.salvar(periodo);		
 		return modelAndView;
 	}
-
+	
 	@RequestMapping(path="/{id}/detalhar")
 	public ModelAndView detalhar(@PathVariable ("id") Integer id){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_DETALHAR);
@@ -91,23 +77,20 @@ public class PeriodoController {
 		periodoService.excluir(periodoService.getPeriodo(id));
 		return modelAndView;
 	}
-
+	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Integer id){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_EDITAR);
 		modelAndView.addObject("periodo", periodoService.getPeriodo(id));
 		return modelAndView;
-	}
+	}	
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
 	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @RequestParam("status") Status status ){
-		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);
-		
+		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);		
 		Periodo periodo = periodoService.getPeriodo(id);
-		periodo.setStatus(status);
-		
-		periodoService.salvar(periodo);		
-		
+		periodo.setStatus(status);		
+		periodoService.salvar(periodo);			
 		return modelAndView;
 	}
 

@@ -484,8 +484,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
-            <h3 class="box-title m-b-0">Cadastrar Período</h3>
-            
+            <h3 class="box-title m-b-0">Cadastrar Período</h3>           
             
             <form th:action="@{/periodos/cadastrar}" th:object="${periodo}" method="POST" class="form-horizontal">
               <div class="form-group">
@@ -501,9 +500,7 @@
                   <input type="text" id="semestre" name="semestre" class="form-control" th:field="*{semestre}"></input>
                   <span th:if = "${#fields.hasErrors('semestre')}" th:errors = "*{semestre}" class = "help-block with-errors"></span>
                 </div>
-
-              </div>     
-             
+              </div>         
                       
 
               <div class="text-right">
