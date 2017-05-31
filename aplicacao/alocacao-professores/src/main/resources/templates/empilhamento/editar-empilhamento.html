@@ -30,7 +30,7 @@
 					<form th:action="@{${'/empilhamentos/cadastrar'}}" method="POST"
 						th:object="${empilhamento}">
 						<div class="form-group">
-							<label>Disciplina A</label>
+							<label>Primeira Disciplina</label>
 							<div class="col-md-12">
 								<select th:field="*{primeiraDisciplina.id}"
 									id="disciplinaASelect" class="js-example-basic-multiple"
@@ -42,7 +42,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label>Turma A</label>
+							<label>Primeira Turma</label>
 							<div class="col-md-12">
 								<select th:field="*{primeiraTurma.id}" id="turmaASelect"
 									class="js-example-basic-multiple" name="primeiraTurma">
@@ -55,7 +55,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label>Disciplina B</label>
+							<label>Segunda Disciplina</label>
 							<div class="col-md-12">
 								<select th:field="*{segundaDisciplina.id}"
 									id="disciplinaBSelect" name="segundaDisciplina"
@@ -67,7 +67,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label>Turma B</label>
+							<label>Segunda Turma</label>
 							<div class="col-md-12">
 								<select th:field="*{segundaTurma.id}" id="turmaBSelect"
 									class="js-example-basic-multiple" name="segundaTurma">
