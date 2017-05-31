@@ -68,8 +68,6 @@ public class Periodo {
 		this.ofertas = ofertas;
 	}
 	
-	
-
 	public enum Status{
 		ABERTA("Aberta"), EM_ANALISE("Em análise"), CONSOLIDADA("consolidada");
 		
@@ -84,6 +82,5 @@ public class Periodo {
 		}
 		
 	}
+	
 }
-
-

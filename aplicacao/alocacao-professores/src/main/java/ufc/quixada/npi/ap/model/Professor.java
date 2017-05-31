@@ -67,5 +67,4 @@ public class Professor {
 		this.ofertas = ofertas;
 	}
 	
-	
 }

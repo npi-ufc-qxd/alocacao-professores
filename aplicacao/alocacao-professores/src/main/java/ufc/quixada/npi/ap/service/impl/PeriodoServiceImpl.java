@@ -13,7 +13,7 @@ import ufc.quixada.npi.ap.service.PeriodoService;
 public class PeriodoServiceImpl implements PeriodoService{
 	
 	@Autowired
-	PeriodoRepository periodoRepository;
+	private PeriodoRepository periodoRepository;
 	
 	@Override
 	public void salvar(Periodo periodo){
@@ -32,6 +32,3 @@ public class PeriodoServiceImpl implements PeriodoService{
 		return periodoRepository.findOne(id);
 	}
 }	
-	
-	
-

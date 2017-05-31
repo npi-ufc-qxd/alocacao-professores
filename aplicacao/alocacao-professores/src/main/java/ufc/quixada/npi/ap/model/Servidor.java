@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-//@EntityListeners(ServidorEntityListener.class)
 public class Servidor {
 
 	@Id

@@ -24,4 +24,5 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 								new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500")
 								));
 	}
+	
 }

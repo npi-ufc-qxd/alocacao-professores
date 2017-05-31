@@ -22,24 +22,24 @@ import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.PeriodoValidator;
 
 @Controller
-@RequestMapping(path="/periodo")
+@RequestMapping(path="/periodos")
 public class PeriodoController {
 	
 	@Autowired
 	PeriodoService periodoService;
-	
+
 	@Autowired
 	PeriodoValidator periodoValidator;
 	
-	
-	@RequestMapping(path="/")
-	public ModelAndView listar(){
-		ModelAndView mv = new ModelAndView(Constants.PERIODO_LISTAR);
+	@RequestMapping(path = {"", "/"})
+	public ModelAndView listarPeriodos(){
+		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_LISTAR);
 		List<Periodo> periodos = periodoService.listaPeriodos();
-		mv.addObject("periodos", periodos);
-		return mv;
+		modelAndView.addObject("periodos", periodos);
+		
+		return modelAndView;
 	}
-	
+
 	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
 	public ModelAndView cadastrar(Periodo periodo){
 		ModelAndView mv = new ModelAndView(Constants.PERIODO_CADASTRAR);
@@ -47,67 +47,68 @@ public class PeriodoController {
 		
 		return mv;
 	}
-	
+
 	@ModelAttribute("status")
 	public List<Periodo.Status> todosStatus(){
 		return Arrays.asList(Periodo.Status.values());
 	}
-	
+
+	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
+	public ModelAndView cadastrarPeriodo(Periodo periodo){
+		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_CADASTRAR);
+		modelAndView.addObject("periodo", periodo);
+		
+		return modelAndView;
+	}
+
 	@RequestMapping( path="/cadastrar", method=RequestMethod.POST)
-	public ModelAndView adicionarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result, ModelAndView model){
+	public ModelAndView adicionarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result, ModelAndView modelAndView){
 		
 		periodoValidator.validate(periodo, result);
 		
 		if (result.hasErrors()){
-			model.setViewName(Constants.PERIODO_CADASTRAR);
+			modelAndView.setViewName(Constants.PERIODO_CADASTRAR);
 			
-			return model;
+			return modelAndView;
 		}
 		
-		model.setViewName(Constants.PERIODO_REDIRECT_LISTAR_PERIODO);
-		
+		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
 		periodo.setStatus(Status.ABERTA);
 		periodoService.salvar(periodo);
 		
-		return model;
+		return modelAndView;
 	}
-	
-	
-	
+
 	@RequestMapping(path="/{id}/detalhar")
 	public ModelAndView detalhar(@PathVariable ("id") Integer id){
-		ModelAndView mv = new ModelAndView(Constants.PERIODO_DETALHAR);
-		return mv;
+		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_DETALHAR);
+		return modelAndView;
 	}
 	
 	@RequestMapping(path="/{id}/excluir")
 	public ModelAndView excluir(@PathVariable ("id") Integer id){
-		ModelAndView mv = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR_PERIODO);
-		List<Periodo> periodos = periodoService.listaPeriodos();
-		for (Periodo periodo : periodos) {
-			if(periodo.getId()==id)
-				periodoService.excluir(periodo);
-		}
-		return mv;
+		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);
+		periodoService.excluir(periodoService.getPeriodo(id));
+		return modelAndView;
 	}
 
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Integer id){
-		ModelAndView mv = new ModelAndView(Constants.PERIODO_EDITAR);
-		mv.addObject("periodo", periodoService.getPeriodo(id));
-		return mv;
+		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_EDITAR);
+		modelAndView.addObject("periodo", periodoService.getPeriodo(id));
+		return modelAndView;
 	}
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
 	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @RequestParam("status") Status status ){
-		ModelAndView mv = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR_PERIODO);
+		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);
 		
 		Periodo periodo = periodoService.getPeriodo(id);
 		periodo.setStatus(status);
 		
 		periodoService.salvar(periodo);		
 		
-		return mv;
+		return modelAndView;
 	}
 
 }
