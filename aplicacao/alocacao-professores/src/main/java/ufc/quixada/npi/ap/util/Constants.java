@@ -51,10 +51,10 @@ public class Constants {
 	public static final String DISCIPLINA_LISTAR = "disciplina/listar-disciplinas";
 
 	//Empilhamento
-	public static final String EMPILHAMENTO_CADASTRAR = "empilhamento/cadastrar-empilhamento";
-	public static final String EMPILHAMENTO_EDITAR = "empilhamento/editar-empilhamento";
-	public static final String EMPILHAMENTO_LISTAR = "empilhamento/listar-empilhamento";
-	public static final String EMPILHAMENTO_DETALHAR = "empilhamento/detalhar-empilhamento";
-	public static final String EMPILHAMENTO_REDIRECT_PAGINA_LISTAR = "redirect:/empilhamentos";
+	public static final String PAGINA_FORM_CADASTRAR_EMPILHAMENTO = "empilhamento/cadastrar-empilhamento";
+	public static final String PAGINA_FORM_EDITAR_EMPILHAMENTO = "empilhamento/editar-empilhamento";
+	public static final String PAGINA_LISTAR_EMPILHAMENTO = "empilhamento/listar-empilhamento";
+	public static final String PAGINA_DETALHAR_EMPILHAMENTO = "empilhamento/detalhar-empilhamento";
+	public static final String REDIRECT_PAGINA_LISTAR_EMPILHAMENTO = "redirect:/empilhamentos";
 	
 }
