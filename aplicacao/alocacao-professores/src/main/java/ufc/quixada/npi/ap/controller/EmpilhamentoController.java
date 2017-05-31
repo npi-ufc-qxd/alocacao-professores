@@ -82,7 +82,7 @@ public class EmpilhamentoController {
 	@RequestMapping(path={"/{id}/excluir"})
 	public String excluirEmpilhamento(@PathVariable("id") Integer id){
 		empilhamentoService.excluirEmpilhamento(id);
-		return Constants.EMPILHAMENTO_LISTAR;
+		return Constants.EMPILHAMENTO_REDIRECT_LISTAR;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
