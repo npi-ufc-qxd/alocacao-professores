@@ -48,7 +48,7 @@ public class Constants {
 	public static final String CADASTRAR_DISCIPLINA = "disciplina/cadastrar-disciplina"; 
 	public static final String DISCIPLINA_EDITAR = "disciplina/editar-disciplina";
 	public static final String DISCIPLINA_LISTAR = "disciplina/listar-disciplinas";
-	
+
 	public static final String PAGINA_FORM_CADASTRAR_EMPILHAMENTO = "empilhamento/cadastrar-empilhamento";
 	public static final String PAGINA_FORM_EDITAR_EMPILHAMENTO = "empilhamento/editar-empilhamento";
 	public static final String PAGINA_LISTAR_EMPILHAMENTO = "empilhamento/listar-empilhamento";
@@ -57,4 +57,5 @@ public class Constants {
 	// Redirects
 	public static final String REDIRECT_PAGINA_LISTAR_EMPILHAMENTO = "redirect:/empilhamentos";
 	public static final String PERIODO_REDIRECT_LISTAR_PERIODO = "redirect:/periodos/";
+	public static final String REDIRECT_LISTAR_DISCIPLINA = "redirect:/disciplinas/";
 }

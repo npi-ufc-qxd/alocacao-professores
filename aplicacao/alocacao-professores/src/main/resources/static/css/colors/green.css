@@ -1,4 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,500,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900);
+@import url(https://fonts.googleapis.com/css?family=Poppins:400,500,300,600,700);
 /*Theme Colors*/
 /*bootstrap Color*/
 /*Normal Color*/
@@ -49,12 +51,6 @@ body {
 .logo i {
   color: #ffffff;
 }
-.top-left-part .light-logo {
-  display: inline-block;
-}
-.top-left-part .dark-logo {
-  display: none;
-}
 .navbar-header {
   background: #00c292;
 }
@@ -84,12 +80,16 @@ body {
   color: #54667a;
   border-left: 0px solid #fff;
 }
+.nav-second-level > li > a:hover,
+.nav-second-level > li > a:focus {
+  background-color: #f7fafc !important;
+}
 #side-menu > li > a:hover,
 #side-menu > li > a:focus {
-  background: rgba(0, 0, 0, 0.03);
+  background-color: #f7fafc !important;
 }
 #side-menu > li > a.active {
-  border-left: 3px solid #00c292;
+  border-bottom: 2px solid #00c292;
   color: #2b2b2b;
   font-weight: 500;
 }
@@ -98,6 +98,7 @@ body {
 }
 #side-menu ul > li > a:hover {
   color: #00c292;
+  background: none;
 }
 #side-menu ul > li > a.active {
   color: #2b2b2b;
@@ -106,12 +107,18 @@ body {
 .sidebar #side-menu .user-pro .nav-second-level a:hover {
   color: #00c292;
 }
+.fix-sidebar .top-left-part {
+  background: #00c292;
+}
+#side-menu .nav-second-level li:hover > a {
+  color: #00c292;
+}
 /*themecolor*/
 .bg-theme {
-  background-color: #6e8680 !important;
+  background-color: #fb9678 !important;
 }
 .bg-theme-dark {
-  background-color: #00c292 !important;
+  background-color: #01c0c8 !important;
 }
 /*Chat widget*/
 .chat-list .odd .chat-text {

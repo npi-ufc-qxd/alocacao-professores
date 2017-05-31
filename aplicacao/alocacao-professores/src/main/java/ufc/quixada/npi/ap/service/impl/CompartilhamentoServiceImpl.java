@@ -20,8 +20,17 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 		compartilhamentoRepository.save(compartilhamento);
 	}
 	
+	public Compartilhamento findCompartilhamento(Integer id){
+		return compartilhamentoRepository.findOne(id);
+	}
+	
 	@Override
 	public List<Compartilhamento> findAllCompartilhamentos() {
 		return compartilhamentoRepository.findAll();
+	}
+	
+	@Override
+	public void excluir(Integer id) {
+		compartilhamentoRepository.delete(id);
 	}
 }

@@ -39,7 +39,7 @@ public class EmpilhamentoController {
 	@Autowired
 	EmpilhamentoValidator empilhamentoValidator;
 	
-	@RequestMapping(path = {""})
+	@RequestMapping(path = {"", "/"})
 	public ModelAndView listarEmpilhamentos(){
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
 		
@@ -72,29 +72,36 @@ public class EmpilhamentoController {
 			return model;
 		}
 		
-		empilhamentoService.cadastarEmpilhamento(empilhamento);
+		empilhamentoService.salvarEmpilhamento(empilhamento);
 		
 		ModelAndView modelRetorno = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
 		return modelRetorno;
 	}
 	
+	//
 	@RequestMapping(path={"/{id}/excluir"})
-	public String excluirEmpilhamento(@RequestParam Integer id){
+	public String excluirEmpilhamento(@PathVariable("id") Integer id){
 		empilhamentoService.excluirEmpilhamento(id);
 		return Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public String editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
-		return Constants.PAGINA_FORM_EDITAR_EMPILHAMENTO;
+	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
+		ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_EDITAR_EMPILHAMENTO);
+		model.addObject("empilhamento", empilhamentoService.visualizarEmpilhamento(id));
+		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(
-			Integer primeiraTurma, Integer primeiraDisciplina, 
-			Integer segundaTurma, Integer segundaDisciplina){
-		
+	public ModelAndView editarCompartilhamento(Empilhamento empilhamento){
+	
 		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
+		try{
+			empilhamentoService.salvarEmpilhamento(empilhamento);
+		}catch(Exception e){
+			model.addObject("erro", e.getMessage());
+		}
+		
 		return model;
 	}
 	
