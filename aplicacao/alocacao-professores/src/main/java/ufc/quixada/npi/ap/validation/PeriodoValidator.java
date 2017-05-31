@@ -9,14 +9,12 @@ import ufc.quixada.npi.ap.model.Periodo;
 public class PeriodoValidator implements org.springframework.validation.Validator{
 
 	@Override
-	public boolean supports(Class<?> arg0) {
-		// TODO Auto-generated method stub
+	public boolean supports(Class<?> arg0) {		
 		return Periodo.class.isAssignableFrom(arg0);
 	}
 	
 	@Override
-	public void validate(Object objeto, Errors error) {
-		// TODO Auto-generated method stub
+	public void validate(Object objeto, Errors error) {		
 		Periodo periodo = (Periodo) objeto;
 		validateAno(error, periodo.getAno(), "ano","anoNull");
 		validateSemestre(error, periodo.getSemestre(), "semestre", "semestreNull");		
