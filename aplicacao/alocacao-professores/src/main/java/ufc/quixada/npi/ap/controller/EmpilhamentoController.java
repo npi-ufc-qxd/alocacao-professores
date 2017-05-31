@@ -39,7 +39,7 @@ public class EmpilhamentoController {
 	@Autowired
 	EmpilhamentoValidator empilhamentoValidator;
 	
-	@RequestMapping(path = {"", "/"})
+	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
 		
@@ -78,16 +78,24 @@ public class EmpilhamentoController {
 		return modelRetorno;
 	}
 	
+	//
 	@RequestMapping(path={"/{id}/excluir"})
 	public String excluirEmpilhamento(@PathVariable("id") Integer id){
 		empilhamentoService.excluirEmpilhamento(id);
-		return Constants.EMPILHAMENTO_REDIRECT_PAGINA_LISTAR;
+		return Constants.EMPILHAMENTO_LISTAR;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public ModelAndView editarEmpilhamento(@PathVariable("id") Integer id){
+	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
+		
+		List<Disciplina> disciplinas = disciplinaService.listar();
+		List<Turma> turmas = turmaService.listarTurmas();
+		Empilhamento empilhamentos = empilhamentoService.visualizarEmpilhamento(id);
+		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
-		model.addObject("empilhamento", empilhamentoService.visualizarEmpilhamento(id));
+		model.addObject("empilhamento", empilhamentos);
+		model.addObject("disciplinas", disciplinas);
+		model.addObject("turmas", turmas);
 		return model;
 	}
 	
