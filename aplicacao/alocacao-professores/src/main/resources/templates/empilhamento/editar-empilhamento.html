@@ -9,63 +9,90 @@
 </head>
 
 <section layout:fragment="conteudo">
-	<form th:action="@{${'/empilhamentos/cadastrar'}}" method="POST" th:object = "${empilhamento}">
-		<div class="form-group">
+
+	<div class="row bg-title">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h4 class="page-title">Empilhamentos</h4>
+		</div>
+		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+			<a href="/empilhamentos/cadastrar"
+				class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+				class="fa fa-plus" aria-hidden="true"></i> Novo Empilhamento</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="white-box">
 				<h3 class="box-title m-b-0">Editar Empilhamento</h3>
-            	<label>Disciplina A</label>
-            	<div class="col-md-12">
-	              	<select th:field="*{primeiraDisciplina.id}" id="disciplinaASelect" class="js-example-basic-multiple" name="primeiraDisciplina">             		
-	                	<option th:each ="disciplina : ${disciplinas}" 
-	                	    th:value = "${disciplina.id}"
-	                        th:text = "${disciplina.nome}"></option>
-					</select>
-					<span th:if="${#fields.hasErrors('primeiraDisciplina.id')}"
-					      th:error="*{primeiraDisciplina.id}"></span>
+				<div class="table-responsive">
+
+					<form th:action="@{${'/empilhamentos/cadastrar'}}" method="POST"
+						th:object="${empilhamento}">
+						<div class="form-group">
+							<label>Primeira Disciplina</label>
+							<div class="col-md-12">
+								<select th:field="*{primeiraDisciplina.id}"
+									id="disciplinaASelect" class="js-example-basic-multiple"
+									name="primeiraDisciplina">
+									<option th:each="disciplina : ${disciplinas}"
+										th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+								</select> <span th:if="${#fields.hasErrors('primeiraDisciplina.id')}"
+									th:error="*{primeiraDisciplina.id}"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>Primeira Turma</label>
+							<div class="col-md-12">
+								<select th:field="*{primeiraTurma.id}" id="turmaASelect"
+									class="js-example-basic-multiple" name="primeiraTurma">
+									<option th:each="turma : ${turmas}" th:value="${turma.id}"
+										th:inline="text">[[${turma.curso.nome}]] -
+										[[${turma.semestre}]]</option>
+								</select> <span th:if="${#fields.hasErrors('primeiraTurma.id')}"
+									th:error="*{primeiraTurma.id}"></span>
+
+							</div>
+						</div>
+						<div class="form-group">
+							<label>Segunda Disciplina</label>
+							<div class="col-md-12">
+								<select th:field="*{segundaDisciplina.id}"
+									id="disciplinaBSelect" name="segundaDisciplina"
+									class="js-example-basic-multiple">
+									<option th:each="disciplina : ${disciplinas}"
+										th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+								</select> <span th:if="${#fields.hasErrors('segundaDisciplina.id')}"
+									th:error="*{segundaDisciplina.id}"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>Segunda Turma</label>
+							<div class="col-md-12">
+								<select th:field="*{segundaTurma.id}" id="turmaBSelect"
+									class="js-example-basic-multiple" name="segundaTurma">
+									<option th:each="turma : ${turmas}" th:value="${turma.id}"
+										th:inline="text">[[${turma.curso.nome}]] -
+										[[${turma.semestre}]]</option>
+								</select> <span th:if="${#fields.hasErrors('segundaTurma.id')}"
+									th:error="*{segundaTurma.id}"></span>
+							</div>
+						</div>
+						<div class="text-right">
+							<button type="submit"
+								class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
+							<button type="button"
+								class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+						</div>
+					</form>
 				</div>
-             </div>
-             <div class="form-group">
-              <label>Turma A</label>
-              <div class="col-md-12">
-	              <select th:field="*{primeiraTurma.id}" id="turmaASelect" class="js-example-basic-multiple" name="primeiraTurma">
-	                	<option th:each ="turma : ${turmas}" 
-	                	    th:value = "${turma.id}"
-	                        th:inline="text">[[${turma.curso.nome}]] - [[${turma.semestre}]]</option>
-					</select>
-					<span th:if="${#fields.hasErrors('primeiraTurma.id')}"
-					      th:error="*{primeiraTurma.id}"></span>
-					
-				</div>
-             </div>
-            <div class="form-group">
-              <label>Disciplina B</label>  
-              <div class="col-md-12">    
-	              <select th:field="*{segundaDisciplina.id}" id="disciplinaBSelect" name="segundaDisciplina" class="js-example-basic-multiple">
-	                	<option th:each ="disciplina : ${disciplinas}" 
-	                	    th:value = "${disciplina.id}"
-	                        th:text = "${disciplina.nome}"></option>
-					</select>
-					<span th:if="${#fields.hasErrors('segundaDisciplina.id')}"
-					      th:error="*{segundaDisciplina.id}"></span>
-				</div>
-            </div>
-            <div class="form-group">
-              <label>Turma B</label>
-              <div class="col-md-12">
-	              <select th:field="*{segundaTurma.id}" id="turmaBSelect" class="js-example-basic-multiple" name="segundaTurma">           		
-	                	<option th:each ="turma : ${turmas}" 
-	                	    th:value = "${turma.id}"
-	                        th:inline="text">[[${turma.curso.nome}]] - [[${turma.semestre}]]</option>
-					</select>
-					<span th:if="${#fields.hasErrors('segundaTurma.id')}"
-					      th:error="*{segundaTurma.id}"></span>
-				</div>
-             </div>
-              <div class="text-right">
-				<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
-				<button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
 			</div>
-	</form>
-	<!--end container-->
+		</div>
+	</div>
+
+
+
+
 </section>
 <section layout:fragment="js">
 	<script type="text/javascript">		
