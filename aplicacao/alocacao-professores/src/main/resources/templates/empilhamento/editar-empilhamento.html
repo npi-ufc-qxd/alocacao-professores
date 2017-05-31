@@ -22,8 +22,7 @@
 				<h3 class="box-title m-b-0">Editar Empilhamento</h3>
 				<div class="table-responsive">
 
-					<form th:action="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}" method="POST"
-						th:object="${empilhamento}">
+					<form th:action="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}" method="POST" th:object = "${empilhamento}">
 						<div class="form-group">
 							<label>Primeira Disciplina</label>
 							<div class="col-md-12">
@@ -77,7 +76,7 @@
 							<button type="button"
 								class="btn btn-inverse waves-effect waves-light">Cancelar</button>
 							<button type="submit"
-								class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
+								class="btn btn-success waves-effect waves-light m-r-10">Salvar</button>
 						</div>
 					</form>
 				</div>
