@@ -31,6 +31,4 @@ public class PeriodoServiceImpl implements PeriodoService{
 	public Periodo getPeriodo(Integer id){
 		return periodoRepository.findOne(id);
 	}
-	
-}
-
+}	
