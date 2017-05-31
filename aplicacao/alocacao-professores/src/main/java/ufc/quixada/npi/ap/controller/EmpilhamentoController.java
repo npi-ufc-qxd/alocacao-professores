@@ -43,7 +43,7 @@ public class EmpilhamentoController {
 	public ModelAndView listarEmpilhamentos(){
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
 		
-		ModelAndView model = new ModelAndView(Constants.PAGINA_LISTAR_EMPILHAMENTO);
+		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR);
 		model.addObject("empilhamentos", empilhamentos);
 		
 		return model;
@@ -51,7 +51,7 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path={"/cadastrar"}, method=RequestMethod.GET)
 	public ModelAndView cadastrarEmpilhamento(){
-		ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_CADASTRAR_EMPILHAMENTO);
+		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
 		
 		List<Disciplina> disciplinas = disciplinaService.listar();
 		List<Turma> turmas = turmaService.listarTurmas();
@@ -68,26 +68,25 @@ public class EmpilhamentoController {
 		empilhamentoValidator.validate(empilhamento, bindingResult);
 		
 		if(bindingResult.hasErrors()){
-			ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_CADASTRAR_EMPILHAMENTO);
+			ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
 			return model;
 		}
 		
 		empilhamentoService.salvarEmpilhamento(empilhamento);
 		
-		ModelAndView modelRetorno = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
+		ModelAndView modelRetorno = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_PAGINA_LISTAR);
 		return modelRetorno;
 	}
 	
-	//
 	@RequestMapping(path={"/{id}/excluir"})
 	public String excluirEmpilhamento(@PathVariable("id") Integer id){
 		empilhamentoService.excluirEmpilhamento(id);
-		return Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO;
+		return Constants.EMPILHAMENTO_REDIRECT_PAGINA_LISTAR;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
-		ModelAndView model = new ModelAndView(Constants.PAGINA_FORM_EDITAR_EMPILHAMENTO);
+	public ModelAndView editarEmpilhamento(@PathVariable("id") Integer id){
+		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
 		model.addObject("empilhamento", empilhamentoService.visualizarEmpilhamento(id));
 		return model;
 	}
@@ -95,7 +94,7 @@ public class EmpilhamentoController {
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(Empilhamento empilhamento){
 	
-		ModelAndView model = new ModelAndView(Constants.REDIRECT_PAGINA_LISTAR_EMPILHAMENTO);
+		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_PAGINA_LISTAR);
 		try{
 			empilhamentoService.salvarEmpilhamento(empilhamento);
 		}catch(Exception e){
@@ -109,7 +108,7 @@ public class EmpilhamentoController {
 	public ModelAndView visualizarEmpilhamento(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
 		Empilhamento empilhamento =  empilhamentoService.visualizarEmpilhamento(id);
 		
-		ModelAndView model = new ModelAndView(Constants.PAGINA_DETALHAR_EMPILHAMENTO);
+		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_DETALHAR);
 		model.addObject("empilhamento", empilhamento);
 		model.addObject("erro", erro);
 		

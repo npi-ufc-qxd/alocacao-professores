@@ -9,4 +9,5 @@ public class AlocacaoProfessoresApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AlocacaoProfessoresApplication.class, args);
 	}
+	
 }

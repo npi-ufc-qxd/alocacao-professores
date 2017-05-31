@@ -7,8 +7,11 @@ import ufc.quixada.npi.ap.model.Periodo;
 public interface PeriodoService {
 
 	void salvar(Periodo periodo);
-	List<Periodo> listaPeriodos();
-	Periodo getPeriodo(Integer id);
+	
+	public List<Periodo> listaPeriodos();
+	
+	public Periodo getPeriodo(Integer id);
+	
 	void excluir(Periodo periodo);
 	
 }
