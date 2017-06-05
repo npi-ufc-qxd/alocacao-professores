@@ -31,7 +31,7 @@ public class PeriodoController {
 	@Autowired
 	PeriodoValidator periodoValidator;
 	
-	@RequestMapping(path = {"", "/"})
+	@RequestMapping(path = {"","/"})
 	public ModelAndView listarPeriodos(){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_LISTAR);
 		List<Periodo> periodos = periodoService.listaPeriodos();
@@ -46,7 +46,7 @@ public class PeriodoController {
 	}
 	
 	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
-	public ModelAndView cadastrarPeriodo(Periodo periodo){
+	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") Periodo periodo){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_CADASTRAR);
 		modelAndView.addObject("periodo", periodo);		
 		return modelAndView;
@@ -79,7 +79,7 @@ public class PeriodoController {
 	}
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.GET)
-	public ModelAndView editar(@PathVariable ("id") Integer id){
+	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_EDITAR);
 		modelAndView.addObject("periodo", periodoService.getPeriodo(id));
 		return modelAndView;
