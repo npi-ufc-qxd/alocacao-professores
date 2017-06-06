@@ -55,7 +55,7 @@ public class EmpilhamentoController {
 	public ModelAndView cadastrarEmpilhamento(){
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
 		
-		List<Disciplina> disciplinas = disciplinaService.listar();
+		List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
 		List<Turma> turmas = turmaService.listarTurmas();
 		
 		model.addObject("disciplinas", disciplinas);
