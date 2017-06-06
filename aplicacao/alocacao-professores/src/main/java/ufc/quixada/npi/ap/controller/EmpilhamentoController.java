@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.ap.validation.EmpilhamentoValidator;
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Empilhamento;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
 import ufc.quixada.npi.ap.service.TurmaService;
-import ufc.quixada.npi.ap.util.Constants;
-import ufc.quixada.npi.ap.validation.EmpilhamentoValidator;
 
 @Controller
 @RequestMapping(path="/empilhamentos")
