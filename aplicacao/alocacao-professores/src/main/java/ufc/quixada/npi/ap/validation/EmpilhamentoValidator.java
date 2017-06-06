@@ -20,18 +20,13 @@ public class EmpilhamentoValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		Empilhamento empilhamento = (Empilhamento) target;
+		
 		validateDisciplinaNotNull(errors, empilhamento.getPrimeiraDisciplina(), "primeiraDisciplina.id", "Campo obrigatório");
 		validateTurmaNotNull(errors, empilhamento.getPrimeiraTurma(), "primeiraTurma.id", "Campo obrigatório");
 		validateDisciplinaNotNull(errors, empilhamento.getSegundaDisciplina(), "segundaDisciplina.id", "Campo obrigatório");
 		validateTurmaNotNull(errors, empilhamento.getSegundaTurma(), "segundaTurma.id", "Campo obrigatório");
 	}
-
-	void validateStrings(Errors erros, String object, String field, String message) {
-		if (object.isEmpty() || object.equals("")) {
-			erros.rejectValue(field, field, message);
-		}
-	}
-
+	
 	void validateDisciplinaNotNull(Errors erros, Disciplina object, String field, String message) {
 		if (object == null || object.getId() == null || object.getId() <= 0){
 			erros.rejectValue(field, field, message);

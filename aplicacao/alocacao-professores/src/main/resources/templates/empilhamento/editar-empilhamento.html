@@ -9,47 +9,83 @@
 	</head>
 	
 	<section layout:fragment="conteudo">
+	<div class="row bg-title">
 		<h3 class="box-title m-b-0">Editar Empilhamento</h3>
-		<form class = "form-horizontal" th:action="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}" method="POST" th:object="${empilhamento}">
-			<div class="form-group" th:classappend= "${#fields.hasErrors('primeiraDisciplina.id')}? has-error">
-				<label for = "disciplinaASelect" class = "control-label">Disciplina A</label>
-					<select th:field="*{primeiraDisciplina.id}" id="disciplinaASelect" class="form-control" name="primeiraDisciplina">
-						<option value="">Selecione </option>
-						<option th:each="disciplina : ${disciplinas}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
-					</select>
-					<span th:if="${#fields.hasErrors('primeiraDisciplina.id')}" th:errors="*{primeiraDisciplina.id}" class = "help-block with-errors"></span>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="white-box">
+				<form class="form-horizontal"
+					th:action="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}"
+					method="POST" th:object="${empilhamento}">
+					<div class="form-group" th:classappend="${#fields.hasErrors('primeiraDisciplina.id')}? has-error">
+						<label for="disciplinaASelect" class="control-label m-l-10">Disciplina A</label>
+						<div class="col-md-12">
+							<select th:field="*{primeiraDisciplina.id}"
+								id="disciplinaASelect" class="form-control"
+								name="primeiraDisciplina">
+								<option value="">Selecione uma opção</option>
+								<option th:each="disciplina : ${disciplinasNaoArquivadas}"
+									th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+							</select> 
+							<span th:if="${#fields.hasErrors('primeiraDisciplina.id')}"
+								th:errors="*{primeiraDisciplina.id}"
+								class="help-block with-errors"></span>
+						</div>
+					</div>
+					<div class="form-group" th:classappend="${#fields.hasErrors('primeiraTurma.id')}? has-error">
+						<label for="turmaASelect" class="control-label m-l-10">Turma A</label>
+						<div class="col-md-12">
+							<select th:field="*{primeiraTurma.id}"
+								id="turmaASelect" class="form-control select2"
+								name="primeiraTurma">
+								<option value="">Selecione uma opção</option>
+								<option th:each="turma : ${turmas}" th:value="${turma.id}"
+									th:inline="text">[[${turma.curso.nome}]] -
+									[[${turma.semestre}]]</option>
+							</select>
+							<span th:if="${#fields.hasErrors('primeiraTurma.id')}"
+								th:errors="*{primeiraTurma.id}" class="help-block with-errors"></span>
+						</div>
+					</div>
+					<div class="form-group" th:classappend="${#fields.hasErrors('segundaDisciplina.id')}? has-error">
+						<label for="disciplinaBSelect" class="control-label m-l-10">Disciplina B</label>
+						<div class="col-md-12">
+							<select
+								th:field="*{segundaDisciplina.id}" id="disciplinaBSelect"
+								name="segundaDisciplina" class="form-control select2">
+								<option value="">Selecione uma opção</option>
+								<option th:each="disciplina : ${disciplinasNaoArquivadas}"
+									th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+							</select>
+							<span th:if="${#fields.hasErrors('segundaDisciplina.id')}"
+								th:errors="*{segundaDisciplina.id}"
+								class="help-block with-errors"></span>
+						</div>
+					</div>
+					<div class="form-group" th:classappend="${#fields.hasErrors('segundaTurma.id')}? has-error">
+						<label for="turmaBSelect" class="control-label m-l-10">Turma B</label>
+						<div class="col-md-12">
+							<select th:field="*{segundaTurma.id}"
+								id="turmaBSelect" class="form-control select2"
+								name="segundaTurma">
+								<option value="">Selecione uma opção</option>
+								<option th:each="turma : ${turmas}" th:value="${turma.id}"
+									th:inline="text">[[${turma.curso.nome}]] -
+									[[${turma.semestre}]]</option>
+							</select> <span th:if="${#fields.hasErrors('segundaTurma.id')}"
+								th:errors="*{segundaTurma.id}" class="help-block with-errors"></span>
+						</div>
+					</div>
+					<div class="text-right">
+						<a th:href="@{/empilhamentos}" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+						<button type="submit" class="btn btn-success waves-effect waves-light">Editar</button>
+					</div>
+				</form>
 			</div>
-			<div class="form-group" th:classappend= "${#fields.hasErrors('primeiraTurma.id')}? has-error">
-				<label>Turma A</label>
-					<select th:field="*{primeiraTurma.id}" id="turmaASelect"
-						class="form-control select2" name="primeiraTurma">
-						<option value="">Selecione </option>
-						<option th:each="turma : ${turmas}" th:value="${turma.id}" th:inline="text">[[${turma.curso.nome}]] - [[${turma.semestre}]]</option>
-					</select> 
-					<span th:if="${#fields.hasErrors('primeiraTurma.id')}" th:errors="*{primeiraTurma.id}" class = "help-block with-errors"></span>
-			</div>
-			<div class="form-group" th:classappend= "${#fields.hasErrors('segundaDisciplina.id')}? has-error">
-				<label>Disciplina B</label>
-					<select th:field="*{segundaDisciplina.id}" id="disciplinaBSelect" name="segundaDisciplina" class="form-control select2">
-						<option value="">Selecione </option>
-						<option th:each="disciplina : ${disciplinas}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
-					</select> 
-					<span th:if="${#fields.hasErrors('segundaDisciplina.id')}" th:errors="*{segundaDisciplina.id}" class = "help-block with-errors"></span>
-			</div>
-			<div class="form-group" th:classappend= "${#fields.hasErrors('segundaTurma.id')}? has-error">
-				<label>Turma B</label>
-					<select th:field="*{segundaTurma.id}" id="turmaBSelect" class="form-control select2" name="segundaTurma">
-					<option value="">Selecione </option>
-						<option th:each="turma : ${turmas}" th:value="${turma.id}" th:inline="text">[[${turma.curso.nome}]] - [[${turma.semestre}]]</option>
-					</select>
-					<span th:if="${#fields.hasErrors('segundaTurma.id')}" th:errors="*{segundaTurma.id}" class = "help-block with-errors"></span>
-			</div>
-			<div class="text-right">
-				<button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
-				<button type="submit" class="btn btn-success waves-effect waves-light">Editar</button>
-			</div>
-		</form>
-	</section>
+		</div>
+	</div>
+</section>
 	<section layout:fragment="js">
 		<script type="text/javascript">		
 			$("#disciplinaASelect").select2();

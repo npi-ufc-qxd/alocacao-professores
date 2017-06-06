@@ -46,11 +46,6 @@ public class EmpilhamentoController {
 		return turmaService.listarTurmas();
 	}
 	
-	@ModelAttribute("disciplinas")
-	public List<Disciplina> todasDisciplinas(){
-		return disciplinaService.listarNaoArquivada();
-	}
-	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
@@ -65,6 +60,11 @@ public class EmpilhamentoController {
 	public ModelAndView cadastrarEmpilhamento(){
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
 		
+		List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
+		List<Turma> turmas = turmaService.listarTurmas();
+		
+		model.addObject("disciplinas", disciplinas);
+		model.addObject("turmas", turmas);
 		model.addObject("empilhamento", new Empilhamento());
 		
 		return model;
@@ -98,12 +98,14 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
 	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
-		Empilhamento empilhamentos = empilhamentoService.visualizarEmpilhamento(id);
+		List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
+		Empilhamento empilhamento = empilhamentoService.visualizarEmpilhamento(id);
 		
-		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
-		model.addObject("empilhamento", empilhamentos);
+		ModelAndView modelAndView = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
+		modelAndView.addObject("disciplinasNaoArquivadas", disciplinas);
+		modelAndView.addObject("empilhamento", empilhamento);
 		
-		return model;
+		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
@@ -115,6 +117,9 @@ public class EmpilhamentoController {
 		
 		if (bindingResult.hasErrors()){
 			modelAndView.setViewName(Constants.EMPILHAMENTO_EDITAR);
+			
+			List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
+			modelAndView.addObject("disciplinasNaoArquivadas	", disciplinas);
 			
 			return modelAndView;
 		}
