@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import ufc.quixada.npi.ap.util.Constants;
-import ufc.quixada.npi.ap.validation.EmpilhamentoValidator;
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Empilhamento;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
 import ufc.quixada.npi.ap.service.TurmaService;
+import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.ap.validation.EmpilhamentoValidator;
 
 @Controller
 @RequestMapping(path="/empilhamentos")
@@ -41,6 +41,16 @@ public class EmpilhamentoController {
 	@Autowired
 	EmpilhamentoValidator empilhamentoValidator;
 	
+	@ModelAttribute("turmas")
+	public List<Turma> todasTurmas(){
+		return turmaService.listarTurmas();
+	}
+	
+	@ModelAttribute("disciplinas")
+	public List<Disciplina> todasDisciplinas(){
+		return disciplinaService.listarNaoArquivada();
+	}
+	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
@@ -55,11 +65,6 @@ public class EmpilhamentoController {
 	public ModelAndView cadastrarEmpilhamento(){
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
 		
-		List<Disciplina> disciplinas = disciplinaService.listar();
-		List<Turma> turmas = turmaService.listarTurmas();
-		
-		model.addObject("disciplinas", disciplinas);
-		model.addObject("turmas", turmas);
 		model.addObject("empilhamento", new Empilhamento());
 		
 		return model;
@@ -93,29 +98,38 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
 	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
-		
-		List<Disciplina> disciplinas = disciplinaService.listar();
-		List<Turma> turmas = turmaService.listarTurmas();
 		Empilhamento empilhamentos = empilhamentoService.visualizarEmpilhamento(id);
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
 		model.addObject("empilhamento", empilhamentos);
-		model.addObject("disciplinas", disciplinas);
-		model.addObject("turmas", turmas);
+		
 		return model;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(Empilhamento empilhamento){
-	
-		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
+												@ModelAttribute("empilhamento") @Valid Empilhamento empilhamento, 
+													BindingResult bindingResult, ModelAndView modelAndView){
+		
+		empilhamentoValidator.validate(empilhamento, bindingResult);
+		
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName(Constants.EMPILHAMENTO_EDITAR);
+			
+			return modelAndView;
+		}
+		
 		try{
 			empilhamentoService.salvarEmpilhamento(empilhamento);
 		}catch(Exception e){
-			model.addObject("erro", e.getMessage());
+			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
+			
+			return modelAndView;
 		}
 		
-		return model;
+		modelAndView.setViewName(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
+		
+		return modelAndView;
 	}
 	
 	@RequestMapping(path={"/{id}/detalhar"})
