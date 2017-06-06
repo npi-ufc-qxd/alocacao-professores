@@ -1,4 +1,4 @@
-$(".sa-btn-excluir").on("click", function(event){
+$(".sa-emp-btn-excluir").on("click", function(event){
 	event.preventDefault();
 
 	var botaoExcluir = $(event.currentTarget);
@@ -20,6 +20,7 @@ $(".sa-btn-excluir").on("click", function(event){
 				url: urlExcluir,
 				type: 'GET',
 				success: function(result){
+					console.log(result);
 					if (result === true){
 						successSwal();
 					}
@@ -29,6 +30,8 @@ $(".sa-btn-excluir").on("click", function(event){
 					
 				},
 				error: function(status, error){
+					console.log(status);
+					console.log(error);
 					errorSwal();
 				}
 			});
