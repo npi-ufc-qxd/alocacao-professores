@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.validation;
 
+import java.util.Date;
+
 import javax.inject.Named;
 import org.springframework.validation.Errors;
 import ufc.quixada.npi.ap.model.Periodo;
@@ -17,7 +19,8 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 	public void validate(Object objeto, Errors error) {		
 		Periodo periodo = (Periodo) objeto;
 		validateAno(error, periodo.getAno(), "ano","anoNull");
-		validateSemestre(error, periodo.getSemestre(), "semestre", "semestreNull");		
+		validateSemestre(error, periodo.getSemestre(), "semestre", "semestreNull");
+		
 	}
 	
 	public void validateAno(Errors error, String ano, String campo, String mensagem){
@@ -28,5 +31,24 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 	public void validateSemestre(Errors error, String semestre, String campo, String mensagem){
 		if(semestre==null || semestre.isEmpty() || !semestre.matches("\\d{1}")|| !semestre.matches("[12]"))
 			error.rejectValue(campo, mensagem);		
-	}	
+	}
+	
+	public void validateInicioPeriodoCoordenacao(Errors error, Date data, String campo, String mensagem){
+		
+	}
+	public void validateFimPeriodoCoordenacao(Errors error, Date data, String campo, String mensagem){
+		
+	}
+	public void validateInicioPeriodoDirecao(Errors error, Date data, String campo, String mensagem){
+		
+	}
+	public void validateFimPeriodoDirecao(Errors error, Date data, String campo, String mensagem){
+		
+	}
+	public void validateInicioPeriodoAjuste(Errors error, Date data, String campo, String mensagem){
+		
+	}
+	public void validateFimPeriodoAjuste(Errors error, Date data, String campo, String mensagem){
+		
+	}
 }
