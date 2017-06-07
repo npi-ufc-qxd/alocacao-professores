@@ -36,101 +36,106 @@ public class CompartilhamentoController {
 	@Autowired
 	private TurmaService turmaService;
 	
+	@ModelAttribute("turmas")
+	public List<Turma> todasTurmas(){
+		return turmaService.listarTurmas();
+	}
+	
 	@RequestMapping(path = {"", "/"}, method = RequestMethod.GET)
 	public ModelAndView listarCompartilhamentos(){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
+		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
 		
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.findAllCompartilhamentos();
 		
-		model.addObject("compartilhamentos", compartilhamentos);
+		modelAndView.addObject("compartilhamentos", compartilhamentos);
 		
-		return model;
+		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
-	public ModelAndView cadastrarCompartilhamentos(@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
+	public ModelAndView cadastrarCompartilhamento(@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
+		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
 		
-		return model;
+		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.POST)
 	public ModelAndView cadastrarCompartilhamento(
 			@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
-				BindingResult bindingResult, ModelAndView model){
+				BindingResult bindingResult, ModelAndView modelAndView){
 		
 		compartilhamentoValidator.validate(compartilhamento, bindingResult);
 		
 		if (bindingResult.hasErrors()){
-			model.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
+			modelAndView.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
 			
-			return model;
+			return modelAndView;
 		}
 		
 		
 		try{
 			compartilhamentoService.salvar(compartilhamento);
 		} catch(Exception e){
-			model.setViewName(Constants.PAGINA_ERRO_403);
+			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
 			
-			return model;
+			return modelAndView;
 		}
 		
-		model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+		modelAndView.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
 		
-		return model;
+		return modelAndView;
 	}
 
 	@RequestMapping(path = {"/{id}/detalhar"}, method = RequestMethod.GET)
 	public ModelAndView detalharCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_DETALHAR);
+		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_DETALHAR);
 		
-		return model;
+		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id, 
 												@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
 		
-		ModelAndView model = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
+		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
 		
 		compartilhamento = compartilhamentoService.findCompartilhamento(id);
 		
 		if (compartilhamento == null){
-			model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+			modelAndView.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
 			
-			return model;
+			return modelAndView;
 		}
 		
-		model.addObject("compartilhamento", compartilhamento);
+		modelAndView.addObject("compartilhamento", compartilhamento);
 		
-		return model;
+		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
 												@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
-													BindingResult bindingResult, ModelAndView model){
+													BindingResult bindingResult, ModelAndView modelAndView){
 		
 		compartilhamentoValidator.validate(compartilhamento, bindingResult);
 		
 		if (bindingResult.hasErrors()){
-			model.setViewName(Constants.COMPARTILHAMENTO_EDITAR);
+			modelAndView.setViewName(Constants.COMPARTILHAMENTO_EDITAR);
 			
-			return model;
+			return modelAndView;
 		}
 		
 		try{
 			compartilhamentoService.salvar(compartilhamento);
 		} catch(Exception e){
-			model.setViewName(Constants.PAGINA_ERRO_403);
+			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
 			
-			return model;
+			return modelAndView;
 		}
 		
-		model.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+		modelAndView.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
 		
-		return model;
+		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
@@ -142,11 +147,6 @@ public class CompartilhamentoController {
 		}
 		
 		return true;
-	}
-	
-	@ModelAttribute("turmas")
-	public List<Turma> todasTurmas(){
-		return turmaService.listarTurmas();
 	}
 	
 }

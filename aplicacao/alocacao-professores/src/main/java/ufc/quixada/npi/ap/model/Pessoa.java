@@ -17,7 +17,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-//@EntityListeners(PessoaEntityListener.class)
 public class Pessoa implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -35,7 +34,6 @@ public class Pessoa implements UserDetails {
 
 	private String password;
 
-	// TODO: representar os papéis através de uma lista de strings
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "papel_pessoa", joinColumns = @JoinColumn(name = "pessoa_id"), inverseJoinColumns = @JoinColumn(name = "papel_id"))
 	private List<Papel> papeis;

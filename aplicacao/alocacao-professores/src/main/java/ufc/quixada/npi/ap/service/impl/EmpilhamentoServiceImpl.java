@@ -6,22 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ufc.quixada.npi.ap.model.Empilhamento;
-import ufc.quixada.npi.ap.repository.DisciplinaRepository;
 import ufc.quixada.npi.ap.repository.EmpilhamentoRepository;
-import ufc.quixada.npi.ap.repository.TurmaRepository;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
 
 @Service
 public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 
 	@Autowired
-	EmpilhamentoRepository empilhamentoRepository;
-	
-	@Autowired
-	DisciplinaRepository disciplinaRepository;
-	
-	@Autowired
-	TurmaRepository turmaRepository;
+	private EmpilhamentoRepository empilhamentoRepository;
 	
 	@Override
 	public Empilhamento salvarEmpilhamento(Empilhamento empilhamento) {

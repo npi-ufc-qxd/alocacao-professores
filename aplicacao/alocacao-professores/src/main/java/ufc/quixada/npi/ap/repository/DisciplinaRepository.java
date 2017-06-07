@@ -13,7 +13,7 @@ public interface DisciplinaRepository extends JpaRepository<Disciplina, Integer>
 
 	Disciplina findByNome(String nome);
 
-	List<Disciplina> findByArquivarFalse();
+	List<Disciplina> findByArquivadaFalse();
 	
 	Disciplina findById(Integer id);
 	

@@ -20,17 +20,15 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
 		return disciplinaRepository.findAll();
 	}
-	
+
 	public void salvar(Disciplina disciplina) {
 		disciplinaRepository.save(disciplina);
-
-
 	}
 
 	@Override
 	public List<Disciplina> listarNaoArquivada() {
 
-		return disciplinaRepository.findByArquivarFalse();
+		return disciplinaRepository.findByArquivadaFalse();
 
 	}
 
@@ -43,7 +41,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 			return false;
 		}
 
-		disciplina.setArquivar(true);
+		disciplina.setArquivada(true);
 		disciplinaRepository.save(disciplina);
 
 		return true;

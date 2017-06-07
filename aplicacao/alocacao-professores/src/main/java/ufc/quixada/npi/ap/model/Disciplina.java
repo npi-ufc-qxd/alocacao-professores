@@ -21,8 +21,8 @@ public class Disciplina {
 	private int cargaHorariaTeorica;
 
 	private int cargaHorariaPratica;
-
-	private Boolean arquivar = false;
+	
+	private boolean arquivada;	
 
 	public Integer getId() {
 		return id;
@@ -72,12 +72,12 @@ public class Disciplina {
 		this.cargaHorariaPratica = cargaHorariaPratica;
 	}
 
-	public Boolean getArquivar() {
-		return arquivar;
+	public boolean getArquivada() {
+		return arquivada;
 	}
 
-	public void setArquivar(Boolean arquivar) {
-		this.arquivar = arquivar;
+	public void setArquivada(boolean arquivada) {
+		this.arquivada = arquivada;
 	}
 
 }

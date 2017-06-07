@@ -1,10 +1,7 @@
 package ufc.quixada.npi.ap.controller;
 
-import static ufc.quixada.npi.ap.util.Constants.CADASTRAR_DISCIPLINA;
-import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_LISTAR;
-import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_EDITAR;
 
-import static ufc.quixada.npi.ap.util.Constants.REDIRECT_LISTAR_DISCIPLINA;
+import ufc.quixada.npi.ap.util.Constants;
 
 
 import javax.validation.Valid;
@@ -34,9 +31,9 @@ public class DisciplinaController {
 	public DisciplinaService disciplinaService;
 
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public ModelAndView listarDisciplina() {
+	public ModelAndView listarDisciplinas() {
 		
-		ModelAndView model = new ModelAndView(DISCIPLINA_LISTAR);
+		ModelAndView model = new ModelAndView(Constants.DISCIPLINA_LISTAR);
 		
 		model.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		
@@ -46,20 +43,21 @@ public class DisciplinaController {
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarDisciplina(Disciplina disciplina) {
-		ModelAndView model = new ModelAndView(CADASTRAR_DISCIPLINA);
+		ModelAndView model = new ModelAndView(Constants.DISCIPLINA_CADASTRAR_);
 		model.addObject("disciplina", disciplina);
 		return model;
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
 
-	public ModelAndView adicionarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
+	public ModelAndView cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
 			BindingResult result) {
-		ModelAndView modelAndView = new ModelAndView(REDIRECT_LISTAR_DISCIPLINA);
+
+		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_LISTAR);
 		disciplinaValidator.validate(disciplina, result);
 
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView(CADASTRAR_DISCIPLINA);
+			modelAndView = new ModelAndView(Constants.DISCIPLINA_CADASTRAR_);
 		} else {
 			disciplinaService.salvar(disciplina);
 		}
@@ -67,23 +65,26 @@ public class DisciplinaController {
 		return modelAndView;
 	}
 
+
 	@RequestMapping(value = "/{idDisciplina}/editar/", method = RequestMethod.GET)
 	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina) {
-		ModelAndView modelAndView = new ModelAndView(DISCIPLINA_EDITAR);
+		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_EDITAR);
 		modelAndView.addObject("disciplina", disciplina);
 		
 		return modelAndView;
+
+
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
 
 	public ModelAndView editarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
 			BindingResult result) {
-		ModelAndView modelAndView = new ModelAndView(REDIRECT_LISTAR_DISCIPLINA);
+		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_REDIRECT_LISTAR);
 		disciplinaValidator.validate(disciplina, result);
 
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView(DISCIPLINA_EDITAR);
+			modelAndView = new ModelAndView(Constants.DISCIPLINA_EDITAR);
 		} else {
 			disciplinaService.salvar(disciplina);
 		}
@@ -98,4 +99,5 @@ public class DisciplinaController {
 		return disciplinaService.arquivarDisciplina(id);
 
 	}
+	
 }
