@@ -18,10 +18,10 @@ public class DisciplinaValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		Disciplina disciplina = (Disciplina) target;
-		validateStrings(errors, disciplina.getNome(), "nome", "Campo apresenta erro");
-		validateNotNull(errors, disciplina.getCargaHorariaPratica(), "cargaHorariaPratica", "Campo apresenta erro");
-		validateNotNull(errors, disciplina.getCargaHorariaTeorica(), "cargaHorariaTeorica", "Campo apresenta erro");
-		validateNotNull(errors, disciplina.getCreditos(), "creditos", "Campo apresenta erro");
+		validateStrings(errors, disciplina.getNome(), "nome", "Preenchimento inválido");
+		validateNotNull(errors, disciplina.getCargaHorariaPratica(), "cargaHorariaPratica", "Preenchimento inválido");
+		validateNotNull(errors, disciplina.getCargaHorariaTeorica(), "cargaHorariaTeorica", "Preenchimento inválido");
+		validateNotNull(errors, disciplina.getCreditos(), "creditos", "Preenchimento inválido");
 	}
 
 	void validateStrings(Errors erros, String object, String field, String message) {

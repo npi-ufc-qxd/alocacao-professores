@@ -59,7 +59,7 @@ public class DisciplinaController {
 		disciplinaValidator.validate(disciplina, result);
 
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView(DISCIPLINA_EDITAR);
+			modelAndView = new ModelAndView(CADASTRAR_DISCIPLINA);
 		} else {
 			disciplinaService.salvar(disciplina);
 		}
