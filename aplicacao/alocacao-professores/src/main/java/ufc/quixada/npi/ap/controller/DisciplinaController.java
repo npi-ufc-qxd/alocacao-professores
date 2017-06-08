@@ -53,7 +53,7 @@ public class DisciplinaController {
 	public ModelAndView cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
 			BindingResult result) {
 
-		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_LISTAR);
+		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_REDIRECT_LISTAR);
 		disciplinaValidator.validate(disciplina, result);
 
 		if (result.hasErrors()) {

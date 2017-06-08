@@ -19,7 +19,7 @@
           <div class="white-box">            
 
 <!-- Modelo do Formulario -->
-<form class="form-horizontal"
+<form class="form-horizontal"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 								th:action="@{/disciplinas/editar}" th:object="${disciplina}"
 								method="post">
 
@@ -31,8 +31,8 @@
 											maxlength="80" 
 											th:field="*{nome}" required="required" ></input> <span
 											th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
-											
-											class="help-block with-errors"></span>
+												
+										class="help-block with-errors"></span>
 
 									</div>
 								</div>
