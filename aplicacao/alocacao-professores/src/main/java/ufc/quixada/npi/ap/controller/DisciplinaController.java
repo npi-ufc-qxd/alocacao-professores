@@ -66,7 +66,7 @@ public class DisciplinaController {
 	}
 
 
-	@RequestMapping(value = "/{idDisciplina}/editar/", method = RequestMethod.GET)
+	@RequestMapping(value = "/{idDisciplina}/editar", method = RequestMethod.GET)
 	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina) {
 		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_EDITAR);
 		modelAndView.addObject("disciplina", disciplina);
