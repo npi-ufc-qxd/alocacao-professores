@@ -15,12 +15,19 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 		return Periodo.class.isAssignableFrom(arg0);
 	}
 	
+	Date dataAtual = new Date();
+	
 	@Override
 	public void validate(Object objeto, Errors error) {		
 		Periodo periodo = (Periodo) objeto;
 		validateAno(error, periodo.getAno(), "ano","anoNull");
 		validateSemestre(error, periodo.getSemestre(), "semestre", "semestreNull");
-		
+		validateInicioPeriodoCoordenacao(error, periodo.getInicioPeriodoCoordenacao(), "inicioPeriodoCoordenacao", "dataNull");
+		validateFimPeriodoCoordenacao(error,periodo, "fimPeriodoCoordenacao", "dataNull");
+		validateInicioPeriodoDirecao(error, periodo, "inicioPeriodoDirecao", "dataNull");
+		validateFimPeriodoDirecao(error, periodo, "fimPeriodoDirecao", "dataNull");
+		validateInicioPeriodoAjuste(error, periodo, "inicioPeriodoAjuste", "dataNull");
+		validateFimPeriodoAjuste(error, periodo, "fimPeriodoAjuste", "dataNull");
 	}
 	
 	public void validateAno(Errors error, String ano, String campo, String mensagem){
@@ -33,22 +40,30 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 			error.rejectValue(campo, mensagem);		
 	}
 	
-	public void validateInicioPeriodoCoordenacao(Errors error, Date data, String campo, String mensagem){
-		
+
+	
+	public void validateInicioPeriodoCoordenacao(Errors error, Date data, String campo, String mensagem){		
+		if(data == null || data.before(dataAtual))
+			error.rejectValue(campo,mensagem);
 	}
-	public void validateFimPeriodoCoordenacao(Errors error, Date data, String campo, String mensagem){
-		
+	public void validateFimPeriodoCoordenacao(Errors error, Periodo periodo, String campo, String mensagem){
+		if(periodo.getFimPeriodoCoordenacao() == null ||periodo.getFimPeriodoCoordenacao().before(periodo.getInicioPeriodoCoordenacao()))
+			error.rejectValue(campo,mensagem);
 	}
-	public void validateInicioPeriodoDirecao(Errors error, Date data, String campo, String mensagem){
-		
+	public void validateInicioPeriodoDirecao(Errors error,Periodo periodo, String campo, String mensagem){
+		if(periodo.getInicioPeriodoDirecao() == null || periodo.getInicioPeriodoDirecao().before(periodo.getFimPeriodoCoordenacao()))
+			error.rejectValue(campo,mensagem);
 	}
-	public void validateFimPeriodoDirecao(Errors error, Date data, String campo, String mensagem){
-		
+	public void validateFimPeriodoDirecao(Errors error, Periodo periodo, String campo, String mensagem){
+		if(periodo.getFimPeriodoDirecao() == null || periodo.getFimPeriodoDirecao().before(periodo.getInicioPeriodoDirecao()))
+			error.rejectValue(campo,mensagem);
 	}
-	public void validateInicioPeriodoAjuste(Errors error, Date data, String campo, String mensagem){
-		
+	public void validateInicioPeriodoAjuste(Errors error, Periodo periodo, String campo, String mensagem){
+		if(periodo.getInicioPeriodoAjuste() == null || periodo.getInicioPeriodoAjuste().before(periodo.getFimPeriodoDirecao()))
+			error.rejectValue(campo,mensagem);
 	}
-	public void validateFimPeriodoAjuste(Errors error, Date data, String campo, String mensagem){
-		
+	public void validateFimPeriodoAjuste(Errors error, Periodo periodo, String campo, String mensagem){
+		if(periodo.getFimPeriodoAjuste() == null || periodo.getFimPeriodoAjuste().before(periodo.getInicioPeriodoAjuste()))
+			error.rejectValue(campo,mensagem);
 	}
 }
