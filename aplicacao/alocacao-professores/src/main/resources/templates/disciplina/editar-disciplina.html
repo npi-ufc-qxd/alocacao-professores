@@ -23,9 +23,9 @@
 								th:action="@{/disciplinas/editar}" th:object="${disciplina}"
 								method="post">
 
-								<div class="form-group">
+								<div class="form-group" th:classappend="${#fields.hasErrors('nome')} ? has-error">
 								<input type="hidden" th:field="*{id}"></input>
-									<label class="col-md-12">Nome da Disciplina</label>
+									<label class="control-label m-l-10">Nome da Disciplina</label>
 									<div class="col-md-12">
 										<input class="form-control" type="text" id="nome"
 											maxlength="80" 
@@ -36,8 +36,8 @@
 
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-12">Créditos</label>
+								<div class="form-group" th:classappend="${#fields.hasErrors('creditos')} ? has-error">
+									<label class="control-label m-l-10">Créditos</label>
 									<div class="col-md-12">
 										<select class="form-control" th:field="*{creditos}">
 											<option value="2">2</option>
@@ -50,8 +50,8 @@
 
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-12">Carga horária teórica</label>
+								<div class="form-group" th:classappend="${#fields.hasErrors('cargaHorariaTeorica')} ? has-error">
+									<label class="control-label m-l-10">Carga horária teórica</label>
 									<div class="col-md-12">
 										<input class="form-control" type="number"
 											id="cargaHorariaTeorica" th:field="*{cargaHorariaTeorica}"
@@ -62,8 +62,8 @@
 
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-12">Carga horária prática</label>
+								<div class="form-group" th:classappend="${#fields.hasErrors('cargaHorariaPratica')} ? has-error">
+									<label class="control-label m-l-10">Carga horária prática</label>
 									<div class="col-md-12">
 										<input class="form-control" type="number"
 											id="cargaHorariaPratica" th:field="*{cargaHorariaPratica}"

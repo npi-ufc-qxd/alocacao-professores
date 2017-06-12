@@ -70,10 +70,8 @@ public class DisciplinaController {
 	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina) {
 		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_EDITAR);
 		modelAndView.addObject("disciplina", disciplina);
-		
+	
 		return modelAndView;
-
-
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
