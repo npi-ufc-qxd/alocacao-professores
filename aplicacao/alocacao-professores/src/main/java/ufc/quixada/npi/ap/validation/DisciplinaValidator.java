@@ -33,8 +33,9 @@ public class DisciplinaValidator implements Validator {
 		}
 	}
 
+ 
 	void validateNotNull(Errors erros, Integer object, String field, String message) {
-		if (object <= 0 || object.toString().isEmpty()) {
+		if (object < 0 || object.toString().isEmpty()) {
 			erros.rejectValue(field, field, message);
 		}
 	}
