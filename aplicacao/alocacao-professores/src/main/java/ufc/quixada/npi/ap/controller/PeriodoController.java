@@ -86,11 +86,13 @@ public class PeriodoController {
 	}	
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
-	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @RequestParam("status") Status status ){
+	public ModelAndView editarPeriodo(Periodo periodo){
+		
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);		
-		Periodo periodo = periodoService.getPeriodo(id);
-		periodo.setStatus(status);		
-		periodoService.salvar(periodo);			
+		Periodo periodoSalvo = periodoService.getPeriodo(periodo.getId());
+		periodoSalvo.setStatus(periodo.getStatus());		
+		periodoService.salvar(periodoSalvo);
+		modelAndView.addObject("periodo", periodoSalvo);
 		return modelAndView;
 	}
 

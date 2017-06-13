@@ -16,6 +16,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Periodo {
 	
+	@Override
+	public String toString() {
+		return "Periodo [id=" + id + ", ano=" + ano + ", semestre=" + semestre + ", status=" + status + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	
@@ -138,7 +143,7 @@ public class Periodo {
 	}
 	
 	public enum Status{
-		ABERTA("Aberta"), EM_ANALISE("Em análise"), CONSOLIDADA("consolidada");
+		ABERTA("Aberta"), EM_ANALISE("Em análise"), CONSOLIDADA("Consolidada");
 		
 		private String descricao;
 		

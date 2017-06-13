@@ -16,7 +16,7 @@
 	<section layout:fragment="conteudo">
 		<h3 class="box-title">Editar Período</h3>		
 		<div class="white-box">	
-	        <form class="form-horizontal" th:action="@{/periodos/editar}" method="POST">
+	        <form class="form-horizontal" th:action="@{/periodos/{id}/editar(id=${periodo.id})}" th:object="${periodo}" method="POST">
 	              <div class="form-group">
 	                <label class="col-sm-12">Status</label>
 	                <div class="col-sm-12">                 
@@ -28,8 +28,8 @@
 	              <div class="text-right">                          
 	                <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
 	                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Editar</button>
-	              </div>                            
-	        </form>
-		</div>
+	              </div> 	              
+	          </form>
+		</div>	
 	</section>
 </html>
