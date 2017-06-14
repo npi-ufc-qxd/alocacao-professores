@@ -11,7 +11,7 @@
 	<section layout:fragment="conteudo">
 		<div class="row bg-title">
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h4 class="page-title">Períodos</h4>
+				<h3 class="box-title">Períodos</h3>	
 			</div>
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 		    	<a th:href="@{/periodos/cadastrar}" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Novo Período</a>
@@ -38,7 +38,7 @@
                   <td th:text="${periodo.status}"></td> 
                   <td class="text-right">
                     <a th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn btn-inverse btn-xs waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </a>
-                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-inverse btn-xs waves-effect waves-light"><i class="fa fa-pencil"></i> Excluir </a>                    
+                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-sm waves-effect waves-light"><i class="fa fa-close"></i> Excluir </a>                    
                   </td>                                                               					
                 </tr>                                   
               </tbody>
