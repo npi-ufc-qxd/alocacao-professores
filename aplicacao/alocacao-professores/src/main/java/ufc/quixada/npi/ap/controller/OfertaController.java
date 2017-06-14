@@ -47,9 +47,9 @@ public class OfertaController {
 	
 	@RequestMapping(value = {"", "/"})
 	public ModelAndView listarOfertas(){
-		ModelAndView mv = new ModelAndView(Constants.OFERTA_LISTAR);
-
-		return mv;
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
+		
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
@@ -60,7 +60,6 @@ public class OfertaController {
 		
 		return modelAndView;
 	}
-	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
 	public ModelAndView cadastrarOferta(
@@ -74,7 +73,6 @@ public class OfertaController {
 			
 			return modelAndView;
 		}
-		
 		
 		try{
 			ofertaService.salvar(oferta);
@@ -91,9 +89,9 @@ public class OfertaController {
 	
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id){
-		ModelAndView mv = new ModelAndView(Constants.OFERTA_EDITAR);
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
 
-		return mv;
+		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
@@ -102,9 +100,9 @@ public class OfertaController {
 				@ModelAttribute("oferta") @Valid Oferta oferta, 
 					BindingResult bindingResult, ModelAndView modelAndView){
 		
-		ModelAndView mv = new ModelAndView(Constants.OFERTA_EDITAR);
+		modelAndView.setViewName(Constants.OFERTA_EDITAR);
 
-		return mv;
+		return modelAndView;
 	}
 
 	@RequestMapping(value= "/{id}/excluir", method = RequestMethod.GET)
