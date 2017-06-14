@@ -85,13 +85,24 @@ public class PeriodoController {
 	}	
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
-	public ModelAndView editarPeriodo(Periodo periodo){
-		
-		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);		
+	public ModelAndView editarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result, ModelAndView modelAndView ){			
+		periodoValidator.validate(periodo, result);		
+		if (result.hasErrors()){
+			modelAndView.setViewName(Constants.PERIODO_EDITAR);			
+			return modelAndView;
+		}		
+				
 		Periodo periodoSalvo = periodoService.getPeriodo(periodo.getId());
-		periodoSalvo.setStatus(periodo.getStatus());		
-		periodoService.salvar(periodoSalvo);
+		periodoSalvo.setStatus(periodo.getStatus());
+		periodoSalvo.setInicioPeriodoAjuste(periodo.getInicioPeriodoAjuste());
+		periodoSalvo.setFimPeriodoAjuste(periodo.getFimPeriodoAjuste());
+		periodoSalvo.setInicioPeriodoCoordenacao(periodo.getInicioPeriodoCoordenacao());
+		periodoSalvo.setFimPeriodoCoordenacao(periodo.getFimPeriodoCoordenacao());
+		periodoSalvo.setInicioPeriodoDirecao(periodo.getInicioPeriodoDirecao());
+		periodoSalvo.setFimPeriodoDirecao(periodo.getFimPeriodoDirecao());
+		periodoService.salvar(periodoSalvo);		
 		modelAndView.addObject("periodo", periodoSalvo);
+		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
 		return modelAndView;
 	}
 

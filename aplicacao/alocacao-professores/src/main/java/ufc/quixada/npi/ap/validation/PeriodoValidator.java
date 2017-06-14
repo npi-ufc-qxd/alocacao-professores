@@ -40,8 +40,6 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 			error.rejectValue(campo, mensagem);		
 	}
 	
-
-	
 	public void validateInicioPeriodoCoordenacao(Errors error, Date data, String campo, String mensagem){		
 		if(data == null || data.before(dataAtual))
 			error.rejectValue(campo,mensagem);
