@@ -1,6 +1,7 @@
 package ufc.quixada.npi.ap.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Oferta;
+import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.OfertaService;
@@ -43,6 +45,28 @@ public class OfertaController {
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas(){
 		return turmaService.listarTurmas();
+	}
+	
+	@ModelAttribute("professores")
+	public List<Professor> todosProfessores(){
+		List<Professor> professores = new ArrayList<>();
+		
+		Professor p1 = new Professor();
+		p1.setId(1);
+		p1.setNome("Alberto Sampaio Lima");
+		p1.setCpf("00000000000");
+		p1.setApelido("Alberto");
+		
+		Professor p2 = new Professor();
+		p2.setId(2);
+		p2.setNome("Alisson Barbosa de Souza");
+		p2.setCpf("00000000000");
+		p2.setApelido("Alisson");
+		
+		professores.add(p1);
+		professores.add(p2);
+
+		return professores;
 	}
 	
 	@RequestMapping(value = {"", "/"})
