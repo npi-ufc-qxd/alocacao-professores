@@ -26,10 +26,9 @@ public class OfertaValidator implements Validator {
 		Oferta oferta = (Oferta) objeto;
 		
 		validateProfessoresNotNull(erros, oferta.getProfessores(), "professores", "professoresNull");
-		validateTurma(erros, oferta.getTurma(), "turma.id", "turmaNull");
-		validateDisciplina(erros, oferta.getDisciplina(), "disciplina.id", "disciplinaNull");
+		validateTurma(erros, oferta.getTurma(), "turma", "turmaNull");
+		validateDisciplina(erros, oferta.getDisciplina(), "disciplina", "disciplinaNull");
 		validateTurno(erros, oferta.getTurno(), "turno", "turnoNull");
-		validateVagasNotNull(erros, oferta.getVagas(), "vagas", "vagasNull");
 		validateVagasValorInvalido(erros, oferta.getVagas(), "vagas", "vagasInvalid");
 	}
 	
@@ -50,11 +49,6 @@ public class OfertaValidator implements Validator {
 	
 	private void validateTurno(Errors erros, Turno turno, String campo, String mensagem){
 		if (turno == null)
-			erros.rejectValue(campo, mensagem);
-	}
-	
-	private void validateVagasNotNull(Errors erros, Integer vagas, String campo, String mensagem){
-		if (vagas == null)
 			erros.rejectValue(campo, mensagem);
 	}
 	

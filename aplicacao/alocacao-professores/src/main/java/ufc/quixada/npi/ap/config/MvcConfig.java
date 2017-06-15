@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import ufc.quixada.npi.ap.formatter.DisciplinaFormatter;
 import ufc.quixada.npi.ap.formatter.ProfessorFormatter;
+import ufc.quixada.npi.ap.formatter.TurmaFormatter;
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
@@ -31,5 +33,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addFormatter(new ProfessorFormatter());
+		registry.addFormatter(new TurmaFormatter());
+		registry.addFormatter(new DisciplinaFormatter());
 	}
 }

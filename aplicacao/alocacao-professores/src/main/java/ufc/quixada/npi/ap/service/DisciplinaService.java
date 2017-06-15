@@ -14,4 +14,6 @@ public interface DisciplinaService {
 	
 	boolean arquivarDisciplina(Integer id);
 	
+	public Disciplina findDisciplina(Integer id);
+	
 }
