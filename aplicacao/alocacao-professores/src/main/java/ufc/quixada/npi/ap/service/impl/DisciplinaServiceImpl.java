@@ -45,4 +45,10 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
 		return true;
 	}
+
+	@Override
+	public Disciplina findDisciplina(Integer id) {
+		return disciplinaRepository.findOne(id);
+	}
+	
 }

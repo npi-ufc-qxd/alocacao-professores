@@ -20,4 +20,9 @@ public class TurmaServiceImpl implements TurmaService {
 		return turmaRepository.findAll();
 	}
 
+	@Override
+	public Turma findTurma(Integer id) {
+		return turmaRepository.findOne(id);
+	}
+	
 }
