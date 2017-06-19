@@ -29,11 +29,11 @@
 							<table id = "myTable" class = "table table-striped">
 								<thead>
 										<tr>
-											<th>Disciplina</th>
-											<th>Turno</th>
-											<th>Vagas</th>
-											<th>Professores</th>
-											<th>Ações</th>
+											<th class = "col-md-4">Disciplina</th>
+											<th class = "col-md-1">Turno</th>
+											<th class = "col-md-1">Vagas</th>
+											<th class = "col-md-2">Professores</th>
+											<th class = "col-md-3">Ações</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -51,7 +51,7 @@
 														<i class="fa fa-link"></i>
 														<span>Compartilhar</span>
 													</button>
-													<a class="btn btn-sm btn-warning waves-effect waves-light">
+													<a th:href="@{/ofertas/{id}/editar(id=${oferta.id})}" class="btn btn-sm btn-warning waves-effect waves-light">
 														<i class="fa fa-pencil"></i>
 														<span>Editar</span>
 													</a>
