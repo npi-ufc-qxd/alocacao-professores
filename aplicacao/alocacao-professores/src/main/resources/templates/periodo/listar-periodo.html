@@ -28,17 +28,17 @@
                   <th>Ano</th>
                   <th>Semeste</th>
                   <th>Status</th>
-                  <th></th>                                      
+                                                       
                 </tr>
               </thead>
               <tbody>
                 <tr th:each="periodo : ${periodos}">
                   <td th:text="${periodo.ano}"></td>
                   <td th:text="${periodo.semestre}"></td>
-                  <td th:text="${periodo.status}"></td> 
+                  <td th:text="${periodo.status}"></td>                                                                                           
                   <td class="text-right">
                     <a th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn btn-inverse btn-xs waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </a>
-                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-sm waves-effect waves-light"><i class="fa fa-close"></i> Excluir </a>                    
+                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-xs waves-effect waves-light"><i class="fa fa-close"></i> Excluir </a>                    
                   </td>                                                               					
                 </tr>                                   
               </tbody>

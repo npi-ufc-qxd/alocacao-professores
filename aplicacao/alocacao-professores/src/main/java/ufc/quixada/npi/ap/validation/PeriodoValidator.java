@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.inject.Named;
 import org.springframework.validation.Errors;
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Periodo.Status;
 
 
 @Named
@@ -22,6 +23,7 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 		Periodo periodo = (Periodo) objeto;
 		validateAno(error, periodo.getAno(), "ano","anoNull");
 		validateSemestre(error, periodo.getSemestre(), "semestre", "semestreNull");
+		//validateStatus(error, periodo.getStatus(), "status", "statusNull");
 		validateInicioPeriodoCoordenacao(error, periodo.getInicioPeriodoCoordenacao(), "inicioPeriodoCoordenacao", "dataNull");
 		validateFimPeriodoCoordenacao(error,periodo, "fimPeriodoCoordenacao", "dataNull");
 		validateInicioPeriodoDirecao(error, periodo, "inicioPeriodoDirecao", "dataNull");
@@ -38,6 +40,11 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 	public void validateSemestre(Errors error, String semestre, String campo, String mensagem){
 		if(semestre==null || semestre.isEmpty() || !semestre.matches("\\d{1}")|| !semestre.matches("[12]"))
 			error.rejectValue(campo, mensagem);		
+	}
+	
+	public void validateStatus(Errors error, Status status, String campo, String mensagem){
+		if(status==null || status.getDescricao().isEmpty())
+			error.rejectValue(campo, mensagem);
 	}
 	
 	public void validateInicioPeriodoCoordenacao(Errors error, Date data, String campo, String mensagem){		

@@ -22,6 +22,8 @@
 		<div class="white-box">	
 	        <form class="form-horizontal" th:action="@{/periodos/{id}/editar(id=${periodo.id})}" th:object="${periodo}" method="POST">
 	              <div class="form-group">
+	              	<input type="hidden" class="form-control" value="" th:field="*{ano}" th:value="${periodo.ano}"/>
+	              	<input type="hidden" class="form-control" value="" th:field="*{semestre}" th:value="${periodo.semestre}"/>
 	                <label class="col-sm-12">Status</label>
 	                <div class="col-sm-12">                 
 	                  <select class="form-control" th:field="*{status}"   >

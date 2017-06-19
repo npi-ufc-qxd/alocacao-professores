@@ -30,7 +30,7 @@ public class PeriodoController {
 	@Autowired
 	PeriodoValidator periodoValidator;
 	
-	@RequestMapping(path = {"","/"})
+	@RequestMapping(path = {"","/"}, method=RequestMethod.GET)
 	public ModelAndView listarPeriodos(){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_LISTAR);
 		List<Periodo> periodos = periodoService.listaPeriodos();
@@ -78,31 +78,27 @@ public class PeriodoController {
 	}
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.GET)
-	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id){
+	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @ModelAttribute("periodo") Periodo periodo){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_EDITAR);
 		modelAndView.addObject("periodo", periodoService.getPeriodo(id));
 		return modelAndView;
 	}	
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
-	public ModelAndView editarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result, ModelAndView modelAndView ){			
-		periodoValidator.validate(periodo, result);		
+	public ModelAndView editarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result){
+		ModelAndView modelAndView = new ModelAndView();
+		periodoValidator.validate(periodo, result);
+		
+		System.out.println(result.getErrorCount());
+		
 		if (result.hasErrors()){
 			modelAndView.setViewName(Constants.PERIODO_EDITAR);			
 			return modelAndView;
 		}		
-				
-		Periodo periodoSalvo = periodoService.getPeriodo(periodo.getId());
-		periodoSalvo.setStatus(periodo.getStatus());
-		periodoSalvo.setInicioPeriodoAjuste(periodo.getInicioPeriodoAjuste());
-		periodoSalvo.setFimPeriodoAjuste(periodo.getFimPeriodoAjuste());
-		periodoSalvo.setInicioPeriodoCoordenacao(periodo.getInicioPeriodoCoordenacao());
-		periodoSalvo.setFimPeriodoCoordenacao(periodo.getFimPeriodoCoordenacao());
-		periodoSalvo.setInicioPeriodoDirecao(periodo.getInicioPeriodoDirecao());
-		periodoSalvo.setFimPeriodoDirecao(periodo.getFimPeriodoDirecao());
-		periodoService.salvar(periodoSalvo);		
-		modelAndView.addObject("periodo", periodoSalvo);
+		
 		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
+		periodoService.salvar(periodo);		
+		
 		return modelAndView;
 	}
 
