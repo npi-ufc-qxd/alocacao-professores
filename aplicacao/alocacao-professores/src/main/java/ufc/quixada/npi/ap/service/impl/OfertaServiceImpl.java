@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,11 @@ public class OfertaServiceImpl implements OfertaService {
 	@Override
 	public Oferta findOferta(Integer id) {
 		return ofertaRepository.findOne(id);
+	}
+	
+	@Override
+	public List<Oferta> findAllOfertas() {
+		return ofertaRepository.findAll();
 	}
 	
 }

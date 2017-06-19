@@ -59,6 +59,8 @@ public class OfertaController {
 	public ModelAndView listarOfertas(){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
 		
+		modelAndView.addObject("ofertas", ofertaService.findAllOfertas());
+		
 		return modelAndView;
 	}
 
