@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 public class Periodo {
@@ -29,22 +30,22 @@ public class Periodo {
 	
 	private String semestre;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoCoordenacao;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date fimPeriodoCoordenacao;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoDirecao;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date fimPeriodoDirecao;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoAjuste;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date fimPeriodoAjuste;
 	
 	

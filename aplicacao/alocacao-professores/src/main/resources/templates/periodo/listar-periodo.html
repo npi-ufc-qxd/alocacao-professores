@@ -22,23 +22,35 @@
         <div class="col-sm-12">
           <div class="white-box">         
             <div class="table-responsive">
-            <table id="myTable" class="table table-striped">
+            <table id="myTable" class="table table-striped ">
               <thead>
                 <tr>
-                  <th>Ano</th>
-                  <th>Semeste</th>
-                  <th>Status</th>
-                                                       
+                  <th class="text-center">Ano</th>
+                  <th class="text-center">Semeste</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Início Coordenação</th>
+                  <th class="text-center">Fim Coordenação</th>
+                  <th class="text-center">Início Direção</th>
+                  <th class="text-center">Fim Direção</th>
+                  <th class="text-center" >Início Ajuste</th>
+                  <th class="text-center">Fim Ajuste</th> 
+                  <th class="text-center active">Opções</th>                                    
                 </tr>
               </thead>
               <tbody>
                 <tr th:each="periodo : ${periodos}">
-                  <td th:text="${periodo.ano}"></td>
-                  <td th:text="${periodo.semestre}"></td>
-                  <td th:text="${periodo.status}"></td>                                                                                           
-                  <td class="text-right">
+                  <td class="text-center" th:text="${periodo.ano}"></td>
+                  <td class="text-center" th:text="${periodo.semestre}"></td>
+                  <td class="text-center" th:text="${periodo.status}"></td>
+                  <td class="success text-center" th:text="${#dates.format(periodo.inicioPeriodoCoordenacao, 'dd-MMM-yyyy')}"></td>
+				  <td class="danger text-center" th:text="${#dates.format(periodo.fimPeriodoCoordenacao, 'dd-MMM-yyyy')}"></td>
+                  <td class="success text-center" th:text="${#dates.format(periodo.inicioPeriodoDirecao, 'dd-MMM-yyyy')}"></td>
+                  <td class="danger text-center" th:text="${#dates.format(periodo.fimPeriodoDirecao, 'dd-MMM-yyyy')}"></td>
+                  <td class="success text-center" th:text="${#dates.format(periodo.inicioPeriodoAjuste, 'dd-MMM-yyyy')}"></td>
+                  <td class="danger text-center" th:text="${#dates.format(periodo.fimPeriodoAjuste, 'dd-MMM-yyyy')}"></td>                                                                                          
+                  <td class="text-right active">
                     <a th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn btn-inverse btn-xs waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </a>
-                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-xs waves-effect waves-light"><i class="fa fa-close"></i> Excluir </a>                    
+                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-xs waves-effect waves-light"><i class="fa fa-close "></i> Excluir </a>                    
                   </td>                                                               					
                 </tr>                                   
               </tbody>
