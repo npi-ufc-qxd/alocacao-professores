@@ -1,9 +1,5 @@
 package ufc.quixada.npi.ap.controller;
 
-
-import ufc.quixada.npi.ap.util.Constants;
-
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.service.DisciplinaService;
+import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.DisciplinaValidator;
 
 @Controller
@@ -30,21 +27,19 @@ public class DisciplinaController {
 	@Autowired
 	public DisciplinaService disciplinaService;
 
-	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public ModelAndView listarDisciplinas() {
-		
 		ModelAndView model = new ModelAndView(Constants.DISCIPLINA_LISTAR);
-		
 		model.addObject("disciplinas", disciplinaService.listarNaoArquivada());
-		
+
 		return model;
-		
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarDisciplina(Disciplina disciplina) {
 		ModelAndView model = new ModelAndView(Constants.DISCIPLINA_CADASTRAR_);
 		model.addObject("disciplina", disciplina);
+		
 		return model;
 	}
 
@@ -52,7 +47,6 @@ public class DisciplinaController {
 
 	public ModelAndView cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
 			BindingResult result) {
-
 		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_REDIRECT_LISTAR);
 		disciplinaValidator.validate(disciplina, result);
 
@@ -65,12 +59,11 @@ public class DisciplinaController {
 		return modelAndView;
 	}
 
-
 	@RequestMapping(value = "/{idDisciplina}/editar", method = RequestMethod.GET)
 	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina) {
 		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_EDITAR);
 		modelAndView.addObject("disciplina", disciplina);
-	
+
 		return modelAndView;
 	}
 
@@ -89,13 +82,11 @@ public class DisciplinaController {
 
 		return modelAndView;
 	}
-	
-	
-	@RequestMapping(value="/{id}/arquivar", method = RequestMethod.GET)
-	public @ResponseBody boolean arquivarDisciplina(@PathVariable("id") Integer id){
-		
-		return disciplinaService.arquivarDisciplina(id);
 
+	@RequestMapping(value = "/{id}/arquivar", method = RequestMethod.GET)
+	public @ResponseBody boolean arquivarDisciplina(@PathVariable("id") Integer id) {
+
+		return disciplinaService.arquivarDisciplina(id);
 	}
-	
+
 }

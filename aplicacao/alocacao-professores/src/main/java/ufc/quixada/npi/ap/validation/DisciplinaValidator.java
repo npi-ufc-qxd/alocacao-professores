@@ -11,8 +11,8 @@ public class DisciplinaValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
+		
 		return Disciplina.class.isAssignableFrom(clazz);
-
 	}
 
 	@Override
@@ -24,16 +24,13 @@ public class DisciplinaValidator implements Validator {
 		validateNotNull(errors, disciplina.getCreditos(), "creditos", "Preenchimento inválido");
 	}
 
-	void validateStrings(Errors erros, String object, String field, String message) {
-		
+	void validateStrings(Errors erros, String object, String field, String message) {	
 		if (object.isEmpty() || 
-		   
 		    !object.matches("[^=+\\\\|\\[{\\]};:'\"<>/@#$%]*")) {
 			erros.rejectValue(field, field, message);
 		}
 	}
 
- 
 	void validateNotNull(Errors erros, Integer object, String field, String message) {
 		if (object < 0 || object.toString().isEmpty()) {
 			erros.rejectValue(field, field, message);
