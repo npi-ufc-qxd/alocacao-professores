@@ -11,7 +11,6 @@ public class DisciplinaValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		
 		return Disciplina.class.isAssignableFrom(clazz);
 	}
 

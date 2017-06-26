@@ -31,7 +31,6 @@ public class DisciplinaController {
 	public ModelAndView listarDisciplinas() {
 		ModelAndView model = new ModelAndView(Constants.DISCIPLINA_LISTAR);
 		model.addObject("disciplinas", disciplinaService.listarNaoArquivada());
-
 		return model;
 	}
 
@@ -39,23 +38,19 @@ public class DisciplinaController {
 	public ModelAndView cadastrarDisciplina(Disciplina disciplina) {
 		ModelAndView model = new ModelAndView(Constants.DISCIPLINA_CADASTRAR_);
 		model.addObject("disciplina", disciplina);
-		
 		return model;
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
-
 	public ModelAndView cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
 			BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_REDIRECT_LISTAR);
 		disciplinaValidator.validate(disciplina, result);
-
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView(Constants.DISCIPLINA_CADASTRAR_);
 		} else {
 			disciplinaService.salvar(disciplina);
 		}
-
 		return modelAndView;
 	}
 
@@ -63,29 +58,24 @@ public class DisciplinaController {
 	public ModelAndView editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina) {
 		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_EDITAR);
 		modelAndView.addObject("disciplina", disciplina);
-
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
-
 	public ModelAndView editarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
 			BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_REDIRECT_LISTAR);
 		disciplinaValidator.validate(disciplina, result);
-
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView(Constants.DISCIPLINA_EDITAR);
 		} else {
 			disciplinaService.salvar(disciplina);
 		}
-
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/{id}/arquivar", method = RequestMethod.GET)
 	public @ResponseBody boolean arquivarDisciplina(@PathVariable("id") Integer id) {
-
 		return disciplinaService.arquivarDisciplina(id);
 	}
 
