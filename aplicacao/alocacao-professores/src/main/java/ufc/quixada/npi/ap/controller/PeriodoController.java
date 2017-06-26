@@ -6,12 +6,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Periodo;
@@ -59,7 +61,7 @@ public class PeriodoController {
 			return modelAndView;
 		}		
 		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
-		periodo.setStatus(Status.ABERTA);
+		periodo.setStatus(Status.ABERTO);
 		periodoService.salvar(periodo);		
 		return modelAndView;
 	}
@@ -71,10 +73,13 @@ public class PeriodoController {
 	}
 	
 	@RequestMapping(path="/{id}/excluir")
-	public ModelAndView excluir(@PathVariable ("id") Integer id){
-		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);
-		periodoService.excluir(periodoService.getPeriodo(id));
-		return modelAndView;
+	public @ResponseBody boolean excluir(@PathVariable ("id") Integer id){
+		try {
+			periodoService.excluir(periodoService.getPeriodo(id));
+		} catch (EmptyResultDataAccessException ex) {
+			return false;
+		}
+		return true;
 	}
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.GET)

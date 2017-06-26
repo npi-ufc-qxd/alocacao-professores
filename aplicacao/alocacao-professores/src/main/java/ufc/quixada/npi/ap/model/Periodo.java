@@ -144,7 +144,7 @@ public class Periodo {
 	}
 	
 	public enum Status{
-		ABERTA("Aberta"), EM_ANALISE("Em análise"), CONSOLIDADA("Consolidada");
+		ABERTO("Aberto"), EM_ANALISE("Em análise"), CONSOLIDADO("Consolidado");
 		
 		private String descricao;
 		

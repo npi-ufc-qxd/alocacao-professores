@@ -49,8 +49,10 @@
                   <td class="success text-center" th:text="${#dates.format(periodo.inicioPeriodoAjuste, 'dd-MMM-yyyy')}"></td>
                   <td class="danger text-center" th:text="${#dates.format(periodo.fimPeriodoAjuste, 'dd-MMM-yyyy')}"></td>                                                                                          
                   <td class="text-right active">
-                    <a th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn btn-inverse btn-xs waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </a>
-                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-xs waves-effect waves-light"><i class="fa fa-close "></i> Excluir </a>                    
+                    <a th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn btn-inverse btn-xs waves-effect waves-light"><i class="fa fa-edit"></i> Editar </a>
+                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-xs waves-effect waves-light sa-btn-excluir"><i class="fa fa-close "></i> Excluir </a>
+                    <a  class="btn btn-inverse btn-xs waves-effect waves-light "><i class="fa fa-plus "></i> Detalhes </a>                    
+                                        
                   </td>                                                               					
                 </tr>                                   
               </tbody>
@@ -60,5 +62,8 @@
         </div>
         </div>
 		
+	</section>
+	<section layout:fragment="js">
+		<script th:src="@{/js/periodo/periodo.js}"></script>
 	</section>
 </html>
