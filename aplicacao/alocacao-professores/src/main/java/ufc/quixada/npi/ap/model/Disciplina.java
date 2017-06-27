@@ -8,18 +8,29 @@ import javax.persistence.Id;
 @Entity
 public class Disciplina {
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	private String nome;
-	
+
+	private String codigo;
+
 	private int creditos;
 	
 	private int cargaHorariaTeorica;
 	
 	private int cargaHorariaPratica;
+	
+	private boolean arquivada;	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -29,12 +40,12 @@ public class Disciplina {
 		this.nome = nome;
 	}
 
-	public Integer getId() {
-		return id;
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public int getCreditos() {
@@ -60,6 +71,13 @@ public class Disciplina {
 	public void setCargaHorariaPratica(int cargaHorariaPratica) {
 		this.cargaHorariaPratica = cargaHorariaPratica;
 	}
-	
+
+	public boolean getArquivada() {
+		return arquivada;
+	}
+
+	public void setArquivada(boolean arquivada) {
+		this.arquivada = arquivada;
+	}
 	
 }

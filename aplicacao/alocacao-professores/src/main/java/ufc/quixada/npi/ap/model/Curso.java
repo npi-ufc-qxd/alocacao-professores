@@ -21,6 +21,8 @@ public class Curso {
 	
 	private String coordenador;
 	
+	private String sigla;
+	
 	@OneToMany(mappedBy = "curso")
 	private List<Turma> turmas;
 
@@ -62,7 +64,14 @@ public class Curso {
 
 	public void setTurmas(List<Turma> turmas) {
 		this.turmas = turmas;
+	}
+
+	public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
 	}	
-	
 	
 }

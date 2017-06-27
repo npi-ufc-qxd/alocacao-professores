@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,22 +10,39 @@ import ufc.quixada.npi.ap.repository.DisciplinaRepository;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 
 @Service
-public class DisciplinaServiceImpl implements DisciplinaService{
+public class DisciplinaServiceImpl implements DisciplinaService {
 
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
-	
+
 	@Override
+	public List<Disciplina> listar() {
+
+		return disciplinaRepository.findAll();
+	}
+	
 	public void salvar(Disciplina disciplina) {
 		disciplinaRepository.save(disciplina);
-	
+	}
+
+	public List<Disciplina> listarNaoArquivada() {
+
+		return disciplinaRepository.findByArquivadaFalse();
 	}
 
 	@Override
-	public void atualizar(Disciplina disciplina) {
-		
+	public boolean arquivarDisciplina(Integer id) {
+
+		Disciplina disciplina = disciplinaRepository.findById(id);
+
+		if (disciplina == null) {
+			return false;
+		}
+
+		disciplina.setArquivada(true);
 		disciplinaRepository.save(disciplina);
-		
+
+		return true;
 	}
 
 }

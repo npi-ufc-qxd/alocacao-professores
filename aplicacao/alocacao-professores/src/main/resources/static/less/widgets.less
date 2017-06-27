@@ -154,7 +154,6 @@
   padding:15px;
 }
 
-
 /*Task*/
 .dropdown-tasks, .dropdown-alerts{ padding:0px;}
 .dropdown-tasks li a, .dropdown-alerts li a, .mailbox li > a{ padding:15px 20px;}
@@ -372,7 +371,7 @@ Basic List
       display: block;
       font-size: 12px;
       font-style: normal;
-      font-weight: 500;
+      font-weight: bold;
       margin:0;
       line-height:15px;
       position: relative;
@@ -519,7 +518,7 @@ Basic List
 .myadmin-alert .closed {
     color: rgba(255, 255, 255, 0.5);
     font-size: 20px;
-    font-weight: 500;
+    font-weight: bold;
     padding: 4px;
     position: absolute;
     right: 3px;
@@ -1514,7 +1513,7 @@ table.focus-on {
   position:relative;
   font-size:56px;
   margin:20px 0 10px;
-  font-weight:500;
+  font-weight:bold;
   span{
     position:absolute;
     font-size:15px;
@@ -1781,9 +1780,9 @@ table.focus-on {
   background:@white;
   top:0px;
   height:100%;
+  
   box-shadow:5px 1px 40px rgba(0, 0, 0, 0.1);
   transition:all 0.3s ease;
-  
   .rpanel-title{
     display:block;
     padding:21px;
@@ -1812,7 +1811,6 @@ table.focus-on {
    }
  } 
 }
-
 .shw-rside{
   right:0px;
   width:240px;
@@ -1931,13 +1929,7 @@ ul#themecolors {
     background: linear-gradient(to right, #4f5467 0%,#4f5467 23%,@megna 23%,@megna 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4f5467', endColorstr='@megna',GradientType=1 ); /* IE6-9 */
 }
-.red-dark-theme{
-    background: #e20b0b; /* Old browsers */
-    background: -moz-linear-gradient(left, #4f5467 0%, #4f5467 23%, #e20b0b 23%, #e20b0b 99%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, #4f5467 0%,#4f5467 23%,#e20b0b 23%,#e20b0b 99%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, #4f5467 0%,#4f5467 23%,#e20b0b 23%,#e20b0b 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4f5467', endColorstr='#e20b0b',GradientType=1 ); /* IE6-9 */
-}
+
 
 /*visited ul li*/
 .visited li a{
@@ -2082,7 +2074,7 @@ position:relative;
 /*Jquery toaster*/
 
 
-.jq-icon-info {background-color: @megna; color:@white;}
+.jq-icon-info {background-color: @info; color:@white;}
 .jq-icon-success {background-color: @success; color:@white;}
 .jq-icon-error {background-color: @danger; color:@white;}
 .jq-icon-warning{ background-color:@warning; color:@white;}
@@ -2555,32 +2547,6 @@ ul.list-icons{
     outline:0!important;
     outline-offset:0!important}
 .editable-table td:focus{outline:0}
-
-/*USer-profile*/
-.user-profile{
-  padding:15px 0;
-  position:relative;
-  text-align:center;
-  
-  .user-pro-body{
-      display:block;
-   img{
-      width:50px;
-      display:block;
-      margin:0 auto;
-      margin-bottom:10px;
-   }
-   .u-dropdown{
-      color:@sidebar-text;
-   }
-   .dropdown-menu{
-      right:0px;
-      width:180px;
-      left:0px;
-      margin:0 auto;
-   }   
-  }
-}
 
 /*Form-Wizard*/
 .wizard-steps{

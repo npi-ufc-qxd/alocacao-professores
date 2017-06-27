@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 public class Empilhamento {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	
 	@OneToOne
@@ -65,7 +65,5 @@ public class Empilhamento {
 	public void setSegundaDisciplina(Disciplina segundaDisciplina) {
 		this.segundaDisciplina = segundaDisciplina;
 	}
-	
-	
-		
+
 }

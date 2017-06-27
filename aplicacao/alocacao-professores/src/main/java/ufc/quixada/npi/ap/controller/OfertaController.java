@@ -11,37 +11,37 @@ import ufc.quixada.npi.ap.util.Constants;
 @RequestMapping(path = "/ofertas")
 public class OfertaController {
 	
-	@RequestMapping(value = "")
-	public ModelAndView listar(){
-		ModelAndView mv = new ModelAndView(Constants.LISTAR_OFERTA);
+	@RequestMapping(value = {"", "/"})
+	public ModelAndView listarOfertas(){
+		ModelAndView mv = new ModelAndView(Constants.OFERTA_LISTAR);
 
 		return mv;
 	}
 
 	@RequestMapping(value = "/cadastrar")
-	public ModelAndView cadastrar(){
-		ModelAndView mv = new ModelAndView(Constants.FORM_CADASTRAR_OFERTA);
+	public ModelAndView cadastrarOferta(){
+		ModelAndView mv = new ModelAndView(Constants.OFERTA_CADASTRAR);
 
 		return mv;
 	}
 	
 	@RequestMapping(value = "/{id}/editar")
-	public ModelAndView editar(){
-		ModelAndView mv = new ModelAndView(Constants.FORM_EDITAR_OFERTA);
+	public ModelAndView editarOferta(){
+		ModelAndView mv = new ModelAndView(Constants.OFERTA_EDITAR);
 
 		return mv;
 	}
 
 	@RequestMapping(value = "/{id}/detalhar")
-	public ModelAndView detalhar(){
-		ModelAndView mv = new ModelAndView(Constants.DETALHAR_OFERTA);
+	public ModelAndView detalharOferta(){
+		ModelAndView mv = new ModelAndView(Constants.OFERTA_DETALHAR);
 
 		return mv;
 	}
 
 	@RequestMapping(value= "/{id}/excluir")
-	public void excluir(){
+	public void excluirOferta(){
 	
 	}
-
+	
 }

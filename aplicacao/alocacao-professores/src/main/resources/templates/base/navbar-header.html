@@ -1,0 +1,43 @@
+<html 
+	lang="ptBR"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+
+<!-- Top Navigation -->
+<nav class="navbar navbar-default navbar-static-top m-b-0" th:fragment="navbar-header">
+   <div class="navbar-header">
+      <!-- Toggle icon for mobile view --> 
+      <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+      <!-- Logo -->
+      <div class="top-left-part">
+         <a class="logo" href="">
+           <!-- Logo icon image, you can use font-icon also -->
+           <b><img th:src="@{/plugins/images/eliteadmin-logo.png}" alt="home" /></b>
+           <!-- Logo text image you can use text also -->
+           <span class="hidden-xs"><img th:src="@{/plugins/images/eliteadmin-text.png}" alt="home" /></span>
+         </a>
+      </div>
+      <!-- /Logo -->
+      <!-- This is the message dropdown -->
+      <ul class="nav navbar-top-links navbar-right pull-right">
+         <!-- .user dropdown -->
+         <li class="dropdown m-r-20">
+            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img th:src="@{/plugins/images/users/varun.jpg}" alt="user-img" width="36" class="img-circle" /><b class="hidden-xs">Steave</b> </a>
+            <ul class="dropdown-menu dropdown-user animated flipInY">
+               <li><a href="#"><i class="ti-user"></i> Perfil</a></li>
+               <li role="separator" class="divider"></li>
+               <li><a href="#"><i class="fa fa-power-off"></i> Sair</a></li>
+            </ul>
+            <!-- /.user dropdown-user -->
+         </li>
+         <!-- /.user dropdown -->
+      </ul>
+   </div>
+   <!-- /.navbar-header -->
+   <!-- /.navbar-top-links -->
+   <!-- /.navbar-static-side -->
+</nav>
+<!-- End Top Navigation -->
+</html>
