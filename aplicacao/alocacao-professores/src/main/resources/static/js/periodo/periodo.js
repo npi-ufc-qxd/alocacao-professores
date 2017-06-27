@@ -52,7 +52,7 @@ function successSwal(){
 function errorSwal(){
 	swal({
 		title: "Erro ao excluir",
-		text: "O período não foi excluído, pois existe uma oferta atrelado a ele", 
+		text: "O período não foi excluído, pois existe uma oferta de disciplina relacionada a ele", 
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",
