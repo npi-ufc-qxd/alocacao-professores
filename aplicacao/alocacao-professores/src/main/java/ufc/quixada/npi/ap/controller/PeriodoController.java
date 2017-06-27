@@ -6,13 +6,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Periodo;
@@ -31,7 +32,7 @@ public class PeriodoController {
 	@Autowired
 	PeriodoValidator periodoValidator;
 	
-	@RequestMapping(path = {"", "/"})
+	@RequestMapping(path = {"","/"}, method=RequestMethod.GET)
 	public ModelAndView listarPeriodos(){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_LISTAR);
 		List<Periodo> periodos = periodoService.listaPeriodos();
@@ -46,7 +47,7 @@ public class PeriodoController {
 	}
 	
 	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
-	public ModelAndView cadastrarPeriodo(Periodo periodo){
+	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") Periodo periodo){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_CADASTRAR);
 		modelAndView.addObject("periodo", periodo);		
 		return modelAndView;
@@ -60,7 +61,7 @@ public class PeriodoController {
 			return modelAndView;
 		}		
 		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
-		periodo.setStatus(Status.ABERTA);
+		periodo.setStatus(Status.ABERTO);
 		periodoService.salvar(periodo);		
 		return modelAndView;
 	}
@@ -72,25 +73,37 @@ public class PeriodoController {
 	}
 	
 	@RequestMapping(path="/{id}/excluir")
-	public ModelAndView excluir(@PathVariable ("id") Integer id){
-		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);
-		periodoService.excluir(periodoService.getPeriodo(id));
-		return modelAndView;
+	public @ResponseBody boolean excluir(@PathVariable ("id") Integer id){
+		try {
+			periodoService.excluir(periodoService.getPeriodo(id));
+		} catch (EmptyResultDataAccessException ex) {
+			return false;
+		}
+		return true;
 	}
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.GET)
-	public ModelAndView editar(@PathVariable ("id") Integer id){
+	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @ModelAttribute("periodo") Periodo periodo){
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_EDITAR);
 		modelAndView.addObject("periodo", periodoService.getPeriodo(id));
 		return modelAndView;
 	}	
 	
 	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
-	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @RequestParam("status") Status status ){
-		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_REDIRECT_LISTAR);		
-		Periodo periodo = periodoService.getPeriodo(id);
-		periodo.setStatus(status);		
-		periodoService.salvar(periodo);			
+	public ModelAndView editarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result){
+		ModelAndView modelAndView = new ModelAndView();
+		periodoValidator.validate(periodo, result);
+		
+		System.out.println(result.getErrorCount());
+		
+		if (result.hasErrors()){
+			modelAndView.setViewName(Constants.PERIODO_EDITAR);			
+			return modelAndView;
+		}		
+		
+		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
+		periodoService.salvar(periodo);		
+		
 		return modelAndView;
 	}
 
