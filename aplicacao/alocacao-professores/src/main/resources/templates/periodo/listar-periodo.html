@@ -27,8 +27,7 @@
                 <tr>
                   <th class="text-center">Ano</th>
                   <th class="text-center">Semeste</th>
-                  <th class="text-center">Status</th>
- 
+                  <th class="text-center">Status</th> 
                   <th class="text-center active">Opções</th>                                    
                 </tr>
               </thead>
@@ -39,9 +38,16 @@
                   <td class="text-center" th:text="${periodo.status}"></td>
                                                                                                          
                   <td class="text-right active">
-                    <a th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn btn-inverse btn-xs waves-effect waves-light"><i class="fa fa-edit"></i> Editar </a>
-                    <a th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-xs waves-effect waves-light sa-btn-excluir"><i class="fa fa-close "></i> Excluir </a>
-                    <a  class="btn btn-inverse btn-xs waves-effect waves-light "><i class="fa fa-plus "></i> Detalhes </a>                    
+                    <a data-toggle="tooltip" data-placement="top" title="Detalhes" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
+                    	<i class="fa fa-eye "></i>  
+                    </a> 
+                    <a data-toggle="tooltip" data-placement="top" title="Editar" th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn  btn-warning btn-xs btn-circle">
+                    	<i class="fa fa-pencil"></i>  
+                    </a>
+                                                          
+                    <a data-toggle="tooltip" data-placement="top" title="Excluir" th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-circle btn-xs waves-effect waves-light sa-btn-excluir">
+                    	<i class="fa fa-close "></i>  
+                    </a>
                                         
                   </td>                                                               					
                 </tr>                                   
