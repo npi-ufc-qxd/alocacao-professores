@@ -22,7 +22,7 @@
         <div class="col-sm-12">
           <div class="white-box">         
             <div class="table-responsive">
-            <table id="myTable" class="table table-striped ">
+            <table id="myTable" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th class="text-center">Ano</th>
@@ -39,7 +39,7 @@
                   <td class="text-center" th:text="${periodo.status}"></td>
                                                                                                          
                   <td class="text-right active">
-                    <a data-toggle="tooltip" data-placement="top" title="Detalhes" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
+                    <a  data-toggle="tooltip" data-placement="top" title="Detalhes" th:href="@{/periodos/{id}/detalhar(id=${periodo.id})}" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
                     	<i class="fa fa-eye "></i>  
                     </a> 
                     <a data-toggle="tooltip" data-placement="top" title="Editar" th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn  btn-warning btn-xs btn-circle">

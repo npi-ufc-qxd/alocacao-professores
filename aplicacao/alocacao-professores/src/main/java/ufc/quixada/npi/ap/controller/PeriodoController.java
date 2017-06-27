@@ -106,5 +106,13 @@ public class PeriodoController {
 		
 		return modelAndView;
 	}
+	
+	
+	@RequestMapping(path="/{id}/detalhar", method=RequestMethod.GET)
+	public ModelAndView detalharPeriodo(@PathVariable ("id") Integer id, @ModelAttribute("periodo") Periodo periodo){
+		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_DETALHAR);
+		modelAndView.addObject("periodo", periodoService.getPeriodo(id));
+		return modelAndView;
+	}
 
 }
