@@ -28,8 +28,11 @@ public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/").authenticated()
-				.antMatchers("/js/**", "/css/**", "/img/**", "/plugins/**", "/bootstrap/**", "/less/**", "/**").permitAll()
-				.antMatchers("/compartilhamentos/**").permitAll()
+				.antMatchers("/js/**", "/css/**", "/img/**", "/plugins/**", "/bootstrap/**").permitAll()
+				.antMatchers("/compartilhamentos/**").hasAnyAuthority("DOCENTE")
+				.antMatchers("/empilhamentos/**").hasAnyAuthority("DOCENTE")
+				.antMatchers("/disciplinas/**").hasAnyAuthority("DOCENTE")
+				.antMatchers("/periodos/**").hasAnyAuthority("DOCENTE")
 				.anyRequest().authenticated()
 				.and().formLogin()
 				.loginProcessingUrl(login).loginPage(login).permitAll().and().logout()
