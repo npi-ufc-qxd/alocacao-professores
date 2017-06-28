@@ -62,21 +62,24 @@
         						<tr>
         							<th>Disciplina</th>
         							<th>Turma</th>
-        							<th>Vagas</th>
-        							<th>Total</th>
+        							<th>Turno</th>
+        							<th>Vagas</th>    							
         							<th>CC</th>
+        							<th>DD</th>
                                     <th>ES</th>
-                                    <th>SI</th>
-                                    <th>RD</th>
                                     <th>EC</th>
-                                    <th>DD</th>
-                                    <th>Turno</th>
+                                    <th>RD</th>
+                                    <th>SI</th>                                   
+                                    <th>Total</th>
                                     <th class="text-nowrap"></th>
         						</tr>
         					</thead>
         					<tbody>
-        						<tr th:each="oferta: periodo.getOfertas">
-        							<td th:text="${oferta.Disciplina.getNome}"></td>
+        						<tr th:each="oferta : ${periodo.ofertas}">
+        							<td th:text="${oferta.disciplina.nome}"></td>
+        							<td th:text="${#strings.concat(oferta.turma.curso.sigla,' ' ,oferta.turma.semestre)}" ></td>
+        							<td th:text="${oferta.turno.descricao}"></td>
+        							<td th:text="${oferta.vagas}"></td> 
         						</tr>
         					</tbody>
         				</table>
