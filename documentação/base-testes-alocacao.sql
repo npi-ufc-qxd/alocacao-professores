@@ -1,10 +1,10 @@
 -- CURSOS
-INSERT INTO curso (codigo, nome, sigla) VALUES (401, 'Sistemas de Informação', 'SI');
-INSERT INTO curso (codigo, nome, sigla) VALUES (402, 'Engenharia de Software', 'ES');
-INSERT INTO curso (codigo, nome, sigla) VALUES (403, 'Redes de Computadores', 'RC');
-INSERT INTO curso (codigo, nome, sigla) VALUES (404, 'Ciência da Computação', 'CC');
-INSERT INTO curso (codigo, nome, sigla) VALUES (406, 'Design Digital', 'DD');
-INSERT INTO curso (codigo, nome, sigla) VALUES (405, 'Engenharia de Computação', 'EC');
+INSERT INTO curso (id, codigo, nome, sigla) VALUES (1, 401, 'Sistemas de Informação', 'SI');
+INSERT INTO curso (id, codigo, nome, sigla) VALUES (2, 402, 'Engenharia de Software', 'ES');
+INSERT INTO curso (id, codigo, nome, sigla) VALUES (3, 403, 'Redes de Computadores', 'RC');
+INSERT INTO curso (id, codigo, nome, sigla) VALUES (4, 404, 'Ciência da Computação', 'CC');
+INSERT INTO curso (id, codigo, nome, sigla) VALUES (5, 406, 'Design Digital', 'DD');
+INSERT INTO curso (id, codigo, nome, sigla) VALUES (6, 405, 'Engenharia de Computação', 'EC');
 
 -- SISTEMAS DE INFORMAÇÃO
 INSERT INTO turma(semestre, curso_id) VALUES (1, 1);
