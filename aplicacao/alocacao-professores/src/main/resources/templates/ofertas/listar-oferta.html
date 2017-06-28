@@ -46,17 +46,18 @@
 											</td>
 											<td>
 												<a class="btn btn-success btn-circle popup-with-form" href="#test-form"> <i class="fa fa-search"></i></a> 
-												<span th:if="${oferta.periodo.status.name()} != 'CONSOLIDADA'">
-													<button class="btn btn-sm btn-info waves-effect waves-light">
+												<span th:if="${oferta.periodo.status.name()} != 'CONSOLIDADO'">
+													<a class="btn-circle btn-warning waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Compartilhar">
 														<i class="fa fa-link"></i>
-														<span>Compartilhar</span>
-													</button>
-													<a th:href="@{/ofertas/{id}/editar(id=${oferta.id})}" class="btn btn-sm btn-warning waves-effect waves-light">
-														<i class="fa fa-pencil"></i>
-														<span>Editar</span>
 													</a>
-													<a th:href="@{/ofertas/{id}/excluir(id=${oferta.id})}" class="btn btn-sm btn-danger waves-effect waves-light sa-btn-excluir">
-														<i class="fa fa-trash"></i> <span>Excluir</span>
+													<a th:href="@{/ofertas/{id}/editar(id=${oferta.id})}" class="btn-circle btn-inverse waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Editar">
+														<i class="fa fa-pencil"></i>
+													</a>
+													<a class="btn-circle btn-info waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Detalhes">
+														<i class="fa fa-pencil"></i>
+													</a>
+													<a th:href="@{/ofertas/{id}/excluir(id=${oferta.id})}" class="btn-circle btn-danger waves-effect waves-light sa-btn-excluir" role="button" data-toggle="tooltip" data-placement="top" title="Excluir">
+														<i class="fa fa-close"></i>
 													</a>
 												</span>
 											</td>
