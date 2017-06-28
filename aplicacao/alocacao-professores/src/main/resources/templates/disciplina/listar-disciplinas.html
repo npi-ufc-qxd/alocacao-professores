@@ -35,15 +35,13 @@
               </thead>
               <tbody>
                 <tr th:each="disciplina : ${disciplinas}">
-                  <td th:text="${disciplina.nome}"></td>
+                  <td th:inline="text"><b>[[${disciplina.codigo}]]</b> - [[${disciplina.nome}]]</td>
                   <td th:text="${disciplina.creditos}"></td>
                   <td th:text="${disciplina.cargaHorariaTeorica}"></td>
                   <td th:text="${disciplina.cargaHorariaPratica}"></td>                                                     					
-                  <td>
-                  <div class="text-right">
-                    <a th:href="@{/disciplinas/{id}/editar(id=${disciplina.id})}" class="btn btn-inverse btn-sm waves-effect waves-light"><i class="fa fa-pencil"></i> Editar </a>
-                    <a th:href="@{/disciplinas/{id}/arquivar(id=${disciplina.id})}" class="btn btn-danger btn-sm waves-effect waves-light m-r-10 sa-btn-arquivar"> Arquivar </a>
-                  </div>
+                  <td class="text-right">
+                    <a th:href="@{/disciplinas/{id}/editar(id=${disciplina.id})}" class="btn btn-inverse btn-circle waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil"></i></a>
+                    <a th:href="@{/disciplinas/{id}/arquivar(id=${disciplina.id})}" class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-btn-arquivar" data-toggle="tooltip" data-placement="top" title="Arquivar"><i class="fa fa-archive"></i></a>
                   </td>                                      
                 </tr>                                   
               </tbody>
