@@ -9,10 +9,9 @@ public interface OfertaService {
 	public List<Oferta> findAllOfertas();
 
 	public void excluir(Integer id);
-
-	public Oferta salvarOferta(Oferta oferta);
 	
+	public Oferta salvar(Oferta oferta);
+
 	public Oferta visualizarOferta(Integer idOferta);
-	
-}
 
+}

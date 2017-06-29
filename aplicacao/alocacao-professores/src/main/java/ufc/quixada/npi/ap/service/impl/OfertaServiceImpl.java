@@ -26,7 +26,7 @@ public class OfertaServiceImpl implements OfertaService {
 	}
 	
 	@Override
-	public Oferta salvarOferta(Oferta oferta) {
+	public Oferta salvar(Oferta oferta) {
 		return ofertaRepository.save(oferta);
 	}
 
