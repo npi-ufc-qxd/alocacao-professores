@@ -29,6 +29,7 @@ public class Constants {
 	public static final String OFERTA_LISTAR = "/ofertas/listar-oferta";
 	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";
 	public static final String OFERTA_EXCLUIR = "/ofertas/excluir-oferta";
+	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
 	
 	// Compartilhamento
 	public static final String COMPARTILHAMENTO_CADASTRAR = "compartilhamento/cadastrar-compartilhamento";

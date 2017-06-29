@@ -12,7 +12,6 @@ public class DisciplinaValidator implements Validator {
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return Disciplina.class.isAssignableFrom(clazz);
-
 	}
 
 	@Override
@@ -22,7 +21,6 @@ public class DisciplinaValidator implements Validator {
 		validateNotNull(errors, disciplina.getCargaHorariaPratica(), "cargaHorariaPratica", "Preenchimento inválido");
 		validateNotNull(errors, disciplina.getCargaHorariaTeorica(), "cargaHorariaTeorica", "Preenchimento inválido");
 		validateNotNull(errors, disciplina.getCreditos(), "creditos", "Preenchimento inválido");
-		
 		validateCodigoInvalido(errors, disciplina.getCodigo(), "codigo", "codigoInvalid");
 		validateCodigoNotNull(errors, disciplina.getCodigo(), "codigo", "codigoNotNull");
 	}
@@ -39,7 +37,7 @@ public class DisciplinaValidator implements Validator {
 		}
 	}
 
-	void validateStrings(Errors erros, String object, String field, String message) {
+	void validateStrings(Errors erros, String object, String field, String message) {	
 		if (object.isEmpty() || !object.matches("[^=+\\\\|\\[{\\]};:'\"<>/@#$%]*")) {
 			erros.rejectValue(field, field, message);
 		}
