@@ -7,19 +7,19 @@ import javax.persistence.Id;
 
 @Entity
 public class Disciplina {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private String nome;
 
 	private String codigo;
 
 	private int creditos;
-	
+
 	private int cargaHorariaTeorica;
-	
+
 	private int cargaHorariaPratica;
 	
 	private boolean arquivada;	
@@ -79,5 +79,5 @@ public class Disciplina {
 	public void setArquivada(boolean arquivada) {
 		this.arquivada = arquivada;
 	}
-	
+
 }
