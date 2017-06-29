@@ -14,9 +14,9 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Autowired
 	private OfertaRepository ofertaRepository;
-	
+
 	@Override
-	public Oferta salvarOferta(Oferta oferta) {
+	public Oferta salvar(Oferta oferta) {
 		return ofertaRepository.save(oferta);
 	}
 

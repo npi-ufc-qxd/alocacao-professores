@@ -23,7 +23,7 @@ public class Oferta {
 	
 	private int vagas;
 	
-	enum Turno{
+	public enum Turno{
 		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite"), MESMO_DIA("Mesmo dia");
 		
 		private String descricao;

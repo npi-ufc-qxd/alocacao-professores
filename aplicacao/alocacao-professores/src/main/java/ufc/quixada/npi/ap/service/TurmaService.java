@@ -8,4 +8,5 @@ public interface TurmaService {
 	
 	public List<Turma> listarTurmas();
 	
+	public Turma findTurma(Integer id);
 }
