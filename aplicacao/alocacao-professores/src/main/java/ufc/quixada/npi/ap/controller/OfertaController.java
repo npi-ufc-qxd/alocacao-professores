@@ -56,7 +56,7 @@ public class OfertaController {
 		return professorService.findAllProfessores();
 	}
 	
-	@RequestMapping(value = {"", "/"})
+	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public ModelAndView listarOfertas(){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
 		modelAndView.addObject("ofertas", ofertaService.findAllOfertas());
@@ -96,7 +96,32 @@ public class OfertaController {
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
+		
+		modelAndView.addObject("oferta", ofertaService.findOferta(id));
+		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
+	public ModelAndView editarOferta(
+			@PathVariable(name = "id", required = true) Integer id,
+				@ModelAttribute("oferta") @Valid Oferta oferta, 
+					BindingResult bindingResult, ModelAndView modelAndView){
+		
+		ofertaValidator.validate(oferta, bindingResult);
+		
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName(Constants.OFERTA_EDITAR);
+			modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
+			
+			return modelAndView;
+		}
+		
+		ofertaService.salvar(oferta);
+		
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		
 		return modelAndView;
 	}
 
@@ -109,17 +134,6 @@ public class OfertaController {
 		modelAndView.addObject("oferta", oferta);
 		modelAndView.addObject("professores",oferta.getProfessores());
 		modelAndView.addObject("erro", erro);
-
-		return modelAndView;
-	}
-	
-	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
-	public ModelAndView editarOferta(
-			@PathVariable(name = "id", required = true) Integer id,
-				@ModelAttribute("oferta") @Valid Oferta oferta, 
-					BindingResult bindingResult, ModelAndView modelAndView){
-		
-		modelAndView.setViewName(Constants.OFERTA_EDITAR);
 
 		return modelAndView;
 	}

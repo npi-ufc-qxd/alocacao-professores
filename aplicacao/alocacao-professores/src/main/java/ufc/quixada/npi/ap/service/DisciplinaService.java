@@ -11,9 +11,9 @@ public interface DisciplinaService {
 	public List<Disciplina> listar();
 
 	public List<Disciplina> listarNaoArquivada();
-
-	public boolean arquivarDisciplina(Integer id);
-
+	
+	boolean arquivarDisciplina(Integer id);
+	
 	public Disciplina findDisciplina(Integer id);
-
+	
 }

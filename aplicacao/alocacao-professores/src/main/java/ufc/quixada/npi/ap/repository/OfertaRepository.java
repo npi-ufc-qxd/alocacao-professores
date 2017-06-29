@@ -9,4 +9,3 @@ import ufc.quixada.npi.ap.model.Oferta;
 public interface OfertaRepository extends JpaRepository<Oferta, Integer> {
 
 }
-
