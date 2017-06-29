@@ -6,11 +6,12 @@ import ufc.quixada.npi.ap.model.Oferta;
 
 public interface OfertaService {
 
+	public List<Oferta> findAllOfertas();
+
+	public void excluir(Integer id);
+	
 	public Oferta salvar(Oferta oferta);
 
-	public List<Oferta> listarOfertas();
-
-	public void excluirOferta(Integer idOferta);
-
 	public Oferta visualizarOferta(Integer idOferta);
+
 }

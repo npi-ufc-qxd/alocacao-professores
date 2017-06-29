@@ -11,23 +11,23 @@ import ufc.quixada.npi.ap.service.OfertaService;
 
 @Service
 public class OfertaServiceImpl implements OfertaService {
-
+	
 	@Autowired
 	private OfertaRepository ofertaRepository;
 
 	@Override
-	public Oferta salvar(Oferta oferta) {
-		return ofertaRepository.save(oferta);
-	}
-
-	@Override
-	public List<Oferta> listarOfertas() {
+	public List<Oferta> findAllOfertas() {
 		return ofertaRepository.findAll();
 	}
-
+	
 	@Override
-	public void excluirOferta(Integer idOferta) {
-		ofertaRepository.delete(idOferta);
+	public void excluir(Integer id) {
+		ofertaRepository.delete(id);
+	}
+	
+	@Override
+	public Oferta salvar(Oferta oferta) {
+		return ofertaRepository.save(oferta);
 	}
 
 	@Override

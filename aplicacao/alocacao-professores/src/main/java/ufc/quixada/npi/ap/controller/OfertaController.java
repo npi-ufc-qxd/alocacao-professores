@@ -1,11 +1,11 @@
 package ufc.quixada.npi.ap.controller;
 
-
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,11 +55,11 @@ public class OfertaController {
 	public List<Professor> todosProfessores(){
 		return professorService.findAllProfessores();
 	}
-
 	
 	@RequestMapping(value = {"", "/"})
 	public ModelAndView listarOfertas(){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
+		modelAndView.addObject("ofertas", ofertaService.findAllOfertas());
 		
 		return modelAndView;
 	}
@@ -67,7 +67,6 @@ public class OfertaController {
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
-		
 		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		
 		return modelAndView;
@@ -110,12 +109,8 @@ public class OfertaController {
 		modelAndView.addObject("oferta", oferta);
 		modelAndView.addObject("professores",oferta.getProfessores());
 		modelAndView.addObject("erro", erro);
-		return modelAndView;
-	}
 
-	@RequestMapping(value= "/{id}/excluir")
-	public void excluirOferta(){
-		
+		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
@@ -131,7 +126,13 @@ public class OfertaController {
 
 	@RequestMapping(value= "/{id}/excluir", method = RequestMethod.GET)
 	public @ResponseBody boolean excluirOferta(@PathVariable(name = "id", required = true) Integer id){
-		return false;
+		try {
+			ofertaService.excluir(id);
+		} catch (EmptyResultDataAccessException e) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 }
