@@ -1,4 +1,4 @@
-$(".sa-emp-btn-excluir").on("click", function(event){
+$(".sa-btn-excluir").on("click", function(event){
 	event.preventDefault();
 
 	var botaoExcluir = $(event.currentTarget);
@@ -20,7 +20,6 @@ $(".sa-emp-btn-excluir").on("click", function(event){
 				url: urlExcluir,
 				type: 'GET',
 				success: function(result){
-					console.log(result);
 					if (result === true){
 						successSwal();
 					}
@@ -30,8 +29,6 @@ $(".sa-emp-btn-excluir").on("click", function(event){
 					
 				},
 				error: function(status, error){
-					console.log(status);
-					console.log(error);
 					errorSwal();
 				}
 			});
@@ -41,8 +38,8 @@ $(".sa-emp-btn-excluir").on("click", function(event){
 
 function successSwal(){
 	swal({
-		title: "Empilhamento excluído!",
-		text: "O empilhamento foi excluído.", 
+		title: "Periodo excluído!",
+		text: "O período foi excluído.", 
 		type: "success",
 		showcancelButton: false,
 		confirmButtonText: "Ok!",
@@ -55,7 +52,7 @@ function successSwal(){
 function errorSwal(){
 	swal({
 		title: "Erro ao excluir",
-		text: "O empilhamento não foi excluído.", 
+		text: "O período não foi excluído, pois existe uma oferta de disciplina relacionada a ele", 
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",

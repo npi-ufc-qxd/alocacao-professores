@@ -1,204 +1,80 @@
 <!DOCTYPE html>
-<html lang="ptBR"
+<html lang="ptBR" 
 	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-<meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content=""/>
-<meta name="author" content=""/>
-<link rel="icon" type="image/png" sizes="16x16" th:href="@{../plugins/images/favicon.png}"/>
-<title>listar</title>
-<!-- Bootstrap Core CSS -->
-<link th:href="@{../bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-<!-- animation CSS -->
-<link th:href="@{../css/animate.css}" rel="stylesheet"/>
-<!-- Custom CSS -->
-<link th:href="@{../css/style.css}" rel="stylesheet"/>
-<!-- color CSS -->
-<link th:href="@{../css/colors/default.css}" id="theme"  rel="stylesheet"/>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script th:src="@{https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script th:src="@{https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-19175540-9', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-</head>
-<body class="fix-sidebar">
-<!-- Preloader -->
-<div class="preloader">
-  <div class="cssload-speeding-wheel"></div>
-</div>
-<div id="wrapper">
-  <!-- Top Navigation -->
-  <nav class="navbar navbar-default navbar-static-top m-b-0">
-    <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
-      <ul class="nav navbar-top-links navbar-left hidden-xs">
-        <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
-      </ul>
-    </div>
-  </nav>
-  <!-- Left navbar-header -->
-  <div class="navbar-default sidebar" role="navigation">
-    <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-      <ul class="nav" id="side-menu">
-        <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-          <!-- input-group -->
-          <div class="input-group custom-search-form">
-            <input type="text" class="form-control" placeholder="Search..."></input>
-            <span class="input-group-btn">
-            <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
-            </span> </div>
-          <!-- /input-group -->
-        </li>
-
-        <li class="nav-small-cap m-t-10">--- Menu Principal</li>
-        <li> <a href="/ofertas/cadastrar" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu"> Cadastrar <span class="fa arrow"></span></span></a></li>
-        <li> <a href="/ofertas/editar" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu"> Editar <span class="fa arrow"></span></span></a></li>
-        <li> <a href="/ofertas" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Listar<span class="fa arrow"></span></span></a></li>
-        <li> <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Excluir<span class="fa arrow"></span></span></a></li>
-
-        <li> <a href="calendar.html" class="waves-effect"><i data-icon="A" class="linea-icon linea-elaborate fa-fw"></i> <span class="hide-menu">Calendário</span></a></li>
-
-        <li><a href="#" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Sair</span></a></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Left navbar-header end -->
-  <!-- Page Content -->
-  <div id="page-wrapper">
-    <div class="container-fluid">
-      <div class="row bg-title">
-        <div class="col-sm-12">
-          <h4 class="page-title">Ofertas de Disciplinas Cadastradas</h4>
-        </div>
-
-        <!-- /.col-lg-12 -->
-      </div>
-      <!-- /row -->
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="white-box">
-            <h3 class="box-title m-b-0">Disciplinas Cadastradas</h3>
-            <p class="text-muted m-b-15 font-13"> </p>
-            <label class="form-inline">Mostrar
-            <select id="demo-show-entries" class="form-control input-sm">
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-            </select>
-            Resultados </label>
-            <table id="demo-foo-pagination" class="table m-b-0 toggle-arrow-tiny" data-page-size="5">
-              <thead>
-                <tr>
-                  <th data-toggle="true"> Disciplina </th>
-                  <th> Professor </th>
-                  <th data-hide="phone"> Turno </th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Estrutura de Dados</td>
-                  <td>Davi Sena</td>
-                  <td>Manhã</td>
-                  <td><a class="btn btn-warning waves-effect waves-light" href="/ofertas/editar" role="button">Editar</a></td>
-                  <td><a class="btn btn-info waves-effect waves-light" href="/ofertas/detalhar" role="button">Ver Detalhes</a></td>
-                  <td><button type="button" class="btn btn-danger waves-effect waves-light">Excluir</button></td>
-                </tr>
-                <tr>
-                  <td>Estrutura de Dados</td>
-                  <td>Davi Sena</td>
-                  <td>Manhã</td>
-                  <td><a class="btn btn-warning waves-effect waves-light" href="editar-oferta.html" role="button">Editar</a></td>
-                  <td><a class="btn btn-info waves-effect waves-light" href="detalhar-oferta.html" role="button">Ver Detalhes</a></td>
-                  <td><button type="button" class="btn btn-danger waves-effect waves-light">Excluir</button></td>
-                </tr>
-                <tr>
-                  <td>Estrutura de Dados</td>
-                  <td>Davi Sena</td>
-                  <td>Manhã</td>
-                  <td><a class="btn btn-warning waves-effect waves-light" href="editar-oferta.html" role="button">Editar</a></td>
-                  <td><a class="btn btn-info waves-effect waves-light" href="detalhar-oferta.html" role="button">Ver Detalhes</a></td>
-                  <td><button type="button" class="btn btn-danger waves-effect waves-light">Excluir</button></td>
-                </tr>
-                <tr>
-                  <td>Estrutura de Dados</td>
-                  <td>Davi Sena</td>
-                  <td>Manhã</td>
-                  <td><a class="btn btn-warning waves-effect waves-light" href="editar-oferta.html" role="button">Editar</a></td>
-                  <td><a class="btn btn-info waves-effect waves-light" href="detalhar-oferta.html" role="button">Ver Detalhes</a></td>
-                  <td><button type="button" class="btn btn-danger waves-effect waves-light">Excluir</button></td>
-                </tr>
-                <tr>
-                  <td>Estrutura de Dados</td>
-                  <td>Davi Sena</td>
-                  <td>Manhã</td>
-                  <td><a class="btn btn-warning waves-effect waves-light" href="editar-oferta.html" role="button">Editar</a></td>
-                  <td><a class="btn btn-info waves-effect waves-light" href="detalhar-oferta.html" role="button">Ver Detalhes</a></td>
-                  <td><button type="button" class="btn btn-danger waves-effect waves-light">Excluir</button></td>
-                </tr>
-                <tr>
-                  <td>Estrutura de Dados</td>
-                  <td>Davi Sena</td>
-                  <td>Manhã</td>
-
-                  <td><a class="btn btn-warning waves-effect waves-light" href="editar-oferta.html" role="button">Editar</a></td>
-                  <td><a class="btn btn-info waves-effect waves-light" href="detalhar-oferta.html" role="button">Ver Detalhes</a></td>
-                  <td><button type="button" class="btn btn-danger waves-effect waves-light">Excluir</button></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="5"><div class="text-right">
-                      <ul class="pagination pagination-split m-t-30">
-                      </ul>
-                    </div></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-      </div>
-      <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-    <footer class="footer text-center"> Universidade Federal do Ceará - Campus Quixadá</footer>
-  </div>
-  <!-- /#page-wrapper -->
-  </div>
-  <!-- /#wrapper -->
-  <!-- jQuery -->
-  <script th:src="@{../plugins/bower_components/jquery/dist/jquery.min.js}"></script>
-<!-- Bootstrap Core JavaScript -->
-<script th:src="@{../bootstrap/js/bootstrap.min.js}"></script>
-<!-- Menu Plugin JavaScript -->
-<script th:src="@{../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js}"></script>
-
-<!--slimscroll JavaScript -->
-<script th:src="@{../js/jquery.slimscroll.js}"></script>
-<!--Wave Effects -->
-<script th:src="@{../js/waves.js}"></script>
-<!-- Custom Theme JavaScript -->
-<script th:src="@{../js/custom.min.js}"></script>
-<!--Style Switcher -->
-<script th:src="@{../plugins/bower_components/styleswitcher/jQuery.style.switcher.js}"></script>
-</body>
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+	
+	<head>
+		<title>Ofertas | Alocação Professores</title>
+		
+		<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
+	</head>
+	
+	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h4 class="page-title">Ofertas</h4>
+			</div>
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+		    	<a th:href="@{/ofertas/cadastrar}" target="_blank" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Nova</a>
+			</div>
+		</div>
+		
+		<div class = "row">
+			<div class = "col-sm-12">
+				<div class = "white-box">
+					<div class = "table-responsive">
+						<div class = "table-responsive">
+							<table id = "myTable" class = "table table-striped">
+								<thead>
+										<tr>
+											<th class = "col-md-4">Disciplina</th>
+											<th class = "col-md-1">Turno</th>
+											<th class = "col-md-1">Vagas</th>
+											<th class = "col-md-2">Professores</th>
+											<th class = "col-md-3">Ações</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="oferta : ${ofertas}">
+											<td th:text="${oferta.disciplina.nome}"></td>
+											<td th:text="${oferta.turno.descricao}"></td>
+											<td th:text="${oferta.vagas}"></td>
+											<td>
+												<span th:if="${not #lists.isEmpty(oferta.professores)}" th:each="a, iterStat : ${oferta.professores}" th:text="!${iterStat.last} ? ${a.nome} + ', ': ${a.nome}"></span>
+											</td>
+											<td>
+												<a class="btn btn-success btn-circle popup-with-form" href="#test-form"> <i class="fa fa-search"></i></a> 
+												<span th:if="${oferta.periodo.status.name()} != 'CONSOLIDADO'">
+													<a class="btn-circle btn-warning waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Compartilhar">
+														<i class="fa fa-link"></i>
+													</a>
+													<a th:href="@{/ofertas/{id}/editar(id=${oferta.id})}" class="btn-circle btn-inverse waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Editar">
+														<i class="fa fa-pencil"></i>
+													</a>
+													<a class="btn-circle btn-info waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Detalhes">
+														<i class="fa fa-pencil"></i>
+													</a>
+													<a th:href="@{/ofertas/{id}/excluir(id=${oferta.id})}" class="btn-circle btn-danger waves-effect waves-light sa-btn-excluir" role="button" data-toggle="tooltip" data-placement="top" title="Excluir">
+														<i class="fa fa-close"></i>
+													</a>
+												</span>
+											</td>
+										</tr>
+									</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section layout:fragment="js">
+		<!-- Sweet-Alert  -->
+		<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+		
+		<script th:src="@{/js/ordenacao-tabela.js}"></script>
+		<script th:src="@{/js/oferta/oferta.js}"></script>
+	</section>
 </html>
-  
-  

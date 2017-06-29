@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.util.Constants;
@@ -39,7 +41,12 @@ public class EmpilhamentoController {
 	@Autowired
 	EmpilhamentoValidator empilhamentoValidator;
 	
-	@RequestMapping(path = {"", "/"})
+	@ModelAttribute("turmas")
+	public List<Turma> todasTurmas(){
+		return turmaService.listarTurmas();
+	}
+	
+	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
 		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
 		
@@ -53,7 +60,7 @@ public class EmpilhamentoController {
 	public ModelAndView cadastrarEmpilhamento(){
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
 		
-		List<Disciplina> disciplinas = disciplinaService.listar();
+		List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
 		List<Turma> turmas = turmaService.listarTurmas();
 		
 		model.addObject("disciplinas", disciplinas);
@@ -78,30 +85,56 @@ public class EmpilhamentoController {
 		return modelRetorno;
 	}
 	
-	@RequestMapping(path={"/{id}/excluir"})
-	public String excluirEmpilhamento(@PathVariable("id") Integer id){
-		empilhamentoService.excluirEmpilhamento(id);
-		return Constants.EMPILHAMENTO_REDIRECT_LISTAR;
+	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
+	public @ResponseBody boolean excluirEmpilhamento(@PathVariable(name = "id", required = true) Integer id){
+		try{
+			empilhamentoService.excluirEmpilhamento(id);
+		}catch(EmptyResultDataAccessException ex){
+			return false;
+		}
+		
+		return true;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public ModelAndView editarEmpilhamento(@PathVariable("id") Integer id){
-		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
-		model.addObject("empilhamento", empilhamentoService.visualizarEmpilhamento(id));
-		return model;
+	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
+		List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
+		Empilhamento empilhamento = empilhamentoService.visualizarEmpilhamento(id);
+		
+		ModelAndView modelAndView = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
+		modelAndView.addObject("disciplinasNaoArquivadas", disciplinas);
+		modelAndView.addObject("empilhamento", empilhamento);
+		
+		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(Empilhamento empilhamento){
-	
-		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
+												@ModelAttribute("empilhamento") @Valid Empilhamento empilhamento, 
+													BindingResult bindingResult, ModelAndView modelAndView){
+		
+		empilhamentoValidator.validate(empilhamento, bindingResult);
+		
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName(Constants.EMPILHAMENTO_EDITAR);
+			
+			List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
+			modelAndView.addObject("disciplinasNaoArquivadas	", disciplinas);
+			
+			return modelAndView;
+		}
+		
 		try{
 			empilhamentoService.salvarEmpilhamento(empilhamento);
 		}catch(Exception e){
-			model.addObject("erro", e.getMessage());
+			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
+			
+			return modelAndView;
 		}
 		
-		return model;
+		modelAndView.setViewName(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
+		
+		return modelAndView;
 	}
 	
 	@RequestMapping(path={"/{id}/detalhar"})

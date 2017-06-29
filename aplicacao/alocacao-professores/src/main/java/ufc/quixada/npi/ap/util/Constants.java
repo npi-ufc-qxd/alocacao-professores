@@ -29,6 +29,7 @@ public class Constants {
 	public static final String OFERTA_LISTAR = "/ofertas/listar-oferta";
 	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";
 	public static final String OFERTA_EXCLUIR = "/ofertas/excluir-oferta";
+	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
 	
 	// Compartilhamento
 	public static final String COMPARTILHAMENTO_CADASTRAR = "compartilhamento/cadastrar-compartilhamento";
@@ -46,9 +47,10 @@ public class Constants {
 	public static final String PERIODO_REDIRECT_LISTAR = "redirect:/periodos";
 	
 	// Disciplina
-	public static final String DISCIPLINA_CADASTRAR_ = "disciplina/cadastrar-disciplina"; 
+	public static final String DISCIPLINA_CADASTRAR = "disciplina/cadastrar-disciplina"; 
 	public static final String DISCIPLINA_EDITAR = "disciplina/editar-disciplina";
 	public static final String DISCIPLINA_LISTAR = "disciplina/listar-disciplinas";
+	public static final String DISCIPLINA_REDIRECT_LISTAR = "redirect:/disciplinas";
 
 	//Empilhamento
 	public static final String EMPILHAMENTO_CADASTRAR = "empilhamento/cadastrar-empilhamento";
