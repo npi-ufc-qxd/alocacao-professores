@@ -68,6 +68,7 @@ public class OfertaController {
 		modelAndView.addObject("oferta", oferta);
 		modelAndView.addObject("professores",oferta.getProfessores());
 		modelAndView.addObject("erro", erro);
+
 		return modelAndView;
 	}
 	
