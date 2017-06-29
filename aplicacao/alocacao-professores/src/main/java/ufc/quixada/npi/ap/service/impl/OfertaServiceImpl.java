@@ -24,5 +24,15 @@ public class OfertaServiceImpl implements OfertaService {
 	public void excluir(Integer id) {
 		ofertaRepository.delete(id);
 	}
+	
+	@Override
+	public Oferta salvarOferta(Oferta oferta) {
+		return ofertaRepository.save(oferta);
+	}
+
+	@Override
+	public Oferta visualizarOferta(Integer idOferta) {
+		return ofertaRepository.findOne(idOferta);
+	}
 
 }

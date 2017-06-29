@@ -1,6 +1,5 @@
 package ufc.quixada.npi.ap.controller;
 
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -58,6 +58,18 @@ public class OfertaController {
 
 		return modelAndView;
 	}
+
+	@RequestMapping(path = {"/{id}/detalhar"}, method = RequestMethod.GET)
+	public ModelAndView detalharOferta(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
+		
+		Oferta oferta=  ofertaService.visualizarOferta(id);
+		
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_DETALHAR);
+		modelAndView.addObject("oferta", oferta);
+		modelAndView.addObject("professores",oferta.getProfessores());
+		modelAndView.addObject("erro", erro);
+		return modelAndView;
+	}
 	
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
 	public ModelAndView editarOferta(
@@ -80,5 +92,5 @@ public class OfertaController {
 		
 		return true;
 	}
-	
+
 }
