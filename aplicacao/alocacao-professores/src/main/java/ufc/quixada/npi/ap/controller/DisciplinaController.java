@@ -36,21 +36,22 @@ public class DisciplinaController {
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarDisciplina(Disciplina disciplina) {
-		ModelAndView model = new ModelAndView(Constants.DISCIPLINA_CADASTRAR_);
+		ModelAndView model = new ModelAndView(Constants.DISCIPLINA_CADASTRAR);
 		model.addObject("disciplina", disciplina);
 		return model;
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
-	public ModelAndView cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
-			BindingResult result) {
+	public ModelAndView cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina, BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView(Constants.DISCIPLINA_REDIRECT_LISTAR);
+		
 		disciplinaValidator.validate(disciplina, result);
+
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView(Constants.DISCIPLINA_CADASTRAR_);
-		} else {
-			disciplinaService.salvar(disciplina);
-		}
+			modelAndView = new ModelAndView(Constants.DISCIPLINA_CADASTRAR);
+		} 
+		
+		disciplinaService.salvar(disciplina);
 		return modelAndView;
 	}
 

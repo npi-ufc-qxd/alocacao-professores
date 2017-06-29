@@ -1,4 +1,4 @@
-package ufc.quixada.npi.ap.validation;
+	package ufc.quixada.npi.ap.validation;
 
 import javax.inject.Named;
 import org.springframework.validation.Errors;
@@ -21,11 +21,24 @@ public class DisciplinaValidator implements Validator {
 		validateNotNull(errors, disciplina.getCargaHorariaPratica(), "cargaHorariaPratica", "Preenchimento inválido");
 		validateNotNull(errors, disciplina.getCargaHorariaTeorica(), "cargaHorariaTeorica", "Preenchimento inválido");
 		validateNotNull(errors, disciplina.getCreditos(), "creditos", "Preenchimento inválido");
+		validateCodigoInvalido(errors, disciplina.getCodigo(), "codigo", "codigoInvalid");
+		validateCodigoNotNull(errors, disciplina.getCodigo(), "codigo", "codigoNotNull");
+	}
+	
+	void validateCodigoInvalido(Errors erros, String codigo, String campo, String mensagem){
+		if (!codigo.matches("^[A-Z]{3}\\d{4}$")){
+			erros.rejectValue(campo, mensagem);
+		}
+	}
+	
+	void validateCodigoNotNull(Errors erros, String codigo, String campo, String mensagem){
+		if (codigo == null || codigo.isEmpty() || codigo.equals("")){
+			erros.rejectValue(campo, mensagem);
+		}
 	}
 
 	void validateStrings(Errors erros, String object, String field, String message) {	
-		if (object.isEmpty() || 
-		    !object.matches("[^=+\\\\|\\[{\\]};:'\"<>/@#$%]*")) {
+		if (object.isEmpty() || !object.matches("[^=+\\\\|\\[{\\]};:'\"<>/@#$%]*")) {
 			erros.rejectValue(field, field, message);
 		}
 	}
