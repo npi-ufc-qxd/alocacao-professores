@@ -25,5 +25,4 @@ public class DisciplinaFormatter implements Formatter<Disciplina> {
 	public Disciplina parse(String id, Locale locale) throws ParseException {
 		return disciplinaService.findDisciplina(Integer.parseInt(id));
 	}
-
 }

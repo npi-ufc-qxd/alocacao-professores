@@ -56,4 +56,5 @@ public class OfertaValidator implements Validator {
 		if (vagas != null && vagas <= 0)
 			erros.rejectValue(campo, mensagem);
 	}
+
 }

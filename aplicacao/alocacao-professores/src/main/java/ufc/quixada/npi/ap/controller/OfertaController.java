@@ -1,17 +1,18 @@
 package ufc.quixada.npi.ap.controller;
 
-
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -58,7 +59,6 @@ public class OfertaController {
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public ModelAndView listarOfertas(){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
-		
 		modelAndView.addObject("ofertas", ofertaService.findAllOfertas());
 		
 		return modelAndView;
@@ -67,6 +67,7 @@ public class OfertaController {
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
+		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		
 		return modelAndView;
 	}
@@ -75,6 +76,17 @@ public class OfertaController {
 	public ModelAndView cadastrarOferta(
 			@ModelAttribute("oferta") @Valid Oferta oferta,
 				BindingResult bindingResult, ModelAndView modelAndView){
+		
+		ofertaValidator.validate(oferta, bindingResult);
+		
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
+			modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
+			
+			return modelAndView;
+		}
+		
+		ofertaService.salvar(oferta);
 		
 		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
 		
@@ -113,9 +125,28 @@ public class OfertaController {
 		return modelAndView;
 	}
 
+	@RequestMapping(path = {"/{id}/detalhar"}, method = RequestMethod.GET)
+	public ModelAndView detalharOferta(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
+		
+		Oferta oferta=  ofertaService.visualizarOferta(id);
+		
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_DETALHAR);
+		modelAndView.addObject("oferta", oferta);
+		modelAndView.addObject("professores",oferta.getProfessores());
+		modelAndView.addObject("erro", erro);
+
+		return modelAndView;
+	}
+
 	@RequestMapping(value= "/{id}/excluir", method = RequestMethod.GET)
 	public @ResponseBody boolean excluirOferta(@PathVariable(name = "id", required = true) Integer id){
-		return false;
+		try {
+			ofertaService.excluir(id);
+		} catch (EmptyResultDataAccessException e) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 }

@@ -29,5 +29,15 @@ public class OfertaServiceImpl implements OfertaService {
 	public List<Oferta> findAllOfertas() {
 		return ofertaRepository.findAll();
 	}
+
+	@Override
+	public void excluir(Integer id) {
+		ofertaRepository.delete(id);
+	}
 	
+	@Override
+	public Oferta visualizarOferta(Integer idOferta) {
+		return ofertaRepository.findOne(idOferta);
+	}
+
 }

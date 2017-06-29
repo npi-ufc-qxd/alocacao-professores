@@ -287,10 +287,10 @@ INSERT INTO disciplina( carga_horaria_pratica, carga_horaria_teorica, codigo, no
 -- PERIODOS
 -- INSERT INTO periodo( id, ano, semestre, status) VALUES (?, ?, ?, ?);
 
-INSERT INTO periodo( ano, semestre, status) VALUES (2016, 1, "CONSOLIDADA");
-INSERT INTO periodo( ano, semestre, status) VALUES (2016, 2, "CONSOLIDADA");
-INSERT INTO periodo( ano, semestre, status) VALUES (2017, 1, "CONSOLIDADA");
-INSERT INTO periodo( ano, semestre, status) VALUES (2017, 2, "ABERTA");
+INSERT INTO periodo( ano, semestre, status, fim_periodo_ajuste, fim_periodo_coordenacao, fim_periodo_direcao, inicio_periodo_ajuste, inicio_periodo_coordenacao, inicio_periodo_direcao) VALUES (2016, 1, 'CONSOLIDADO', '2016-03-04 00:00:00', '2016-02-28 00:00:00', '2016-03-02 00:00:00', '2016-03-03 00:00:00', '2016-02-27 00:00:00', '2016-02-29 00:00:00');
+INSERT INTO periodo( ano, semestre, status, fim_periodo_ajuste, fim_periodo_coordenacao, fim_periodo_direcao, inicio_periodo_ajuste, inicio_periodo_coordenacao, inicio_periodo_direcao) VALUES (2016, 2, 'CONSOLIDADO', '2016-07-04 00:00:00', '2016-06-28 00:00:00', '2016-06-30 00:00:00', '2016-07-03 00:00:00', '2016-06-27 00:00:00', '2016-06-29 00:00:00');
+INSERT INTO periodo( ano, semestre, status, fim_periodo_ajuste, fim_periodo_coordenacao, fim_periodo_direcao, inicio_periodo_ajuste, inicio_periodo_coordenacao, inicio_periodo_direcao) VALUES (2017, 1, 'CONSOLIDADO', '2017-03-04 00:00:00', '2017-02-28 00:00:00', '2017-03-02 00:00:00', '2017-03-03 00:00:00', '2017-02-27 00:00:00', '2017-03-01 00:00:00');
+INSERT INTO periodo( ano, semestre, status, fim_periodo_ajuste, fim_periodo_coordenacao, fim_periodo_direcao, inicio_periodo_ajuste, inicio_periodo_coordenacao, inicio_periodo_direcao) VALUES (2017, 2, 'ABERTO', '2017-07-04 00:00:00', '2017-06-28 00:00:00', '2017-06-30 00:00:00', '2017-07-03 00:00:00', '2017-06-27 00:00:00', '2017-06-29 00:00:00');
 
 
 
