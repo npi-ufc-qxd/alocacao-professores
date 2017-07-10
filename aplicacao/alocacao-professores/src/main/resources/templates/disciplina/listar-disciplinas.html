@@ -1,60 +1,70 @@
 <!DOCTYPE html>
-<html lang="ptBR" 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="base/base">
 
-	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
-	<title>Listar Disciplinas | Alocação Professores</title>
+<link rel="icon" type="image/png" sizes="16x16"
+	th:href="@{/plugins/images/favicon.png}"></link>
+<title>Listar Disciplinas | Alocação Professores</title>
 
-	<section layout:fragment="conteudo">
-		<div class="row bg-title">
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h4 class="page-title">Disciplinas</h4>
-			</div>
-			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-		    	<a th:href="@{/disciplinas/cadastrar}" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Nova Disciplina</a>
+<section layout:fragment="conteudo">
+	<div class="row bg-title">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h4 class="page-title">Disciplinas</h4>
+		</div>
+		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+			<a th:href="@{/disciplinas/cadastrar}"
+				class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+				class="fa fa-plus" aria-hidden="true"></i> Nova Disciplina</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="white-box">
+				<h3 class="box-title m-b-0">Lista de Disciplinas</h3>
+				<div class="table-responsive">
+					<div class="table-responsive">
+						<table id="myTable" class="table table-striped">
+							<thead>
+								<tr>
+									<th>Disciplina</th>
+									<th>Créditos</th>
+									<th>Carga horária Teórica</th>
+									<th>Carga horária Prática</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="disciplina : ${disciplinas}">
+									<td th:inline="text"><b>[[${disciplina.codigo}]]</b> -
+										[[${disciplina.nome}]]</td>
+									<td th:text="${disciplina.creditos}"></td>
+									<td th:text="${disciplina.cargaHorariaTeorica}"></td>
+									<td th:text="${disciplina.cargaHorariaPratica}"></td>
+									<td class="text-right"><a
+										th:href="@{/disciplinas/{id}/editar(id=${disciplina.id})}"
+										class="btn btn-inverse btn-circle waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title="Editar"><i
+											class="fa fa-pencil"></i></a> <a
+										th:href="@{/disciplinas/{id}/arquivar(id=${disciplina.id})}"
+										class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-btn-arquivar"
+										data-toggle="tooltip" data-placement="top" title="Arquivar"><i
+											class="fa fa-archive"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
-		
-		<div class="row">
-        <div class="col-sm-12">
-          <div class="white-box">         
-            <h3 class="box-title m-b-0">Lista de Disciplinas</h3>            
-            <div class="table-responsive">
-            <table id="myTable" class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Disciplina</th>
-                  <th>Créditos</th>
-                  <th>Carga horária Teórica</th>
-                  <th>Carga horária Prática</th>                                                                 
-                  <th></th>                                      
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="disciplina : ${disciplinas}">
-                  <td th:inline="text"><b>[[${disciplina.codigo}]]</b> - [[${disciplina.nome}]]</td>
-                  <td th:text="${disciplina.creditos}"></td>
-                  <td th:text="${disciplina.cargaHorariaTeorica}"></td>
-                  <td th:text="${disciplina.cargaHorariaPratica}"></td>                                                     					
+	</div>
 
-                  <td class="text-right">
-                    <a th:href="@{/disciplinas/{id}/editar(id=${disciplina.id})}" class="btn btn-inverse btn-circle waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil"></i></a>
-                    <a th:href="@{/disciplinas/{id}/arquivar(id=${disciplina.id})}" class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-btn-arquivar" data-toggle="tooltip" data-placement="top" title="Arquivar"><i class="fa fa-archive"></i></a>
-                  </td>                                      
-                </tr>                                   
-              </tbody>
-            </table>
-            </div>
-          </div>
-        </div>
-        </div>
-		
-	</section>
-	<section layout:fragment="js">
-		<script th:inline="javascript">
+</section>
+<section layout:fragment="js">
+	<script th:src="@{/js/ordenacao-tabela.js}"></script>
+	<script th:inline="javascript">
 	   $(window).load(function() {
 			if([[${status}]] === "success") {
 				swal([[${titulo}]], [[${mensagem}]], [[${status}]]);	
@@ -63,5 +73,5 @@
 			}
 	  });
    </script>
-	</section>
-	</html>
+</section>
+</html>

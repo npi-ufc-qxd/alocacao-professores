@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ufc.quixada.npi.ap.exception.AlocacaoProfessorException;
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.repository.DisciplinaRepository;
 import ufc.quixada.npi.ap.service.DisciplinaService;
@@ -27,7 +28,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 		Disciplina disciplinaRecuperada = disciplinaRepository.findByCodigo(disciplina.getCodigo());	
 		
 		if(disciplinaRecuperada != null) {
-			throw new Exception(DISCIPLINA_CADASTRAR_EXISTENTE);
+			throw new AlocacaoProfessorException(DISCIPLINA_CADASTRAR_EXISTENTE);
 		}
 		
 		disciplinaRepository.save(disciplina);
