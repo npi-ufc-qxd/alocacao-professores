@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.service.impl;
 
+import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_CADASTRAR_EXISTENTE;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,15 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 		return disciplinaRepository.findAll();
 	}
 
-	public void salvar(Disciplina disciplina) {
+	public void salvar(Disciplina disciplina) throws Exception {
+		Disciplina disciplinaRecuperada = disciplinaRepository.findByCodigo(disciplina.getCodigo());	
+		
+		if(disciplinaRecuperada != null) {
+			throw new Exception(DISCIPLINA_CADASTRAR_EXISTENTE);
+		}
+		
 		disciplinaRepository.save(disciplina);
+
 	}
 
 	@Override
@@ -37,7 +46,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 		}
 		disciplina.setArquivada(true);
 		disciplinaRepository.save(disciplina);
-		
+
 		return true;
 	}
 
@@ -45,5 +54,5 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	public Disciplina findDisciplina(Integer id) {
 		return disciplinaRepository.findOne(id);
 	}
-	
+
 }

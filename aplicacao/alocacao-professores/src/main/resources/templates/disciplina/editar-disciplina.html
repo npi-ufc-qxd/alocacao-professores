@@ -24,8 +24,9 @@
 
 					<div class="form-group"
 						th:classappend="${#fields.hasErrors('nome')} ? has-error">
-						<input type="hidden" th:field="*{id}"></input> <label
-							class="control-label m-l-10">Nome da Disciplina</label>
+						<input type="hidden" th:field="*{id}"></input>
+						<input type="hidden" th:field="*{codigo}"></input>
+						<label class="control-label m-l-10">Nome da Disciplina</label>
 						<div class="col-md-12">
 							<input class="form-control" type="text" id="nome" maxlength="80"
 								th:field="*{nome}" required="required"></input> <span

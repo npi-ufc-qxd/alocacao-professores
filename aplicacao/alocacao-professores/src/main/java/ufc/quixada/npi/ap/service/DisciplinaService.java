@@ -6,7 +6,7 @@ import ufc.quixada.npi.ap.model.Disciplina;
 
 public interface DisciplinaService {
 
-	public void salvar(Disciplina disciplina);
+	public void salvar(Disciplina disciplina) throws Exception;
 
 	public List<Disciplina> listar();
 

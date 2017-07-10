@@ -85,7 +85,7 @@
           </div>
         </div>
       </div>      
-	
+	</section>
 	<section layout:fragment="conteudo">
 		<div class="row bg-title">
 			<h3 class="box-title m-b-0">Cadastrar Disciplina</h3>
@@ -144,4 +144,19 @@
 			</div>
 		</div>
 	</section>
+	
+	
+	<section layout:fragment="js">
+		<script th:inline="javascript">
+	   $(window).load(function() {
+			if([[${status}]] === "success") {
+				swal([[${titulo}]], [[${mensagem}]], [[${status}]]);	
+			} else if([[${status}]] === "error") {
+				swal([[${titulo}]], [[${mensagem}]], [[${status}]]);
+			}
+	  });
+   </script>
+	</section>
+	
+	
 </html>
