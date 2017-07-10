@@ -51,7 +51,8 @@ public class DisciplinaValidator implements Validator {
 	}
 	
 	void validateNomeNull(Errors erros, String object, String field, String message) {
-		if(object.equals(" ")) {
+		String nome = object.substring(0, 1);
+		if(nome.equals(" ")) {
 			erros.rejectValue(field, field, message);
 		}
 	}

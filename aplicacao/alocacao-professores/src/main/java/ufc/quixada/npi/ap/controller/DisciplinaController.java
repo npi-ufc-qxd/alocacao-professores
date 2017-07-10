@@ -11,6 +11,8 @@ import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_REDIRECT_LISTAR;
 import static ufc.quixada.npi.ap.util.Constants.STATUS_ERROR;
 import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
 import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_REDIRECT_CADASTRAR;
+import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_EDITADAR_TITULO_SUCCESS;
+import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_EDITADA;
 
 
 import javax.validation.Valid;
@@ -89,12 +91,15 @@ public class DisciplinaController {
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
 	public String editarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
-			BindingResult result) throws Exception {
+			BindingResult result, RedirectAttributes redirect) throws Exception {
 		disciplinaValidator.validate(disciplina, result);
 		if (result.hasErrors()) {
 			return DISCIPLINA_EDITAR;
 		} else {
-			disciplinaService.salvar(disciplina);
+			disciplinaService.editar(disciplina);
+			redirect.addFlashAttribute("status", STATUS_SUCCESS);
+			redirect.addFlashAttribute("titulo", DISCIPLINA_EDITADAR_TITULO_SUCCESS);
+			redirect.addFlashAttribute("mensagem", DISCIPLINA_EDITADA);
 		}
 		return DISCIPLINA_REDIRECT_LISTAR;
 	}

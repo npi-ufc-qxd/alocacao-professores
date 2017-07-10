@@ -65,6 +65,8 @@ public class Constants {
 	public static final String STATUS_SUCCESS = "success";
 	public static final String DISCIPLINA_CADASTAR_TITULO_SUCCESS = "Disciplina cadastrada!";
 	public static final String DISCIPLINA_CADASTRADA = "A disciplina foi cadastrada com sucesso!";
+	public static final String DISCIPLINA_EDITADAR_TITULO_SUCCESS = "Disciplina editada";
+	public static final String DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso";
 	
 	//Mensagens Erros
 	public static final String STATUS_ERROR = "error";

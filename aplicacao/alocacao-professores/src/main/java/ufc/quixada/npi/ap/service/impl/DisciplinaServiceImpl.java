@@ -22,6 +22,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 		return disciplinaRepository.findAll();
 	}
 
+	@Override
 	public void salvar(Disciplina disciplina) throws Exception {
 		Disciplina disciplinaRecuperada = disciplinaRepository.findByCodigo(disciplina.getCodigo());	
 		
@@ -31,6 +32,11 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 		
 		disciplinaRepository.save(disciplina);
 
+	}
+	
+	@Override
+	public void editar(Disciplina disciplina) {
+		disciplinaRepository.save(disciplina);
 	}
 
 	@Override

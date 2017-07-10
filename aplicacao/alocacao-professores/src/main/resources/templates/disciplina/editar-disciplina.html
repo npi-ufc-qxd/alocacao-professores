@@ -29,7 +29,7 @@
 						<label class="control-label m-l-10">Nome da Disciplina</label>
 						<div class="col-md-12">
 							<input class="form-control" type="text" id="nome" maxlength="80"
-								th:field="*{nome}" required="required"></input> <span
+								th:field="*{nome}" required="required" pattern="[a-zA-Z ]+$"></input> <span
 								th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
 								class="help-block with-errors"></span>
 

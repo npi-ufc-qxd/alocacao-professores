@@ -53,4 +53,15 @@
         </div>
 		
 	</section>
+	<section layout:fragment="js">
+		<script th:inline="javascript">
+	   $(window).load(function() {
+			if([[${status}]] === "success") {
+				swal([[${titulo}]], [[${mensagem}]], [[${status}]]);	
+			} else if([[${status}]] === "error") {
+				swal([[${titulo}]], [[${mensagem}]], [[${status}]]);
+			}
+	  });
+   </script>
+	</section>
 	</html>
