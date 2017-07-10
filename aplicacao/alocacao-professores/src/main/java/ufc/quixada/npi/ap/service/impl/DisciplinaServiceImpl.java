@@ -31,12 +31,14 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 			throw new AlocacaoProfessorException(DISCIPLINA_CADASTRAR_EXISTENTE);
 		}
 		
+		disciplina.setNome(disciplina.getNome().toUpperCase());
 		disciplinaRepository.save(disciplina);
 
 	}
 	
 	@Override
 	public void editar(Disciplina disciplina) {
+		disciplina.setNome(disciplina.getNome().toUpperCase());
 		disciplinaRepository.save(disciplina);
 	}
 
