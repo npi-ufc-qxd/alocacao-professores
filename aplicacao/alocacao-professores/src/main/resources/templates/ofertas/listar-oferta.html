@@ -1,80 +1,83 @@
 <!DOCTYPE html>
-<html lang="ptBR" 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="base/base">
-	
-	<head>
-		<title>Ofertas | Alocação Professores</title>
-		
-		<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
-	</head>
-	
-	<section layout:fragment="conteudo">
-		<div class="row bg-title">
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h4 class="page-title">Ofertas</h4>
-			</div>
-			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-		    	<a th:href="@{/ofertas/cadastrar}" target="_blank" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Nova</a>
-			</div>
+
+<head>
+<title>Ofertas | Alocação Professores</title>
+
+<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet"
+	type="text/css"></link>
+</head>
+
+<section layout:fragment="conteudo">
+	<div class="row bg-title">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h4 class="page-title">Ofertas</h4>
 		</div>
-		
-		<div class = "row">
-			<div class = "col-sm-12">
-				<div class = "white-box">
-					<div class = "table-responsive">
-						<div class = "table-responsive">
-							<table id = "myTable" class = "table table-striped">
-								<thead>
-										<tr>
-											<th class = "col-md-4">Disciplina</th>
-											<th class = "col-md-1">Turno</th>
-											<th class = "col-md-1">Vagas</th>
-											<th class = "col-md-2">Professores</th>
-											<th class = "col-md-3">Ações</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="oferta : ${ofertas}">
-											<td th:text="${oferta.disciplina.nome}"></td>
-											<td th:text="${oferta.turno.descricao}"></td>
-											<td th:text="${oferta.vagas}"></td>
-											<td>
-												<span th:if="${not #lists.isEmpty(oferta.professores)}" th:each="a, iterStat : ${oferta.professores}" th:text="!${iterStat.last} ? ${a.nome} + ', ': ${a.nome}"></span>
-											</td>
-											<td>
-												<a class="btn btn-success btn-circle popup-with-form" href="#test-form"> <i class="fa fa-search"></i></a> 
-												<span th:if="${oferta.periodo.status.name()} != 'CONSOLIDADO'">
-													<a class="btn-circle btn-warning waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Compartilhar">
-														<i class="fa fa-link"></i>
-													</a>
-													<a th:href="@{/ofertas/{id}/editar(id=${oferta.id})}" class="btn-circle btn-inverse waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Editar">
-														<i class="fa fa-pencil"></i>
-													</a>
-													<a class="btn-circle btn-info waves-effect waves-light" role="button" data-toggle="tooltip" data-placement="top" title="Detalhes">
-														<i class="fa fa-pencil"></i>
-													</a>
-													<a th:href="@{/ofertas/{id}/excluir(id=${oferta.id})}" class="btn-circle btn-danger waves-effect waves-light sa-btn-excluir" role="button" data-toggle="tooltip" data-placement="top" title="Excluir">
-														<i class="fa fa-close"></i>
-													</a>
-												</span>
-											</td>
-										</tr>
-									</tbody>
-							</table>
-						</div>
+		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+			<a th:href="@{/ofertas/cadastrar}"
+				class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+				class="fa fa-plus" aria-hidden="true"></i> Nova</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="white-box">
+				<div class="table-responsive">
+					<div class="table-responsive">
+						<table id="myTable" class="table table-striped">
+							<thead>
+								<tr>
+									<th class="col-md-4">Disciplina</th>
+									<th class="col-md-1">Turno</th>
+									<th class="col-md-1">Vagas</th>
+									<th class="col-md-2">Professores</th>
+									<th class="col-md-3">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="oferta : ${ofertas}">
+									<td th:text="${oferta.disciplina.nome}"></td>
+									<td th:text="${oferta.turno.descricao}"></td>
+									<td th:text="${oferta.vagas}"></td>
+									<td><span
+										th:if="${not #lists.isEmpty(oferta.professores)}"
+										th:each="a, iterStat : ${oferta.professores}"
+										th:text="!${iterStat.last} ? ${a.nome} + ', ': ${a.nome}"></span>
+									</td>
+									<td><a class="btn btn-success btn-circle popup-with-form"
+										href="#test-form"> <i class="fa fa-search"></i></a> <span
+										th:if="${oferta.periodo.status.name()} != 'CONSOLIDADO'">
+											<a class="btn-circle btn-warning waves-effect waves-light"
+											role="button" data-toggle="tooltip" data-placement="top"
+											title="Compartilhar"> <i class="fa fa-link"></i>
+										</a> <a th:href="@{/ofertas/{id}/editar(id=${oferta.id})}"
+											class="btn-circle btn-inverse waves-effect waves-light"
+											role="button" data-toggle="tooltip" data-placement="top"
+											title="Editar"> <i class="fa fa-pencil"></i>
+										</a> <a class="btn-circle btn-info waves-effect waves-light"
+											role="button" data-toggle="tooltip" data-placement="top"
+											title="Detalhes"> <i class="fa fa-pencil"></i>
+										</a> <a th:href="@{/ofertas/{id}/excluir(id=${oferta.id})}"
+											class="btn-circle btn-danger waves-effect waves-light sa-btn-excluir"
+											role="button" data-toggle="tooltip" data-placement="top"
+											title="Excluir"> <i class="fa fa-close"></i>
+										</a>
+									</span></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-	<section layout:fragment="js">
-		<!-- Sweet-Alert  -->
-		<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
-		
-		<script th:src="@{/js/ordenacao-tabela.js}"></script>
-		<script th:src="@{/js/oferta/oferta.js}"></script>
-	</section>
+	</div>
+</section>
+<section layout:fragment="js">
+	<script th:src="@{/js/ordenacao-tabela.js}"></script>
+	<script th:src="@{/js/oferta/oferta.js}"></script>
+</section>
 </html>

@@ -51,6 +51,7 @@ public class Constants {
 	public static final String DISCIPLINA_EDITAR = "disciplina/editar-disciplina";
 	public static final String DISCIPLINA_LISTAR = "disciplina/listar-disciplinas";
 	public static final String DISCIPLINA_REDIRECT_LISTAR = "redirect:/disciplinas";
+	public static final String DISCIPLINA_REDIRECT_CADASTRAR = "redirect:/disciplinas/cadastrar";
 
 	//Empilhamento
 	public static final String EMPILHAMENTO_CADASTRAR = "empilhamento/cadastrar-empilhamento";
@@ -58,5 +59,18 @@ public class Constants {
 	public static final String EMPILHAMENTO_LISTAR = "empilhamento/listar-empilhamento";
 	public static final String EMPILHAMENTO_DETALHAR = "empilhamento/detalhar-empilhamento";
 	public static final String EMPILHAMENTO_REDIRECT_LISTAR = "redirect:/empilhamentos";
-		
+	
+	
+	//Mensagens Sucesso
+	public static final String STATUS_SUCCESS = "success";
+	public static final String DISCIPLINA_CADASTAR_TITULO_SUCCESS = "Disciplina cadastrada!";
+	public static final String DISCIPLINA_CADASTRADA = "A disciplina foi cadastrada com sucesso!";
+	public static final String DISCIPLINA_EDITADAR_TITULO_SUCCESS = "Disciplina editada";
+	public static final String DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso";
+	
+	//Mensagens Erros
+	public static final String STATUS_ERROR = "error";
+	public static final String DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
+	public static final String DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
+	
 }
