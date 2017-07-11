@@ -1,123 +1,127 @@
 <!DOCTYPE html>
-<html 
-	lang="ptBR"
-	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-	
-	<head>
-		<meta charset="utf-8"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<meta name="description" content=""/>
-		<meta name="author" content=""/>
-		
-		<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"/>
-		<title>Alocação de Disciplinas</title>
-		
-		<!-- Bootstrap Core CSS -->
-		<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-		<!-- DataTable plugin CSS -->
-		<link th:href="@{/plugins/datatables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css" />
-		<!-- animation CSS -->
-		<link th:href="@{/css/animate.css}" rel="stylesheet"/>
-		<!-- Custom CSS -->
-		<link th:href="@{/css/style.css}" rel="stylesheet"/>
-		<!-- color CSS -->
-		<link th:href="@{/css/colors/blue.css}" id="theme"  rel="stylesheet"/>
-		<!-- Select2 CSS -->
-		<link th:href="@{/plugins/select2/css/select2.min.css}" rel="stylesheet"/>
-		<!--alerts CSS -->
-		<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
-		
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+
+<link rel="icon" type="image/png" sizes="16x16"
+	th:href="@{/plugins/images/favicon.png}" />
+<title>Alocação de Disciplinas</title>
+
+<!-- Bootstrap Core CSS -->
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+<!-- DataTable plugin CSS -->
+<link th:href="@{/plugins/datatables/jquery.dataTables.min.css}"
+	rel="stylesheet" type="text/css" />
+<!-- animation CSS -->
+<link th:href="@{/css/animate.css}" rel="stylesheet" />
+<!-- Custom CSS -->
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<!-- color CSS -->
+<link th:href="@{/css/colors/blue.css}" id="theme" rel="stylesheet" />
+<!-- Select2 CSS -->
+<link th:href="@{/plugins/select2/css/select2.min.css}" rel="stylesheet" />
+<!--alerts CSS -->
+<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet"
+	type="text/css"></link>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
 		    <script th:src="@{https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		    <script th:src="@{https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		  ga('create', 'UA-19175540-9', 'auto');
-		  ga('send', 'pageview');
-		</script>
-	</head>
-	
-	<body class="fix-sidebar" th:attr="erro = ${ERRO}, success = ${E}">
-		<!-- Preloader -->
-		<div class="preloader">
-		  <div class="cssload-speeding-wheel"></div>
-		</div>	
-	
-		<div id="wrapper">
-			<div th:replace="base/navbar-header :: navbar-header">
-			</div>
-			<div id="alerttopright" class="myadmin-alert myadmin-alert myadmin-alert-top-right"><a href="#" class="closed">&times;</a>
-                                        <h4 id="res-msg"></h4> <b id="corpo-msg"></b></div>
-			<div th:replace="base/sidebar :: sidebar"></div>
-			
-			<div id="page-wrapper">
-				<div class="container-fluid">
-					<section layout:fragment="conteudo"></section>
-				</div>
-				<footer class="footer text-center"> 2017 NPI - UFC Quixadá</footer>
-			</div>
+<script>
+	(function(i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function() {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script',
+			'https://www.google-analytics.com/analytics.js', 'ga');
+	ga('create', 'UA-19175540-9', 'auto');
+	ga('send', 'pageview');
+</script>
+</head>
+
+<body class="fix-sidebar">
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="cssload-speeding-wheel"></div>
+	</div>
+
+	<div id="wrapper">
+		<div th:replace="base/navbar-header :: navbar-header"></div>
+		<div id="alerttopright"
+			class="myadmin-alert myadmin-alert myadmin-alert-top-right">
+			<a href="#" class="closed">&times;</a>
+			<h4 id="res-msg"></h4>
+			<b id="corpo-msg"></b>
 		</div>
-		
-		<!-- JQuery -->
-		<script th:src="@{/plugins/jquery/dist/jquery.min.js}"></script>
-		<!-- Bootstrap Core JavaScript -->
-		<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-		<!-- Menu Plugin JavaScript -->
-		<script th:src="@{/plugins/sidebar-nav/dist/sidebar-nav.min.js}"></script>
-		<!--slimscroll JavaScript -->
-		<script th:src="@{/js/jquery.slimscroll.js}"></script>
-		<!-- Wave Effects -->
-		<script th:src="@{/js/waves.js}"></script>
-		<!-- Custom Theme JavaScript -->
-		<script th:src="@{/js/custom.min.js}"></script>
-		<!-- Style Switcher -->
-		<script th:src="@{/plugins/styleswitcher/jQuery.style.switcher.js}"></script>
-		<!-- Select2 JavaScript -->
-		<script th:src="@{/plugins/select2/js/select2.min.js}"></script>
-		<!-- JS Disciplinas -->		
-		<script th:src="@{/js/disciplina/disciplina.js}"></script>
-		<script th:src="@{/js/empilhamento/empilhamento.js}"></script>
-		<!-- Sweet-Alert  -->
-		<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
-		<script th:src="@{/plugins/sweetalert/jquery.sweet-alert.custom.js}"></script>
-	
-		<!-- Toast Alert  -->
-		<script th:src="@{/js/jquery.toast.js}"></script>
-		
-				
-		<section layout:fragment="js">	
-		
-		</section>
-		
-		<script th:inline="javascript">
-			$(".myadmin-alert .closed").click(function (event) {
-            	$(this).parents(".myadmin-alert").fadeToggle(350);
-            	return false;
-        	});
+		<div th:replace="base/sidebar :: sidebar"></div>
+
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<section layout:fragment="conteudo"></section>
+			</div>
+			<footer class="footer text-center"> 2017 NPI - UFC Quixadá</footer>
+		</div>
+	</div>
+
+	<!-- JQuery -->
+	<script th:src="@{/plugins/jquery/dist/jquery.min.js}"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<!-- Menu Plugin JavaScript -->
+	<script th:src="@{/plugins/sidebar-nav/dist/sidebar-nav.min.js}"></script>
+	<!--slimscroll JavaScript -->
+	<script th:src="@{/js/jquery.slimscroll.js}"></script>
+	<!-- Wave Effects -->
+	<script th:src="@{/js/waves.js}"></script>
+	<!-- Custom Theme JavaScript -->
+	<script th:src="@{/js/custom.min.js}"></script>
+	<!-- Style Switcher -->
+	<script th:src="@{/plugins/styleswitcher/jQuery.style.switcher.js}"></script>
+	<!-- Select2 JavaScript -->
+	<script th:src="@{/plugins/select2/js/select2.min.js}"></script>
+	<!-- JS Disciplinas -->
+	<script th:src="@{/js/disciplina/disciplina.js}"></script>
+	<script th:src="@{/js/empilhamento/empilhamento.js}"></script>
+	<!-- Sweet-Alert  -->
+	<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+	<!-- Data tables -->
+	<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+	<section layout:fragment="js"></section>
+
+	<script th:inline="javascript">
+		$(".myadmin-alert .closed").click(function (event) {
+			$(this).parents(".myadmin-alert").fadeToggle(350);
+			return false;
+		});
 			$(window).load(function() {
-			    if([[${ERRO}]]) {
-			    	document.getElementById('corpo-msg').innerHTML = [[${ERRO}]];
-			    	document.getElementById('res-msg').innerHTML = "Erro!";
-			    	$('#alerttopright').addClass("alert-danger");
-			    	$("#alerttopright").fadeToggle(200);    
-			        } else if([[${SUCESSO}]]) {
-			          	document.getElementById('corpo-msg').innerHTML = [[${SUCESSO}]];
-				    	document.getElementById('res-msg').innerHTML = "Sucesso!";
-				    	$('#alerttopright').addClass("alert-success");
-				    	$("#alerttopright").fadeToggle(200); 	
-			        }
-			      });
-		</script>
-		
-	</body>
+				if([[${error}]]) {
+					document.getElementById('corpo-msg').innerHTML = [[${error}]];
+					document.getElementById('res-msg').innerHTML = "Erro!";
+					$('#alerttopright').addClass("alert-danger");
+					$("#alerttopright").fadeToggle(200);
+				} else if([[${success}]]) {
+					document.getElementById('corpo-msg').innerHTML = [[${success}]];
+					document.getElementById('res-msg').innerHTML = "Sucesso!";
+					$('#alerttopright').addClass("alert-success");
+					$("#alerttopright").fadeToggle(200);
+				}});
+	</script>
+
+</body>
 </html>

@@ -29,10 +29,10 @@ import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.OfertaValidator;
 
-import static ufc.quixada.npi.ap.util.Constants.ERRO;
+import static ufc.quixada.npi.ap.util.Constants.STATUS_ERROR;
 import static ufc.quixada.npi.ap.util.Constants.OFERTA_REDIRECT_CADASTRO;
 import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
-import static ufc.quixada.npi.ap.util.Constants.SUCESSO;
+import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
 
 @Controller
 @RequestMapping(path = "/ofertas")
@@ -94,11 +94,10 @@ public class OfertaController {
 		try {
 			ofertaService.salvar(oferta);
 			modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
-			redirectAttributes.addFlashAttribute(SUCESSO, OFERTA_CADASTRADA);
+			redirectAttributes.addFlashAttribute(STATUS_SUCCESS, OFERTA_CADASTRADA);
 		} catch (AlocacaoProfessoresException e) {
-			modelAndView.setViewName(OFERTA_REDIRECT_CADASTRO);
-			modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
-			redirectAttributes.addFlashAttribute(ERRO, e.getMessage());
+			modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+			redirectAttributes.addFlashAttribute(STATUS_ERROR, e.getMessage());
 			redirectAttributes.addFlashAttribute("oferta", oferta);
 		}
 
