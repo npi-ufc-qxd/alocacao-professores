@@ -1,9 +1,13 @@
+$('#btn-modal-importar-ofertas').on('click', function (event) {
+	$('#modal-importar-ofertas').modal('show');
+});
+
+
 $(".sa-btn-excluir").on("click", function(event){
 	event.preventDefault();
 
 	var botaoExcluir = $(event.currentTarget);
 	var urlExcluir = botaoExcluir.attr("href");
-	
 	
 	swal({
 		title: "Tem certeza?",

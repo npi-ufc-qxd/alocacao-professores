@@ -30,6 +30,8 @@ public class Constants {
 	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";
 	public static final String OFERTA_EXCLUIR = "/ofertas/excluir-oferta";
 	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
+	public static final String OFERTA_REDIRECT_CADASTRO = "redirect:/ofertas/cadastrar";
+	public static final String OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
 	
 	// Compartilhamento
 	public static final String COMPARTILHAMENTO_CADASTRAR = "compartilhamento/cadastrar-compartilhamento";
@@ -58,5 +60,12 @@ public class Constants {
 	public static final String EMPILHAMENTO_LISTAR = "empilhamento/listar-empilhamento";
 	public static final String EMPILHAMENTO_DETALHAR = "empilhamento/detalhar-empilhamento";
 	public static final String EMPILHAMENTO_REDIRECT_LISTAR = "redirect:/empilhamentos";
-		
+	
+	//Exceptions
+	public static final String PERIODO_INVALIDO = "Não há um período válido disponível";
+	
+	
+	//Mensagens
+	public static final String ERRO = "ERRO";
+	public static final String SUCESSO = "SUCESSO";	
 }

@@ -22,7 +22,6 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 	public void validate(Object objeto, Errors error) {		
 		Periodo periodo = (Periodo) objeto;
 		validateAno(error, periodo.getAno(), "ano","anoNull");
-		validateSemestre(error, periodo.getSemestre(), "semestre", "semestreNull");
 		//validateStatus(error, periodo.getStatus(), "status", "statusNull");
 		validateInicioPeriodoCoordenacao(error, periodo.getInicioPeriodoCoordenacao(), "inicioPeriodoCoordenacao", "dataNull");
 		validateFimPeriodoCoordenacao(error,periodo, "fimPeriodoCoordenacao", "dataNull");

@@ -18,7 +18,7 @@ import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.DisciplinaValidator;
 
 @Controller
-@RequestMapping("disciplinas")
+@RequestMapping("/disciplinas")
 public class DisciplinaController {
 
 	@Autowired

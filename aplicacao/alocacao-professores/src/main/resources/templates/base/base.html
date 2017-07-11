@@ -47,14 +47,17 @@
 		</script>
 	</head>
 	
-	<body class="fix-sidebar">
+	<body class="fix-sidebar" th:attr="erro = ${ERRO}, success = ${E}">
 		<!-- Preloader -->
 		<div class="preloader">
 		  <div class="cssload-speeding-wheel"></div>
 		</div>	
 	
 		<div id="wrapper">
-			<div th:replace="base/navbar-header :: navbar-header"></div>
+			<div th:replace="base/navbar-header :: navbar-header">
+			</div>
+			<div id="alerttopright" class="myadmin-alert myadmin-alert myadmin-alert-top-right"><a href="#" class="closed">&times;</a>
+                                        <h4 id="res-msg"></h4> <b id="corpo-msg"></b></div>
 			<div th:replace="base/sidebar :: sidebar"></div>
 			
 			<div id="page-wrapper">
@@ -87,8 +90,34 @@
 		<!-- Sweet-Alert  -->
 		<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
 		<script th:src="@{/plugins/sweetalert/jquery.sweet-alert.custom.js}"></script>
+	
+		<!-- Toast Alert  -->
+		<script th:src="@{/js/jquery.toast.js}"></script>
 		
-		<section layout:fragment="js"></section>
+				
+		<section layout:fragment="js">	
+		
+		</section>
+		
+		<script th:inline="javascript">
+			$(".myadmin-alert .closed").click(function (event) {
+            	$(this).parents(".myadmin-alert").fadeToggle(350);
+            	return false;
+        	});
+			$(window).load(function() {
+			    if([[${ERRO}]]) {
+			    	document.getElementById('corpo-msg').innerHTML = [[${ERRO}]];
+			    	document.getElementById('res-msg').innerHTML = "Erro!";
+			    	$('#alerttopright').addClass("alert-danger");
+			    	$("#alerttopright").fadeToggle(200);    
+			        } else if([[${SUCESSO}]]) {
+			          	document.getElementById('corpo-msg').innerHTML = [[${SUCESSO}]];
+				    	document.getElementById('res-msg').innerHTML = "Sucesso!";
+				    	$('#alerttopright').addClass("alert-success");
+				    	$("#alerttopright").fadeToggle(200); 	
+			        }
+			      });
+		</script>
 		
 	</body>
 </html>

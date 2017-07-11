@@ -31,4 +31,9 @@ public class PeriodoServiceImpl implements PeriodoService{
 	public Periodo getPeriodo(Integer id){
 		return periodoRepository.findOne(id);
 	}
+
+	@Override
+	public Periodo periodoAtivo() {
+		return periodoRepository.pediodoAtivo();
+	}
 }	
