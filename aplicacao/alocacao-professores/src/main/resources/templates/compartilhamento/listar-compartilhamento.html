@@ -1,27 +1,32 @@
 <!DOCTYPE html>
-<html lang="ptBR" 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="base/base">
-	
-	<head>
-		<title>Compartilhamentos | Alocação Professores</title>
-		
-		<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
-	</head>
-	
-	<section layout:fragment="conteudo">
-		<div class="row bg-title">
+
+<head>
+<title>Compartilhamentos | Alocação Professores</title>
+
+<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet"
+	type="text/css"></link>
+</head>
+
+<section layout:fragment="conteudo">
+	<div class="row bg-title">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h4 class="page-title">Compatilhamentos 2017.1</h4>
+		</div>
+	</div>
+	<!--	<div class="row bg-title">
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 				<h4 class="page-title">Titulo</h4>
 			</div>
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-		    	<a href="" target="_blank" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Nova</a>
+		    	<a href="" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Nova</a>
 			</div>
 		</div>
 
-		<div class = "table-responsive">
+ 		<div class = "table-responsive">
 			<table id = "myTable" class = "table table-striped">
 				<thead>
 					<tr>
@@ -58,15 +63,109 @@
 					</tr>
 				</tbody>
 			</table>
+		</div> -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="white-box">
+			<h3 class="box-title">Lista de Compartilhementos</h3>
+				<div class="table-responsive">
+					<table id="myTable" class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th>Disciplina</th>
+								<th>Turma</th>
+								<th>Vagas</th>
+								<th>Total</th>
+								<th>Turno</th>
+								<th>CC</th> 
+								<th>ES</th>
+								<th>SI</th>
+								<th>RD</th>
+								<th>EC</th>
+								<th>DD</th>
+								<th class="text-nowrap">Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="oferta : ${ofertas}"
+								th:unless="${#lists.isEmpty(ofertas)}">
+								<td><a th:if="${oferta} != null"
+									th:text="${oferta.disciplina.nome}" href="#"
+									data-toggle="tooltip" data-original-title="Detalhes Oferta"
+									class="btn-link"></a></td>
+								<td th:inline="text">[[${oferta.turma.curso.sigla}]]
+									[[${oferta.turma.semestre}]]</td>
+								<td th:text="${oferta.vagas}"></td>
+								<td><span class="text-left"><b>130</b></span></td>
+								<td th:text="${oferta.turno}"></td>
+								<td th:with="compartilhamentoCC=${oferta.getCompartilhamentoPorCurso('CC')}"><span
+									th:text="${compartilhamentoCC} ? ${compartilhamentoCC.turma.semestre}+'°s' : ''"
+									class="label label-info"></span> <b><span
+									th:text="${compartilhamentoCC} ? ${compartilhamentoCC.vagas} + ' ' + vagas : ''"
+									class="text-left"></span></b></td>
+						 		<td th:with="compartilhamentoES=${oferta.getCompartilhamentoPorCurso('ES')}"><span
+									th:text="${compartilhamentoES} ? ${compartilhamentoES.turma.semestre} : ''"
+									class="label label-info"></span> <b><span
+									th:text="${compartilhamentoES} ? ${compartilhamentoES.vagas} + ' ' + vagas : ''"
+									class="text-left"></span></b></td>
+								<td th:with="compartilhamentoSI=${oferta.getCompartilhamentoPorCurso('SI')}"><span
+									th:text="${compartilhamentoSI} ? ${compartilhamentoSI.turma.semestre} : ''"
+									class="label label-info"></span> <b><span
+									th:text="${compartilhamentoSI} ? ${compartilhamentoSI.vagas} + ' ' + vagas : ''"
+									class="text-left"></span></b></td>
+								<td th:with="compartilhamentoRD=${oferta.getCompartilhamentoPorCurso('RD')}"><span
+									th:text="${compartilhamentoRD} ? ${compartilhamentoRD.turma.semestre} : ''"
+									class="label label-info"></span> <b><span
+									th:text="${compartilhamentoRD} ? ${compartilhamentoRD.vagas} + ' ' + vagas : ''"
+									class="text-left"></span></b></td>
+								<td th:with="compartilhamentoEC=${oferta.getCompartilhamentoPorCurso('EC')}"><span
+									th:text="${compartilhamentoEC} ? ${compartilhamentoEC.turma.semestre}+'°s' : ''"
+									class="label label-info"></span> <b><span
+									th:text="${compartilhamentoEC} ? ${compartilhamentoEC.vagas} + ' ' + vagas : ''"
+									class="text-left"></span></b></td>
+								<td th:with="compartilhamentoDD=${oferta.getCompartilhamentoPorCurso('DD')}"><span
+									th:text="${compartilhamentoDD} ? ${compartilhamentoDD.turma.semestre} : ''"
+									class="label label-info"></span> <b><span
+									th:text="${compartilhamentoDD} ? ${compartilhamentoDD.vagas} + ' ' + vagas : ''"
+									class="text-left"></span></b></td>
+
+								<td>
+									<div class="text-right">
+										<button type="button" class="btn btn-success btn-circle">
+											<i class="fa fa-search"></i>
+										</button>
+										<button type="button"
+											class="btn btn-info btn-circle waves-effect waves-light">
+											<i class="fa fa-share-alt"></i>
+										</button>
+										<button type="submit"
+											class="btn btn-warning btn-circle waves-effect waves-light">
+											<i class="fa fa-pencil"></i>
+										</button>
+										<button type="submit"
+											class="btn btn-danger  btn-circle waves-effect waves-light sa-warning btn-sm">
+											<i class="fa fa-close"></i>
+										</button>
+									</div>
+								</td>
+ 							</tr>
+						</tbody>
+					</table>
+				</div>
+
+
+			</div>
 		</div>
-	</section>
-	<section layout:fragment="js">
-		<!-- Sweet-Alert  -->
-		<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
-		<script th:src="@{/plugins/sweetalert/jquery.sweet-alert.custom.js}"></script>
-		<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
-		
-		<script th:src="@{/js/ordenacao-tabela.js}"></script>
-		<script th:src="@{/js/compartilhamento/compartilhamento.js}"></script>
-	</section>
+	</div>
+	<!-- .row -->
+</section>
+<section layout:fragment="js">
+	<!-- Sweet-Alert  -->
+	<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+	<script th:src="@{/plugins/sweetalert/jquery.sweet-alert.custom.js}"></script>
+	<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+
+	<script th:src="@{/js/ordenacao-tabela.js}"></script>
+	<script th:src="@{/js/compartilhamento/compartilhamento.js}"></script>
+</section>
 </html>
