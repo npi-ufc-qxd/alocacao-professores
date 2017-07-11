@@ -132,5 +132,15 @@ public class Oferta {
 	public void setCompartilhamentos(List<Compartilhamento> compartilhamentos) {
 		this.compartilhamentos = compartilhamentos;
 	}
+	
+	public Compartilhamento getCompartilhamentoPorCurso(String sigla) {
+		for(Compartilhamento compartilhamento : this.compartilhamentos) {
+			if(compartilhamento.getTurma().getCurso().getSigla().equals(sigla)) {
+				return compartilhamento;
+			}
+		}
+		
+		return null;
+	}
 
 }

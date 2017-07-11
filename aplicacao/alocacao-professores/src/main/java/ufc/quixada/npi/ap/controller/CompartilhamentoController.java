@@ -1,5 +1,7 @@
 package ufc.quixada.npi.ap.controller;
 
+import static ufc.quixada.npi.ap.util.Constants.COMPARTILHAMENTO_LISTAR;
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -7,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,14 +45,9 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"", "/"}, method = RequestMethod.GET)
-	public ModelAndView listarCompartilhamentos(){
-		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
-		
-		List<Compartilhamento> compartilhamentos = compartilhamentoService.findAllCompartilhamentos();
-		
-		modelAndView.addObject("compartilhamentos", compartilhamentos);
-		
-		return modelAndView;
+	public String listarCompartilhamentos(Model model){
+		model.addAttribute("ofertas", compartilhamentoService.listarCompartilhamentoOfertas());
+		return COMPARTILHAMENTO_LISTAR;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)

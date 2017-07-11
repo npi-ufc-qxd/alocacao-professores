@@ -55,4 +55,5 @@ public class Compartilhamento {
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
 	}
+	
 }

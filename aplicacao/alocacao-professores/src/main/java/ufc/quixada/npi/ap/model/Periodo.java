@@ -30,6 +30,8 @@ public class Periodo {
 	
 	private String semestre;
 	
+	private Boolean ativo;
+	
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoCoordenacao;
 	
@@ -126,6 +128,14 @@ public class Periodo {
 	public void setSemestre(String semestre) {
 		this.semestre = semestre;
 	}	
+	
+	public Boolean getAtivo() {
+		return ativo;
+	}
+	
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
 	
 	public Status getStatus() {
 		return status;
