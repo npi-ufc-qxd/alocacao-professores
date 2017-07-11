@@ -1,90 +1,85 @@
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="base/base">
+	layout:decorator="base/base">
 
 <head>
     <title>Cadastrar Disciplina | Alocação Professores</title>
 </head>
 
-
-<section layout:fragment="conteudo">
-	<div class="row bg-title">
-		<h3 class="box-title m-b-0">Cadastrar Disciplina</h3>
-        </div>        
-        
-      <div class="row">
-        <div class="col-md-12">
-          <div class="white-box">            
-
-<!-- Modelo do Formulario -->
-              <form class="form-horizontal"
-                th:action="@{/disciplinas/cadastrar}" th:object="${disciplina}"
-                method="post">
-                <div class="form-group">               
-                  <label class="col-md-12">Nome da Disciplina</label>
-                  <div class="col-md-12">
-                    <input class="form-control" type="text" id="nome" 
-                      th:field="*{nome}" required="required" ></input> <span
-                      th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
-                      
-                      class="help-block with-errors"></span>
-
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-12">Créditos</label>
-                  <div class="col-md-12">
-                    <select class="form-control" th:field="*{creditos}">
-                      <option value="2">2</option>
-                      <option value="4">4</option>
-                      <option value="6">6</option>
-                      <option value="10">10</option>
-                    </select>  <span
-                      th:if="${#fields.hasErrors('creditos')}"
-                      th:errors="*{creditos}" class="help-block with-errors"></span>
-
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-12">Carga horária teórica</label>
-                  <div class="col-md-12">
-                    <input class="form-control" type="number"
-                      id="cargaHorariaTeorica" th:field="*{cargaHorariaTeorica}"
-                      required="required"></input> <span
-                      th:if="${#fields.hasErrors('cargaHorariaTeorica')}"
-                      th:errors="*{cargaHorariaTeorica}"
-                      class="help-block with-errors"></span>
-
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-12">Carga horária prática</label>
-                  <div class="col-md-12">
-                    <input class="form-control" type="number"
-                      id="cargaHorariaPratica" th:field="*{cargaHorariaPratica}"
-                      required="required"></input> <span
-                      th:if="${#fields.hasErrors('cargaHorariaPratica')}"
-                      th:errors="*{cargaHorariaPratica}"
-                      class="help-block with-errors"></span>
-                  </div>
-                </div>
-
-
-                <div class="text-right">
-                  <button type="submit"
-                    class="btn btn-inverse waves-effect waves-light">Cancelar</button>
-                  <button type="submit"
-                    class="btn btn-success waves-effect waves-light m-r-10">Cadastrar</button>
-                </div>
-
-
-              </form>
-          </div>
-        </div>
-      </div>      
+	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<h3 class="box-title m-b-0">Cadastrar Disciplina</h3>
+		</div>
 	
-	<!--end container-->
-</section>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="white-box">
+					<!-- Modelo do Formulario -->
+					<form class="form-horizontal" data-toggle="validator" th:action="@{/disciplinas/cadastrar}" th:object="${disciplina}" method="post">
+						<div class="form-group" th:classappend="${#fields.hasErrors('codigo')} ? has-error">
+							<label class="control-label m-l-10">Código da Disciplina</label>
+							<div class="col-md-12">
+								<input class="form-control" type="text" id="codigo" placeholder = "ex: QXD1234" pattern="^[A-Z]{3}[0-9]{4}$" th:field="*{codigo}" required="required" maxlength="12"></input>
+								<span th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="help-block with-errors"></span>
+							</div>
+						</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+							<label class="control-label m-l-10">Nome da Disciplina</label>
+							<div class="col-md-12">
+								<input class="form-control" type="text" id="nome" maxlength="80" th:field="*{nome}" pattern="[a-zA-Z ]+$" required="required"></input>
+								<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="help-block with-errors"></span>
+							</div>
+						</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('creditos')} ? has-error">
+							<label class="control-label m-l-10">Créditos</label>
+							<div class="col-md-12">
+								<select class="form-control" th:field="*{creditos}">
+									<option value="2">2</option>
+									<option value="4">4</option>
+									<option value="6">6</option>
+									<option value="10">10</option>
+								</select> <span th:if="${#fields.hasErrors('creditos')}" th:errors="*{creditos}" class="help-block with-errors"></span>
+							</div>
+						</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('cargaHorariaTeorica')} ? has-error">
+							<label class="control-label m-l-10">Carga horária teórica</label>
+							<div class="col-md-12">
+								<input class="form-control" type="number" id="cargaHorariaTeorica" th:field="*{cargaHorariaTeorica}" required="required"></input>
+								<span th:if="${#fields.hasErrors('cargaHorariaTeorica')}" th:errors="*{cargaHorariaTeorica}" class="help-block with-errors"></span>
+							</div>
+						</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('cargaHorariaPratica')} ? has-error">
+							<label class="control-label m-l-10">Carga horária prática</label>
+							<div class="col-md-12">
+								<input class="form-control" type="number" id="cargaHorariaPratica" th:field="*{cargaHorariaPratica}" required="required"></input>
+									<span th:if="${#fields.hasErrors('cargaHorariaPratica')}" th:errors="*{cargaHorariaPratica}" class="help-block with-errors"></span>
+							</div>
+						</div>
+						<div class="text-right">
+							<a th:href="@{/disciplinas/}" class="btn btn-inverse waves-effect waves-light">Cancelar	</a>
+							<button type="submit" class="btn btn-success waves-effect waves-light">Cadastrar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	<section layout:fragment="js">
+		<script th:inline="javascript">
+	   $(window).load(function() {
+			if([[${status}]] === "success") {
+				swal([[${titulo}]], [[${mensagem}]], [[${status}]]);	
+			} else if([[${status}]] === "error") {
+				swal([[${titulo}]], [[${mensagem}]], [[${status}]]);
+			}
+	  });
+   </script>
+	</section>
+	
+	
 </html>

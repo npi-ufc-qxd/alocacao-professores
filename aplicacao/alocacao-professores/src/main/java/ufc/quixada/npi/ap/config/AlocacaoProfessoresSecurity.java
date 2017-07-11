@@ -35,7 +35,7 @@ public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers("/periodos/**").hasAnyAuthority("DIRECAO, COORDENACAO")
 				.anyRequest().authenticated()
 				.and().formLogin()
-				.loginProcessingUrl(login).defaultSuccessUrl("/ofertas").loginPage(login).permitAll().and().logout()
+				.loginProcessingUrl(login).successHandler(new AuthenticationSuccessHandlerImpl()).loginPage(login).permitAll().and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl(login);
 	}
 
