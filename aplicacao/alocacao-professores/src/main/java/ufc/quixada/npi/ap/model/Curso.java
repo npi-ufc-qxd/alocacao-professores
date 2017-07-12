@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Curso {
@@ -19,7 +20,8 @@ public class Curso {
 	
 	private String codigo;
 	
-	private String coordenador;
+	@OneToOne
+	private Professor coordenador;
 	
 	private String sigla;
 	
@@ -50,11 +52,11 @@ public class Curso {
 		this.codigo = codigo;
 	}
 
-	public String getCoordenador() {
+	public Professor getCoordenador() {
 		return coordenador;
 	}
 
-	public void setCoordenador(String coordenador) {
+	public void setCoordenador(Professor coordenador) {
 		this.coordenador = coordenador;
 	}
 
