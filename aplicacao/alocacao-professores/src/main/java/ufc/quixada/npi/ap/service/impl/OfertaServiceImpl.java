@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Curso;
+import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.repository.CursoRepository;
+import ufc.quixada.npi.ap.repository.DisciplinaRepository;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
 import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.OfertaService;
@@ -28,6 +30,9 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Autowired
 	private CursoRepository cursoRepository;
+	
+	@Autowired
+	private DisciplinaRepository disciplinaRepository;
 	
 	@Override
 	public void salvar(Oferta oferta) throws AlocacaoProfessoresException{
@@ -62,8 +67,21 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Override
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador) {
-		Curso curso = cursoRepository.findByCoordenador(coordenador.getNome());
+		Curso curso = cursoRepository.findByCoordenador(coordenador);
 		return ofertaRepository.findByPeriodoAndCurso(periodo, curso);
+	}
+
+	@Override
+	public void importarOfertas(List<Integer> disciplinas) {
+		Periodo periodo = periodoRepository.pediodoAtivo();
+		for(Integer id: disciplinas){
+			Disciplina disciplina = disciplinaRepository.findOne(id);
+			Oferta oferta = new Oferta();
+			oferta.setPeriodo(periodo);
+			oferta.setDisciplina(disciplina);
+			oferta.setVagas(0);
+			ofertaRepository.save(oferta);
+		}
 	}
 
 }

@@ -1,6 +1,12 @@
 $('#btn-modal-importar-ofertas').on('click', function (event) {
-	$('#resultado-ofertas').empty();
+	$('#resultado-ofertas-1').empty();
+	$('#resultado-ofertas-2').empty();
+	$('#sem-resultado-ofertas').empty();
 	$('#modal-importar-ofertas').modal('show');
+});
+
+$('#btn-importar-ofertas').on('click', function (event) {
+	importarOfertas();
 });
 
 var periodos = document.getElementById("periodo");
@@ -14,6 +20,20 @@ if(_context == null){
     _context = "";
 }
 
+function importarOfertas(){
+	var disciplinas = $("input[name=ofertas]:checked").map(function() {
+		return this.value;
+	}).get().join(",");
+	
+	if(disciplinas.length > 0){
+		$.get(_context + "/ofertas/importar", {disciplinas : disciplinas}, function() {
+		})
+		.done(function(retorno) {
+			location.reload();
+		});
+	}
+}
+
 $('#btn-exibir-ofertas').click(function() {
 	var periodo = document.getElementById("periodo").selectedIndex;
 	var periodos = document.getElementById("periodo").options;
@@ -24,14 +44,17 @@ $('#btn-exibir-ofertas').click(function() {
 			
 		})
 		.done(function(ofertas) {
-			console.log(ofertas);
-			$('#resultado-ofertas').empty();
+			$('#resultado-ofertas-1').empty();
+			$('#resultado-ofertas-2').empty();
+			$('#sem-resultado-ofertas').empty();
+			var index = 2;
 			if(ofertas.length > 0){
 				$.each(ofertas, function(key, value) {
-					adicionarResultado(value.disciplina.id, "ofertas", '#resultado-ofertas', value.disciplina.nome, "ofertas");	
+					adicionarResultado(value.disciplina.id, "ofertas", '#resultado-ofertas-1', '#resultado-ofertas-2', value.disciplina.nome, "ofertas", index);	
+					index++;
 				});
 			}else{
-				adicionarMensagemSemResultado('#resultado-ofertas');
+				adicionarMensagemSemResultado('#sem-resultado-ofertas');
 			}
 		});
 	}
@@ -45,7 +68,7 @@ function adicionarMensagemSemResultado(coluna){
     $(coluna).append(label);
 }
 
-function adicionarResultado(id, name, coluna, nome, classe){
+function adicionarResultado(id, name, coluna1, coluna2, nome, classe, index){
 	
 	var checkbox = document.createElement('input');
 	checkbox.className = classe;
@@ -59,17 +82,33 @@ function adicionarResultado(id, name, coluna, nome, classe){
 	label.htmlFor = id;
 	label.appendChild(document.createTextNode(nome));
 	
-	var lista = document.createElement('ul');
-	lista.id = 'resultado-disciplinas';
-	$(coluna).append(lista);	
+	var lista1 = document.createElement('ul');
+	lista1.id = 'resultado-disciplinas-1';
+	lista1.setAttribute('class','list-unstyled');
+	
+	var lista2 = document.createElement('ul');
+	lista2.id = 'resultado-disciplinas-2';
+	lista2.setAttribute('class','list-unstyled');
 	
 	
-	var ul = document.getElementById('resultado-disciplinas');
-    var li = document.createElement('li');
+	$(coluna1).append(lista1);
+	$(coluna2).append(lista2);
+	
+	
+	var ul1 = document.getElementById('resultado-disciplinas-1');
+	var ul2 = document.getElementById('resultado-disciplinas-2');
+	
+	var li = document.createElement('li');
     li.appendChild(checkbox);
     li.appendChild(label);
+    li.setAttribute('class', 'checkbox checkbox-success');
     
-    ul.appendChild(li); 
+	
+	if(index % 2 == 0){
+		ul1.appendChild(li); 
+	}else{
+		ul2.appendChild(li);
+	}
 }
 
 $(".sa-btn-excluir").on("click", function(event){
