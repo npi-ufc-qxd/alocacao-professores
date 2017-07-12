@@ -11,4 +11,5 @@ import ufc.quixada.npi.ap.model.Oferta;
 public interface OfertaRepository extends JpaRepository<Oferta, Integer> {
 
 	List<Oferta> findByPeriodoAtivoTrue();
+	List<Oferta> findByPeriodoAtivoTrueAndTurmaCursoSigla(String sigla);
 }

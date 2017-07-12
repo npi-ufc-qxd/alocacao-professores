@@ -142,5 +142,4 @@ public class Oferta {
 		
 		return null;
 	}
-
 }

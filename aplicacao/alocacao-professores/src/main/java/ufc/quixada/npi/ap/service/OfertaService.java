@@ -3,6 +3,7 @@ package ufc.quixada.npi.ap.service;
 import java.util.List;
 
 import ufc.quixada.npi.ap.model.Oferta;
+import ufc.quixada.npi.ap.model.Pessoa;
 
 public interface OfertaService {
 
@@ -15,5 +16,7 @@ public interface OfertaService {
 	public void excluir(Integer id);
 
 	public Oferta visualizarOferta(Integer idOferta);
+	
+	public List<Oferta> findAllOfertasCurso(Pessoa pessoa);
 
 }

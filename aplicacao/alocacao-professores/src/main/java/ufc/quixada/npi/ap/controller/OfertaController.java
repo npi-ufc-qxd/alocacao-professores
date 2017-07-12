@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Oferta;
+import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.DisciplinaService;
@@ -57,9 +59,10 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public ModelAndView listarOfertas(){
+	public ModelAndView listarOfertas(Authentication auth){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
-		modelAndView.addObject("ofertas", ofertaService.findAllOfertas());
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		modelAndView.addObject("ofertas", ofertaService.findAllOfertasCurso(pessoa));
 		
 		return modelAndView;
 	}

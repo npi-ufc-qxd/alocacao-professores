@@ -23,7 +23,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-sm-12">
 			<div class="white-box">
 				<div class="table-responsive">
@@ -74,8 +74,13 @@
 				</div>
 			</div>
 		</div>
+	</div> -->
+	<div th:each="oferta : ${ofertas}">
+		<div th:replace="ofertas/fragment-lista-ofertas :: ofertas(${oferta})"></div>
 	</div>
+	
 </section>
+
 <section layout:fragment="js">
 	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/oferta/oferta.js}"></script>

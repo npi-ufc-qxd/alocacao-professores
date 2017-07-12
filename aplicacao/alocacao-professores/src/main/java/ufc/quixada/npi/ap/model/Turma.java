@@ -26,6 +26,7 @@ public class Turma {
 	@OneToMany(mappedBy = "turma")
 	private List<Compartilhamento> compartilhamentos;
 
+	
 	public Integer getId() {
 		return id;
 	}
