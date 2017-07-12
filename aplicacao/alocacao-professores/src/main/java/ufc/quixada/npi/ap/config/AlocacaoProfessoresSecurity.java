@@ -42,7 +42,6 @@ public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(provider);
-
 	}
 	
 }
