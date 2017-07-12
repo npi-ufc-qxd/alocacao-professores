@@ -20,5 +20,7 @@ public interface OfertaService {
 	public Oferta visualizarOferta(Integer idOferta);
 	
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador);
+	
+	public void importarOfertas(List<Integer> disciplinas);
 
 }
