@@ -10,3 +10,4 @@ target
 *.war
 *.ear
 *.log
+/bin/

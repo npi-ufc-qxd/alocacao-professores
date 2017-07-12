@@ -14,4 +14,8 @@ public interface PeriodoService {
 	
 	void excluir(Periodo periodo);
 	
+	public Periodo periodoAtivo();
+	
+	public List<Periodo> periodosConsolidados();
+	
 }

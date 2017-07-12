@@ -63,6 +63,12 @@
 
 	<div id="wrapper">
 		<div th:replace="base/navbar-header :: navbar-header"></div>
+		<div id="alerttopright"
+			class="myadmin-alert myadmin-alert myadmin-alert-top-right">
+			<a href="#" class="closed">&times;</a>
+			<h4 id="res-msg"></h4>
+			<b id="corpo-msg"></b>
+		</div>
 		<div th:replace="base/sidebar :: sidebar"></div>
 
 		<div id="page-wrapper">
@@ -97,6 +103,25 @@
 	<!-- Data tables -->
 	<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
 	<section layout:fragment="js"></section>
+
+	<script th:inline="javascript">
+		$(".myadmin-alert .closed").click(function (event) {
+			$(this).parents(".myadmin-alert").fadeToggle(350);
+			return false;
+		});
+			$(window).load(function() {
+				if([[${error}]]) {
+					document.getElementById('corpo-msg').innerHTML = [[${error}]];
+					document.getElementById('res-msg').innerHTML = "Erro!";
+					$('#alerttopright').addClass("alert-danger");
+					$("#alerttopright").fadeToggle(200);
+				} else if([[${success}]]) {
+					document.getElementById('corpo-msg').innerHTML = [[${success}]];
+					document.getElementById('res-msg').innerHTML = "Sucesso!";
+					$('#alerttopright').addClass("alert-success");
+					$("#alerttopright").fadeToggle(200);
+				}});
+	</script>
 
 </body>
 </html>

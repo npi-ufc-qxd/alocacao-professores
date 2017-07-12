@@ -21,6 +21,11 @@
 				class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
 				class="fa fa-plus" aria-hidden="true"></i> Nova</a>
 		</div>
+		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+			<a id="btn-modal-importar-ofertas"
+				class="btn btn-info pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+				class="fa fa-history" aria-hidden="true"></i> Importar</a>
+		</div>
 	</div>
 
 	<div class="row">
@@ -75,9 +80,59 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="modal-importar-ofertas">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Importação de Ofertas</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Selecione o semestre</label> <select id="periodo"
+								class="form-control">
+								<option th:value="0">Selecione o semestre..</option>
+								<option th:each="p : ${periodos}"
+									th:text="${p.semestre.descricao} +' semestre de ' + ${p.ano}"
+									th:value="${p.id}"></option>
+							</select>
+						</div>
+					</div>
+
+					<br />
+					<div class="row col-md-12" id="resultado-ofertas">
+
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-md-12">
+							<button class="btn btn-info pull-right" id="btn-exibir-ofertas">Exibir ofertas</button>
+						</div>
+					</div>
+
+					
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-success">Importar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </section>
 <section layout:fragment="js">
+	<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/oferta/oferta.js}"></script>
+	<script type="text/javascript">
+	</script>
 </section>
 </html>

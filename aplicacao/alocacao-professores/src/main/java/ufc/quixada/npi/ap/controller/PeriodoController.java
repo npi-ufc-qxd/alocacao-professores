@@ -17,63 +17,67 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Periodo.Semestre;
 import ufc.quixada.npi.ap.model.Periodo.Status;
 import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.PeriodoValidator;
 
 @Controller
-@RequestMapping(path="/periodos")
+@RequestMapping(path = "/periodos")
 public class PeriodoController {
-	
+
 	@Autowired
 	PeriodoService periodoService;
 
 	@Autowired
 	PeriodoValidator periodoValidator;
-	
-	@RequestMapping(path = {"","/"}, method=RequestMethod.GET)
-	public ModelAndView listarPeriodos(){
+
+	@RequestMapping(path = { "", "/" }, method = RequestMethod.GET)
+	public ModelAndView listarPeriodos() {
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_LISTAR);
 		List<Periodo> periodos = periodoService.listaPeriodos();
 		modelAndView.addObject("periodos", periodos);
-		
+
 		return modelAndView;
 	}
-	
+
 	@ModelAttribute("status")
-	public List<Periodo.Status> getAllStatus(){
+	public List<Periodo.Status> getAllStatus() {
 		return Arrays.asList(Periodo.Status.values());
 	}
-	
-	@RequestMapping(path="/cadastrar", method=RequestMethod.GET)
-	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") Periodo periodo){
+
+	@RequestMapping(path = "/cadastrar", method = RequestMethod.GET)
+	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") Periodo periodo) {
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_CADASTRAR);
-		modelAndView.addObject("periodo", periodo);		
+		modelAndView.addObject("periodo", periodo);
+		modelAndView.addObject("semestres", Semestre.values());
 		return modelAndView;
 	}
-	
-	@RequestMapping( path="/cadastrar", method=RequestMethod.POST)
-	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result, ModelAndView modelAndView){		
-		periodoValidator.validate(periodo, result);		
-		if (result.hasErrors()){
-			modelAndView.setViewName(Constants.PERIODO_CADASTRAR);			
+
+	@RequestMapping(path = "/cadastrar", method = RequestMethod.POST)
+	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result,
+			ModelAndView modelAndView) {
+		periodoValidator.validate(periodo, result);
+		if (result.hasErrors()) {
+			modelAndView.setViewName(Constants.PERIODO_CADASTRAR);
+			modelAndView.addObject("semestres", Semestre.values());
 			return modelAndView;
-		}		
+		}
 		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
 		periodo.setStatus(Status.ABERTO);
-		periodoService.salvar(periodo);		
+		periodoService.salvar(periodo);
 		return modelAndView;
 	}
-	
-	@RequestMapping(path="/{id}/detalhar")
-	public ModelAndView detalhar(@PathVariable ("id") Integer id){
+
+	@RequestMapping(path = "/{id}/detalhar")
+	public ModelAndView detalhar(@PathVariable("id") Integer id) {
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_DETALHAR);
 		return modelAndView;
 	}
-	
-	@RequestMapping(path="/{id}/excluir")
-	public @ResponseBody boolean excluir(@PathVariable ("id") Integer id){
+
+	@RequestMapping(path = "/{id}/excluir")
+	public @ResponseBody boolean excluir(@PathVariable("id") Integer id) {
 		try {
 			periodoService.excluir(periodoService.getPeriodo(id));
 		} catch (EmptyResultDataAccessException ex) {
@@ -81,29 +85,29 @@ public class PeriodoController {
 		}
 		return true;
 	}
-	
-	@RequestMapping(path="/{id}/editar", method=RequestMethod.GET)
-	public ModelAndView editarPeriodo(@PathVariable ("id") Integer id, @ModelAttribute("periodo") Periodo periodo){
+
+	@RequestMapping(path = "/{id}/editar", method = RequestMethod.GET)
+	public ModelAndView editarPeriodo(@PathVariable("id") Integer id, @ModelAttribute("periodo") Periodo periodo) {
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_EDITAR);
 		modelAndView.addObject("periodo", periodoService.getPeriodo(id));
 		return modelAndView;
-	}	
-	
-	@RequestMapping(path="/{id}/editar", method=RequestMethod.POST)
-	public ModelAndView editarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result){
+	}
+
+	@RequestMapping(path = "/{id}/editar", method = RequestMethod.POST)
+	public ModelAndView editarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView();
 		periodoValidator.validate(periodo, result);
-		
+
 		System.out.println(result.getErrorCount());
-		
-		if (result.hasErrors()){
-			modelAndView.setViewName(Constants.PERIODO_EDITAR);			
+
+		if (result.hasErrors()) {
+			modelAndView.setViewName(Constants.PERIODO_EDITAR);
 			return modelAndView;
-		}		
-		
+		}
+
 		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
-		periodoService.salvar(periodo);		
-		
+		periodoService.salvar(periodo);
+
 		return modelAndView;
 	}
 
