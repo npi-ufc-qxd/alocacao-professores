@@ -36,4 +36,9 @@ public class PeriodoServiceImpl implements PeriodoService{
 	public Periodo periodoAtivo() {
 		return periodoRepository.pediodoAtivo();
 	}
+
+	@Override
+	public List<Periodo> periodosConsolidados() {
+		return periodoRepository.periodosInativos();
+	}
 }	

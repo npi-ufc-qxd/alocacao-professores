@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Oferta {
 		
@@ -45,10 +47,12 @@ public class Oferta {
 	
 	@ManyToOne
 	@JoinColumn(name = "turma_id")
+	@JsonIgnore
 	private Turma turma;
 	
 	@ManyToOne
 	@JoinColumn(name = "periodo_id")
+	@JsonIgnore
 	private Periodo periodo;
 	
 	@Enumerated(EnumType.STRING)
@@ -56,9 +60,10 @@ public class Oferta {
 	
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
+	@JsonIgnore
 	private List<Professor> professores;
 	
-	@OneToMany(mappedBy = "oferta")	
+	@OneToMany(mappedBy = "oferta")
 	private List<Compartilhamento> compartilhamentos;
 
 	public Integer getId() {

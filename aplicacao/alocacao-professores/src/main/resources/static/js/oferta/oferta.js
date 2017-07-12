@@ -1,7 +1,65 @@
 $('#btn-modal-importar-ofertas').on('click', function (event) {
+	$('#resultado-ofertas').empty();
 	$('#modal-importar-ofertas').modal('show');
 });
 
+var periodos = document.getElementById("periodo");
+var periodo = periodos.options[periodos.selectedIndex].text;
+
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+
+var _context = $("meta[name='_context']").attr("content");
+if(_context == null){
+    _context = "";
+}
+
+$('#btn-exibir-ofertas').click(function() {
+	var periodo = document.getElementById("periodo").selectedIndex;
+	var periodos = document.getElementById("periodo").options;
+	var id = periodos[periodo].value;
+	
+	if(id > 0){
+		$.get(_context + "/ofertas/buscar-ofertas/" + id, function() {
+			
+		})
+		.done(function(ofertas) {
+			console.log(ofertas);
+			$('#resultado-ofertas').empty();
+			$.each(ofertas, function(key, value) {
+					adicionarResultado(value.disciplina.id, "ofertas", '#resultado-ofertas', value.disciplina.nome, "ofertas");	
+			});
+		});
+	}
+	
+});
+
+function adicionarResultado(id, name, coluna, nome, classe){
+	
+	var checkbox = document.createElement('input');
+	checkbox.className = classe;
+	checkbox.type = "checkbox";
+	checkbox.name = name;
+	checkbox.value = id;
+	checkbox.id = id;
+	checkbox.setAttribute("nome", nome);
+	
+	var label = document.createElement('label')
+	label.htmlFor = id;
+	label.appendChild(document.createTextNode(nome));
+	
+	var lista = document.createElement('ul');
+	lista.id = 'resultado-disciplinas';
+	$(coluna).append(lista);	
+	
+	
+	var ul = document.getElementById('resultado-disciplinas');
+    var li = document.createElement('li');
+    li.appendChild(checkbox);
+    li.appendChild(label);
+    
+    ul.appendChild(li); 
+}
 
 $(".sa-btn-excluir").on("click", function(event){
 	event.preventDefault();

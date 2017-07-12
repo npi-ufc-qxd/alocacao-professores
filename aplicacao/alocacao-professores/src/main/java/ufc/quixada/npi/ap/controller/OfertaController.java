@@ -1,5 +1,9 @@
 package ufc.quixada.npi.ap.controller;
 
+import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
+import static ufc.quixada.npi.ap.util.Constants.STATUS_ERROR;
+import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,20 +23,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Oferta;
-import ufc.quixada.npi.ap.model.Periodo.Semestre;
+import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.OfertaService;
+import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.ProfessorService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.OfertaValidator;
-
-import static ufc.quixada.npi.ap.util.Constants.STATUS_ERROR;
-import static ufc.quixada.npi.ap.util.Constants.OFERTA_REDIRECT_CADASTRO;
-import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
-import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
 
 @Controller
 @RequestMapping(path = "/ofertas")
@@ -52,6 +52,9 @@ public class OfertaController {
 
 	@Autowired
 	private OfertaValidator ofertaValidator;
+	
+	@Autowired
+	private PeriodoService periodoService;
 
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas() {
@@ -68,7 +71,7 @@ public class OfertaController {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
 		List<Oferta> ofertas = ofertaService.findAllOfertas();
 		modelAndView.addObject("ofertas", ofertas);
-		modelAndView.addObject("semestres", Semestre.values());
+		modelAndView.addObject("periodos", periodoService.periodosConsolidados());
 		return modelAndView;
 	}
 
@@ -161,6 +164,12 @@ public class OfertaController {
 		}
 
 		return true;
+	}
+	
+	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
+	public @ResponseBody List<Oferta> buscarOfertas(@PathVariable("periodo") Periodo periodo) {
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodo(periodo);
+		return ofertas;
 	}
 
 }

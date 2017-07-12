@@ -82,7 +82,7 @@
 	</div>
 
 	<div class="modal fade" id="modal-importar-ofertas">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">Importação de Ofertas</h5>
@@ -94,30 +94,28 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-6">
-							<label>Insira o ano</label> <input type="number" min="2000"
-								max="2099" class="form-control" />
-						</div>
-						<div class="col-md-6">
-							<label>Selecione o semestre</label> <select id="semestre"
+							<label>Selecione o semestre</label> <select id="periodo"
 								class="form-control">
-								<option th:each="s : ${semestres}" th:text="${s.descricao}"
-									th:value="${s}"></option>
+								<option th:value="0">Selecione o semestre..</option>
+								<option th:each="p : ${periodos}"
+									th:text="${p.semestre.descricao} +' semestre de ' + ${p.ano}"
+									th:value="${p.id}"></option>
 							</select>
 						</div>
 					</div>
 
 					<br />
+					<div class="row col-md-12" id="resultado-ofertas">
+
+					</div>
+					<br />
 					<div class="row">
 						<div class="col-md-12">
-							<button class="btn btn-info pull-right">Exibir ofertas</button>
+							<button class="btn btn-info pull-right" id="btn-exibir-ofertas">Exibir ofertas</button>
 						</div>
 					</div>
 
-					<div class="row" id="resultado-ofertas">
-
-						<div class="col-md-12"></div>
-
-					</div>
+					
 
 				</div>
 				<div class="modal-footer">
@@ -134,5 +132,7 @@
 	<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/oferta/oferta.js}"></script>
+	<script type="text/javascript">
+	</script>
 </section>
 </html>

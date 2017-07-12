@@ -16,4 +16,6 @@ public interface PeriodoService {
 	
 	public Periodo periodoAtivo();
 	
+	public List<Periodo> periodosConsolidados();
+	
 }

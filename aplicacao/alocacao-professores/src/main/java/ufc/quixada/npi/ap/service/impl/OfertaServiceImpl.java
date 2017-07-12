@@ -53,4 +53,9 @@ public class OfertaServiceImpl implements OfertaService {
 		return ofertaRepository.findOne(idOferta);
 	}
 
+	@Override
+	public List<Oferta> buscarPorPeriodo(Periodo periodo) {
+		return ofertaRepository.findByPeriodo(periodo);
+	}
+
 }
