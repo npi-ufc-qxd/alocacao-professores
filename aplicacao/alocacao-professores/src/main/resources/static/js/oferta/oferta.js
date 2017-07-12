@@ -3,6 +3,7 @@ $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-2').empty();
 	$('#sem-resultado-ofertas').empty();
 	$('#modal-importar-ofertas').modal('show');
+	
 });
 
 $('#btn-importar-ofertas').on('click', function (event) {
