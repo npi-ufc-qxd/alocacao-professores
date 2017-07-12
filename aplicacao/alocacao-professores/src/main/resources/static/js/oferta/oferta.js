@@ -29,7 +29,10 @@ function importarOfertas(){
 		$.get(_context + "/ofertas/importar", {disciplinas : disciplinas}, function() {
 		})
 		.done(function(retorno) {
-			location.reload();
+			if(retorno === true){
+				$('#modal-importar-ofertas').modal('toggle');
+				importacaoRealizada();
+			}
 		});
 	}
 }
@@ -147,6 +150,19 @@ $(".sa-btn-excluir").on("click", function(event){
 		}
 	});
 });
+
+function importacaoRealizada(){
+	swal({
+		title: "Oferta(as) importadas!",
+		text: "As oferta(as) selecionadas foram importadas.", 
+		type: "success",
+		showcancelButton: false,
+		confirmButtonText: "Ok!",
+		closeOnConfirm: true
+	}, function(isConfirm){
+		location.reload();
+	});
+}
 
 function successSwal(){
 	swal({
