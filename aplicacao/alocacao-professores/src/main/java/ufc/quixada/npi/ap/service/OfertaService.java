@@ -5,6 +5,7 @@ import java.util.List;
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Pessoa;
 
 public interface OfertaService {
 
@@ -18,6 +19,6 @@ public interface OfertaService {
 
 	public Oferta visualizarOferta(Integer idOferta);
 	
-	public List<Oferta> buscarPorPeriodo(Periodo periodo);
+	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador);
 
 }

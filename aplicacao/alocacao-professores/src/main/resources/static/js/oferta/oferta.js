@@ -26,13 +26,24 @@ $('#btn-exibir-ofertas').click(function() {
 		.done(function(ofertas) {
 			console.log(ofertas);
 			$('#resultado-ofertas').empty();
-			$.each(ofertas, function(key, value) {
+			if(ofertas.length > 0){
+				$.each(ofertas, function(key, value) {
 					adicionarResultado(value.disciplina.id, "ofertas", '#resultado-ofertas', value.disciplina.nome, "ofertas");	
-			});
+				});
+			}else{
+				adicionarMensagemSemResultado('#resultado-ofertas');
+			}
 		});
 	}
 	
 });
+
+function adicionarMensagemSemResultado(coluna){
+	var label = document.createElement('p');
+    label.setAttribute('class','text-center');
+    label.appendChild(document.createTextNode("Não foi encontrado resultado para a sua busca."));
+    $(coluna).append(label);
+}
 
 function adicionarResultado(id, name, coluna, nome, classe){
 	

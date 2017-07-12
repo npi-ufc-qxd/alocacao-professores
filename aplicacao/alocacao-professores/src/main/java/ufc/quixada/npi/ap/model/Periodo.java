@@ -16,12 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 public class Periodo {
-
-	@Override
-	public String toString() {
-		return "Periodo [id=" + id + ", ano=" + ano + ", semestre=" + semestre + ", status=" + status + "]";
-	}
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

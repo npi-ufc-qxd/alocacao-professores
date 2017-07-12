@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.DisciplinaService;
@@ -52,7 +54,7 @@ public class OfertaController {
 
 	@Autowired
 	private OfertaValidator ofertaValidator;
-	
+
 	@Autowired
 	private PeriodoService periodoService;
 
@@ -165,10 +167,11 @@ public class OfertaController {
 
 		return true;
 	}
-	
+
 	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
-	public @ResponseBody List<Oferta> buscarOfertas(@PathVariable("periodo") Periodo periodo) {
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodo(periodo);
+	public @ResponseBody List<Oferta> buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
+		Pessoa logada = (Pessoa) auth.getPrincipal();
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodo, logada);
 		return ofertas;
 	}
 
