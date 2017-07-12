@@ -174,5 +174,11 @@ public class OfertaController {
 		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodo, logada);
 		return ofertas;
 	}
+	
+	@RequestMapping(value = "/importar", method = RequestMethod.GET)
+	public @ResponseBody boolean importarOfertas(@RequestParam("disciplinas") List<Integer> disciplinas){
+		ofertaService.importarOfertas(disciplinas);
+		return true;
+	}
 
 }

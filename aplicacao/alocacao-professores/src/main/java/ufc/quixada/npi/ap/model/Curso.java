@@ -19,7 +19,7 @@ public class Curso {
 	private String nome;
 	
 	private String codigo;
-	
+
 	@OneToOne
 	private Professor coordenador;
 	

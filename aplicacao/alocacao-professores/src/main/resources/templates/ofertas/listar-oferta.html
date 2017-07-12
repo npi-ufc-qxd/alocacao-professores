@@ -46,7 +46,7 @@
 							<tbody>
 								<tr th:each="oferta : ${ofertas}">
 									<td th:text="${oferta.disciplina.nome}"></td>
-									<td th:text="${oferta.turno.descricao}"></td>
+									<td th:text="${oferta.turno} ? ${oferta.turno} : 'Essa oferta não possui turno'"></td>
 									<td th:text="${oferta.vagas}"></td>
 									<td><span
 										th:if="${not #lists.isEmpty(oferta.professores)}"
@@ -105,9 +105,13 @@
 					</div>
 
 					<br />
-					<div class="row col-md-12" id="resultado-ofertas">
-
+					<div class="row col-md-6" id="resultado-ofertas-1">
 					</div>
+					<div class="row col-md-6" id="resultado-ofertas-2">
+					</div>
+					<div class="row col-md-12" id="sem-resultado-ofertas">
+					</div>
+					
 					<br />
 					<div class="row">
 						<div class="col-md-12">
@@ -121,7 +125,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Fechar</button>
-					<button type="button" class="btn btn-success">Importar</button>
+					<button type="button" class="btn btn-success" id="btn-importar-ofertas">Importar</button>
 				</div>
 			</div>
 		</div>
