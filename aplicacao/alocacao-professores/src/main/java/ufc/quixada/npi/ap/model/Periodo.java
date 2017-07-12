@@ -36,7 +36,7 @@ public class Periodo {
 
 	@OneToMany(mappedBy = "periodo")
 	private List<Oferta> ofertas;
-
+	
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoCoordenacao;
 

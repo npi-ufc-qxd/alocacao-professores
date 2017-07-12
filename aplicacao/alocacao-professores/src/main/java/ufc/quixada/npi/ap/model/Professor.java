@@ -2,6 +2,7 @@ package ufc.quixada.npi.ap.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Professor {
@@ -17,11 +19,10 @@ public class Professor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private String nome;
-	
-	private String cpf;
-	
 	private String apelido;
+	
+	@OneToOne(optional = false, cascade = CascadeType.MERGE)
+	private Pessoa pessoa;
 	
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "professor_id"), inverseJoinColumns = @JoinColumn(name = "oferta_id"))
@@ -35,22 +36,6 @@ public class Professor {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public String getApelido() {
 		return apelido;
 	}
@@ -58,7 +43,15 @@ public class Professor {
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
 	}
-
+	
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+	
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+	
 	public List<Oferta> getOfertas() {
 		return ofertas;
 	}

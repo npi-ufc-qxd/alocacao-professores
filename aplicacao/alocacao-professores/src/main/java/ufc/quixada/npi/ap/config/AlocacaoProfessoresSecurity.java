@@ -28,18 +28,20 @@ public class AlocacaoProfessoresSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/").authenticated()
-				.antMatchers("/js/**", "/css/**", "/img/**", "/plugins/**", "/bootstrap/**", "/less/**", "/**").permitAll()
-				.antMatchers("/compartilhamentos/**").permitAll()
+				.antMatchers("/js/**", "/css/**", "/img/**", "/plugins/**", "/bootstrap/**").permitAll()
+				.antMatchers("/compartilhamentos/**").hasAnyAuthority("DIRECAO, COORDENACAO")
+				.antMatchers("/empilhamentos/**").hasAnyAuthority("DIRECAO, COORDENACAO")
+				.antMatchers("/disciplinas/**").hasAnyAuthority("DIRECAO, COORDENACAO")
+				.antMatchers("/periodos/**").hasAnyAuthority("DIRECAO, COORDENACAO")
 				.anyRequest().authenticated()
 				.and().formLogin()
-				.loginProcessingUrl(login).loginPage(login).permitAll().and().logout()
+				.loginProcessingUrl(login).successHandler(new AuthenticationSuccessHandlerImpl()).loginPage(login).permitAll().and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl(login);
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(provider);
-
 	}
 	
 }
