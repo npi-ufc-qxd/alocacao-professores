@@ -112,6 +112,7 @@ function adicionarResultado(id, name, coluna1, coluna2, nome, classe, index){
 	}else{
 		ul2.appendChild(li);
 	}
+	
 }
 
 $(".sa-btn-excluir").on("click", function(event){
