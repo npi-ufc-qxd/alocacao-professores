@@ -13,10 +13,12 @@ import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
+import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.repository.CursoRepository;
 import ufc.quixada.npi.ap.repository.DisciplinaRepository;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
 import ufc.quixada.npi.ap.repository.PeriodoRepository;
+import ufc.quixada.npi.ap.repository.ProfessorRepository;
 import ufc.quixada.npi.ap.service.OfertaService;
 
 @Service
@@ -33,6 +35,9 @@ public class OfertaServiceImpl implements OfertaService {
 	
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
+	
+	@Autowired
+	private ProfessorRepository professorRepository;
 	
 	@Override
 	public void salvar(Oferta oferta) throws AlocacaoProfessoresException{
@@ -67,7 +72,8 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Override
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador) {
-		Curso curso = cursoRepository.findByCoordenador(coordenador);
+		Professor professor = professorRepository.findByPessoa(coordenador);
+		Curso curso = cursoRepository.findByCoordenador(professor);
 		return ofertaRepository.findByPeriodoAndCurso(periodo, curso);
 	}
 

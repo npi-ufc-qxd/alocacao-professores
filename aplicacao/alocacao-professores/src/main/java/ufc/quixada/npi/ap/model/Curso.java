@@ -20,7 +20,7 @@ public class Curso {
 	
 	private String codigo;
 	@OneToOne
-	private Pessoa coordenador;
+	private Professor coordenador;
 	
 	private String sigla;
 	
@@ -51,11 +51,11 @@ public class Curso {
 		this.codigo = codigo;
 	}
 
-	public Pessoa getCoordenador() {
+	public Professor getCoordenador() {
 		return coordenador;
 	}
 
-	public void setCoordenador(Pessoa coordenador) {
+	public void setCoordenador(Professor coordenador) {
 		this.coordenador = coordenador;
 	}
 
