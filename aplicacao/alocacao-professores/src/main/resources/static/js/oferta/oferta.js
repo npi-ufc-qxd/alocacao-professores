@@ -30,7 +30,7 @@ function importarOfertas(){
 		})
 		.done(function(retorno) {
 			if(retorno === true){
-				$('#modal-importar-ofertas').modal('dimiss');
+				$('#modal-importar-ofertas').modal('toggle');
 				importacaoRealizada();
 			}
 		});

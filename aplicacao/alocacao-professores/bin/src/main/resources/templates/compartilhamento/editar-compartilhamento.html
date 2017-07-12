@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ptBR" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+
+	<head>
+		<title>Editar Compartilhamento | Alocação Professores</title>
+	</head>
+	
+	<section layout:fragment="nome_entidade">
+		<h4 class="page-title">Compartilhamento</h4>
+	</section>
+	
+	<section layout:fragment="conteudo">
+		<h3 class = "box-title m-b-0">Editar Compartilhamento</h3>
+		<form class = "form-horizontal" th:action = "@{/compartilhamentos/{id}/editar(id=${compartilhamento.id})}" th:object = "${compartilhamento}" method = "POST">
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('turma.id')}? has-error">
+				<label for="turma" class="control-label">Turma</label>
+				<select th:field= "*{turma.id}" id="turma" class="form-control select2" required="required">
+					<option value = "">Selecione uma turma</option>
+					<option th:each = "turma : ${turmas}" th:value = "${turma.id}" th:text = "${turma.curso.nome+' - '+turma.semestre+'º Semestre'}"></option>
+				</select>
+				<span th:if = "${#fields.hasErrors('turma.id')}" th:errors = "*{turma.id}" class = "help-block with-errors"></span>
+			</div>
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('oferta.id')}? has-error">
+				<label for="oferta" class = "control-label">Oferta</label>
+				<select id="oferta" th:field="*{oferta.id}" class="form-control select2" required="required">
+					<option value = "">Selecione uma oferta</option>
+					<option th:value = "1">QXD108 	INTRODUÇÃO À CIÊNCIA DA COMPUTAÇÃO - Sistemas de Informação - 2017.1</option>
+				</select> 
+				<span th:if = "${#fields.hasErrors('oferta.id')}" th:errors = "*{oferta.id}" class = "help-block with-errors"></span>
+			</div>
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
+				<label class = "control-label" for = "vagas">Número de Vagas</label>
+				<input type = "number" min = "1" id = "vagas" th:field = "*{vagas}" class = "form-control" required="required"/>
+				<span th:if = "${#fields.hasErrors('vagas')}" th:errors = "*{vagas}" class = "help-block with-errors"></span>
+			</div>
+			<div class = "text-right">
+				<a th:href="@{/compartilhamentos/}" class = "btn btn-inverse waves-effect waves-light">Cancelar</a>
+				<button type = "submit" name = "action" class = "btn btn-success waves-effect waves-light">Cadastrar</button>
+			</div>
+		</form>
+	</section>
+	<section layout:fragent="js"></section>
+</html>

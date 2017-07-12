@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ptBR" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
+	<title>Listar Períodos | Alocação Professores</title>
+
+	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h3 class="box-title">Períodos</h3>	
+			</div>
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+		    	<a th:href="@{/periodos/cadastrar}" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Novo Período</a>
+			</div>
+		</div>
+		
+		<div class="row">
+        <div class="col-sm-12">
+          <div class="white-box">         
+            <div class="table-responsive">
+            <table id="myTable" class="table table-striped ">
+              <thead>
+                <tr>
+                  <th class="text-center">Ano</th>
+                  <th class="text-center">Semeste</th>
+                  <th class="text-center">Status</th> 
+                                  
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr th:each="periodo : ${periodos}">
+                  <td class="text-center" th:text="${periodo.ano}"></td>
+                  <td class="text-center" th:text="${periodo.semestre}"></td>
+                  <td class="text-center" th:text="${periodo.status}"></td>
+                                                                                                         
+                  <td class="text-right active">
+                    <a data-toggle="tooltip" data-placement="top" title="Detalhes" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
+                    	<i class="fa fa-eye "></i>  
+                    </a> 
+                    <a data-toggle="tooltip" data-placement="top" title="Editar" th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn  btn-warning btn-xs btn-circle">
+                    	<i class="fa fa-pencil"></i>  
+                    </a>
+                                                          
+                    <a data-toggle="tooltip" data-placement="top" title="Excluir" th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-circle btn-xs waves-effect waves-light sa-btn-excluir">
+                    	<i class="fa fa-close "></i>  
+                    </a>
+                                        
+                  </td>                                                               					
+                </tr>                                   
+
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+        </div>
+		
+	</section>
+	<section layout:fragment="js">
+		<script th:src="@{/js/periodo/periodo.js}"></script>
+	</section>
+</html>
