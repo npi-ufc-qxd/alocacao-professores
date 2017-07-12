@@ -18,51 +18,51 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Oferta {
-		
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private int vagas;
-	
-	public enum Turno{
+
+	public enum Turno {
 		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite"), MESMO_DIA("Mesmo dia");
-		
+
 		private String descricao;
-		
-		Turno(String descricao){
+
+		Turno(String descricao) {
 			this.descricao = descricao;
 		}
-		
+
 		public String getDescricao() {
 			return descricao;
 		}
 	}
-	
+
 	private String observacao;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "disciplina_id")
 	private Disciplina disciplina;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "turma_id")
 	@JsonIgnore
 	private Turma turma;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "periodo_id")
 	@JsonIgnore
 	private Periodo periodo;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
-	
+
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
 	@JsonIgnore
 	private List<Professor> professores;
-	
+
 	@OneToMany(mappedBy = "oferta")
 	private List<Compartilhamento> compartilhamentos;
 
@@ -137,14 +137,14 @@ public class Oferta {
 	public void setCompartilhamentos(List<Compartilhamento> compartilhamentos) {
 		this.compartilhamentos = compartilhamentos;
 	}
-	
+
 	public Compartilhamento getCompartilhamentoPorCurso(String sigla) {
-		for(Compartilhamento compartilhamento : this.compartilhamentos) {
-			if(compartilhamento.getTurma().getCurso().getSigla().equals(sigla)) {
+		for (Compartilhamento compartilhamento : this.compartilhamentos) {
+			if (compartilhamento.getTurma().getCurso().getSigla().equals(sigla)) {
 				return compartilhamento;
 			}
 		}
-		
+
 		return null;
 	}
 
