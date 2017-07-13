@@ -27,18 +27,19 @@
                 <tr>
                   <th class="text-center">Ano</th>
                   <th class="text-center">Semeste</th>
-                  <th class="text-center">Status</th> 
-                                  
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Ativo</th> 
+                  <th class="text-center">Opções</th> 
                 </tr>
               </thead>
               <tbody>
 
                 <tr th:each="periodo : ${periodos}">
                   <td class="text-center" th:text="${periodo.ano}"></td>
-                  <td class="text-center" th:text="${periodo.semestre}"></td>
+                  <td class="text-center" th:text="${periodo.semestre.descricao}"></td>
                   <td class="text-center" th:text="${periodo.status}"></td>
-                                                                                                         
-                  <td class="text-right active">
+                  <td class="text-center" th:text="${periodo.ativo} ? 'Sim' : 'Não' "></td>                                                                                       
+                  <td class="text-center active">
                     <a data-toggle="tooltip" data-placement="top" title="Detalhes" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
                     	<i class="fa fa-eye "></i>  
                     </a> 
@@ -50,7 +51,8 @@
                     	<i class="fa fa-close "></i>  
                     </a>
                                         
-                  </td>                                                               					
+                  </td>  
+                                                                               					
                 </tr>                                   
 
               </tbody>

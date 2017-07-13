@@ -14,43 +14,55 @@ import javax.persistence.OneToMany;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Periodo {
 	
-	@Override
-	public String toString() {
-		return "Periodo [id=" + id + ", ano=" + ano + ", semestre=" + semestre + ", status=" + status + "]";
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;	
-	
+	private Integer id;
+
 	private String ano;
 	
-	private String semestre;
-	
-	private Boolean ativo;
+	@Enumerated(EnumType.STRING)
+	private Semestre semestre;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	@OneToMany(mappedBy = "periodo")
+	@JsonIgnore
+	private List<Oferta> ofertas;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoCoordenacao;
-	
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date fimPeriodoCoordenacao;
-	
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoDirecao;
-	
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date fimPeriodoDirecao;
-	
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoAjuste;
-	
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date fimPeriodoAjuste;
 	
-	
+	private Boolean ativo;
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	public Date getInicioPeriodoCoordenacao() {
 		return inicioPeriodoCoordenacao;
 	}
@@ -99,12 +111,6 @@ public class Periodo {
 		this.fimPeriodoAjuste = fimPeriodoAjuste;
 	}
 
-	@Enumerated(EnumType.STRING)
-	private Status status;
-	
-	@OneToMany(mappedBy = "periodo")
-	private List<Oferta> ofertas;
-
 	public Integer getId() {
 		return id;
 	}
@@ -121,22 +127,14 @@ public class Periodo {
 		this.ano = ano;
 	}
 
-	public String getSemestre() {
+	public Semestre getSemestre() {
 		return semestre;
 	}
 
-	public void setSemestre(String semestre) {
+	public void setSemestre(Semestre semestre) {
 		this.semestre = semestre;
-	}	
-	
-	public Boolean getAtivo() {
-		return ativo;
 	}
-	
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
-	
+
 	public Status getStatus() {
 		return status;
 	}
@@ -152,18 +150,32 @@ public class Periodo {
 	public void setOfertas(List<Oferta> ofertas) {
 		this.ofertas = ofertas;
 	}
-	
-	public enum Status{
+
+	public enum Status {
 		ABERTO("Aberto"), EM_ANALISE("Em análise"), CONSOLIDADO("Consolidado");
-		
+
 		private String descricao;
-		
-		Status(String descricao){
+
+		Status(String descricao) {
 			this.descricao = descricao;
 		}
 
 		public String getDescricao() {
 			return descricao;
-		}		
-	}	
+		}
+	}
+
+	public enum Semestre {
+		PRIMEIRO("1º"), SEGUNDO("2º");
+		
+		private String descricao;
+
+		Semestre(String descricao){
+			this.descricao = descricao;
+		}
+
+		public String getDescricao() {
+			return descricao;
+		}
+	}
 }

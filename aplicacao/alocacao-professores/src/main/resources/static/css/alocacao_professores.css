@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+
+.panel-margin {
+	margin-bottom: 2%;
+	width:20%;
+	float:left;
+}
+
+.panel-informe {
+	margin-bottom: 2%;
+}
