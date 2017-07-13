@@ -74,7 +74,6 @@ $('#button').click(function() {
 	})
 	.done(function(ofertas) {
 		if(ofertas.length > 0){
-			console.log("OI");
 			organizarOfertas(ofertas);
 		}
 	});

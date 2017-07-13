@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Pessoa;
+import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.repository.CursoRepository;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
+import ufc.quixada.npi.ap.repository.ProfessorRepository;
 import ufc.quixada.npi.ap.service.OfertaService;
 
 @Service
@@ -20,6 +22,9 @@ public class OfertaServiceImpl implements OfertaService {
 	
 	@Autowired
 	private CursoRepository cursoRepository;
+	
+	@Autowired
+	private ProfessorRepository professorRepository;
 	
 	@Override
 	public void salvar(Oferta oferta) {
@@ -49,7 +54,8 @@ public class OfertaServiceImpl implements OfertaService {
 	@Override
 	public List<Oferta> findAllOfertasCurso(Pessoa pessoa) {
 		if(pessoa != null) {
-			Curso curso = cursoRepository.findByCoordenador(pessoa.getNome());
+			Professor professor = professorRepository.findByPessoa(pessoa);
+			Curso curso = cursoRepository.findByCoordenador(professor);
 			return ofertaRepository.findByPeriodoAtivoTrueAndTurmaCursoSigla(curso.getSigla());
 		}
 		
