@@ -22,7 +22,7 @@
 				class="fa fa-plus" aria-hidden="true"></i> Nova</a>
 		</div>
 	</div>
-
+	<button class="btn btn-success" id="button">Tentativa</button>
 	<!-- <div class="row">
 		<div class="col-sm-12">
 			<div class="white-box">
@@ -75,8 +75,11 @@
 			</div>
 		</div>
 	</div> -->
-	<div th:each="oferta : ${ofertas}">
+	 <!-- <div th:each="oferta : ${ofertas}">
 		<div th:replace="ofertas/fragment-lista-ofertas :: ofertas(${oferta})"></div>
+	</div> -->
+	<div id="ofertas">
+	
 	</div>
 	
 </section>
@@ -85,4 +88,5 @@
 	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/oferta/oferta.js}"></script>
 </section>
+
 </html>

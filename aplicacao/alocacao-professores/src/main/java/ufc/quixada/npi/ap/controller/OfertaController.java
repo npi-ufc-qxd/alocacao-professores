@@ -61,10 +61,14 @@ public class OfertaController {
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public ModelAndView listarOfertas(Authentication auth){
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-		modelAndView.addObject("ofertas", ofertaService.findAllOfertasCurso(pessoa));
-		
 		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	public @ResponseBody List<Oferta> listarOfertasTeste(Authentication auth) {
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		List<Oferta> ofertas = ofertaService.findAllOfertasCurso(pessoa);
+		return ofertas;
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
