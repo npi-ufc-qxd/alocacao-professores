@@ -71,6 +71,7 @@ public class OfertaController {
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public ModelAndView listarOfertas() {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
+		modelAndView.addObject("periodos", periodoService.periodosConsolidados());
 		return modelAndView;
 	}
 	
