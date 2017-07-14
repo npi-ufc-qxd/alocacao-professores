@@ -71,8 +71,6 @@ public class OfertaController {
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public ModelAndView listarOfertas() {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
-		//List<Oferta> ofertas = ofertaService.findAllOfertas();
-		//modelAndView.addObject("ofertas", ofertas);
 		return modelAndView;
 	}
 	
