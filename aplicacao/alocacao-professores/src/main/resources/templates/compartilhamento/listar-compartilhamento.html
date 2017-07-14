@@ -41,7 +41,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="oferta : ${ofertas}"
-								th:unless="${#lists.isEmpty(ofertas)}">
+								th:unless="${not #lists.isEmpty(ofertas)}">
 								<td><a th:if="${oferta} != null"
 									th:text="${oferta.disciplina.nome}" href="#"
 									data-toggle="tooltip" data-original-title="Detalhes Oferta"

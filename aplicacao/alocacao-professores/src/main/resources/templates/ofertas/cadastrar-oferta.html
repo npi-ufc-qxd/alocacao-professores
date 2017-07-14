@@ -22,7 +22,7 @@
 							<label for = "professores" class="control-label m-l-10">Professores</label>
 							<div class="col-md-12">
 								<select id="professores" th:field="*{professores}" class = "form-control select2 select2-multiple" multiple="multiple" data-placeholder = "Selecione os professores" >
-									<option th:each = "professor : ${professores}" th:value = "${{professor}}" th:text = "${professor.nome}"></option>
+									<option th:each = "professor : ${professores}" th:value = "${{professor}}" th:text = "${professor.pessoa.nome}"></option>
 								</select>
 								<span th:if="${#fields.hasErrors('professores')}" th:errors="*{professores}" class = "help-block with-errors"></span>
 							</div>

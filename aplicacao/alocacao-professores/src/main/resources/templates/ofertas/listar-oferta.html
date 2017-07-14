@@ -51,7 +51,7 @@
 									<td><span
 										th:if="${not #lists.isEmpty(oferta.professores)}"
 										th:each="a, iterStat : ${oferta.professores}"
-										th:text="!${iterStat.last} ? ${a.nome} + ', ': ${a.nome}"></span>
+										th:text="!${iterStat.last} ? ${a.pessoa.nome} + ', ': ${a.pessoa.nome}"></span>
 									</td>
 									<td><a class="btn btn-success btn-circle popup-with-form"
 										href="#test-form"> <i class="fa fa-search"></i></a> <span

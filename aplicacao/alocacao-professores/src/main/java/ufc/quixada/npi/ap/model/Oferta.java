@@ -1,5 +1,6 @@
 package ufc.quixada.npi.ap.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -83,7 +84,7 @@ public class Oferta {
 	}
 
 	public String getObservacao() {
-		return observacao;
+		return null == observacao ? " " : this.observacao;
 	}
 
 	public void setObservacao(String observacao) {
@@ -131,7 +132,10 @@ public class Oferta {
 	}
 
 	public List<Compartilhamento> getCompartilhamentos() {
-		return compartilhamentos;
+		if (null == this.compartilhamentos) {
+			this.compartilhamentos = new ArrayList<>();
+		}
+		return this.compartilhamentos;
 	}
 
 	public void setCompartilhamentos(List<Compartilhamento> compartilhamentos) {

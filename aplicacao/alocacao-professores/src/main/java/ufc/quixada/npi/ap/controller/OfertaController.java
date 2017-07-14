@@ -176,9 +176,8 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/importar", method = RequestMethod.GET)
-	public @ResponseBody boolean importarOfertas(@RequestParam("disciplinas") List<Integer> disciplinas){
-		ofertaService.importarOfertas(disciplinas);
-		return true;
+	public @ResponseBody List<Oferta> importarOfertas(@RequestParam("disciplinas") List<Integer> ofertas){
+		return ofertaService.importarOfertas(ofertas);
 	}
 
 }

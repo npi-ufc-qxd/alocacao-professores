@@ -30,9 +30,11 @@ function importarOfertas(){
 		$.get(_context + "/ofertas/importar", {disciplinas : disciplinas}, function() {
 		})
 		.done(function(retorno) {
-			if(retorno === true){
+			if(retorno.length === 0){
 				$('#modal-importar-ofertas').modal('toggle');
 				importacaoRealizada();
+			}else{
+				errorSwal();
 			}
 		});
 	}
@@ -52,9 +54,10 @@ $('#btn-exibir-ofertas').click(function() {
 			$('#resultado-ofertas-2').empty();
 			$('#sem-resultado-ofertas').empty();
 			var index = 2;
+			console.log(ofertas);
 			if(ofertas.length > 0){
 				$.each(ofertas, function(key, value) {
-					adicionarResultado(value.disciplina.id, "ofertas", '#resultado-ofertas-1', '#resultado-ofertas-2', value.disciplina.nome, "ofertas", index);	
+					adicionarResultado(value.id, "ofertas", '#resultado-ofertas-1', '#resultado-ofertas-2', value.disciplina.nome, "ofertas", index);	
 					index++;
 				});
 			}else{
