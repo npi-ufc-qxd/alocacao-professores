@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Periodo {
 	
@@ -30,6 +32,7 @@ public class Periodo {
 	private Status status;
 
 	@OneToMany(mappedBy = "periodo")
+	@JsonIgnore
 	private List<Oferta> ofertas;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)

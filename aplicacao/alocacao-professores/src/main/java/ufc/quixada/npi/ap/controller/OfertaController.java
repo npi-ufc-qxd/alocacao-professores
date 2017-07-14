@@ -71,10 +71,15 @@ public class OfertaController {
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public ModelAndView listarOfertas() {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
-		List<Oferta> ofertas = ofertaService.findAllOfertas();
-		modelAndView.addObject("ofertas", ofertas);
 		modelAndView.addObject("periodos", periodoService.periodosConsolidados());
 		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	public @ResponseBody List<Oferta> listarOfertas(Authentication auth) {
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), pessoa);
+		return ofertas;
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)

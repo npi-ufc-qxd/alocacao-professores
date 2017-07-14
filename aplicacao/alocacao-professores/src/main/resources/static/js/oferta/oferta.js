@@ -189,3 +189,214 @@ function errorSwal(){
 		closeOnConfirm: true
 	});	
 }
+
+//Função que faz a requisição da lista de ofertas quando a página é carregada
+$(window).load(function() {
+	$.get(_context + "/ofertas/listar", function() {
+	})
+	.done(function(ofertas) {
+		if(ofertas.length > 0){
+			organizarOfertas(ofertas);
+		}
+	});
+});
+
+//Função que organiza a lista de ofertas por semestre
+function organizarOfertas(ofertas) {
+	semestres = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'QUARTO', 'QUINTO', 'SEXTO', 'SETIMO', 'OITAVO', 'NONO', 'DECIMO'];
+	for(var i = 0; i <= 9; i++) {
+		var semestre = semestres[i];
+		var numberSemestre = i+1;
+		criarEstrutura(semestre, ofertas[0].turma.curso.sigla);
+		var existe = false;
+		var newRow = 0;
+		var idNewRow = '';
+		
+		$.each(ofertas, function(key, value) {
+			var professores = listarProfessoresOferta(value.professores);
+			if(value.turma.semestre == semestre) {
+				if(newRow%4 === 0) {
+					idNewRow = 'rowPanel'+newRow+semestre;
+				}
+				
+				criarPanelsOferta(value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, newRow, idNewRow);
+				existe = true;
+				newRow++;
+				
+			} 
+		});
+		
+		criarInforme(semestre, existe);
+	}
+}
+
+
+//Função que cria a estrtura por semestre
+function criarEstrutura(semestre, sigla) {
+	//var divContainer = document.createElement('div');
+	//divContainer.setAttribute('class', 'container');
+	
+	var divRow = document.createElement('div');
+	divRow.setAttribute('class', 'row');
+	
+	divRow.id = semestre;
+	
+	var b = document.createElement('b');
+	b.setAttribute('class', 'col-md-12');
+	b.appendChild(document.createTextNode(semestre));
+	
+	divRow.appendChild(b);
+	//divContainer.appendChild(divRow);
+	
+	$('#ofertas').append(divRow);
+	
+	if(sigla !== 'EC') {
+		$('#NONO').hide();
+		$('#DECIMO').hide();
+	}
+}
+
+//Função que divide as ofertas em linhas com quatro ofertas
+function criarRowsPanel(panel, semestre, newRow, idNewRow) {
+	if(newRow%4 === 0) {
+		var divRow = document.createElement('div');
+		console.log(idNewRow);
+		divRow.id = idNewRow;	
+		divRow.setAttribute('class', 'row');
+		
+		divRow.appendChild(panel);
+		$('#'+semestre).append(divRow);
+	} else {
+		$('#'+idNewRow).append(panel);
+		$('#'+semestre).append($('#'+idNewRow));
+	}
+}
+
+
+//Função que cria o panel para cada oferta
+function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, newRow, idNewRow){
+	//Elementos html criados via Javascript
+	var divCol = document.createElement('div');
+	divCol.setAttribute('class', 'col-lg-4 col-md-4 col-sm-4 col-xs-12 panel-margin');
+	
+	var divPanel = document.createElement('div');
+	divPanel.setAttribute('class', 'panel panel-default');
+	
+	var divPanelHeading = document.createElement('div');
+	divPanelHeading.setAttribute('class', 'panel-heading');
+	
+	var label = document.createElement('label');
+	var bold = document.createElement('b');
+	
+	bold.appendChild(document.createTextNode(sigla+numberSemestre + ' - ' + codigoDisciplina + ' - ' + nomeDisciplina));
+	label.appendChild(bold);
+	
+	var divPanelAction = document.createElement('div');
+	divPanelAction.setAttribute('class', 'panel-action');
+	
+	var divPanelWrapper = document.createElement('div');
+	divPanelWrapper.setAttribute('class', 'panel-wrapper collapse in');
+	
+	var divPanelBody = document.createElement('div');
+	divPanelBody.setAttribute('class', 'panel-body');
+	
+	var pVagas = document.createElement('p');
+	var pTurno = document.createElement('p');
+	var pProfessores = document.createElement('p');
+	
+	var divPanelFooter = document.createElement('div');
+	divPanelFooter.setAttribute('class', 'panel-footer');
+	
+	var divRowButton = document.createElement('div');
+	divRowButton.setAttribute('class', 'row');
+	
+	var divColButton = document.createElement('div');
+	divColButton.setAttribute('class', 'col-sm-12');
+	
+	var divButton = document.createElement('div');
+	divButton.setAttribute('class', 'pull-right');
+	
+	var buttonEditar = document.createElement('a');
+	buttonEditar.href = '#';
+	buttonEditar.appendChild(document.createTextNode("Editar"));
+	buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+	
+	var buttonExcluir = document.createElement('a');
+	buttonExcluir.href = '#';
+	buttonExcluir.appendChild(document.createTextNode("Excluir"));
+	buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes');
+	
+	//Inserindo elementos filhos nos elementos pai
+	pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
+	pTurno.appendChild(document.createTextNode("Turno: " + turno));
+	pProfessores.appendChild(document.createTextNode("Professores" + professores));
+			
+	divPanelBody.appendChild(pVagas);
+	divPanelBody.appendChild(pTurno);
+	divPanelBody.appendChild(pProfessores);
+	
+	divButton.appendChild(buttonEditar);
+	divButton.appendChild(buttonExcluir);
+	
+	divColButton.appendChild(divButton);
+	
+	divRowButton.appendChild(divColButton)
+	
+	divPanelFooter.appendChild(divRowButton);
+	
+	divPanelWrapper.appendChild(divPanelBody);
+	divPanelWrapper.appendChild(divPanelFooter);
+	
+	divPanelHeading.appendChild(label);
+	divPanelHeading.appendChild(divPanelAction);
+	
+	divPanel.appendChild(divPanelHeading);
+	divPanel.appendChild(divPanelWrapper);
+	
+	
+	divCol.appendChild(divPanel);
+	criarRowsPanel(divCol, semestre, newRow, idNewRow);
+}
+
+//Função que cria o panel de informe quando não há nenhuma oferta para determinado semestre
+function criarInforme(semestre, existe) {
+	if(existe === false) { 
+		var divCol = document.createElement('div');
+		divCol.setAttribute('class', 'col-md-12 panel-informe');
+		
+		var divPanel = document.createElement('div');
+		divPanel.setAttribute('class', 'panel panel-default');
+		
+		var divPanelHeading = document.createElement('div');
+		divPanelHeading.setAttribute('class', 'panel-heading');
+		
+		var label = document.createElement('p');
+		var bold = document.createElement('b');
+		label.setAttribute('class', 'text-center');
+		
+		bold.appendChild(document.createTextNode("As ofertas serão exibidas aqui"));
+		label.appendChild(bold);
+		
+		divPanelHeading.appendChild(label);
+		divPanel.appendChild(divPanelHeading);
+		divCol.appendChild(divPanel);
+		
+		$('#'+semestre).append(divCol);
+	}
+}
+
+//Função que transforma em string a lista de professores de uma oferta
+function listarProfessoresOferta(professores) {
+	var professorList = '';
+	
+	if(professores.length > 0) {
+		$.each(professores, function(key, value) {
+			professorList += ' : ' + value.pessoa.nome;	
+		});
+	} else {
+		professorList = 'Não há professores para essa oferta.';
+	}
+
+	return professorList;
+}
+

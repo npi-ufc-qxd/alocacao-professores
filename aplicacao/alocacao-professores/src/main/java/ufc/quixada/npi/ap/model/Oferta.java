@@ -14,8 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Oferta {
 
@@ -24,7 +22,7 @@ public class Oferta {
 	private Integer id;
 
 	private int vagas;
-
+	
 	public enum Turno {
 		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite"), MESMO_DIA("Mesmo dia");
 
@@ -47,20 +45,17 @@ public class Oferta {
 
 	@ManyToOne
 	@JoinColumn(name = "turma_id")
-	@JsonIgnore
 	private Turma turma;
 
 	@ManyToOne
 	@JoinColumn(name = "periodo_id")
-	@JsonIgnore
 	private Periodo periodo;
 
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
-
+	
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
-	@JsonIgnore
 	private List<Professor> professores;
 
 	@OneToMany(mappedBy = "oferta")
@@ -137,7 +132,7 @@ public class Oferta {
 	public void setCompartilhamentos(List<Compartilhamento> compartilhamentos) {
 		this.compartilhamentos = compartilhamentos;
 	}
-
+	
 	public Compartilhamento getCompartilhamentoPorCurso(String sigla) {
 		for (Compartilhamento compartilhamento : this.compartilhamentos) {
 			if (compartilhamento.getTurma().getCurso().getSigla().equals(sigla)) {
@@ -147,5 +142,5 @@ public class Oferta {
 
 		return null;
 	}
-
+	
 }

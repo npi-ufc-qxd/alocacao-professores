@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+.panel-margin {
+	width:25%;
+}
+
+.panel-informe {
+	margin-bottom: 2%;
+}
+
+.btn-acoes {
+	margin-left: 5px;
+}
