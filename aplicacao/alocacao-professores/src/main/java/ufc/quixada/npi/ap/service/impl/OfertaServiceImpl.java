@@ -97,7 +97,8 @@ public class OfertaServiceImpl implements OfertaService {
 		}
 		return ofertasContidas;
 	}
-
+	
+	
 	private Oferta clonarOferta(Oferta o) {
 		Oferta oferta = new Oferta();
 		oferta.setDisciplina(o.getDisciplina());
