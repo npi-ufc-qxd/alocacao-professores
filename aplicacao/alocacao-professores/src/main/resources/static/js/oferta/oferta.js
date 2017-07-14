@@ -329,7 +329,7 @@ function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno
 	//Inserindo elementos filhos nos elementos pai
 	pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
 	pTurno.appendChild(document.createTextNode("Turno: " + turno));
-	pProfessores.appendChild(document.createTextNode("Professores: " + professores));
+	pProfessores.appendChild(document.createTextNode("Professores" + professores));
 			
 	divPanelBody.appendChild(pVagas);
 	divPanelBody.appendChild(pTurno);
@@ -391,7 +391,7 @@ function listarProfessoresOferta(professores) {
 	
 	if(professores.length > 0) {
 		$.each(professores, function(key, value) {
-			professorList += value.pessoa.nome + ' / ';	
+			professorList += ' : ' + value.pessoa.nome;	
 		});
 	} else {
 		professorList = 'Não há professores para essa oferta.';
