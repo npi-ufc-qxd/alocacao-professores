@@ -46,7 +46,8 @@
 							<tbody>
 								<tr th:each="oferta : ${ofertas}">
 									<td th:text="${oferta.disciplina.nome}"></td>
-									<td th:text="${oferta.turno} ? ${oferta.turno} : 'Essa oferta não possui turno'"></td>
+									<td
+										th:text="${oferta.turno} ? ${oferta.turno} : 'Essa oferta não possui turno'"></td>
 									<td th:text="${oferta.vagas}"></td>
 									<td><span
 										th:if="${not #lists.isEmpty(oferta.professores)}"
@@ -105,27 +106,64 @@
 					</div>
 
 					<br />
-					<div class="row col-md-6" id="resultado-ofertas-1">
-					</div>
-					<div class="row col-md-6" id="resultado-ofertas-2">
-					</div>
-					<div class="row col-md-12" id="sem-resultado-ofertas">
-					</div>
-					
+					<div class="row col-md-6" id="resultado-ofertas-1"></div>
+					<div class="row col-md-6" id="resultado-ofertas-2"></div>
+					<div class="row col-md-12" id="sem-resultado-ofertas"></div>
+
 					<br />
 					<div class="row">
 						<div class="col-md-12">
-							<button class="btn btn-info pull-right" id="btn-exibir-ofertas">Exibir ofertas</button>
+							<button class="btn btn-info pull-right" id="btn-exibir-ofertas">Exibir
+								ofertas</button>
 						</div>
 					</div>
 
-					
+
 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Fechar</button>
-					<button type="button" class="btn btn-success" id="btn-importar-ofertas">Importar</button>
+					<button type="button" class="btn btn-success"
+						id="btn-importar-ofertas">Importar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal-substituir-ofertas">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Substituição de Ofertas</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<strong>As ofertas abaixo já estão disponibilizadas para
+								o período atual, selecione quais ofertas gostaria de realizar
+								uma substituição.</strong>
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="row col-md-6" id="resultado-substituicao-ofertas-1">
+						</div>
+						<div class="row col-md-6" id="resultado-substituicao-ofertas-2">
+						</div>
+					</div>
+
+					<br />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal" id="btn-fechar-substituicao">Fechar</button>
+					<button type="button" class="btn btn-success"
+						id="btn-substituir-ofertas">Substituir</button>
 				</div>
 			</div>
 		</div>
@@ -137,6 +175,7 @@
 	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/oferta/oferta.js}"></script>
 	<script type="text/javascript">
+		
 	</script>
 </section>
 </html>

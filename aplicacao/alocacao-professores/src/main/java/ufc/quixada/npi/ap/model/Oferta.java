@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,7 +60,7 @@ public class Oferta {
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
 	@JsonIgnore
 	private List<Professor> professores;
@@ -124,7 +125,10 @@ public class Oferta {
 	}
 
 	public List<Professor> getProfessores() {
-		return professores;
+		if (null == this.professores) {
+			this.professores = new ArrayList<>();
+		}
+		return this.professores;
 	}
 
 	public void setProfessores(List<Professor> professores) {

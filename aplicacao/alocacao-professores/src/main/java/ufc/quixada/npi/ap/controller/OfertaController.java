@@ -5,6 +5,7 @@ import static ufc.quixada.npi.ap.util.Constants.STATUS_ERROR;
 import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -174,10 +175,16 @@ public class OfertaController {
 		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodo, logada);
 		return ofertas;
 	}
-	
+
 	@RequestMapping(value = "/importar", method = RequestMethod.GET)
-	public @ResponseBody List<Oferta> importarOfertas(@RequestParam("disciplinas") List<Integer> ofertas){
+	public @ResponseBody Map<String, Object> importarOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
 		return ofertaService.importarOfertas(ofertas);
+	}
+
+	@RequestMapping(value = "/substituicao-ofertas", method = RequestMethod.GET)
+	public @ResponseBody boolean substituirOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
+		ofertaService.substituirOferta(ofertas);
+		return true;
 	}
 
 }
