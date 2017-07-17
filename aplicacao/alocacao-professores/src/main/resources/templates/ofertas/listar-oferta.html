@@ -9,6 +9,9 @@
 
 <link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet"
 	type="text/css"></link>
+	
+<link th:href="@{/css/alocacao_professores.css}" rel="stylesheet"
+	type="text/css"></link>
 </head>
 
 <section layout:fragment="conteudo">
@@ -84,15 +87,15 @@
 
 	<div class="modal fade" id="modal-importar-ofertas">
 		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-resultado-ofertas">
+				<div class="modal-header modal-border">
 					<h5 class="modal-title">Importação de Ofertas</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-border">
 					<div class="row">
 						<div class="col-md-6">
 							<label>Selecione o semestre</label> <select id="periodo"
@@ -122,7 +125,7 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
+					<button type="button" class="btn btn-inverse waves-effect waves-light"
 						data-dismiss="modal">Fechar</button>
 					<button type="button" class="btn btn-success"
 						id="btn-importar-ofertas">Importar</button>
@@ -133,20 +136,20 @@
 
 	<div class="modal fade" id="modal-substituir-ofertas">
 		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Substituição de Ofertas</h5>
+			<div class="modal-content modal-resultado-ofertas">
+				<div class="modal-header modal-border">
+					<strong class="modal-title">Substituição de Ofertas</strong>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-border">
 					<div class="row">
-						<div class="col-md-12">
-							<strong>As ofertas abaixo já estão disponibilizadas para
+						<div class="col-md-12 msg-substituicao">
+							<p>As ofertas abaixo já estão disponibilizadas para
 								o período atual, selecione quais ofertas gostaria de realizar
-								uma substituição.</strong>
+								uma substituição.</p>
 						</div>
 					</div>
 					<br />
@@ -160,7 +163,7 @@
 					<br />
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
+					<button type="button" class="btn btn-inverse waves-effect waves-light"
 						data-dismiss="modal" id="btn-fechar-substituicao">Fechar</button>
 					<button type="button" class="btn btn-success"
 						id="btn-substituir-ofertas">Substituir</button>

@@ -118,6 +118,7 @@ function adicionarResultado(id, name, coluna1, coluna2, nome, classe, index){
 	checkbox.id = id;
 	checkbox.setAttribute("nome", nome);
 	
+	
 	var label = document.createElement('label')
 	label.htmlFor = id;
 	label.appendChild(document.createTextNode(nome));
