@@ -1,13 +1,16 @@
 $('#btn-modal-importar-ofertas').on('click', function (event) {
-	$('#resultado-ofertas-1').empty();
-	$('#resultado-ofertas-2').empty();
-	$('#sem-resultado-ofertas').empty();
+	limparResultadosImportacao();
 	$('#modal-importar-ofertas').modal('show');
 	
 });
 
 $('#btn-importar-ofertas').on('click', function (event) {
 	importarOfertas();
+});
+
+
+$('#btn-substituir-ofertas').on('click', function (event) {
+	substituirOfertas();
 });
 
 var periodos = document.getElementById("periodo");
@@ -21,22 +24,57 @@ if(_context == null){
     _context = "";
 }
 
-function importarOfertas(){
-	var disciplinas = $("input[name=ofertas]:checked").map(function() {
+function limparResultadosImportacao(){
+	$('#resultado-ofertas-1').empty();
+	$('#resultado-ofertas-2').empty();
+	$('#sem-resultado-ofertas').empty();
+	$('#resultado-substituicao-ofertas-1').empty();
+	$('#resultado-substituicao-ofertas-2').empty();
+}
+
+function substituirOfertas(){
+	var ofertas = $("input[name=ofertas]:checked").map(function() {
 		return this.value;
 	}).get().join(",");
-	
-	if(disciplinas.length > 0){
-		$.get(_context + "/ofertas/importar", {disciplinas : disciplinas}, function() {
+	console.log(ofertas);
+	if(ofertas.length > 0){
+		$.get(_context + "/ofertas/substituicao-ofertas", {ofertas : ofertas}, function() {
 		})
-		.done(function(retorno) {
-			if(retorno === true){
-				$('#modal-importar-ofertas').modal('toggle');
-				importacaoRealizada();
+		.done(function(resultado) {
+			if(resultado === true){
+				$('#modal-substituir-ofertas').modal('toggle');
+				importacaoRealizada(true, false);
+			}else{
+				errorSubstituirOferta();
 			}
 		});
 	}
 }
+
+function importarOfertas(){
+	var ofertas = $("input[name=ofertas]:checked").map(function() {
+		return this.value;
+	}).get().join(",");
+	
+	if(ofertas.length > 0){
+		$.get(_context + "/ofertas/importar", {ofertas : ofertas}, function() {
+		})
+		.done(function(ofertas) {
+				importacaoRealizada(ofertas.importada, ofertas.substituir);
+				$('#modal-importar-ofertas').modal('toggle');
+				limparResultadosImportacao();
+				console.log(ofertas);
+				var index = 2;
+				$.each(ofertas.contidas, function(key, value) {
+					adicionarResultado(value.id, "ofertas", '#resultado-substituicao-ofertas-1', '#resultado-substituicao-ofertas-2', value.disciplina.nome, "ofertas", index);	
+					index++;
+				});
+			
+		});
+	}
+}
+
+
 
 $('#btn-exibir-ofertas').click(function() {
 	var periodo = document.getElementById("periodo").selectedIndex;
@@ -48,13 +86,11 @@ $('#btn-exibir-ofertas').click(function() {
 			
 		})
 		.done(function(ofertas) {
-			$('#resultado-ofertas-1').empty();
-			$('#resultado-ofertas-2').empty();
-			$('#sem-resultado-ofertas').empty();
+			limparResultadosImportacao();
 			var index = 2;
 			if(ofertas.length > 0){
 				$.each(ofertas, function(key, value) {
-					adicionarResultado(value.disciplina.id, "ofertas", '#resultado-ofertas-1', '#resultado-ofertas-2', value.disciplina.nome, "ofertas", index);	
+					adicionarResultado(value.id, "ofertas", '#resultado-ofertas-1', '#resultado-ofertas-2', value.disciplina.nome, "ofertas", index);	
 					index++;
 				});
 			}else{
@@ -82,22 +118,25 @@ function adicionarResultado(id, name, coluna1, coluna2, nome, classe, index){
 	checkbox.id = id;
 	checkbox.setAttribute("nome", nome);
 	
+	
 	var label = document.createElement('label')
 	label.htmlFor = id;
 	label.appendChild(document.createTextNode(nome));
 	
-	var lista1 = document.createElement('ul');
-	lista1.id = 'resultado-disciplinas-1';
-	lista1.setAttribute('class','list-unstyled');
+	if(index === 2){
 	
-	var lista2 = document.createElement('ul');
-	lista2.id = 'resultado-disciplinas-2';
-	lista2.setAttribute('class','list-unstyled');
+		var lista1 = document.createElement('ul');
+		lista1.id = 'resultado-disciplinas-1';
+		lista1.setAttribute('class','list-unstyled');
+	
+		var lista2 = document.createElement('ul');
+		lista2.id = 'resultado-disciplinas-2';
+		lista2.setAttribute('class','list-unstyled');
 	
 	
-	$(coluna1).append(lista1);
-	$(coluna2).append(lista2);
-	
+		$(coluna1).append(lista1);
+		$(coluna2).append(lista2);
+	}
 	
 	var ul1 = document.getElementById('resultado-disciplinas-1');
 	var ul2 = document.getElementById('resultado-disciplinas-2');
@@ -153,17 +192,32 @@ $(".sa-btn-excluir").on("click", function(event){
 	});
 });
 
-function importacaoRealizada(){
-	swal({
-		title: "Oferta(as) importadas!",
-		text: "As oferta(as) selecionadas foram importadas.", 
-		type: "success",
-		showcancelButton: false,
-		confirmButtonText: "Ok!",
-		closeOnConfirm: true
-	}, function(isConfirm){
-		location.reload();
-	});
+function importacaoRealizada(importada, substituir) {
+	if (importada && substituir) {
+		swal({
+			title : "Oferta(as) importadas!",
+			text : "As oferta(as) selecionadas foram importadas.",
+			type : "success",
+			showcancelButton : false,
+			confirmButtonText : "Ok!",
+			closeOnConfirm : true
+		}, function(isConfirm) {
+			$('#modal-substituir-ofertas').modal('show');
+		});
+	}else if(!importada && substituir){
+		$('#modal-substituir-ofertas').modal('show');
+	}else if(importada && !substituir){
+		swal({
+			title : "Oferta(as) importadas!",
+			text : "As oferta(as) selecionadas foram importadas.",
+			type : "success",
+			showcancelButton : false,
+			confirmButtonText : "Ok!",
+			closeOnConfirm : true
+		}, function(isConfirm) {
+			location.reload();
+		});
+	}
 }
 
 function successSwal(){
@@ -177,6 +231,17 @@ function successSwal(){
 	}, function(isConfirm){
 		location.reload();
 	});
+}
+
+function errorSubstituirOferta(){
+	swal({
+		title: "Erro ao substituir",
+		text: "A(s) oferta(s) não foi(ram) substituída(s).", 
+		type: "error",
+		showcancelButton: false,
+		confirmButtonText: "Ok",
+		closeOnConfirm: true
+	});	
 }
 
 function errorSwal(){

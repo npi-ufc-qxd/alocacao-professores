@@ -2,20 +2,21 @@ package ufc.quixada.npi.ap.service.impl;
 
 import static ufc.quixada.npi.ap.util.Constants.PERIODO_INVALIDO;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Curso;
-import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.repository.CursoRepository;
-import ufc.quixada.npi.ap.repository.DisciplinaRepository;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
 import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.repository.ProfessorRepository;
@@ -32,9 +33,6 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Autowired
 	private CursoRepository cursoRepository;
-
-	@Autowired
-	private DisciplinaRepository disciplinaRepository;
 
 	@Autowired
 	private ProfessorRepository professorRepository;
@@ -78,18 +76,88 @@ public class OfertaServiceImpl implements OfertaService {
 	}
 
 	@Override
-	public void importarOfertas(List<Integer> disciplinas) {
+	public Map<String, Object> importarOfertas(List<Integer> ofertas) {
+		List<Oferta> ofertasContidas = new ArrayList<>();
+		boolean contem = false;
 		Periodo periodo = periodoRepository.pediodoAtivo();
-		for (Integer id : disciplinas) {
-			Disciplina disciplina = disciplinaRepository.findOne(id);
-			if (disciplina != null) {
-				Oferta oferta = new Oferta();
-				oferta.setPeriodo(periodo);
-				oferta.setDisciplina(disciplina);
-				oferta.setVagas(0);
-				ofertaRepository.save(oferta);
+
+		Map<String, Object> resultado = new HashMap<String, Object>();
+
+		boolean adicionado = true;
+
+		for (Integer id : ofertas) {
+			Oferta oferta = ofertaRepository.findOne(id);
+			if (oferta != null) {
+				contem = false;
+				for (Oferta o : periodo.getOfertas()) {
+					if (o.getDisciplina().equals(oferta.getDisciplina())) {
+						ofertasContidas.add(oferta);
+						contem = true;
+					}
+				}
+				if (!contem) {
+					Oferta newOferta = this.clonarOferta(oferta);
+					newOferta.setPeriodo(periodo);
+					ofertaRepository.save(newOferta);
+					if (adicionado) {
+						resultado.put("importada", true);
+					}
+					adicionado = false;
+				}
 			}
 		}
+
+		resultado.put("contidas", ofertasContidas);
+		if (adicionado) { 
+			resultado.put("importada", false);
+		}
+		if (!ofertasContidas.isEmpty()) {
+			resultado.put("substituir", true);
+		} else {
+			resultado.put("substituir", false);
+		}
+
+		return resultado;
+	}
+
+	private Oferta clonarOferta(Oferta o) {
+		Oferta oferta = new Oferta();
+		oferta.setDisciplina(o.getDisciplina());
+		oferta.setTurma(o.getTurma());
+		oferta.setTurno(o.getTurno());
+		oferta.setVagas(o.getVagas());
+		oferta.setObservacao(o.getObservacao());
+
+		if (!o.getProfessores().isEmpty()) {
+			List<Professor> professores = new ArrayList<>();
+			for (Professor professor : o.getProfessores()) {
+				professores.add(professor);
+			}
+			oferta.setProfessores(professores);
+		}
+		return oferta;
+	}
+
+	@Override
+	public void substituirOferta(List<Integer> ofertas) {
+		Periodo periodo = periodoRepository.pediodoAtivo();
+		List<Oferta> novas = new ArrayList<>();
+		for (Integer id : ofertas) {
+			Oferta oferta = ofertaRepository.findOne(id);
+			if (oferta != null) {
+				for (Oferta o : periodo.getOfertas()) {
+					if (o.getDisciplina().equals(oferta.getDisciplina())) {
+						ofertaRepository.delete(o);
+						Oferta novaOferta = clonarOferta(o);
+						novaOferta.setPeriodo(periodo);
+						novas.add(novaOferta);
+					}
+				}
+			}
+		}
+
+		ofertaRepository.save(novas);
+
 	}
 
 }

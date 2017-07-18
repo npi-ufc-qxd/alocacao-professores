@@ -1,6 +1,7 @@
 package ufc.quixada.npi.ap.service;
 
 import java.util.List;
+import java.util.Map;
 
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Oferta;
@@ -21,6 +22,8 @@ public interface OfertaService {
 	
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador);
 	
-	public void importarOfertas(List<Integer> disciplinas);
+	public Map<String, Object> importarOfertas(List<Integer> ofertas);
+	
+	public void substituirOferta(List<Integer> ofertas);
 
 }

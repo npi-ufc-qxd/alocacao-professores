@@ -9,6 +9,9 @@
 
 <link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet"
 	type="text/css"></link>
+	
+<link th:href="@{/css/alocacao_professores.css}" rel="stylesheet"
+	type="text/css"></link>
 </head>
 
 <section layout:fragment="conteudo">
@@ -46,12 +49,13 @@
 							<tbody>
 								<tr th:each="oferta : ${ofertas}">
 									<td th:text="${oferta.disciplina.nome}"></td>
-									<td th:text="${oferta.turno} ? ${oferta.turno} : 'Essa oferta não possui turno'"></td>
+									<td
+										th:text="${oferta.turno} ? ${oferta.turno} : 'Essa oferta não possui turno'"></td>
 									<td th:text="${oferta.vagas}"></td>
 									<td><span
 										th:if="${not #lists.isEmpty(oferta.professores)}"
 										th:each="a, iterStat : ${oferta.professores}"
-										th:text="!${iterStat.last} ? ${a.nome} + ', ': ${a.nome}"></span>
+										th:text="!${iterStat.last} ? ${a.pessoa.nome} + ', ': ${a.pessoa.nome}"></span>
 									</td>
 									<td><a class="btn btn-success btn-circle popup-with-form"
 										href="#test-form"> <i class="fa fa-search"></i></a> <span
@@ -83,15 +87,15 @@
 
 	<div class="modal fade" id="modal-importar-ofertas">
 		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-resultado-ofertas">
+				<div class="modal-header modal-border">
 					<h5 class="modal-title">Importação de Ofertas</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-border">
 					<div class="row">
 						<div class="col-md-6">
 							<label>Selecione o semestre</label> <select id="periodo"
@@ -105,27 +109,64 @@
 					</div>
 
 					<br />
-					<div class="row col-md-6" id="resultado-ofertas-1">
-					</div>
-					<div class="row col-md-6" id="resultado-ofertas-2">
-					</div>
-					<div class="row col-md-12" id="sem-resultado-ofertas">
-					</div>
-					
+					<div class="row col-md-6" id="resultado-ofertas-1"></div>
+					<div class="row col-md-6" id="resultado-ofertas-2"></div>
+					<div class="row col-md-12" id="sem-resultado-ofertas"></div>
+
 					<br />
 					<div class="row">
 						<div class="col-md-12">
-							<button class="btn btn-info pull-right" id="btn-exibir-ofertas">Exibir ofertas</button>
+							<button class="btn btn-info pull-right" id="btn-exibir-ofertas">Exibir
+								ofertas</button>
 						</div>
 					</div>
 
-					
+
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
+					<button type="button" class="btn btn-inverse waves-effect waves-light"
 						data-dismiss="modal">Fechar</button>
-					<button type="button" class="btn btn-success" id="btn-importar-ofertas">Importar</button>
+					<button type="button" class="btn btn-success"
+						id="btn-importar-ofertas">Importar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal-substituir-ofertas">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content modal-resultado-ofertas">
+				<div class="modal-header modal-border">
+					<strong class="modal-title">Substituição de Ofertas</strong>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body modal-border">
+					<div class="row">
+						<div class="col-md-12 msg-substituicao">
+							<p>As ofertas abaixo já estão disponibilizadas para
+								o período atual, selecione quais ofertas gostaria de realizar
+								uma substituição.</p>
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="row col-md-6" id="resultado-substituicao-ofertas-1">
+						</div>
+						<div class="row col-md-6" id="resultado-substituicao-ofertas-2">
+						</div>
+					</div>
+
+					<br />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-inverse waves-effect waves-light"
+						data-dismiss="modal" id="btn-fechar-substituicao">Fechar</button>
+					<button type="button" class="btn btn-success"
+						id="btn-substituir-ofertas">Substituir</button>
 				</div>
 			</div>
 		</div>
@@ -137,6 +178,7 @@
 	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/oferta/oferta.js}"></script>
 	<script type="text/javascript">
+		
 	</script>
 </section>
 </html>
