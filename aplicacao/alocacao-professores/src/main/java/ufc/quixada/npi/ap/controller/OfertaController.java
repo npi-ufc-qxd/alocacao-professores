@@ -80,7 +80,7 @@ public class OfertaController {
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), pessoa);
 		return ofertas;
-	}
+	}	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta) {

@@ -192,9 +192,10 @@ function errorSwal(){
 
 //Função que faz a requisição da lista de ofertas quando a página é carregada
 $(window).load(function() {
-	$.get(_context + "/ofertas/listar", function() {
+	$.get(_context + "/alocacao-professores/ofertas/listar", function() {
 	})
 	.done(function(ofertas) {
+		console.log(ofertas)
 		if(ofertas.length > 0){
 			organizarOfertas(ofertas);
 		}
@@ -329,8 +330,8 @@ function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno
 	//Inserindo elementos filhos nos elementos pai
 	pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
 	pTurno.appendChild(document.createTextNode("Turno: " + turno));
-	pProfessores.appendChild(document.createTextNode("Professores" + professores));
-			
+	pProfessores.appendChild(document.createTextNode("Professores: " + professores));
+
 	divPanelBody.appendChild(pVagas);
 	divPanelBody.appendChild(pTurno);
 	divPanelBody.appendChild(pProfessores);
