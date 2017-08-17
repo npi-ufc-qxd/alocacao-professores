@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Curso {
 	
@@ -26,6 +28,7 @@ public class Curso {
 	private String sigla;
 	
 	@OneToMany(mappedBy = "curso")
+	@JsonIgnore
 	private List<Turma> turmas;
 
 	public Integer getId() {

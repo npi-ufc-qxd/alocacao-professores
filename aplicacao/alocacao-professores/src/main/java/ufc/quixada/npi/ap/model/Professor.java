@@ -12,6 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Professor {
 	
@@ -26,6 +28,7 @@ public class Professor {
 	
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "professor_id"), inverseJoinColumns = @JoinColumn(name = "oferta_id"))
+	@JsonIgnore
 	private List<Oferta> ofertas;
 
 	public Integer getId() {
