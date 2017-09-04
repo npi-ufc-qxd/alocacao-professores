@@ -166,16 +166,22 @@ public class Periodo {
 	}
 
 	public enum Semestre {
-		PRIMEIRO("1º"), SEGUNDO("2º");
+		PRIMEIRO("1º", "1"), SEGUNDO("2º", "2");
 		
 		private String descricao;
+		private String numero;
 
-		Semestre(String descricao){
+		Semestre(String descricao, String numero){
 			this.descricao = descricao;
+			this.numero = numero;
 		}
 
 		public String getDescricao() {
 			return descricao;
+		}
+
+		public String getNumero() {
+			return numero;
 		}
 	}
 }
