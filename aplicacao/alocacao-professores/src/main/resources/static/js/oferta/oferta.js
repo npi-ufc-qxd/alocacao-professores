@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-1').empty();
 	$('#resultado-ofertas-2').empty();
