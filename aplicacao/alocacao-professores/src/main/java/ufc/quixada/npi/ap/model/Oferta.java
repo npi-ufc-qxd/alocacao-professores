@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Oferta {
 
@@ -60,6 +62,7 @@ public class Oferta {
 	private List<Professor> professores;
 
 	@OneToMany(mappedBy = "oferta")
+	@JsonIgnore
 	private List<Compartilhamento> compartilhamentos;
 
 	public Integer getId() {

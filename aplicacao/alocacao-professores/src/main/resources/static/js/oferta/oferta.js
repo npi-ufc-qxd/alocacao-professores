@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-1').empty();
 	$('#resultado-ofertas-2').empty();
@@ -193,7 +192,7 @@ function errorSwal(){
 
 //Função que faz a requisição da lista de ofertas quando a página é carregada
 $(window).load(function() {
-	$.get(_context + "/alocacao-professores/ofertas/listar", function() {
+	$.get(_context + "/ofertas/listar", function() {
 	})
 	.done(function(ofertas) {
 		console.log(ofertas)
