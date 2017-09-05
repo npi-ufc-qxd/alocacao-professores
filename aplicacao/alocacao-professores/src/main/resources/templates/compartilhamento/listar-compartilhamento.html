@@ -6,9 +6,7 @@
 
 <head>
 <title>Compartilhamentos | Alocação Professores</title>
-
-<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet"
-	type="text/css"></link>
+<link th:href="@{/plugins/sweetalert/sweetalert.css}" rel="stylesheet" type="text/css"></link>
 </head>
 
 <section layout:fragment="conteudo">
@@ -40,49 +38,47 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="oferta : ${ofertas}"
-								th:unless="${not #lists.isEmpty(ofertas)}">
+							<tr th:each="oferta : ${ofertas}">
 								<td><a th:if="${oferta} != null"
 									th:text="${oferta.disciplina.nome}" href="#"
 									data-toggle="tooltip" data-original-title="Detalhes Oferta"
 									class="btn-link"></a></td>
-								<td th:inline="text">[[${oferta.turma.curso.sigla}]]
-									[[${oferta.turma.semestre}]]</td>
+								<td th:inline="text">[[${oferta.turma.curso.sigla}]]-[[${oferta.turma.semestre.numero}]]</td>
 								<td th:text="${oferta.vagas}"></td>
 								<td><span class="text-left"><b>130</b></span></td>
 								<td th:text="${oferta.turno}"></td>
 								<td th:with="compartilhamentoCC=${oferta.getCompartilhamentoPorCurso('CC')}"><span
-									th:text="${compartilhamentoCC} ? ${compartilhamentoCC.turma.semestre}+'°s' : ''"
+									th:text="${compartilhamentoCC} ? ${compartilhamentoCC.turma.semestre.descricao}+' Sem.' : ''"
 									class="label label-info"></span> <b><span
 									th:text="${compartilhamentoCC} ? ${compartilhamentoCC.vagas} + ' ' + vagas : ''"
 									class="text-left"></span></b></td>
 						 		<td th:with="compartilhamentoES=${oferta.getCompartilhamentoPorCurso('ES')}"><span
-									th:text="${compartilhamentoES} ? ${compartilhamentoES.turma.semestre} : ''"
+									th:text="${compartilhamentoES} ? ${compartilhamentoES.turma.semestre.descricao}+' Sem.' : ''"
 									class="label label-info"></span> <b><span
 									th:text="${compartilhamentoES} ? ${compartilhamentoES.vagas} + ' ' + vagas : ''"
 									class="text-left"></span></b></td>
 								<td th:with="compartilhamentoSI=${oferta.getCompartilhamentoPorCurso('SI')}"><span
-									th:text="${compartilhamentoSI} ? ${compartilhamentoSI.turma.semestre} : ''"
+									th:text="${compartilhamentoSI} ? ${compartilhamentoSI.turma.semestre.descricao}+' Sem.' : ''"
 									class="label label-info"></span> <b><span
 									th:text="${compartilhamentoSI} ? ${compartilhamentoSI.vagas} + ' ' + vagas : ''"
 									class="text-left"></span></b></td>
 								<td th:with="compartilhamentoRD=${oferta.getCompartilhamentoPorCurso('RD')}"><span
-									th:text="${compartilhamentoRD} ? ${compartilhamentoRD.turma.semestre} : ''"
+									th:text="${compartilhamentoRD} ? ${compartilhamentoRD.turma.semestre.descricao}+' Sem.' : ''"
 									class="label label-info"></span> <b><span
 									th:text="${compartilhamentoRD} ? ${compartilhamentoRD.vagas} + ' ' + vagas : ''"
 									class="text-left"></span></b></td>
 								<td th:with="compartilhamentoEC=${oferta.getCompartilhamentoPorCurso('EC')}"><span
-									th:text="${compartilhamentoEC} ? ${compartilhamentoEC.turma.semestre}+'°s' : ''"
+									th:text="${compartilhamentoEC} ? ${compartilhamentoEC.turma.semestre.descricao}+' Sem.' : ''"
 									class="label label-info"></span> <b><span
 									th:text="${compartilhamentoEC} ? ${compartilhamentoEC.vagas} + ' ' + vagas : ''"
 									class="text-left"></span></b></td>
 								<td th:with="compartilhamentoDD=${oferta.getCompartilhamentoPorCurso('DD')}"><span
-									th:text="${compartilhamentoDD} ? ${compartilhamentoDD.turma.semestre} : ''"
+									th:text="${compartilhamentoDD} ? ${compartilhamentoDD.turma.semestre.descricao}+' Sem.'  : ''"
 									class="label label-info"></span> <b><span
 									th:text="${compartilhamentoDD} ? ${compartilhamentoDD.vagas} + ' ' + vagas : ''"
 									class="text-left"></span></b></td>
 
-								<td>
+								<td class="size-opcao-compartilhamento">
 									<div class="text-right">
 										<button type="button" class="btn btn-success btn-circle">
 											<i class="fa fa-search"></i>

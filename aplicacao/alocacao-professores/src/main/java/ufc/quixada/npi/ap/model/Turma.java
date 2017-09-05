@@ -66,17 +66,23 @@ public class Turma {
 	}	
 	
 	public enum Semestre {
-		PRIMEIRO("1º"), SEGUNDO("2º"), TERCEIRO("3°"), QUARTO("4°"), QUINTO("5°"), SEXTO("6°"),
-		SETIMO("7°"), OITAVO("8°"), NONO("9°"), DECIMO("10°"), DECIMOPRIMEIRO("11°"), DECIMOSEGUNDO("12°");
+		PRIMEIRO("1º", "1"), SEGUNDO("2º", "2"), TERCEIRO("3º", "3"), QUARTO("4º", "4"), QUINTO("5º", "5"), SEXTO("6º", "6"),
+		SETIMO("7º", "7"), OITAVO("8º", "8"), NONO("9º", "9"), DECIMO("10º", "10"), DECIMOPRIMEIRO("11º", "11"), DECIMOSEGUNDO("12º", "12");
 		
 		private String descricao;
+		private String numero;
 
-		Semestre(String descricao){
+		Semestre(String descricao, String numero){
 			this.descricao = descricao;
+			this.numero = numero;
 		}
 
 		public String getDescricao() {
 			return descricao;
+		}
+
+		public String getNumero() {
+			return numero;
 		}
 	}
 }
