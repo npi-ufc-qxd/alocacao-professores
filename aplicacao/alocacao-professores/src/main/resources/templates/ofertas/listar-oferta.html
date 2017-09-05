@@ -2,6 +2,7 @@
 <html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorator="base/base">
 
 <head>
@@ -34,58 +35,22 @@
 	<div id="ofertas" class="page-wrapper"></div>
 
 	<div class="row">
-		<div class="col-sm-12">
-			<div class="white-box">
-				<div class="table-responsive">
-					<div class="table-responsive">
-						<table id="myTable" class="table table-striped">
-							<thead>
-								<tr>
-									<th class="col-md-4">Disciplina</th>
-									<th class="col-md-1">Turno</th>
-									<th class="col-md-1">Vagas</th>
-									<th class="col-md-2">Professores</th>
-									<th class="col-md-3">Ações</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="oferta : ${ofertas}">
-									<td th:text="${oferta.disciplina.nome}"></td>
-									<td
-										th:text="${oferta.turno} ? ${oferta.turno} : 'Essa oferta não possui turno'"></td>
-									<td th:text="${oferta.vagas}"></td>
-									<td><span
-										th:if="${not #lists.isEmpty(oferta.professores)}"
-										th:each="a, iterStat : ${oferta.professores}"
-										th:text="!${iterStat.last} ? ${a.pessoa.nome} + ', ': ${a.pessoa.nome}"></span>
-									</td>
-									<td><a class="btn btn-success btn-circle popup-with-form"
-										href="#test-form"> <i class="fa fa-search"></i></a> <span
-										th:if="${oferta.periodo.status.name()} != 'CONSOLIDADO'">
-											<a class="btn-circle btn-warning waves-effect waves-light"
-											role="button" data-toggle="tooltip" data-placement="top"
-											title="Compartilhar"> <i class="fa fa-link"></i>
-										</a> <a th:href="@{/ofertas/{id}/editar(id=${oferta.id})}"
-											class="btn-circle btn-inverse waves-effect waves-light"
-											role="button" data-toggle="tooltip" data-placement="top"
-											title="Editar"> <i class="fa fa-pencil"></i>
-										</a> <a class="btn-circle btn-info waves-effect waves-light"
-											role="button" data-toggle="tooltip" data-placement="top"
-											title="Detalhes"> <i class="fa fa-pencil"></i>
-										</a> <a th:href="@{/ofertas/{id}/excluir(id=${oferta.id})}"
-											class="btn-circle btn-danger waves-effect waves-light sa-btn-excluir"
-											role="button" data-toggle="tooltip" data-placement="top"
-											title="Excluir"> <i class="fa fa-close"></i>
-										</a>
-									</span></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+     	<div class="col-sm-12">
+           <form class="form-inline" action="#">
+               <div class="form-group">
+                 <select id="select-curso" class="form-control" onchange="carregarOfertas()">
+                       <option
+                       th:each="curso : ${cursos}"
+                       th:text="${curso.nome}"
+                       th:value="${curso.id}"
+                       th:selected="${ curso.coordenador.id == #authentication.principal.id }">
+                       </option>
+                   </select>
+               </div>
+           </form>
+        </div>
+     </div>
+	<div id="tabela-fragment"></div>
 
 	<div class="modal fade" id="modal-importar-ofertas">
 		<div class="modal-dialog modal-lg" role="document">
@@ -180,7 +145,15 @@
 	<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/oferta/oferta.js}"></script>
-	<script type="text/javascript"></script>
+	<script type="text/javascript">
+		var url = '/ofertas/curso/' + $('#select-curso').val();
+	    $("#tabela-fragment").load(url);
+		
+		function carregarOfertas() {
+		    var url = '/ofertas/curso/' + $('#select-curso').val();
+		    $("#tabela-fragment").load(url);
+		}
+	</script>
 </section>
 
 </html>
