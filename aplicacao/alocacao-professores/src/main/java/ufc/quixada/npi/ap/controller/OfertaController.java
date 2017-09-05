@@ -24,11 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
+import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
+import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.OfertaService;
 import ufc.quixada.npi.ap.service.PeriodoService;
@@ -38,7 +40,7 @@ import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.OfertaValidator;
 
 @Controller
-@RequestMapping(path = "/ofertas")
+@RequestMapping(value = "/ofertas")
 public class OfertaController {
 
 	@Autowired
@@ -58,6 +60,9 @@ public class OfertaController {
 
 	@Autowired
 	private PeriodoService periodoService;
+	
+	@Autowired
+	private CursoService cursoService;
 
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas() {
@@ -68,6 +73,11 @@ public class OfertaController {
 	public List<Professor> todosProfessores() {
 		return professorService.findAllProfessores();
 	}
+	
+	@ModelAttribute("cursos")
+	public List<Curso> todosCursos() {
+		return cursoService.listar();
+	}
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public ModelAndView listarOfertas() {
@@ -75,6 +85,12 @@ public class OfertaController {
 		modelAndView.addObject("periodo", periodoService.periodoAtivo());
 		modelAndView.addObject("periodos", periodoService.periodosConsolidados());
 		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/curso/{idCurso}", method = RequestMethod.GET)
+	public @ResponseBody List<Oferta> listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), curso);
+		return ofertas;
 	}
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)

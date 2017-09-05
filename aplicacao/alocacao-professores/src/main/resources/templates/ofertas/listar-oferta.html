@@ -2,6 +2,7 @@
 <html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorator="base/base">
 
 <head>
@@ -30,6 +31,19 @@
 				class="fa fa-history" aria-hidden="true"></i> Importar</a>
 		</div>
 	</div>
+
+	<div class="row">
+     	<div class="col-sm-12">
+           <form class="form-inline" action="#">
+               <div class="form-group">
+                 <select id="visulizar-outras-ofertas" class="form-control" onchange="carregarOfertas()">
+                       <option th:each="curso : ${cursos}" th:text="${curso.nome}" th:value="${curso.id}" th:selected="${curso.coordenador.id == #authentication.principal.id}"></option>
+                   </select>
+               </div>
+           </form>
+        </div>
+     </div>
+
 
 	<div id="ofertas" class="page-wrapper"></div>
 
@@ -124,7 +138,6 @@
 
 <section layout:fragment="js">
 	<script th:src="@{/js/oferta/oferta.js}"></script>
-	<script type="text/javascript"></script>
 </section>
 
 </html>

@@ -6,6 +6,18 @@ $('#btn-modal-importar-ofertas').on('click', function (event) {
 	
 });
 
+$('#visulizar-outras-ofertas').on('change', function (event) {
+	$("#ofertas").empty();
+	$.get(_context + '/ofertas/curso/' + $('#visulizar-outras-ofertas').val(), function() {
+	})
+	.done(function(ofertas) {
+		console.log(ofertas)
+		if(ofertas.length > 0){
+			organizarOfertas(ofertas);
+		}
+	});
+});
+
 $('#btn-importar-ofertas').on('click', function (event) {
 	importarOfertas();
 });
@@ -220,7 +232,7 @@ function organizarOfertas(ofertas) {
 					idNewRow = 'rowPanel'+newRow+semestre;
 				}
 				
-				criarPanelsOferta(value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, newRow, idNewRow);
+				criarPanelsOferta(value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow);
 				existe = true;
 				newRow++;
 				
@@ -228,6 +240,45 @@ function organizarOfertas(ofertas) {
 		});
 		
 		criarInforme(semestre, existe);
+		
+		$(".sa-btn-excluir-oferta").on("click", function(event){
+			event.preventDefault();
+
+			var botaoExcluir = $(event.currentTarget);
+			var urlExcluir = botaoExcluir.attr("href");
+			
+			swal({
+				title: "Tem certeza?",
+				text: "Você não poderá desfazer essa operação posteriormente!",
+				type: "warning",   
+				showCancelButton: true,
+				cancelButtonText: "Cancelar",
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Sim, desejo excluir!",
+				closeOnConfirm: false
+			}, function(isConfirm){
+				if(isConfirm){
+					var response = $.ajax({
+						url: urlExcluir,
+						type: 'GET',
+						success: function(result){
+							if (result === true){
+								successSwal();
+							}
+							else{
+								errorSwal();
+							}
+							
+						},
+						error: function(status, error){
+							errorSwal();
+						}
+					});
+				}
+			});
+		});
+		
+		
 	}
 }
 
@@ -275,7 +326,7 @@ function criarRowsPanel(panel, semestre, newRow, idNewRow) {
 
 
 //Função que cria o panel para cada oferta
-function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, newRow, idNewRow){
+function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow){
 	//Elementos html criados via Javascript
 	var divCol = document.createElement('div');
 	divCol.setAttribute('class', 'col-lg-4 col-md-4 col-sm-4 col-xs-12 panel-margin');
@@ -318,14 +369,15 @@ function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno
 	divButton.setAttribute('class', 'pull-right');
 	
 	var buttonEditar = document.createElement('a');
-	buttonEditar.href = '#';
+	buttonEditar.href = _context + '/ofertas/'+ idOferta + '/editar';
+	
 	buttonEditar.appendChild(document.createTextNode("Editar"));
 	buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
 	
 	var buttonExcluir = document.createElement('a');
-	buttonExcluir.href = '#';
+	buttonExcluir.href = _context + '/ofertas/'+ idOferta + '/excluir';
 	buttonExcluir.appendChild(document.createTextNode("Excluir"));
-	buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes');
+	buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
 	
 	//Inserindo elementos filhos nos elementos pai
 	pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
@@ -356,7 +408,7 @@ function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno
 	
 	
 	divCol.appendChild(divPanel);
-	criarRowsPanel(divCol, semestre, newRow, idNewRow);
+	criarRowsPanel(divCol, semestre, newRow, idNewRow);	
 }
 
 //Função que cria o panel de informe quando não há nenhuma oferta para determinado semestre
@@ -558,42 +610,6 @@ function adicionarResultado(id, name, coluna1, coluna2, nome, classe, index){
 	
 }
 
-$(".sa-btn-excluir").on("click", function(event){
-	event.preventDefault();
-
-	var botaoExcluir = $(event.currentTarget);
-	var urlExcluir = botaoExcluir.attr("href");
-	
-	swal({
-		title: "Tem certeza?",
-		text: "Você não poderá desfazer essa operação posteriormente!",
-		type: "warning",   
-		showCancelButton: true,
-		cancelButtonText: "Cancelar",
-		confirmButtonColor: "#DD6B55",
-		confirmButtonText: "Sim, desejo excluir!",
-		closeOnConfirm: false
-	}, function(isConfirm){
-		if(isConfirm){
-			var response = $.ajax({
-				url: urlExcluir,
-				type: 'GET',
-				success: function(result){
-					if (result === true){
-						successSwal();
-					}
-					else{
-						errorSwal();
-					}
-					
-				},
-				error: function(status, error){
-					errorSwal();
-				}
-			});
-		}
-	});
-});
 
 function importacaoRealizada(importada, substituir) {
 	if (importada && substituir) {
