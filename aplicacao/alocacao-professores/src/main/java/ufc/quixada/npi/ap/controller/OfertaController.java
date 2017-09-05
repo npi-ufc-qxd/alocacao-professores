@@ -82,16 +82,15 @@ public class OfertaController {
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public ModelAndView listarOfertas() {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
+		modelAndView.addObject("periodo", periodoService.periodoAtivo());
 		modelAndView.addObject("periodos", periodoService.periodosConsolidados());
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/curso/{idCurso}", method = RequestMethod.GET)
-	public ModelAndView listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
-		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR_TABELA_FRAGMENT);
+	public @ResponseBody List<Oferta> listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
 		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), curso);
-		modelAndView.addObject("ofertas", ofertas);
-		return modelAndView;
+		return ofertas;
 	}
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)

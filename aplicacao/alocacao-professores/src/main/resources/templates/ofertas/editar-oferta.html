@@ -18,15 +18,6 @@
 			<div class="col-sm-12">
 				<div class="white-box">
 					<form class = "form-horizontal" th:action="@{/ofertas/{id}/editar(id=${oferta.id})}" method="POST" th:object="${oferta}">
-						<div class="form-group" th:classappend="${#fields.hasErrors('professores')} ? has-error">
-							<label for = "professores" class="control-label m-l-10">Professores</label>
-							<div class="col-md-12">
-								<select id="professores" th:field="*{professores}" class = "form-control select2 select2-multiple" multiple="multiple" data-placeholder = "Selecione os professores"  required="required">
-									<option th:each = "professor : ${professores}" th:value = "${{professor}}" th:text = "${professor.nome}"></option>
-								</select>
-								<span th:if="${#fields.hasErrors('professores')}" th:errors="*{professores}" class = "help-block with-errors"></span>
-							</div>
-						</div>
 						<div class="form-group" th:classappend="${#fields.hasErrors('turma')} ? has-error">
 							<label for = "turma" class="control-label m-l-10">Turma</label>
 							<div class="col-md-12">
@@ -64,6 +55,15 @@
 								<span th:if = "${#fields.hasErrors('vagas')}" th:errors = "*{vagas}" class = "help-block with-errors"></span>
 							</div>
 				 		</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('professores')} ? has-error">
+							<label for = "professores" class="control-label m-l-10">Professores sugeridos</label>
+							<div class="col-md-12">
+								<select id="professores" th:field="*{professores}" class = "form-control select2 select2-multiple" multiple="multiple" data-placeholder = "Selecione os professores"  required="required">
+									<option th:each = "professor : ${professores}" th:value = "${{professor}}" th:text = "${professor.pessoa.nome}"></option>
+								</select>
+								<span th:if="${#fields.hasErrors('professores')}" th:errors="*{professores}" class = "help-block with-errors"></span>
+							</div>
+						</div>
 						<div class = "form-group" th:classappend= "${#fields.hasErrors('observacao')}? has-error">
 							<label class = "control-label m-l-10" for = "observacao">Observação</label>
 							<div class = "col-md-12">

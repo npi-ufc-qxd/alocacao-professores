@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-1').empty();
 	$('#resultado-ofertas-2').empty();
@@ -6,6 +5,19 @@ $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#modal-importar-ofertas').modal('show');
 	
 });
+
+$('#visulizar-outras-ofertas').on('change', function (event) {
+	$("#ofertas").empty();
+	$.get(_context + '/ofertas/curso/' + $('#visulizar-outras-ofertas').val(), function() {
+	})
+	.done(function(ofertas) {
+		console.log(ofertas)
+		if(ofertas.length > 0){
+			organizarOfertas(ofertas);
+		}
+	});
+});
+
 
 $('#btn-importar-ofertas').on('click', function (event) {
 	importarOfertas();
@@ -193,7 +205,7 @@ function errorSwal(){
 
 //Função que faz a requisição da lista de ofertas quando a página é carregada
 $(window).load(function() {
-	$.get(_context + "/alocacao-professores/ofertas/listar", function() {
+	$.get(_context + "/ofertas/listar", function() {
 	})
 	.done(function(ofertas) {
 		console.log(ofertas)

@@ -18,7 +18,7 @@
 <section layout:fragment="conteudo">
 	<div class="row bg-title">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title">Ofertas</h4>
+			<h4 class="page-title" th:inline="text">Ofertas [[${periodo.ano}]].[[${periodo.semestre.numero}]]</h4>
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<a th:href="@{/ofertas/cadastrar}"
@@ -32,25 +32,20 @@
 		</div>
 	</div>
 
-	<div id="ofertas" class="page-wrapper"></div>
-
 	<div class="row">
      	<div class="col-sm-12">
            <form class="form-inline" action="#">
                <div class="form-group">
-                 <select id="select-curso" class="form-control" onchange="carregarOfertas()">
-                       <option
-                       th:each="curso : ${cursos}"
-                       th:text="${curso.nome}"
-                       th:value="${curso.id}"
-                       th:selected="${ curso.coordenador.id == #authentication.principal.id }">
-                       </option>
+                 <select id="visulizar-outras-ofertas" class="form-control" onchange="carregarOfertas()">
+                       <option th:each="curso : ${cursos}" th:text="${curso.nome}" th:value="${curso.id}"></option>
                    </select>
                </div>
            </form>
         </div>
      </div>
-	<div id="tabela-fragment"></div>
+
+
+	<div id="ofertas" class="page-wrapper"></div>
 
 	<div class="modal fade" id="modal-importar-ofertas">
 		<div class="modal-dialog modal-lg" role="document">
@@ -142,18 +137,7 @@
 </section>
 
 <section layout:fragment="js">
-	<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
-	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/oferta/oferta.js}"></script>
-	<script type="text/javascript">
-		var url = '/ofertas/curso/' + $('#select-curso').val();
-	    $("#tabela-fragment").load(url);
-		
-		function carregarOfertas() {
-		    var url = '/ofertas/curso/' + $('#select-curso').val();
-		    $("#tabela-fragment").load(url);
-		}
-	</script>
 </section>
 
 </html>

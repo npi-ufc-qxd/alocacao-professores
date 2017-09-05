@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
+import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
@@ -38,6 +39,9 @@ public class CompartilhamentoController {
 	
 	@Autowired
 	private TurmaService turmaService;
+
+	@Autowired
+	private PeriodoService periodoService;
 	
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas(){
@@ -46,6 +50,7 @@ public class CompartilhamentoController {
 	
 	@RequestMapping(path = {"", "/"}, method = RequestMethod.GET)
 	public String listarCompartilhamentos(Model model){
+		model.addAttribute("periodo", periodoService.periodoAtivo());
 		model.addAttribute("ofertas", compartilhamentoService.listarCompartilhamentoOfertas());
 		return COMPARTILHAMENTO_LISTAR;
 	}

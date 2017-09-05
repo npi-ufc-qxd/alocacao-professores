@@ -40,7 +40,7 @@
                   <td class="text-center" th:text="${periodo.status}"></td>
                   <td class="text-center" th:text="${periodo.ativo} ? 'Sim' : 'Não' "></td>                                                                                       
                   <td class="text-center active">
-                    <a data-toggle="tooltip" data-placement="top" title="Detalhes" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
+                    <a data-toggle="tooltip" data-placement="top" title="Detalhes" th:href="@{/periodos/{id}/detalhar(id=${periodo.id})}" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
                     	<i class="fa fa-eye "></i>  
                     </a> 
                     <a data-toggle="tooltip" data-placement="top" title="Editar" th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn  btn-warning btn-xs btn-circle">
@@ -48,10 +48,10 @@
                     </a>
                                                           
                     <a data-toggle="tooltip" data-placement="top" title="Excluir" th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-circle btn-xs waves-effect waves-light sa-btn-excluir">
-                    	<i class="fa fa-close "></i>  
+                    	<i class="fa fa-close"></i>  
                     </a>
                                         
-                  </td>  
+                  </td>
                                                                                					
                 </tr>                                   
 

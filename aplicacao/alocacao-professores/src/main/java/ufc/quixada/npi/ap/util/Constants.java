@@ -32,7 +32,6 @@ public class Constants {
 	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
 	public static final String OFERTA_REDIRECT_CADASTRO = "redirect:/ofertas/cadastrar";
 	public static final String OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
-	public static final String OFERTA_LISTAR_TABELA_FRAGMENT = "/ofertas/listar-oferta-tabela :: tabela";
 	
 	// Compartilhamento
 	public static final String COMPARTILHAMENTO_CADASTRAR = "compartilhamento/cadastrar-compartilhamento";
