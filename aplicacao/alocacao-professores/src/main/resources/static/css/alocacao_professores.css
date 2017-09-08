@@ -24,6 +24,14 @@
 	font-weight: 400;
 }
 
-.size-opcao-compartilhamento {
-	width: 132px;
+.width-opcao-compartilhamento {
+	width: 140px;
+}
+
+.label-detalhes {
+    font-weight: bold;
+}
+
+.visulizar-outras-ofertas {
+	margin-left: -90px;
 }

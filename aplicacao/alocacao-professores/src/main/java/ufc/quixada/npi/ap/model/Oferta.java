@@ -152,5 +152,15 @@ public class Oferta {
 
 		return null;
 	}
-	
+
+	public int getTotalVagas() {
+		int totalVagas = this.vagas;
+
+		for (Compartilhamento compartilhamento : getCompartilhamentos()) {
+			totalVagas += compartilhamento.getVagas();
+		}
+
+		return totalVagas;
+	}
+
 }

@@ -2,6 +2,7 @@
 <html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorator="base/base">
 
 <head>
@@ -15,20 +16,26 @@
 </head>
 
 <section layout:fragment="conteudo">
+	<input type="hidden" name="cursoAtual" th:value="${cursoAtual.sigla}"/>
+	
+	
 	<div class="row bg-title">
-		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
 			<h4 class="page-title" th:inline="text">Ofertas [[${periodo.ano}]].[[${periodo.semestre.numero}]]</h4>
 		</div>
-		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<select id="visulizar-outras-ofertas" class="form-control visulizar-outras-ofertas" onchange="carregarOfertas()">
+				<option th:each="curso : ${cursos}" th:text="${curso.nome}" th:value="${curso.id}" th:selected="${curso.coordenador.id == #authentication.principal.id}"></option>
+			</select>
+		</div>
+
 			<a th:href="@{/ofertas/cadastrar}"
-				class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+				class="btn btn-success pull-right m-l-10 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
 				class="fa fa-plus" aria-hidden="true"></i> Nova</a>
-		</div>
-		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<a id="btn-modal-importar-ofertas"
-				class="btn btn-info pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+				class="btn btn-info pull-right m-l-10 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
 				class="fa fa-history" aria-hidden="true"></i> Importar</a>
-		</div>
 	</div>
 
 	<div id="ofertas" class="page-wrapper"></div>
@@ -124,7 +131,6 @@
 
 <section layout:fragment="js">
 	<script th:src="@{/js/oferta/oferta.js}"></script>
-	<script type="text/javascript"></script>
 </section>
 
 </html>
