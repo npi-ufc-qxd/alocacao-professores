@@ -24,12 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
+import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
+import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.OfertaService;
@@ -37,6 +39,7 @@ import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.ProfessorService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 import ufc.quixada.npi.ap.validation.OfertaValidator;
 
 @Controller
@@ -63,6 +66,13 @@ public class OfertaController {
 	
 	@Autowired
 	private CursoService cursoService;
+	
+	@Autowired
+	private CompartilhamentoService compartilhamentoService;
+
+	@Autowired
+	private CompartilhamentoValidator compartilhamentoValidator;
+	
 
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas() {
@@ -80,10 +90,13 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
-	public ModelAndView listarOfertas() {
+	public ModelAndView listarOfertasIndex(Authentication auth) {
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
 		modelAndView.addObject("periodo", periodoService.periodoAtivo());
 		modelAndView.addObject("periodos", periodoService.periodosConsolidados());
+		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+
 		return modelAndView;
 	}
 	
@@ -208,5 +221,46 @@ public class OfertaController {
 		ofertaService.substituirOferta(ofertas);
 		return true;
 	}
+	
+	
+	@RequestMapping(path = {"/{id}/solicitar-compartilhamento"}, method = RequestMethod.GET)
+	public ModelAndView cadastrarCompartilhamento(@PathVariable("id") Integer id, @ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
+		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+
+		modelAndView.addObject("oferta", ofertaService.visualizarOferta(id));
+		modelAndView.addObject("turmas", cursoService.buscarPorCoordenador(pessoa).getTurmas());
+
+		return modelAndView;
+	}
+
+	@RequestMapping(path = {"/{id}/solicitar-compartilhamento"}, method = RequestMethod.POST)
+	public ModelAndView cadastrarCompartilhamento(@PathVariable("id") Integer id, @ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth){
+		compartilhamentoValidator.validate(compartilhamento, bindingResult);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+
+		modelAndView.addObject("oferta", ofertaService.visualizarOferta(id));
+		modelAndView.addObject("turmas", cursoService.buscarPorCoordenador(pessoa).getTurmas());
+
+		
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
+			return modelAndView;
+		}
+
+		try{
+			compartilhamentoService.salvar(compartilhamento);
+		} catch(Exception e){
+			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
+			return modelAndView;
+		}
+		
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		
+		return modelAndView;
+	}
+
 
 }

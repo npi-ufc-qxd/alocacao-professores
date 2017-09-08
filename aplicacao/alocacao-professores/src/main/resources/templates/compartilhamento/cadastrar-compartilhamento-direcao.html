@@ -11,30 +11,30 @@
 	
 	<section layout:fragment="conteudo">
 		<div class="row bg-title">
-			<h3 class="box-title m-b-0">Solicitar Compartilhamento</h3>
+			<h3 class="box-title m-b-0">Cadastrar Compartilhamento</h3>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
 				<div class="white-box">
 
-		<form class = "form-horizontal" th:action = "@{/ofertas/{id}/solicitar-compartilhamento(id=${oferta.id})}" th:object = "${compartilhamento}" method = "POST">
-			<div class = "form-group">
-				<label for="oferta" class ="control-label">Oferta</label><br/>
-				<label for="oferta" class ="control-label label-detalhes" th:inline="text">[[${oferta.disciplina.codigo}]] - [[${oferta.disciplina.nome}]] - [[${oferta.turma.curso.nome}]] - [[${oferta.periodo.ano}]].[[${oferta.periodo.semestre.numero}]]</label>
-			</div>
-			
-			<input type="hidden" name="oferta.id" th:value="${oferta.id}"/>
-
+		<form class = "form-horizontal" th:action = "@{/compartilhamentos/cadastrar}" th:object = "${compartilhamento}" method = "POST">
 			<div class = "form-group" th:classappend= "${#fields.hasErrors('turma.id')}? has-error">
 				<label for="turma" class="control-label">Turma</label>
 				<select th:field= "*{turma.id}" id="turma" class="form-control select2" required="required">
 					<option value = "">Selecione uma turma</option>
-					<option th:each = "turma : ${turmas}" th:value = "${turma.id}" th:text = "${turma.curso.nome+' - '+turma.semestre+' Semestre'}"></option>
+					<option th:each = "turma : ${turmas}" th:value = "${turma.id}" th:text = "${turma.curso.nome+' - '+turma.semestre+'º Semestre'}"></option>
 				</select>
 				<span th:if = "${#fields.hasErrors('turma.id')}" th:errors = "*{turma.id}" class = "help-block with-errors"></span>
 			</div>
-			
+			<div class = "form-group" th:classappend= "${#fields.hasErrors('oferta.id')}? has-error">
+				<label for="oferta" class = "control-label">Oferta</label>
+				<select id="oferta" th:field="*{oferta.id}" class="form-control select2" required="required">
+					<option value = "">Selecione uma oferta</option>
+					<option th:value = "1">QXD108 	INTRODUÇÃO À CIÊNCIA DA COMPUTAÇÃO - Sistemas de Informação - 2017.1</option>
+				</select> 
+				<span th:if = "${#fields.hasErrors('oferta.id')}" th:errors = "*{oferta.id}" class = "help-block with-errors"></span>
+			</div>
 			<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
 				<label class = "control-label" for = "vagas">Número de Vagas</label>
 				<input type = "number" min = "1" id = "vagas" th:field = "*{vagas}" class = "form-control" required="required"/>

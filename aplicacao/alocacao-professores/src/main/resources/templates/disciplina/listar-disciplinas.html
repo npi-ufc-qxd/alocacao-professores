@@ -29,6 +29,7 @@
 						<table id="myTable" class="table table-striped">
 							<thead>
 								<tr>
+									<th>Código</th>
 									<th>Disciplina</th>
 									<th>Créditos</th>
 									<th>Carga horária Teórica</th>
@@ -38,8 +39,8 @@
 							</thead>
 							<tbody>
 								<tr th:each="disciplina : ${disciplinas}">
-									<td th:inline="text"><b>[[${disciplina.codigo}]]</b> -
-										[[${disciplina.nome}]]</td>
+									<td th:inline="text"><b>[[${disciplina.codigo}]]</b></td>
+									<td th:inline="text">[[${disciplina.nome}]]</td>
 									<td th:text="${disciplina.creditos}"></td>
 									<td th:text="${disciplina.cargaHorariaTeorica}"></td>
 									<td th:text="${disciplina.cargaHorariaPratica}"></td>
