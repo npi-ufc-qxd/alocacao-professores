@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+
+<link rel="icon" type="image/png" sizes="16x16"
+	th:href="@{/plugins/images/favicon.png}"></link>
+<title>Listar Professores | Alocação Professores</title>
+
+<section layout:fragment="conteudo">
+	<div class="row bg-title">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h4 class="page-title">Professores</h4>
+		</div>
+		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+			<a th:href="@{/atualizar-professores}"
+				class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+				class="fa fa-plus" aria-hidden="true"></i> Atualizar Professores</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="white-box">
+				<h3 class="box-title m-b-0">Lista de Professores</h3>
+				<div class="table-responsive">
+					<div class="table-responsive">
+						<table id="myTable" class="table table-striped">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Apelido</th>
+									<th>E-Mail</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="professor : ${professores}">
+									<td th:text="${professor.pessoa.nome}"></td>
+									<td th:text="${professor.apelido}"></td>
+									<td th:text="${professor.pessoa.email}"></td>
+									<td>
+										<a
+										class="btn btn-inverse btn-circle waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title="Editar"><i
+										class="fa fa-pencil"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+<section layout:fragment="js">
+	<script th:src="@{/js/ordenacao-tabela.js}"></script>
+</section>
+</html>
