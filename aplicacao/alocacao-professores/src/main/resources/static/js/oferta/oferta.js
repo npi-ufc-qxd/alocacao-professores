@@ -1,5 +1,10 @@
-var getUrl = window.location;
-var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+//var getUrl = window.location;
+//var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+var _ctx = $("meta[name='ctx']").attr("content");
+var protocol = _ctx.split('//')[0];
+var host = _ctx.split('/')[2];
+var baseUrl = protocol + '//' + host;
 
 var siglaCursoAtual = $('input[name=cursoAtual]').val();
 
