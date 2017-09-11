@@ -8,6 +8,9 @@ public class Constants {
 	public static final String LDAP_USER = "ldap.user";
 	public static final String LDAP_PASSWORD = "ldap.password";
 	public static final String LDAP_OU = "ldap.ou";
+	
+	// Afiliações
+	public static final String AFFILIATION_DOCENTE = "DOCENTE";
 
 	// Permissões
 	public static final String PERMISSAO_COORDENACAO = "hasAuthority('COORDENACAO')";

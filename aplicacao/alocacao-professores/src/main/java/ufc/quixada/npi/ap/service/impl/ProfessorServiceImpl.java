@@ -24,5 +24,14 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<Professor> findAllProfessores() {
 		return professorRepository.findAll();
 	}
-
+	
+	@Override
+	public Professor findProfessorByPessoa_cpf(String cpf) {
+		return professorRepository.findByPessoa_cpf(cpf);
+	}
+	
+	@Override
+	public Professor salvar(Professor professor) {
+		return professorRepository.save(professor);
+	}
 }

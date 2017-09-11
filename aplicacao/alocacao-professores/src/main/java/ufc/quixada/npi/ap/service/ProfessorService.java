@@ -8,6 +8,9 @@ public interface ProfessorService {
 	public Professor findProfessor(Integer id);
 
 	public List<Professor> findAllProfessores();
-
+	
+	public Professor findProfessorByPessoa_cpf(String cpf);
+	
+	public Professor salvar(Professor professor);
 }
 
