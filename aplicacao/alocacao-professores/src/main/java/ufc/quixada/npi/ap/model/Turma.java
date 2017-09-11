@@ -1,7 +1,5 @@
 package ufc.quixada.npi.ap.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,9 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Turma {
@@ -27,10 +22,6 @@ public class Turma {
 	
 	@Enumerated(EnumType.STRING)
 	private Semestre semestre;
-	
-	@OneToMany(mappedBy = "turma")
-	@JsonIgnore
-	private List<Compartilhamento> compartilhamentos;
 
 	
 	public Integer getId() {
@@ -56,14 +47,6 @@ public class Turma {
 	public void setSemestre(Semestre semestre) {
 		this.semestre = semestre;
 	}
-
-	public List<Compartilhamento> getCompartilhamentos() {
-		return compartilhamentos;
-	}
-
-	public void setCompartilhamentos(List<Compartilhamento> compartilhamentos) {
-		this.compartilhamentos = compartilhamentos;
-	}	
 	
 	public enum Semestre {
 		PRIMEIRO("1º", "1"), SEGUNDO("2º", "2"), TERCEIRO("3º", "3"), QUARTO("4º", "4"), QUINTO("5º", "5"), SEXTO("6º", "6"),
