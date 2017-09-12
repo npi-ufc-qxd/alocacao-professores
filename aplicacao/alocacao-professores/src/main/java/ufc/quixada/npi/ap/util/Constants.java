@@ -8,6 +8,9 @@ public class Constants {
 	public static final String LDAP_USER = "ldap.user";
 	public static final String LDAP_PASSWORD = "ldap.password";
 	public static final String LDAP_OU = "ldap.ou";
+	
+	// Afiliações
+	public static final String AFFILIATION_DOCENTE = "DOCENTE";
 
 	// Permissões
 	public static final String PERMISSAO_COORDENACAO = "hasAuthority('COORDENACAO')";
@@ -64,6 +67,7 @@ public class Constants {
 	
 	// Professor
 	public static final String PROFESSOR_LISTAR = "professor/listar-professores";
+	public static final String PROFESSOR_REDIRECT_LISTAR = "redirect:/professores";
 	
 	//Exceptions
 	public static final String PERIODO_INVALIDO = "Não há um período válido disponível";

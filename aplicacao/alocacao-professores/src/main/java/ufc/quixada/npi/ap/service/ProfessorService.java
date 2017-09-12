@@ -8,6 +8,7 @@ public interface ProfessorService {
 	public Professor findProfessor(Integer id);
 
 	public List<Professor> findAllProfessores();
-
+	
+	public Professor salvar(Professor professor);
 }
 
