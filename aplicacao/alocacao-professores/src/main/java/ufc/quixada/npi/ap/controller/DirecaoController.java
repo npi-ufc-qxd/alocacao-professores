@@ -43,7 +43,7 @@ public class DirecaoController {
 		List<Usuario> usuarios = usuarioService.getByAffiliation(Constants.AFFILIATION_DOCENTE);
 		
 		for (Usuario usuario : usuarios){
-			Professor professor = professorService.findProfessorByPessoa_cpf(usuario.getCpf());
+			Professor professor = pessoaService.findProfessor(usuario.getCpf());
 			
 			if (professor == null){
 				Pessoa pessoa = new Pessoa();
@@ -57,7 +57,7 @@ public class DirecaoController {
 				professor = new Professor();
 				professor.setPessoa(pessoa);
 				professor.setApelido(usuario.getNome());
-								
+				
 				professorService.salvar(professor);
 			}
 			
