@@ -79,6 +79,11 @@ public class OfertaServiceImpl implements OfertaService {
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Curso curso) {
 		return ofertaRepository.findByPeriodoAndCurso(periodo, curso);
 	}
+	
+	@Override
+	public List<Oferta> buscarOfertasCompartilhadasPorPeriodoAndCurso(Periodo periodo, Curso curso) {
+		return ofertaRepository.findOfertasCompartilhadasByPeriodoAndCurso(periodo, curso);
+	}
 
 	@Override
 	public Map<String, Object> importarOfertas(List<Integer> ofertas) {
