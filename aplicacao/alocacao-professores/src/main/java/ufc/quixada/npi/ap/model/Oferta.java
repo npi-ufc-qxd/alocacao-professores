@@ -24,10 +24,15 @@ public class Oferta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private int vagas;
+	private Integer vagas;
+	
+	private boolean mesmoDia;
+	
+	private Integer aulasEmLaboratorio;
+	
 	
 	public enum Turno {
-		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite"), MESMO_DIA("Mesmo dia");
+		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite");
 
 		private String descricao;
 
@@ -39,6 +44,21 @@ public class Oferta {
 			return descricao;
 		}
 	}
+	
+	public enum HorarioInicio{
+		AB("AB"),CD("CD");
+		
+		private String descricao;
+		
+		HorarioInicio(String descricao){
+			this.descricao = descricao;
+		}
+		
+		public String getDescricao(){
+			return descricao;
+		}
+	}
+	
 
 	private String observacao;
 
@@ -56,6 +76,9 @@ public class Oferta {
 
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
+	
+	@Enumerated(EnumType.STRING)
+	private HorarioInicio horarioInicio;
 
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
@@ -73,11 +96,11 @@ public class Oferta {
 		this.id = id;
 	}
 
-	public int getVagas() {
+	public Integer getVagas() {
 		return vagas;
 	}
 
-	public void setVagas(int vagas) {
+	public void setVagas(Integer vagas) {
 		this.vagas = vagas;
 	}
 
@@ -119,6 +142,30 @@ public class Oferta {
 
 	public void setTurno(Turno turno) {
 		this.turno = turno;
+	}
+
+	public boolean isMesmoDia() {
+		return mesmoDia;
+	}
+
+	public void setMesmoDia(boolean mesmoDia) {
+		this.mesmoDia = mesmoDia;
+	}
+
+	public Integer getAulasEmLaboratorio() {
+		return aulasEmLaboratorio;
+	}
+
+	public void setAulasEmLaboratorio(Integer aulasEmLaboratorio) {
+		this.aulasEmLaboratorio = aulasEmLaboratorio;
+	}
+
+	public HorarioInicio getHorarioInicio() {
+		return horarioInicio;
+	}
+
+	public void setHorarioInicio(HorarioInicio horarioInicio) {
+		this.horarioInicio = horarioInicio;
 	}
 
 	public List<Professor> getProfessores() {
