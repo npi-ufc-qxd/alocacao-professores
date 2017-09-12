@@ -231,13 +231,14 @@ function organizarOfertas(ofertas) {
 	for(var i = 0; i <= 9; i++) {
 		var semestre = semestres[i];
 		var numberSemestre = i+1;
-		criarEstrutura(semestre, ofertas[0].turma.curso.sigla);
+		criarEstrutura(semestre, numberSemestre, ofertas[0].turma.curso.sigla);
 		var existe = false;
 		var newRow = 0;
 		var idNewRow = '';
 		
 		$.each(ofertas, function(key, value) {
 			var professores = listarProfessoresOferta(value.professores);
+			console.log(value.turma.semestre);
 			if(value.turma.semestre == semestre) {
 				if(newRow%4 === 0) {
 					idNewRow = 'rowPanel'+newRow+semestre;
@@ -295,7 +296,7 @@ function organizarOfertas(ofertas) {
 
 
 //Função que cria a estrtura por semestre
-function criarEstrutura(semestre, sigla) {
+function criarEstrutura(semestre, numberSemestre, sigla) {
 	//var divContainer = document.createElement('div');
 	//divContainer.setAttribute('class', 'container');
 	
@@ -307,8 +308,9 @@ function criarEstrutura(semestre, sigla) {
 	var div = document.createElement('div');
 	div.setAttribute('class', 'col-md-12');
 	var h5 = document.createElement('h5');
+	h5.setAttribute('style', 'text-align: center');
 	var b = document.createElement('b');
-	b.appendChild(document.createTextNode(semestre));
+	b.appendChild(document.createTextNode(sigla+' - '+numberSemestre));
 	var hr = document.createElement('hr');
 
 	h5.appendChild(b);
