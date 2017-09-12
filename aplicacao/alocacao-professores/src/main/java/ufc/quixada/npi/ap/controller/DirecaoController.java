@@ -38,7 +38,7 @@ public class DirecaoController {
 	
 	@RequestMapping(value = "/atualizar-professores", method = RequestMethod.GET)
 	public ModelAndView atualizarProfessores(){
-		ModelAndView modelAndView = new ModelAndView("redirect:/ofertas/");
+		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_REDIRECT_LISTAR);
 		
 		List<Usuario> usuarios = usuarioService.getByAffiliation(Constants.AFFILIATION_DOCENTE);
 		
@@ -62,7 +62,6 @@ public class DirecaoController {
 			}
 			
 		}
-		
 		
 		return modelAndView;
 	}
