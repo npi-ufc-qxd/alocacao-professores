@@ -21,4 +21,7 @@ public interface OfertaRepository extends JpaRepository<Oferta, Integer> {
 	@Query("SELECT o FROM Oferta AS o WHERE o.periodo = :periodo AND o.turma.curso = :curso")
 	List<Oferta> findByPeriodoAndCurso(@Param("periodo") Periodo periodo, @Param("curso") Curso curso);
 	
+	@Query("SELECT o FROM Oferta AS o, Compartilhamento AS c WHERE o.id = c.oferta.id AND o.periodo = :periodo AND c.turma.curso = :curso")
+	List<Oferta> findOfertasCompartilhadasByPeriodoAndCurso(@Param("periodo") Periodo periodo, @Param("curso") Curso curso);
+	
 }
