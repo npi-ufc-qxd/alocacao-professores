@@ -65,6 +65,9 @@ public class Constants {
 	public static final String EMPILHAMENTO_DETALHAR = "empilhamento/detalhar-empilhamento";
 	public static final String EMPILHAMENTO_REDIRECT_LISTAR = "redirect:/empilhamentos";
 	
+	// Professor
+	public static final String PROFESSOR_LISTAR = "professor/listar-professores";
+	
 	//Exceptions
 	public static final String PERIODO_INVALIDO = "Não há um período válido disponível";
 

@@ -28,6 +28,14 @@ public class DirecaoController {
 	@Autowired
 	private ProfessorService professorService;
 	
+	@RequestMapping(value = "/professores", method = RequestMethod.GET)
+	public ModelAndView listarProfessores() {
+		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_LISTAR);
+		List<Professor> professores = professorService.findAllProfessores();
+		modelAndView.addObject("professores", professores);
+		return modelAndView;
+	}
+	
 	@RequestMapping(value = "/atualizar-professores", method = RequestMethod.GET)
 	public ModelAndView atualizarProfessores(){
 		ModelAndView modelAndView = new ModelAndView("redirect:/ofertas/");
