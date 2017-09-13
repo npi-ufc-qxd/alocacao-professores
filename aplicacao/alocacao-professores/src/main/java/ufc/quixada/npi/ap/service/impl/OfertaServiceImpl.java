@@ -137,15 +137,14 @@ public class OfertaServiceImpl implements OfertaService {
 		oferta.setTurno(o.getTurno());
 		oferta.setVagas(o.getVagas());
 		oferta.setObservacao(o.getObservacao());
-		oferta.setProfessores(o.getProfessores());
 
-//		if (!o.getProfessores().isEmpty()) {
-//			List<Professor> professores = new ArrayList<>();
-//			for (Professor professor : o.getProfessores()) {
-//				professores.add(professor);
-//			}
-//			oferta.setProfessores(professores);
-//		}
+		if (!o.getProfessores().isEmpty()) {
+			List<Professor> professores = new ArrayList<>();
+			for (Professor professor : o.getProfessores()) {
+				professores.add(professor);
+			}
+			oferta.setProfessores(professores);
+		}
 		
 		return oferta;
 	}
