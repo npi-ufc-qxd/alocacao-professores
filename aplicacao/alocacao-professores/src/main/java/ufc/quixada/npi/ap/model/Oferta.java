@@ -30,6 +30,8 @@ public class Oferta {
 	
 	private Integer aulasEmLaboratorio;
 	
+	private Integer numeroProfessores;
+	
 	
 	public enum Turno {
 		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite");
@@ -167,7 +169,16 @@ public class Oferta {
 	public void setHorarioInicio(HorarioInicio horarioInicio) {
 		this.horarioInicio = horarioInicio;
 	}
+	
+	public Integer getNumeroProfessores() {
+		return numeroProfessores;
+	}
 
+	public void setNumeroProfessores(Integer numeroProfessores) {
+		this.numeroProfessores = numeroProfessores;
+	}
+	
+	
 	public List<Professor> getProfessores() {
 		if (null == this.professores) {
 			this.professores = new ArrayList<>();
