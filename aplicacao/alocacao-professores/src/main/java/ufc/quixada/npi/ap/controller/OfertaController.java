@@ -108,9 +108,16 @@ public class OfertaController {
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public @ResponseBody List<Oferta> listarOfertas(Authentication auth) {
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), pessoa);
-		return ofertas;
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso cursoCoordenador = cursoService.buscarPorCoordenador(coordenador);
+		Periodo periodoAtivo = periodoService.periodoAtivo();
+		
+		List<Oferta> ofertasCurso = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, coordenador);
+		List<Oferta> ofertasCompartilhadas = ofertaService.buscarOfertasCompartilhadasPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
+		
+		ofertasCurso.addAll(ofertasCompartilhadas);
+		
+		return ofertasCurso;
 	}	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)

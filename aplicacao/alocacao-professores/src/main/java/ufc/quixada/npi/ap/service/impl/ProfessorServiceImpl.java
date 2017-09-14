@@ -24,5 +24,9 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<Professor> findAllProfessores() {
 		return professorRepository.findAll();
 	}
-
+	
+	@Override
+	public Professor salvar(Professor professor) {
+		return professorRepository.save(professor);
+	}
 }

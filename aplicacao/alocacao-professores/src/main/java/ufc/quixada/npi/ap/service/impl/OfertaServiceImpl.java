@@ -79,6 +79,11 @@ public class OfertaServiceImpl implements OfertaService {
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Curso curso) {
 		return ofertaRepository.findByPeriodoAndCurso(periodo, curso);
 	}
+	
+	@Override
+	public List<Oferta> buscarOfertasCompartilhadasPorPeriodoAndCurso(Periodo periodo, Curso curso) {
+		return ofertaRepository.findOfertasCompartilhadasByPeriodoAndCurso(periodo, curso);
+	}
 
 	@Override
 	public Map<String, Object> importarOfertas(List<Integer> ofertas) {
@@ -94,7 +99,7 @@ public class OfertaServiceImpl implements OfertaService {
 			Oferta oferta = ofertaRepository.findOne(id);
 			if (oferta != null) {
 				contem = false;
-				for (Oferta o : periodo.getOfertas()) {
+				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodo)) {
 					if (o.getDisciplina().equals(oferta.getDisciplina())) {
 						ofertasContidas.add(oferta);
 						contem = true;
@@ -144,15 +149,16 @@ public class OfertaServiceImpl implements OfertaService {
 	}
 
 	@Override
-	public void substituirOferta(List<Integer> ofertas) {
+	public void substituirOferta(List<Integer> idOfertas) {
 		Periodo periodo = periodoRepository.pediodoAtivo();
 		List<Oferta> novas = new ArrayList<>();
-		for (Integer id : ofertas) {
+		
+		for (Integer id : idOfertas) {
 			Oferta oferta = ofertaRepository.findOne(id);
 			if (oferta != null) {
-				for (Oferta o : periodo.getOfertas()) {
+				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodo)) {
 					if (o.getDisciplina().equals(oferta.getDisciplina())) {
-						ofertaRepository.delete(o);
+						ofertaRepository.delete(o);	
 						Oferta novaOferta = clonarOferta(o);
 						novaOferta.setPeriodo(periodo);
 						novas.add(novaOferta);

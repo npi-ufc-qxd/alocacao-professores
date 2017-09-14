@@ -13,6 +13,9 @@
 	
 <link th:href="@{/css/alocacao_professores.css}" rel="stylesheet"
 	type="text/css"></link>
+	
+<meta name="ctx" th:content="${#httpServletRequest.getRequestURL()}"></meta>
+
 </head>
 
 <section layout:fragment="conteudo">

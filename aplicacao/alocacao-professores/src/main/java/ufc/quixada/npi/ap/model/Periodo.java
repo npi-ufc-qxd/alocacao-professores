@@ -1,7 +1,6 @@
 package ufc.quixada.npi.ap.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,12 +8,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Periodo {
@@ -30,10 +26,6 @@ public class Periodo {
 
 	@Enumerated(EnumType.STRING)
 	private Status status;
-
-	@OneToMany(mappedBy = "periodo")
-	@JsonIgnore
-	private List<Oferta> ofertas;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy", iso = ISO.DATE)
 	private Date inicioPeriodoCoordenacao;
@@ -141,14 +133,6 @@ public class Periodo {
 
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	public List<Oferta> getOfertas() {
-		return ofertas;
-	}
-
-	public void setOfertas(List<Oferta> ofertas) {
-		this.ofertas = ofertas;
 	}
 
 	public enum Status {
