@@ -18,21 +18,17 @@
 			<div class="col-sm-12">
 				<div class="white-box">
 					<form class = "form-horizontal" th:action="@{${'/ofertas/cadastrar'}}" method="POST" th:object="${oferta}">
-						<div class="form-group" th:classappend="${#fields.hasErrors('professores')} ? has-error">
-							<label for = "professores" class="control-label m-l-10">Professores</label>
-							<div class="col-md-12">
-								<select id="professores" th:field="*{professores}" class = "form-control select2 select2-multiple" multiple="multiple" data-placeholder = "Selecione os professores" >
-									<option th:each = "professor : ${professores}" th:value = "${{professor}}" th:text = "${professor.pessoa.nome}"></option>
-								</select>
-								<span th:if="${#fields.hasErrors('professores')}" th:errors="*{professores}" class = "help-block with-errors"></span>
-							</div>
+
+						<div class="form-group">
+							<label class="control-label m-l-10" th:text="${cursoAtual.nome}"></label>
 						</div>
+
 						<div class="form-group" th:classappend="${#fields.hasErrors('turma')} ? has-error">
 							<label for = "turma" class="control-label m-l-10">Turma</label>
 							<div class="col-md-12">
 								<select id="turma" th:field="*{turma}" class = "form-control"  required="required">
 									<option value = "">Selecione uma turma</option>
-									<option th:each = "turma : ${turmas}" th:value = "${{turma}}" th:text = "${turma.curso.nome+' - '+turma.semestre+'º Semestre'}"></option>
+									<option th:each = "turma : ${cursoAtual.turmas}" th:value = "${{turma}}" th:text = "${turma.semestre.descricao + ' Semestre - ' + turma.curso.nome}"></option>
 								</select>
 								<span th:if="${#fields.hasErrors('turma')}" th:errors="*{turma}" class = "help-block with-errors"></span>
 							</div>
@@ -42,11 +38,20 @@
 							<div class="col-md-12">
 								<select id="disciplina" th:field="*{disciplina}" class = "form-control select2" required="required">
 									<option value = "">Selecione uma disciplina</option>
-									<option th:each = "disciplina : ${disciplinas}" th:value = "${{disciplina}}" th:text = "${disciplina.nome}"></option>
+									<option th:each = "disciplina : ${disciplinas}" th:value = "${{disciplina}}" th:inline="text">[[${disciplina.codigo}]] - [[${disciplina.nome}]]</option>
 								</select>
 								<span th:if="${#fields.hasErrors('disciplina')}" th:errors="*{disciplina}" class = "help-block with-errors"></span>
 							</div>
 						</div>
+						
+						<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
+							<label class = "control-label m-l-10" for = "vagas">Número de Vagas</label>
+							<div class = "col-md-12">
+								<input type = "number" id = "vagas" th:field = "*{vagas}" class = "form-control" min = "1"  required="required" />
+								<span th:if = "${#fields.hasErrors('vagas')}" th:errors = "*{vagas}" class = "help-block with-errors"></span>
+							</div>
+				 		</div>
+						
 						<div class="form-group" th:classappend="${#fields.hasErrors('turno')} ? has-error">
 							<label for = "turno" class="control-label m-l-10">Turno</label>
 							<div class="col-md-12">
@@ -57,13 +62,51 @@
 								<span th:if="${#fields.hasErrors('turno')}" th:errors="*{turno}" class = "help-block with-errors"></span>
 							</div>
 						</div>
-						<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
-							<label class = "control-label m-l-10" for = "vagas">Número de Vagas</label>
-							<div class = "col-md-12">
-								<input type = "number" id = "vagas" th:field = "*{vagas}" class = "form-control" min = "1"  required="required" />
-								<span th:if = "${#fields.hasErrors('vagas')}" th:errors = "*{vagas}" class = "help-block with-errors"></span>
+						<div class="form-group" th:classappend="${#fields.hasErrors('mesmoDia')} ? has-error">
+							<label class="control-label m-l-10">Mesmo Dia</label>
+							<div class="col-md-12">
+ 								<select class="form-control" th:field="*{mesmoDia}">
+									<option value="true">SIM</option>
+									<option value="false">NÃO</option>
+								</select> <span th:if="${#fields.hasErrors('mesmoDia')}" th:errors="*{mesmoDia}" class="help-block with-errors"></span>
 							</div>
-				 		</div>
+						</div>
+ 						<div class="form-group" th:classappend="${#fields.hasErrors('horarioInicio')} ? has-error">
+ 							<label for = "horarioInicio" class="control-label m-l-10">Horário de Inicio</label>
+ 							<div class="col-md-12">
+ 								<select id="horarioInicio" th:field="*{horarioInicio}" class = "form-control" required="required">
+ 									<option value = "">Selecione um horario de início</option>
+ 									<option th:each = "horarioInicio : ${T(ufc.quixada.npi.ap.model.Oferta.HorarioInicio).values()}" th:value = "${horarioInicio}" th:text = "${horarioInicio.descricao}"></option> 
+ 								</select>
+ 								<span th:if="${#fields.hasErrors('horarioInicio')}" th:errors="*{horarioInicio}" class = "help-block with-errors"></span>
+ 							</div>
+ 						</div>
+ 						<div class = "form-group" th:classappend= "${#fields.hasErrors('aulasEmLaboratorio')}? has-error">
+ 							<label class = "control-label m-l-10" for = "aulasEmLaboratorio">Número de Aulas em Laboratório</label>
+ 							<div class = "col-md-12">
+ 								<input type = "number" id = "aulasEmLaboratorio" th:field = "*{aulasEmLaboratorio}" class = "form-control" min = "0" required="required" />
+ 								<span th:if = "${#fields.hasErrors('aulasEmLaboratorio')}" th:errors = "*{aulasEmLaboratorio}" class = "help-block with-errors"></span>
+ 							</div>
+ 				 		</div>
+
+						<div class="form-group" th:classappend="${#fields.hasErrors('professores')} ? has-error">
+							<label for = "professores" class="control-label m-l-10">Professores Sugeridos</label>
+							<div class="col-md-12">
+								<select id="professores" th:field="*{professores}" class = "form-control select2 select2-multiple" multiple="multiple" data-placeholder = "Selecione os professores" >
+									<option th:each = "professor : ${professores}" th:value = "${{professor}}" th:text = "${professor.pessoa.nome}"></option>
+								</select>
+								<span th:if="${#fields.hasErrors('professores')}" th:errors="*{professores}" class = "help-block with-errors"></span>
+							</div>
+						</div>
+
+ 						<div class="form-group" th:classappend= "${#fields.hasErrors('aulasEmLaboratorio')}? has-error">
+ 							<label class="control-label m-l-10" for="aulasEmLaboratorio">Número de Professores</label>
+ 							<div class="col-md-12">
+ 								<input type="number" id="numeroProfessores" th:field = "*{numeroProfessores}" min="0" class="form-control"/>
+ 								<span th:if="${#fields.hasErrors('numeroProfessores')}" th:errors="*{numeroProfessores}" class="help-block with-errors"></span>
+ 							</div>
+ 				 		</div>
+
 						<div class = "form-group" th:classappend= "${#fields.hasErrors('observacao')}? has-error">
 							<label class = "control-label m-l-10" for = "observacao">Observação</label>
 							<div class = "col-md-12">
@@ -87,6 +130,22 @@
 			$(".select2").select2({
 				"language": "pt-BR"
 			});
+		</script>
+		
+		<script type="text/javascript">
+			function mudaSelect(select){
+			/*<![CDATA[*/
+          		var campoNumeroProf = document.getElementById("numeroProfessores");
+				var count = 0;
+	        	for (var i = 0; i < select.length; i++){
+					if (select.options[i].selected)
+						count++;
+				}
+		
+	        	campoNumeroProf.value = count;
+        
+			/*]]>*/
+			}
 		</script>
 	</section>
 </html>
