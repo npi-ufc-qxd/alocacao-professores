@@ -6,7 +6,9 @@ var protocol = _ctx.split('//')[0];
 var host = _ctx.split('/')[2];
 var baseUrl = protocol + '//' + host;
 
-var siglaCursoAtual = $('input[name=cursoAtual]').val();
+var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
+var idCursoCoordenador = $('input[name=idCursoAtual]').val();
+var idCursoSelecionado = idCursoCoordenador;
 
 $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-1').empty();
@@ -18,7 +20,8 @@ $('#btn-modal-importar-ofertas').on('click', function (event) {
 
 $('#visulizar-outras-ofertas').on('change', function (event) {
 	$("#ofertas").empty();
-	$.get(baseUrl + '/ofertas/curso/' + $('#visulizar-outras-ofertas').val(), function() {
+	idCursoSelecionado = $('#visulizar-outras-ofertas').val();
+	$.get(baseUrl + '/ofertas/curso/' + idCursoSelecionado, function() {
 	})
 	.done(function(ofertas) {
 		console.log(ofertas)
@@ -244,7 +247,7 @@ function organizarOfertas(ofertas) {
 					idNewRow = 'rowPanel'+newRow+semestre;
 				}
 				
-				criarPanelsOferta(value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow);
+				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow);
 				existe = true;
 				newRow++;
 				
@@ -345,7 +348,7 @@ function criarRowsPanel(panel, semestre, newRow, idNewRow) {
 
 
 //Função que cria o panel para cada oferta
-function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow){
+function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow){
 	//Elementos html criados via Javascript
 	var divCol = document.createElement('div');
 	divCol.setAttribute('class', 'col-lg-4 col-md-4 col-sm-4 col-xs-12 panel-margin');
@@ -353,6 +356,12 @@ function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno
 	var divPanel = document.createElement('div');
 	divPanel.setAttribute('class', 'panel panel-default');
 	
+	var divRibbon = document.createElement('div');
+	divRibbon.setAttribute('class', 'ribbon ribbon-vertical-r ribbon-success');
+	var iconeRibbon = document.createElement('i');
+	iconeRibbon .setAttribute('class', 'fa fa-share-alt');
+	divRibbon.appendChild(iconeRibbon);
+
 	var divPanelHeading = document.createElement('div');
 	divPanelHeading.setAttribute('class', 'panel-heading');
 	
@@ -387,7 +396,50 @@ function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno
 	var divButton = document.createElement('div');
 	divButton.setAttribute('class', 'pull-right');
 	
-	if(siglaCursoAtual != sigla) {
+	if(idCursoSelecionado == idCursoCoordenador) {
+
+		if(siglaCursoCoordenador == sigla) {
+			var iconeEditar = document.createElement('i');
+			iconeEditar.setAttribute('class', 'fa fa-pencil');
+			var buttonEditar = document.createElement('a');
+			buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
+			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+			buttonEditar.appendChild(iconeEditar);
+			divButton.appendChild(buttonEditar);
+			
+			var iconeExcluir = document.createElement('i');
+			iconeExcluir.setAttribute('class', 'fa fa-close');
+			var buttonExcluir = document.createElement('a');
+			buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
+			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
+			buttonExcluir.appendChild(iconeExcluir);
+			divButton.appendChild(buttonExcluir);
+			
+		} else {
+			divPanel.appendChild(divRibbon);
+			var iconeEditar = document.createElement('i');
+			iconeEditar.setAttribute('class', 'fa fa-pencil');
+			var buttonEditar = document.createElement('a');
+			buttonEditar.href = '#editarcompartilhamento';
+			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+			buttonEditar.appendChild(iconeEditar);
+			divButton.appendChild(buttonEditar);
+
+			var iconeExcluir = document.createElement('i');
+			iconeExcluir.setAttribute('class', 'fa fa-close');
+			var buttonExcluir = document.createElement('a');
+			buttonExcluir.href = '#excluircompartilhamento';
+			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
+			buttonExcluir.appendChild(iconeExcluir);
+			divButton.appendChild(buttonExcluir);
+		
+		}
+
+
+		
+	} 
+
+	else if(siglaCursoCoordenador != sigla) {
 		var iconeShare = document.createElement('i');
 		iconeShare.setAttribute('class', 'fa fa-share-alt');
 		var buttonSolicitarCompartilhamento = document.createElement('a');
@@ -395,23 +447,54 @@ function criarPanelsOferta(sigla, codigoDisciplina, nomeDisciplina, vagas, turno
 		buttonSolicitarCompartilhamento.setAttribute('class', 'btn btn-inverse btn-acoes');
 		buttonSolicitarCompartilhamento.appendChild(iconeShare);
 		divButton.appendChild(buttonSolicitarCompartilhamento);
-	} else {
+	}
+
+	
+	/**
+	 * 
+	
+	if(siglaCursoCoordenador != sigla && idCursoSelecionado != idCursoCoordenador) {
+		var iconeShare = document.createElement('i');
+		iconeShare.setAttribute('class', 'fa fa-share-alt');
+		var buttonSolicitarCompartilhamento = document.createElement('a');
+		buttonSolicitarCompartilhamento.href = baseUrl + '/ofertas/'+ idOferta + '/solicitar-compartilhamento';
+		buttonSolicitarCompartilhamento.setAttribute('class', 'btn btn-inverse btn-acoes');
+		buttonSolicitarCompartilhamento.appendChild(iconeShare);
+		divButton.appendChild(buttonSolicitarCompartilhamento);
+	}
+
+	if(siglaCursoCoordenador == sigla) {
 		var iconeEditar = document.createElement('i');
 		iconeEditar.setAttribute('class', 'fa fa-pencil');
 		var buttonEditar = document.createElement('a');
 		buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
 		buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
 		buttonEditar.appendChild(iconeEditar);
+		divButton.appendChild(buttonEditar);
+	} else {
+		divPanel.appendChild(divRibbon);
+		var iconeEditar = document.createElement('i');
+		iconeEditar.setAttribute('class', 'fa fa-pencil');
+		var buttonEditar = document.createElement('a');
+		buttonEditar.href = '#';
+		buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+		buttonEditar.appendChild(iconeEditar);
+		divButton.appendChild(buttonEditar);
+	}
 
+	if(siglaCursoCoordenador == sigla) {
 		var iconeExcluir = document.createElement('i');
 		iconeExcluir.setAttribute('class', 'fa fa-close');
 		var buttonExcluir = document.createElement('a');
 		buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
 		buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
 		buttonExcluir.appendChild(iconeExcluir);
-		divButton.appendChild(buttonEditar);
 		divButton.appendChild(buttonExcluir);
 	}
+
+ * 
+ */	
+	
 	
 	//Inserindo elementos filhos nos elementos pai
 	pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
