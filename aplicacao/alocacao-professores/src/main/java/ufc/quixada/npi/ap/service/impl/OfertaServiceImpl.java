@@ -145,30 +145,32 @@ public class OfertaServiceImpl implements OfertaService {
 			}
 			oferta.setProfessores(professores);
 		}
+		
 		return oferta;
 	}
 
 	@Override
 	public void substituirOferta(List<Integer> idOfertas) {
-		Periodo periodo = periodoRepository.pediodoAtivo();
-		List<Oferta> novas = new ArrayList<>();
+		Periodo periodoAtivo = periodoRepository.pediodoAtivo();
+		List<Oferta> novasOfertas = new ArrayList<>();
 		
 		for (Integer id : idOfertas) {
 			Oferta oferta = ofertaRepository.findOne(id);
+			
 			if (oferta != null) {
-				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodo)) {
+				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodoAtivo)){
 					if (o.getDisciplina().equals(oferta.getDisciplina())) {
-						ofertaRepository.delete(o);	
+						ofertaRepository.delete(o);
+						
 						Oferta novaOferta = clonarOferta(o);
-						novaOferta.setPeriodo(periodo);
-						novas.add(novaOferta);
+						novaOferta.setPeriodo(periodoAtivo);
+						novasOfertas.add(novaOferta);
 					}
 				}
 			}
 		}
 
-		ofertaRepository.save(novas);
-
+		ofertaRepository.save(novasOfertas);
 	}
 
 }

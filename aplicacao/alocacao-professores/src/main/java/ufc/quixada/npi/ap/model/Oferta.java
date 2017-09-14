@@ -3,6 +3,7 @@ package ufc.quixada.npi.ap.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -86,7 +87,7 @@ public class Oferta {
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
 	private List<Professor> professores;
 
-	@OneToMany(mappedBy = "oferta")
+	@OneToMany(mappedBy = "oferta", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<Compartilhamento> compartilhamentos;
 
