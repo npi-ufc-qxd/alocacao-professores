@@ -121,19 +121,23 @@ public class OfertaController {
 	}	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
-	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta) {
+	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
 		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult,
-			ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+			ModelAndView modelAndView, RedirectAttributes redirectAttributes, Authentication auth) {
 
 		ofertaValidator.validate(oferta, bindingResult);
 
 		if (bindingResult.hasErrors()) {
+			Pessoa pessoa = (Pessoa) auth.getPrincipal();
+			modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 			modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
 			modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 			return modelAndView;
@@ -153,8 +157,11 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
-	public ModelAndView editarOferta(@PathVariable("id") Integer id) {
+	public ModelAndView editarOferta(@PathVariable("id") Integer id, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 
 		modelAndView.addObject("oferta", ofertaService.findOferta(id));
 		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
@@ -164,11 +171,13 @@ public class OfertaController {
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
 	public ModelAndView editarOferta(@PathVariable(name = "id", required = true) Integer id,
-			@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView) {
+			@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth) {
 
 		ofertaValidator.validate(oferta, bindingResult);
 
 		if (bindingResult.hasErrors()) {
+			Pessoa pessoa = (Pessoa) auth.getPrincipal();
+			modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 			modelAndView.setViewName(Constants.OFERTA_EDITAR);
 			modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 
