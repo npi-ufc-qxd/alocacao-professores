@@ -130,6 +130,7 @@ public class OfertaController {
 		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+		modelAndView.addObject("periodoAtivo", periodoService.periodoAtivo());
 		return modelAndView;
 	}
 
