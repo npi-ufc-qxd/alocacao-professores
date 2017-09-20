@@ -1,6 +1,6 @@
-$('#myTable').dataTable( {
-    "iDisplayLength": 100
-  } );
+//$('#myTable').dataTable( {
+//    "iDisplayLength": 100
+//  } );
 
 $(".sa-btn-excluir").on("click", function(event){
 	event.preventDefault();
