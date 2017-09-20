@@ -10,6 +10,8 @@ var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
 var idCursoCoordenador = $('input[name=idCursoAtual]').val();
 var idCursoSelecionado = idCursoCoordenador;
 
+
+
 $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-1').empty();
 	$('#resultado-ofertas-2').empty();
@@ -239,6 +241,7 @@ function organizarOfertas(ofertas) {
 		var newRow = 0;
 		var idNewRow = '';
 		
+		
 		$.each(ofertas, function(key, value) {
 			var professores = listarProfessoresOferta(value.professores);
 			console.log(value.turma.semestre);
@@ -247,7 +250,7 @@ function organizarOfertas(ofertas) {
 					idNewRow = 'rowPanel'+newRow+semestre;
 				}
 				
-				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow);
+				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow, value.turma.id);
 				existe = true;
 				newRow++;
 				
@@ -347,8 +350,8 @@ function criarRowsPanel(panel, semestre, newRow, idNewRow) {
 }
 
 
-//Função que cria o panel para cada oferta
-function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow){
+//Função que cria o painel para cada oferta
+function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow, idCompartilhamento){
 	//Elementos html criados via Javascript
 	var divCol = document.createElement('div');
 	divCol.setAttribute('class', 'col-lg-4 col-md-4 col-sm-4 col-xs-12 panel-margin');
@@ -396,6 +399,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	var divButton = document.createElement('div');
 	divButton.setAttribute('class', 'pull-right');
 	
+	
 	if(idCursoSelecionado == idCursoCoordenador) {
 
 		if(siglaCursoCoordenador == sigla) {
@@ -420,7 +424,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			var iconeEditar = document.createElement('i');
 			iconeEditar.setAttribute('class', 'fa fa-pencil');
 			var buttonEditar = document.createElement('a');
-			buttonEditar.href = '#editarcompartilhamento';
+			buttonEditar.href = baseUrl + '/compartilhamentos/'+ idCompartilhamento + '/editar';
 			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
 			buttonEditar.appendChild(iconeEditar);
 			divButton.appendChild(buttonEditar);
@@ -428,7 +432,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			var iconeExcluir = document.createElement('i');
 			iconeExcluir.setAttribute('class', 'fa fa-close');
 			var buttonExcluir = document.createElement('a');
-			buttonExcluir.href = '#excluircompartilhamento';
+			buttonExcluir.href = baseUrl + '/compartilhamentos/'+ idCompartilhamento + '/excluir';
 			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
 			buttonExcluir.appendChild(iconeExcluir);
 			divButton.appendChild(buttonExcluir);
@@ -525,7 +529,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	criarRowsPanel(divCol, semestre, newRow, idNewRow);	
 }
 
-//Função que cria o panel de informe quando não há nenhuma oferta para determinado semestre
+//Função que cria o painel de informe quando não há nenhuma oferta para determinado semestre
 function criarInforme(semestre, existe) {
 	if(existe === false) { 
 		var divCol = document.createElement('div');
@@ -787,3 +791,4 @@ function errorSwal(){
 		closeOnConfirm: true
 	});	
 }
+
