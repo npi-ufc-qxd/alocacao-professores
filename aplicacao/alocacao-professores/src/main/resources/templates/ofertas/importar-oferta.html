@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+
+	<head>
+		<title>Importar Oferta | Alocação Professores</title>
+	</head>
+	
+	<section layout:fragment="conteudo">
+	
+		<div class="row bg-title">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h4 class="page-title">Importar Ofertas</h4>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="white-box">
+					<form class = "form-horizontal" th:action="@{${'/ofertas/importar'}}" method="POST" th:object="${oferta}">
+						<div class="row">
+							<div class="col-md-6">
+								<label>Selecione o período</label> <select id="periodo"
+									class="form-control">
+									<option th:value="0">Selecione o período...</option>
+									<option th:each="p : ${periodos}"
+										th:text= "${p.ano} +'.'+ ${p.semestre.numero}"
+										th:value="${p.id}"></option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<button class="btn btn-info pull-right" id="btn-exibir-ofertas">Exibir ofertas</button>
+							</div>
+						</div>
+						<div id="ofertas" class="page-wrapper"></div>
+						<br />
+							<div class="row col-md-6" id="resultado-ofertas-1"></div>
+							<div class="row col-md-6" id="resultado-ofertas-2"></div>
+							<div class="row col-md-12" id="sem-resultado-ofertas"></div>
+
+						<br />
+					
+						
+						
+						<div class="text-right">
+							<a th:href="@{/ofertas/}"><button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button></a>
+							<button type="submit" class="btn btn-success waves-effect waves-light" id = "btn-importar-ofertas">Importar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section layout:fragment="js">
+		<!-- Select2 Tradução Português Brasileiro -->
+		<script th:src="@{/plugins/select2/js/i18n/pt-BR.js}"></script>
+		<script type="text/javascript">		
+			$(".select2").select2({
+				"language": "pt-BR"
+			});
+		</script>
+		<script th:src="@{js/oferta/importar.js}"></script>
+	</section>
+</html>
