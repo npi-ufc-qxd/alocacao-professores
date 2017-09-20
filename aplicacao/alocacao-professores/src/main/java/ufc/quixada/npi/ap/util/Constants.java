@@ -32,6 +32,7 @@ public class Constants {
 	public static final String OFERTA_LISTAR = "/ofertas/listar-oferta";
 	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";
 	public static final String OFERTA_EXCLUIR = "/ofertas/excluir-oferta";
+	public static final String OFERTA_IMPORTAR = "/ofertas/importar-oferta";
 	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
 	public static final String OFERTA_REDIRECT_CADASTRO = "redirect:/ofertas/cadastrar";
 	public static final String OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
