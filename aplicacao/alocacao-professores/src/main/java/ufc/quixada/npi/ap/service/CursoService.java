@@ -10,4 +10,5 @@ public interface CursoService {
 	public List<Curso> listar();
 	
 	public Curso buscarPorCoordenador(Pessoa pessoa);
+
 }

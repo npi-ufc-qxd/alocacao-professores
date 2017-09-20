@@ -20,19 +20,22 @@
             <!-- /input-group -->
          </li>
          <li>
-            <a th:href="@{/ofertas}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Ofertas <span class="fa arrow"></span> </span></a>
+            <a sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/ofertas}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Ofertas <span class="fa arrow"></span> </span></a>
          </li>
          <li>
-            <a th:href="@{/periodos}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Periodos <span class="fa arrow"></span> </span></a>
+            <a sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/periodos}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Periodos <span class="fa arrow"></span> </span></a>
          </li>
          <li>
-            <a th:href="@{/disciplinas}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Disciplinas <span class="fa arrow"></span> </span></a>
+            <a sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/disciplinas}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Disciplinas <span class="fa arrow"></span> </span></a>
          </li>
+<!--          <li> -->
+<!--             <a sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/empilhamentos}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Empilhamentos<span class="fa arrow"></span> </span></a> -->
+<!--          </li> -->
          <li>
-            <a th:href="@{/compartilhamentos}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Ofertas do Campus <span class="fa arrow"></span> </span></a>
+            <a sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/oferta-campus}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Ofertas do Campus <span class="fa arrow"></span> </span></a>
          </li>
 		<li>
-            <a th:href="@{/professores}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Professores <span class="fa arrow"></span> </span></a>
+            <a sec:authorize="hasAnyAuthority('DIRECAO')" th:href="@{/professores}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Professores <span class="fa arrow"></span> </span></a>
          </li>
       </ul>
    </div>

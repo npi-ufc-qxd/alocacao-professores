@@ -3,6 +3,7 @@ package ufc.quixada.npi.ap.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,10 +25,17 @@ public class Oferta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private int vagas;
+	private Integer vagas;
+	
+	private boolean mesmoDia;
+	
+	private Integer aulasEmLaboratorio;
+	
+	private Integer numeroProfessores;
+	
 	
 	public enum Turno {
-		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite"), MESMO_DIA("Mesmo dia");
+		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite");
 
 		private String descricao;
 
@@ -39,6 +47,21 @@ public class Oferta {
 			return descricao;
 		}
 	}
+	
+	public enum HorarioInicio{
+		AB("AB"),CD("CD");
+		
+		private String descricao;
+		
+		HorarioInicio(String descricao){
+			this.descricao = descricao;
+		}
+		
+		public String getDescricao(){
+			return descricao;
+		}
+	}
+	
 
 	private String observacao;
 
@@ -56,12 +79,15 @@ public class Oferta {
 
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
+	
+	@Enumerated(EnumType.STRING)
+	private HorarioInicio horarioInicio;
 
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
 	private List<Professor> professores;
 
-	@OneToMany(mappedBy = "oferta")
+	@OneToMany(mappedBy = "oferta", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<Compartilhamento> compartilhamentos;
 
@@ -73,11 +99,11 @@ public class Oferta {
 		this.id = id;
 	}
 
-	public int getVagas() {
+	public Integer getVagas() {
 		return vagas;
 	}
 
-	public void setVagas(int vagas) {
+	public void setVagas(Integer vagas) {
 		this.vagas = vagas;
 	}
 
@@ -121,6 +147,39 @@ public class Oferta {
 		this.turno = turno;
 	}
 
+	public boolean isMesmoDia() {
+		return mesmoDia;
+	}
+
+	public void setMesmoDia(boolean mesmoDia) {
+		this.mesmoDia = mesmoDia;
+	}
+
+	public Integer getAulasEmLaboratorio() {
+		return aulasEmLaboratorio;
+	}
+
+	public void setAulasEmLaboratorio(Integer aulasEmLaboratorio) {
+		this.aulasEmLaboratorio = aulasEmLaboratorio;
+	}
+
+	public HorarioInicio getHorarioInicio() {
+		return horarioInicio;
+	}
+
+	public void setHorarioInicio(HorarioInicio horarioInicio) {
+		this.horarioInicio = horarioInicio;
+	}
+	
+	public Integer getNumeroProfessores() {
+		return numeroProfessores;
+	}
+
+	public void setNumeroProfessores(Integer numeroProfessores) {
+		this.numeroProfessores = numeroProfessores;
+	}
+	
+	
 	public List<Professor> getProfessores() {
 		if (null == this.professores) {
 			this.professores = new ArrayList<>();

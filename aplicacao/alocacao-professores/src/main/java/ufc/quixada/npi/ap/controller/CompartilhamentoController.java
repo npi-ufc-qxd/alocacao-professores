@@ -1,7 +1,5 @@
 package ufc.quixada.npi.ap.controller;
 
-import static ufc.quixada.npi.ap.util.Constants.COMPARTILHAMENTO_LISTAR;
-
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
-import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
@@ -39,20 +35,10 @@ public class CompartilhamentoController {
 	
 	@Autowired
 	private TurmaService turmaService;
-
-	@Autowired
-	private PeriodoService periodoService;
 	
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas(){
 		return turmaService.listarTurmas();
-	}
-	
-	@RequestMapping(path = {"", "/"}, method = RequestMethod.GET)
-	public String listarCompartilhamentos(Model model){
-		model.addAttribute("periodo", periodoService.periodoAtivo());
-		model.addAttribute("ofertas", compartilhamentoService.listarCompartilhamentoOfertas());
-		return COMPARTILHAMENTO_LISTAR;
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)

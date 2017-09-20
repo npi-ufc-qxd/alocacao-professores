@@ -3,7 +3,8 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="base/base">
+	layout:decorator="base/base"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
 	<title>Listar Períodos | Alocação Professores</title>
@@ -14,7 +15,7 @@
 				<h3 class="box-title">Períodos</h3>	
 			</div>
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-		    	<a th:href="@{/periodos/cadastrar}" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Novo Período</a>
+		    	<a sec:authorize="hasAnyAuthority('DIRECAO')" th:href="@{/periodos/cadastrar}" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Novo Período</a>
 			</div>
 		</div>
 		
@@ -25,29 +26,32 @@
             <table id="myTable" class="table table-striped ">
               <thead>
                 <tr>
-                  <th class="text-center">Ano</th>
-                  <th class="text-center">Semeste</th>
+                  <th class="text-center">Ano/Semestre</th>
+                  <th class="text-center">Período Coordenação</th>
+                  <th class="text-center">Período Direção</th>
+                  <th class="text-center">Período Ajuste</th>
                   <th class="text-center">Status</th>
                   <th class="text-center">Ativo</th> 
                   <th class="text-center">Opções</th> 
                 </tr>
               </thead>
               <tbody>
-
                 <tr th:each="periodo : ${periodos}">
-                  <td class="text-center" th:text="${periodo.ano}"></td>
-                  <td class="text-center" th:text="${periodo.semestre.descricao}"></td>
+                  <td class="text-center" th:inline="text">[[${periodo.ano}]].[[${periodo.semestre.numero}]]</td>
+                  <td class="text-center"  th:inline="text">[[${#dates.format(periodo.inicioPeriodoCoordenacao, 'dd/MM/yyyy')}]] - [[${#dates.format(periodo.fimPeriodoCoordenacao, 'dd/MM/yyyy')}]]</td>
+                  <td class="text-center"  th:inline="text">[[${#dates.format(periodo.inicioPeriodoDirecao, 'dd/MM/yyyy')}]] - [[${#dates.format(periodo.fimPeriodoDirecao, 'dd/MM/yyyy')}]]</td>
+                  <td class="text-center"  th:inline="text">[[${#dates.format(periodo.inicioPeriodoAjuste, 'dd/MM/yyyy')}]] - [[${#dates.format(periodo.fimPeriodoAjuste, 'dd/MM/yyyy')}]]</td>
                   <td class="text-center" th:text="${periodo.status}"></td>
                   <td class="text-center" th:text="${periodo.ativo} ? 'Sim' : 'Não' "></td>                                                                                       
                   <td class="text-center active">
                     <a data-toggle="tooltip" data-placement="top" title="Detalhes" th:href="@{/periodos/{id}/detalhar(id=${periodo.id})}" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
                     	<i class="fa fa-eye "></i>  
                     </a> 
-                    <a data-toggle="tooltip" data-placement="top" title="Editar" th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn  btn-warning btn-xs btn-circle">
+                    <a sec:authorize="hasAnyAuthority('DIRECAO')" data-toggle="tooltip" data-placement="top" title="Editar" th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn  btn-warning btn-xs btn-circle">
                     	<i class="fa fa-pencil"></i>  
                     </a>
                                                           
-                    <a data-toggle="tooltip" data-placement="top" title="Excluir" th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-circle btn-xs waves-effect waves-light sa-btn-excluir">
+                    <a sec:authorize="hasAnyAuthority('DIRECAO')" data-toggle="tooltip" data-placement="top" title="Excluir" th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-circle btn-xs waves-effect waves-light sa-btn-excluir">
                     	<i class="fa fa-close"></i>  
                     </a>
                                         

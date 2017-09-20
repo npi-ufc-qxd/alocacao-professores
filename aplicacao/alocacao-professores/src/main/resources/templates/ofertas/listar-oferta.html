@@ -20,6 +20,7 @@
 
 <section layout:fragment="conteudo">
 	<input type="hidden" name="cursoAtual" th:value="${cursoAtual.sigla}"/>
+	<input type="hidden" name="idCursoAtual" th:value="${cursoAtual.id}"/>
 	
 	
 	<div class="row bg-title">
@@ -28,7 +29,7 @@
 		</div>
 
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<select id="visulizar-outras-ofertas" class="form-control visulizar-outras-ofertas" onchange="carregarOfertas()">
+			<select id="visulizar-outras-ofertas" class="form-control visulizar-outras-ofertas">
 				<option th:each="curso : ${cursos}" th:text="${curso.nome}" th:value="${curso.id}" th:selected="${curso.coordenador.id == #authentication.principal.id}"></option>
 			</select>
 		</div>
@@ -109,6 +110,7 @@
 								o período atual, selecione quais ofertas gostaria de realizar
 								uma substituição.</p>
 						</div>
+						<div class = "col-md-12 alert alert-danger"><strong>Atenção!</strong> Ao confirmar a substituição da oferta, todos os compartilhamentos serão deletados.</div>
 					</div>
 					<br />
 					<div class="row">
