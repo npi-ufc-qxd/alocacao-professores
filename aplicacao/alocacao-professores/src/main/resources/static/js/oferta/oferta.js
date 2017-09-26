@@ -9,8 +9,6 @@ var baseUrl = protocol + '//' + host;
 var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
 var idCursoCoordenador = $('input[name=idCursoAtual]').val();
 var idCursoSelecionado = idCursoCoordenador;
-//var compartilhamentos = $('input[name=compartilhamento]').val();
-
 
 $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-1').empty();
@@ -25,11 +23,8 @@ $('#visulizar-outras-ofertas').on('change', function (event) {
 	idCursoSelecionado = $('#visulizar-outras-ofertas').val();
 	$.get(baseUrl + '/ofertas/curso/' + idCursoSelecionado, function() {
 	})
-	.done(function(ofertas) {
-		console.log(ofertas)
-		if(ofertas.length > 0){
-			organizarOfertas(ofertas);
-		}
+	.done(function(result) {
+		organizarOfertas(result);
 	});
 });
 
@@ -218,60 +213,56 @@ function errorSwal(){
 	});	
 }
 
-//Função que faz a requisição da lista de ofertas quando a página é carregada
+//Função que faz a requisição da lista de ofertas e de compartilhamentos quando a página é carregada
+//result = modal(ofertas e compartilhamentos)
 $(window).load(function() {
 	$.get(baseUrl + "/ofertas/listar", function() {
 	})
-	.done(function(ofertas) {
-		console.log(ofertas)
-		if(ofertas.length > 0){
-			
-			organizarOfertas(ofertas);
-		}
+	.done(function(result) {
+		console.log(result);
+			organizarOfertas(result);
 	});
 });
 
-//function pegarIdDoCompartilhamento(idOferta, idTurma) {
-//	var idCompartilhamento = 0;
-//	for(var i = 0; i <= compartilhamentos.size(); i++){
-//		if(compartilhamentos[i].oferta.id == idOferta && compartilhamentos[i].turma.id == idTurma){
-//			return idCompartilhamento = compartilhamentos[i].id;
-//		}
-//	}
-//	return idCompartilhamento;
-//}
-
 //Função que organiza a lista de ofertas por semestre
-function organizarOfertas(ofertas) {
+function organizarOfertas(result) {
 	semestres = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'QUARTO', 'QUINTO', 'SEXTO', 'SETIMO', 'OITAVO', 'NONO', 'DECIMO'];
-	
 	for(var i = 0; i <= 9; i++) {
 		var semestre = semestres[i];
 		var numberSemestre = i+1;
-		criarEstrutura(semestre, numberSemestre, ofertas[0].turma.curso.sigla);
+		criarEstrutura(semestre, numberSemestre, result.ofertas[0].turma.curso.sigla);
 		var existe = false;
 		var newRow = 0;
 		var idNewRow = '';
-
-		$.each(ofertas, function(key, value) {
+		
+		$.each(result.ofertas, function(key, value) {
 			var professores = listarProfessoresOferta(value.professores);
-			console.log(value.turma.semestre);
-
-//			$.each(value.compartilhamentos, function(key, value) {
-//				alert(value.id);
-//			});
 
 			if(value.turma.semestre == semestre) {
-				
 				if(newRow%4 === 0) {
 					idNewRow = 'rowPanel'+newRow+semestre;
 				}
-				
-				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow);
+
+				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow, 0);
 				existe = true;
 				newRow++;
 				
-			} 
+			}
+		});
+
+		$.each(result.compartilhamentos, function(key, value) {
+			var professores = listarProfessoresOferta(value.oferta.professores);
+
+			if(value.turma.semestre == semestre) {
+				if(newRow%4 === 0) {
+					idNewRow = 'rowPanel'+newRow+semestre;
+				}
+				numeroDoSemestreOferta = semestres.indexOf(value.oferta.turma.semestre) + 1;
+				criarPanelsOferta(value.oferta.turma.curso.id, value.oferta.turma.curso.sigla, value.oferta.disciplina.codigo, value.oferta.disciplina.nome, value.oferta.vagas, value.oferta.turno, professores, semestre, numeroDoSemestreOferta, value.oferta.id, newRow, idNewRow, value.id);
+				existe = true;
+				newRow++;
+				
+			}
 		});
 		
 		criarInforme(semestre, existe);
@@ -367,8 +358,8 @@ function criarRowsPanel(panel, semestre, newRow, idNewRow) {
 }
 
 
-//Função que cria o painel para cada oferta
-function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow){
+//Função que cria o panel para cada oferta
+function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow, idCompartilhamento){
 	//Elementos html criados via Javascript
 	var divCol = document.createElement('div');
 	divCol.setAttribute('class', 'col-lg-4 col-md-4 col-sm-4 col-xs-12 panel-margin');
@@ -416,7 +407,6 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	var divButton = document.createElement('div');
 	divButton.setAttribute('class', 'pull-right');
 	
-	
 	if(idCursoSelecionado == idCursoCoordenador) {
 
 		if(siglaCursoCoordenador == sigla) {
@@ -441,7 +431,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			var iconeEditar = document.createElement('i');
 			iconeEditar.setAttribute('class', 'fa fa-pencil');
 			var buttonEditar = document.createElement('a');
-			buttonEditar.href = baseUrl + '/compartilhamentos/'+ idCompartilhamento + '/editar';
+			buttonEditar.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/editar';
 			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
 			buttonEditar.appendChild(iconeEditar);
 			divButton.appendChild(buttonEditar);
@@ -449,17 +439,13 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			var iconeExcluir = document.createElement('i');
 			iconeExcluir.setAttribute('class', 'fa fa-close');
 			var buttonExcluir = document.createElement('a');
-			buttonExcluir.href = baseUrl + '/compartilhamentos/'+ idCompartilhamento + '/excluir';
+			buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
 			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
 			buttonExcluir.appendChild(iconeExcluir);
 			divButton.appendChild(buttonExcluir);
 		
 		}
-
-
-		
 	} 
-
 	else if(siglaCursoCoordenador != sigla) {
 		var iconeShare = document.createElement('i');
 		iconeShare.setAttribute('class', 'fa fa-share-alt');
@@ -546,7 +532,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	criarRowsPanel(divCol, semestre, newRow, idNewRow);	
 }
 
-//Função que cria o painel de informe quando não há nenhuma oferta para determinado semestre
+//Função que cria o panel de informe quando não há nenhuma oferta para determinado semestre
 function criarInforme(semestre, existe) {
 	if(existe === false) { 
 		var divCol = document.createElement('div');
@@ -808,4 +794,3 @@ function errorSwal(){
 		closeOnConfirm: true
 	});	
 }
-
