@@ -9,7 +9,7 @@ var baseUrl = protocol + '//' + host;
 var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
 var idCursoCoordenador = $('input[name=idCursoAtual]').val();
 var idCursoSelecionado = idCursoCoordenador;
-
+//var compartilhamentos = $('input[name=compartilhamento]').val();
 
 
 $('#btn-modal-importar-ofertas').on('click', function (event) {
@@ -225,14 +225,26 @@ $(window).load(function() {
 	.done(function(ofertas) {
 		console.log(ofertas)
 		if(ofertas.length > 0){
+			
 			organizarOfertas(ofertas);
 		}
 	});
 });
 
+//function pegarIdDoCompartilhamento(idOferta, idTurma) {
+//	var idCompartilhamento = 0;
+//	for(var i = 0; i <= compartilhamentos.size(); i++){
+//		if(compartilhamentos[i].oferta.id == idOferta && compartilhamentos[i].turma.id == idTurma){
+//			return idCompartilhamento = compartilhamentos[i].id;
+//		}
+//	}
+//	return idCompartilhamento;
+//}
+
 //Função que organiza a lista de ofertas por semestre
 function organizarOfertas(ofertas) {
 	semestres = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'QUARTO', 'QUINTO', 'SEXTO', 'SETIMO', 'OITAVO', 'NONO', 'DECIMO'];
+	
 	for(var i = 0; i <= 9; i++) {
 		var semestre = semestres[i];
 		var numberSemestre = i+1;
@@ -240,17 +252,22 @@ function organizarOfertas(ofertas) {
 		var existe = false;
 		var newRow = 0;
 		var idNewRow = '';
-		
-		
+
 		$.each(ofertas, function(key, value) {
 			var professores = listarProfessoresOferta(value.professores);
 			console.log(value.turma.semestre);
+
+//			$.each(value.compartilhamentos, function(key, value) {
+//				alert(value.id);
+//			});
+
 			if(value.turma.semestre == semestre) {
+				
 				if(newRow%4 === 0) {
 					idNewRow = 'rowPanel'+newRow+semestre;
 				}
 				
-				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow, value.turma.id);
+				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow);
 				existe = true;
 				newRow++;
 				
@@ -351,7 +368,7 @@ function criarRowsPanel(panel, semestre, newRow, idNewRow) {
 
 
 //Função que cria o painel para cada oferta
-function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow, idCompartilhamento){
+function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow){
 	//Elementos html criados via Javascript
 	var divCol = document.createElement('div');
 	divCol.setAttribute('class', 'col-lg-4 col-md-4 col-sm-4 col-xs-12 panel-margin');

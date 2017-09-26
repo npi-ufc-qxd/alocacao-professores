@@ -16,4 +16,5 @@ public interface CompartilhamentoService {
 	public void excluir(Integer id);
 	
 	public List<Oferta> listarCompartilhamentoOfertas();
+	
 }
