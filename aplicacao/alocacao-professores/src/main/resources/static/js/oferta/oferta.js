@@ -23,8 +23,8 @@ $('#visulizar-outras-ofertas').on('change', function (event) {
 	idCursoSelecionado = $('#visulizar-outras-ofertas').val();
 	$.get(baseUrl + '/ofertas/curso/' + idCursoSelecionado, function() {
 	})
-	.done(function(result) {
-		organizarOfertas(result);
+	.done(function(results) {
+		organizarOfertas(results);
 	});
 });
 
@@ -214,13 +214,13 @@ function errorSwal(){
 }
 
 //Função que faz a requisição da lista de ofertas e de compartilhamentos quando a página é carregada
-//result = modal(ofertas e compartilhamentos)
+//results = modal(ofertas e compartilhamentos)
 $(window).load(function() {
 	$.get(baseUrl + "/ofertas/listar", function() {
 	})
-	.done(function(result) {
-		console.log(result);
-			organizarOfertas(result);
+	.done(function(results) {
+		console.log(results);
+			organizarOfertas(results);
 	});
 });
 
