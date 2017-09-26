@@ -214,13 +214,13 @@ function errorSwal(){
 }
 
 //Função que faz a requisição da lista de ofertas e de compartilhamentos quando a página é carregada
-//results = modal(ofertas e compartilhamentos)
+//result = modal(ofertas e compartilhamentos)
 $(window).load(function() {
 	$.get(baseUrl + "/ofertas/listar", function() {
 	})
-	.done(function(results) {
-		console.log(results);
-			organizarOfertas(results);
+	.done(function(result) {
+		console.log(result);
+			organizarOfertas(result);
 	});
 });
 
