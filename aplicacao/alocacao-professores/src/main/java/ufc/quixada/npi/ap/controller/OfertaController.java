@@ -102,13 +102,18 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/curso/{idCurso}", method = RequestMethod.GET)
-	public @ResponseBody List<Oferta> listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
-		Periodo periodoAtivo = periodoService.periodoAtivo();
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), curso);
-		List<Oferta> ofertasCompartilhadas = ofertaService.buscarOfertasCompartilhadasPorPeriodoAndCurso(periodoAtivo, curso);
-		ofertas.addAll(ofertasCompartilhadas);
+	public @ResponseBody ModelMap listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
+		ModelMap model = new ModelMap();
 
-		return ofertas;
+		Periodo periodoAtivo = periodoService.periodoAtivo();
+
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), curso);
+		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, curso);
+
+		model.addAttribute("ofertas", ofertas);
+		model.addAttribute("compartilhamentos", compartilhamentos);
+
+		return model;
 	}
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
