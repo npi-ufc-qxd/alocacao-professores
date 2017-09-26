@@ -41,7 +41,7 @@
 						<tbody>
 							<tr th:each="oferta : ${ofertas}">
 								<td><a th:if="${oferta} != null"
-									th:text="${oferta.disciplina.nome}" href="#"
+									th:text="${oferta.disciplina.nome}" th:href="@{/editar-oferta/{id}(id=${oferta.id})}"
 									data-toggle="tooltip" data-original-title="Detalhes Oferta"
 									class="btn-link"></a></td>
 								<td th:inline="text">[[${oferta.turma.curso.sigla}]]-[[${oferta.turma.semestre.numero}]]</td>

@@ -4,8 +4,6 @@ import static ufc.quixada.npi.ap.util.Constants.COMPARTILHAMENTO_LISTAR;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import br.ufc.quixada.npi.ldap.model.Usuario;
 import br.ufc.quixada.npi.ldap.service.UsuarioService;
 import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
+import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
@@ -29,7 +28,7 @@ import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.PessoaService;
 import ufc.quixada.npi.ap.service.ProfessorService;
 import ufc.quixada.npi.ap.util.Constants;
-import ufc.quixada.npi.ap.validation.OfertaValidator;
+import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 
 @Controller
 public class DirecaoController {
@@ -56,7 +55,7 @@ public class DirecaoController {
 	private DisciplinaService disciplinaService;
 	
 	@Autowired
-	private OfertaValidator ofertaValidator;
+	private CompartilhamentoValidator compartilhamentoValidator;
 	
 	@RequestMapping(path = {"/oferta-campus"}, method = RequestMethod.GET)
 	public String listarCompartilhamentos(Model model){
@@ -117,29 +116,32 @@ public class DirecaoController {
 	}
 
 	@RequestMapping(value = "/editar-oferta/{id}", method = RequestMethod.POST)
-	public ModelAndView editarOferta(@PathVariable(name = "id", required = true) Integer id,
-			@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView) {
-
-		ofertaValidator.validate(oferta, bindingResult);
-
+	public ModelAndView editarOferta(@PathVariable("id") Integer id, @ModelAttribute("oferta") Oferta oferta, 
+									BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		for(Compartilhamento compartilhamento : oferta.getCompartilhamentos()) {
+			compartilhamentoValidator.validate(compartilhamento, bindingResult);
+		}
 		if (bindingResult.hasErrors()) {
+			oferta = ofertaService.findOferta(id);
 			modelAndView.addObject("cursoAtual", oferta.getTurma().getCurso());
-			modelAndView.setViewName(Constants.OFERTA_EDITAR_DIRECAO);
+			modelAndView.addObject("oferta", oferta);
 			modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
-
+			modelAndView.setViewName("redirect:/editar-oferta/"+oferta.getId());
 			return modelAndView;
 		}
-
+		
+		Oferta ofertaSalva = ofertaService.findOferta(id);
+		ofertaSalva.setCompartilhamentos(oferta.getCompartilhamentos());
 		try {
-			ofertaService.salvar(oferta);
+			ofertaService.salvar(ofertaSalva);
 		} catch (AlocacaoProfessoresException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		modelAndView.setViewName("redirect:/editar-oferta/"+oferta.getId());
 
 		return modelAndView;
 	}
-
 }
