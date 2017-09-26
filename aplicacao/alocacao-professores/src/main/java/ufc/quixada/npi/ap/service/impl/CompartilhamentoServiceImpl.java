@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
+import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
+import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.repository.CompartilhamentoRepository;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
@@ -42,5 +44,10 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 	@Override
 	public List<Oferta> listarCompartilhamentoOfertas() {
 		return ofertaRepository.findByPeriodoAtivoTrue();
+	}
+
+	@Override
+	public List<Compartilhamento> buscarCompartilhamentosPorPeriodoAndCurso(Periodo periodo, Curso curso) {
+		return compartilhamentoRepository.findCompartilhamentosByPeriodoAndCurso(periodo, curso);
 	}
 }

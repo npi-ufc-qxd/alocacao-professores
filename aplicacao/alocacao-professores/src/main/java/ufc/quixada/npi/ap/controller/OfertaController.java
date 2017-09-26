@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -111,17 +112,19 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public @ResponseBody List<Oferta> listarOfertas(Authentication auth) {
+	public @ResponseBody ModelMap listarOfertas(Authentication auth) {
+		ModelMap model = new ModelMap();
 		Pessoa coordenador = (Pessoa) auth.getPrincipal();
-		Curso cursoCoordenador = cursoService.buscarPorCoordenador(coordenador);
 		Periodo periodoAtivo = periodoService.periodoAtivo();
-		
+		Curso cursoCoordenador = cursoService.buscarPorCoordenador(coordenador);
+
 		List<Oferta> ofertasCurso = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, coordenador);
-		List<Oferta> ofertasCompartilhadas = ofertaService.buscarOfertasCompartilhadasPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
-		
-		ofertasCurso.addAll(ofertasCompartilhadas);
-		
-		return ofertasCurso;
+		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
+
+		model.addAttribute("ofertas", ofertasCurso);
+		model.addAttribute("compartilhamentos", compartilhamentos);
+
+		return model;
 	}	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
