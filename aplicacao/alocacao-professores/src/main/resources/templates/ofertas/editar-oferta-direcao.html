@@ -14,77 +14,76 @@
 				<h4 class="page-title">Editar Compartilhamentos</h4>
 			</div>
 		</div>
+		
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-md-12">
+				<label class="control-label m-l-10">INFORMAÇÕES DA OFERTA</label>
+				<div class="row white-box">
+					<div class="col-md-5">
+						<label>Turma</label>
+						<p th:text="${oferta.turma.curso.nome +' - '+ oferta.turma.semestre.descricao + ' Semestre'}"></p>
+					</div>
+					<div class="col-md-5">
+						<label>Disciplina</label>
+						<p th:text="${oferta.disciplina.nome}"></p>
+					</div>
+					<div class="col-md-2">
+						<label>Turno</label>
+						<p th:text="${oferta.turno.descricao}"></p>
+					</div>
+					<div class="col-md-5">
+						<label>Número de vagas</label>
+						<p th:text="${oferta.vagas}"></p>
+					</div>
+					<div class="col-md-5">
+						<label>Aulas no Laboratório</label>
+						<p th:text="${oferta.aulasEmLaboratorio != null ? oferta.aulasEmLaboratorio : 'N/A'}"></p>
+					</div>
+					<div class="col-md-2">
+						<label>Horário</label>
+						<p th:text="${oferta.horarioInicio != null ? oferta.horarioInicio.descricao : 'N/A'}"></p>
+					</div>
+					<div class="col-md-12">
+						<label>Professores</label>
+						<p>
+							<span th:each="professor : ${oferta.professores}" class="badge badge-inverse" th:text="${professor.pessoa.nome}"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label class="control-label m-l-10">COMPARTILHAMENTOS DA OFERTA</label>
 				<div class="white-box">
+					<label th:if="${oferta.compartilhamentos.empty}">* Não existem compartilhamentos para esta oferta.</label>
 					<form th:action="@{/editar-oferta/{id}(id=${oferta.id})}" method="POST" th:object="${oferta}">
-						<div class="form-group">
-							<label class="control-label m-l-10">INFORMAÇÕES DA OFERTA</label>
-						</div>
-						
-						<div class="form-group">
-							<label for="turma" class="control-label m-l-10">Turma</label>
-							<input id="turma" th:value="*{turma.curso.nome +' - '+ turma.semestre.descricao + ' Semestre'}" readonly="readonly" />
-						</div>
-						
-						<div class="form-group">
-							<label for="disciplina" class="control-label m-l-10">Disciplina</label>
-							<input id="disciplina" th:value="*{disciplina.nome}" readonly="readonly" />
-						</div>
-						
-						<div class="form-group">
-							<label for="turno" class="control-label m-l-10">Turno</label>
-							<input id="turno" th:value="*{turno.descricao}" readonly="readonly" />
-						</div>
-						
-						
-						<br/>
-						<div th:if="${!oferta.compartilhamentos.empty}" class="form-group">
-							<label class="control-label m-l-10">COMPARTILHAMENTOS DA OFERTA</label>
-							<div class="table-responsive">
-					            <table id="myTable" class="table table-striped ">
-					              <thead>
-					                <tr>
-					                  <th class="text-center">Curso</th>
-					                  <th class="text-center">Turma</th>
-					                  <th class="text-center">Vagas</th>
-					                </tr>
-					              </thead>
-					              <tbody>
-					                <tr th:each="compartilhamento, rowStat: *{compartilhamentos}">
-					                  <input type="hidden" th:field="*{compartilhamentos[__${rowStat.index}__].id}"></input>
-					                  <input type="hidden" th:field="*{compartilhamentos[__${rowStat.index}__].oferta}"></input>
-					                  <td th:text="${compartilhamento.turma.curso.nome}"></td>
-					                  <td>
-					                  	<select th:field="*{compartilhamentos[__${rowStat.index}__].turma}" th:class="form-control" required="required">
+						<div th:each="compartilhamento, rowStat: *{compartilhamentos}" class="panel panel-default">
+							<div class="panel-heading">
+								<span th:text="${compartilhamento.turma.curso.nome}"></span>
+								<input type="hidden" th:field="*{compartilhamentos[__${rowStat.index}__].id}"></input>
+								<input type="hidden" th:field="*{compartilhamentos[__${rowStat.index}__].oferta}"></input>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-8">
+										<label>Turma</label>
+										<select th:field="*{compartilhamentos[__${rowStat.index}__].turma}" th:class="form-control" required="required">
 											<option th:each = "turma : ${compartilhamento.turma.curso.turmas}" th:selected="${turma == compartilhamento.turma}" th:value = "${{turma}}" th:text = "${turma.semestre.descricao + ' Semestre - ' + turma.curso.nome}"></option>
 										</select>
-					                  </td>
-					                  <td>
-					                  	<input type="text" th:field="*{compartilhamentos[__${rowStat.index}__].vagas}"></input>
-					                  </td>
-					                  <!--td>                                 
-					                    <a sec:authorize="hasAnyAuthority('DIRECAO')" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-danger btn-circle btn-xs waves-effect waves-light sa-btn-excluir">
-					                    	<i class="fa fa-save"></i>  
-					                    </a>                 
-					                  </td-->      					
-					                </tr>                           
-					              </tbody>
-					            </table>
-			            	</div>
+									</div>
+									<div class="col-md-4">
+										<label>Quantidade de vagas</label>
+										<input type="number" th:field="*{compartilhamentos[__${rowStat.index}__].vagas}" th:class="form-control"></input>
+									</div>
+								</div>
+							</div>
 						</div>
-						
-						<div th:if="${oferta.compartilhamentos.empty}" class="form-group">
-							<label class="control-label m-l-10">* Não existem compartilhamentos para esta oferta.</label>
-						</div>
-
 						<div class="text-right">
 							<a th:href="@{/oferta-campus}"><button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button></a>
 							<button th:disabled="${oferta.compartilhamentos.empty}" type="submit" class="btn btn-success waves-effect waves-light">Salvar alterações</button>
 						</div>
-				</form>
+					</form>
+				</div>
 			</div>
-		</div>
 		</div>
 	</section>
 	<section layout:fragment="js">
