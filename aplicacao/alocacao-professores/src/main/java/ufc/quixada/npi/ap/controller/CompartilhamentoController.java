@@ -95,7 +95,6 @@ public class CompartilhamentoController {
 			
 			return modelAndView;
 		}
-		
 		modelAndView.addObject("compartilhamento", compartilhamento);
 		
 		return modelAndView;
