@@ -23,11 +23,8 @@ $('#visulizar-outras-ofertas').on('change', function (event) {
 	idCursoSelecionado = $('#visulizar-outras-ofertas').val();
 	$.get(baseUrl + '/ofertas/curso/' + idCursoSelecionado, function() {
 	})
-	.done(function(ofertas) {
-		console.log(ofertas)
-		if(ofertas.length > 0){
-			organizarOfertas(ofertas);
-		}
+	.done(function(results) {
+		organizarOfertas(results);
 	});
 });
 
@@ -216,42 +213,56 @@ function errorSwal(){
 	});	
 }
 
-//Função que faz a requisição da lista de ofertas quando a página é carregada
+//Função que faz a requisição da lista de ofertas e de compartilhamentos quando a página é carregada
+//result = model(ofertas e compartilhamentos)
 $(window).load(function() {
 	$.get(baseUrl + "/ofertas/listar", function() {
 	})
-	.done(function(ofertas) {
-		console.log(ofertas)
-		if(ofertas.length > 0){
-			organizarOfertas(ofertas);
-		}
+	.done(function(result) {
+		console.log(result);
+			organizarOfertas(result);
 	});
 });
 
 //Função que organiza a lista de ofertas por semestre
-function organizarOfertas(ofertas) {
+function organizarOfertas(result) {
 	semestres = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'QUARTO', 'QUINTO', 'SEXTO', 'SETIMO', 'OITAVO', 'NONO', 'DECIMO'];
 	for(var i = 0; i <= 9; i++) {
 		var semestre = semestres[i];
 		var numberSemestre = i+1;
-		criarEstrutura(semestre, numberSemestre, ofertas[0].turma.curso.sigla);
+		criarEstrutura(semestre, numberSemestre, result.ofertas[0].turma.curso.sigla);
 		var existe = false;
 		var newRow = 0;
 		var idNewRow = '';
 		
-		$.each(ofertas, function(key, value) {
+		$.each(result.ofertas, function(key, value) {
 			var professores = listarProfessoresOferta(value.professores);
-			console.log(value.turma.semestre);
+
 			if(value.turma.semestre == semestre) {
 				if(newRow%4 === 0) {
 					idNewRow = 'rowPanel'+newRow+semestre;
 				}
-				
-				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow);
+
+				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow, 0);
 				existe = true;
 				newRow++;
 				
-			} 
+			}
+		});
+
+		$.each(result.compartilhamentos, function(key, value) {
+			var professores = listarProfessoresOferta(value.oferta.professores);
+
+			if(value.turma.semestre == semestre) {
+				if(newRow%4 === 0) {
+					idNewRow = 'rowPanel'+newRow+semestre;
+				}
+				numeroDoSemestreOferta = semestres.indexOf(value.oferta.turma.semestre) + 1;
+				criarPanelsOferta(value.oferta.turma.curso.id, value.oferta.turma.curso.sigla, value.oferta.disciplina.codigo, value.oferta.disciplina.nome, value.oferta.vagas, value.oferta.turno, professores, semestre, numeroDoSemestreOferta, value.oferta.id, newRow, idNewRow, value.id);
+				existe = true;
+				newRow++;
+				
+			}
 		});
 		
 		criarInforme(semestre, existe);
@@ -292,8 +303,43 @@ function organizarOfertas(ofertas) {
 				}
 			});
 		});
-		
-		
+		//deve existir uma maneira melhor para não fazer este ctrl+c ctrl+v mas ainda encontrei
+		$(".sa-btn-excluir-compartilhamento").on("click", function(event){
+			event.preventDefault();
+
+			var botaoExcluir = $(event.currentTarget);
+			var urlExcluir = botaoExcluir.attr("href");
+			
+			swal({
+				title: "Tem certeza?",
+				text: "Você não poderá desfazer essa operação posteriormente!",
+				type: "warning",   
+				showCancelButton: true,
+				cancelButtonText: "Cancelar",
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Sim, desejo excluir!",
+				closeOnConfirm: false
+			}, function(isConfirm){
+				if(isConfirm){
+					var response = $.ajax({
+						url: urlExcluir,
+						type: 'GET',
+						success: function(result){
+							if (result === true){
+								successSwalC();
+							}
+							else{
+								errorSwalC();
+							}
+							
+						},
+						error: function(status, error){
+							errorSwal();
+						}
+					});
+				}
+			});
+		});
 	}
 }
 
@@ -348,7 +394,7 @@ function criarRowsPanel(panel, semestre, newRow, idNewRow) {
 
 
 //Função que cria o panel para cada oferta
-function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow){
+function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow, idCompartilhamento){
 	//Elementos html criados via Javascript
 	var divCol = document.createElement('div');
 	divCol.setAttribute('class', 'col-lg-4 col-md-4 col-sm-4 col-xs-12 panel-margin');
@@ -420,7 +466,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			var iconeEditar = document.createElement('i');
 			iconeEditar.setAttribute('class', 'fa fa-pencil');
 			var buttonEditar = document.createElement('a');
-			buttonEditar.href = '#editarcompartilhamento';
+			buttonEditar.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/editar';
 			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
 			buttonEditar.appendChild(iconeEditar);
 			divButton.appendChild(buttonEditar);
@@ -428,17 +474,13 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			var iconeExcluir = document.createElement('i');
 			iconeExcluir.setAttribute('class', 'fa fa-close');
 			var buttonExcluir = document.createElement('a');
-			buttonExcluir.href = '#excluircompartilhamento';
+			buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
 			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
 			buttonExcluir.appendChild(iconeExcluir);
 			divButton.appendChild(buttonExcluir);
 		
 		}
-
-
-		
 	} 
-
 	else if(siglaCursoCoordenador != sigla) {
 		var iconeShare = document.createElement('i');
 		iconeShare.setAttribute('class', 'fa fa-share-alt');
@@ -449,53 +491,6 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 		divButton.appendChild(buttonSolicitarCompartilhamento);
 	}
 
-	
-	/**
-	 * 
-	
-	if(siglaCursoCoordenador != sigla && idCursoSelecionado != idCursoCoordenador) {
-		var iconeShare = document.createElement('i');
-		iconeShare.setAttribute('class', 'fa fa-share-alt');
-		var buttonSolicitarCompartilhamento = document.createElement('a');
-		buttonSolicitarCompartilhamento.href = baseUrl + '/ofertas/'+ idOferta + '/solicitar-compartilhamento';
-		buttonSolicitarCompartilhamento.setAttribute('class', 'btn btn-inverse btn-acoes');
-		buttonSolicitarCompartilhamento.appendChild(iconeShare);
-		divButton.appendChild(buttonSolicitarCompartilhamento);
-	}
-
-	if(siglaCursoCoordenador == sigla) {
-		var iconeEditar = document.createElement('i');
-		iconeEditar.setAttribute('class', 'fa fa-pencil');
-		var buttonEditar = document.createElement('a');
-		buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
-		buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
-		buttonEditar.appendChild(iconeEditar);
-		divButton.appendChild(buttonEditar);
-	} else {
-		divPanel.appendChild(divRibbon);
-		var iconeEditar = document.createElement('i');
-		iconeEditar.setAttribute('class', 'fa fa-pencil');
-		var buttonEditar = document.createElement('a');
-		buttonEditar.href = '#';
-		buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
-		buttonEditar.appendChild(iconeEditar);
-		divButton.appendChild(buttonEditar);
-	}
-
-	if(siglaCursoCoordenador == sigla) {
-		var iconeExcluir = document.createElement('i');
-		iconeExcluir.setAttribute('class', 'fa fa-close');
-		var buttonExcluir = document.createElement('a');
-		buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
-		buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
-		buttonExcluir.appendChild(iconeExcluir);
-		divButton.appendChild(buttonExcluir);
-	}
-
- * 
- */	
-	
-	
 	//Inserindo elementos filhos nos elementos pai
 	pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
 	pTurno.appendChild(document.createTextNode("Turno: " + turno));
@@ -754,10 +749,10 @@ function importacaoRealizada(importada, substituir) {
 	}
 }
 
-function successSwal(){
+function successSwalC(){
 	swal({
-		title: "Oferta excluída!",
-		text: "A oferta foi excluída.", 
+		title: "Compartilhamento excluído!",
+		text: "O compartilhamento foi excluído.", 
 		type: "success",
 		showcancelButton: false,
 		confirmButtonText: "Ok!",
@@ -778,10 +773,10 @@ function errorSubstituirOferta(){
 	});	
 }
 
-function errorSwal(){
+function errorSwalC(){
 	swal({
 		title: "Erro ao excluir",
-		text: "A oferta não foi excluída.", 
+		text: "O compartilhamento não foi excluído.", 
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",

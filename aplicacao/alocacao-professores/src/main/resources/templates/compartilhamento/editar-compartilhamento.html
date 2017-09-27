@@ -38,8 +38,8 @@
 				<span th:if = "${#fields.hasErrors('vagas')}" th:errors = "*{vagas}" class = "help-block with-errors"></span>
 			</div>
 			<div class = "text-right">
-				<a th:href="@{/compartilhamentos/}" class = "btn btn-inverse waves-effect waves-light">Cancelar</a>
-				<button type = "submit" name = "action" class = "btn btn-success waves-effect waves-light">Cadastrar</button>
+				<a th:href="@{/ofertas/}" class = "btn btn-inverse waves-effect waves-light">Cancelar</a>
+				<a th:href="@{/ofertas/}" type ="submit" name ="action" class = "btn btn-success waves-effect waves-light">Salvar alterações</a>
 			</div>
 		</form>
 	</section>

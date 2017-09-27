@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+
+	<head>
+		<title>Editar Oferta | Alocação Professores</title>
+	</head>
+	
+	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h4 class="page-title">Editar Compartilhamentos</h4>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<label class="control-label m-l-10">INFORMAÇÕES DA OFERTA</label>
+				<div class="row white-box">
+					<div class="col-md-5">
+						<label>Turma</label>
+						<p th:text="${oferta.turma.curso.nome +' - '+ oferta.turma.semestre.descricao + ' Semestre'}"></p>
+					</div>
+					<div class="col-md-5">
+						<label>Disciplina</label>
+						<p th:text="${oferta.disciplina.nome}"></p>
+					</div>
+					<div class="col-md-2">
+						<label>Turno</label>
+						<p th:text="${oferta.turno.descricao}"></p>
+					</div>
+					<div class="col-md-5">
+						<label>Número de vagas</label>
+						<p th:text="${oferta.vagas}"></p>
+					</div>
+					<div class="col-md-5">
+						<label>Aulas no Laboratório</label>
+						<p th:text="${oferta.aulasEmLaboratorio != null ? oferta.aulasEmLaboratorio : 'N/A'}"></p>
+					</div>
+					<div class="col-md-2">
+						<label>Horário</label>
+						<p th:text="${oferta.horarioInicio != null ? oferta.horarioInicio.descricao : 'N/A'}"></p>
+					</div>
+					<div class="col-md-12">
+						<label>Professores</label>
+						<p>
+							<span th:each="professor : ${oferta.professores}" class="badge badge-inverse" th:text="${professor.pessoa.nome}"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label class="control-label m-l-10">COMPARTILHAMENTOS DA OFERTA</label>
+				<div class="white-box">
+					<label th:if="${oferta.compartilhamentos.empty}">* Não existem compartilhamentos para esta oferta.</label>
+					<form th:action="@{/editar-oferta/{id}(id=${oferta.id})}" method="POST" th:object="${oferta}">
+						<div th:each="compartilhamento, rowStat: *{compartilhamentos}" class="panel panel-default">
+							<div class="panel-heading">
+								<span th:text="${compartilhamento.turma.curso.nome}"></span>
+								<input type="hidden" th:field="*{compartilhamentos[__${rowStat.index}__].id}"></input>
+								<input type="hidden" th:field="*{compartilhamentos[__${rowStat.index}__].oferta}"></input>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-8">
+										<label>Turma</label>
+										<select th:field="*{compartilhamentos[__${rowStat.index}__].turma}" th:class="form-control" required="required">
+											<option th:each = "turma : ${compartilhamento.turma.curso.turmas}" th:selected="${turma == compartilhamento.turma}" th:value = "${{turma}}" th:text = "${turma.semestre.descricao + ' Semestre - ' + turma.curso.nome}"></option>
+										</select>
+									</div>
+									<div class="col-md-4">
+										<label>Quantidade de vagas</label>
+										<input type="number" th:field="*{compartilhamentos[__${rowStat.index}__].vagas}" th:class="form-control"></input>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="text-right">
+							<a th:href="@{/oferta-campus}"><button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button></a>
+							<button th:disabled="${oferta.compartilhamentos.empty}" type="submit" class="btn btn-success waves-effect waves-light">Salvar alterações</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section layout:fragment="js">
+		<!-- Select2 Tradução Português Brasileiro -->
+<script th:src="@{/plugins/select2/js/i18n/pt-BR.js}"></script>
+<script type="text/javascript">		
+$(".select2").select2({
+	"language": "pt-BR"
+});
+</script>
+	</section>
+</html>

@@ -87,7 +87,7 @@ public class Oferta {
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
 	private List<Professor> professores;
 
-	@OneToMany(mappedBy = "oferta", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "oferta", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
 	@JsonIgnore
 	private List<Compartilhamento> compartilhamentos;
 
