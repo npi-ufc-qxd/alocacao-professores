@@ -37,8 +37,8 @@
 			<a th:href="@{/ofertas/cadastrar}"
 				class="btn btn-success pull-right m-l-10 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
 				class="fa fa-plus" aria-hidden="true"></i> Nova</a>
-			<a id="btn-modal-importar-ofertas"
-				class="btn btn-info pull-right m-l-10 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+			<a  th:href="@{/ofertas/importar/}"
+				class="btn btn-info pull-right m-l-10 btn-rounded hidden-xs hidden-sm waves-effect waves-light" ><i
 				class="fa fa-history" aria-hidden="true"></i> Importar</a>
 	</div>
 
@@ -68,9 +68,21 @@
 					</div>
 
 					<br />
-					<div class="row col-md-6" id="resultado-ofertas-1"></div>
-					<div class="row col-md-6" id="resultado-ofertas-2"></div>
-					<div class="row col-md-12" id="sem-resultado-ofertas"></div>
+					<div class="row col-md-6">
+						<div class="table-responsive">
+							<table class="table" id="resultado-ofertas">
+								<tr>
+									<th>Nome</th>
+								</tr>
+								<tr>
+									<td>Caio</td>
+								</tr>
+							</table>
+						</div>
+						
+					</div>
+<!-- 					<div class="row col-md-6" id="resultado-ofertas-2"></div> -->
+<!-- 					<div class="row col-md-12" id="sem-resultado-ofertas"></div> -->
 
 					<br />
 					<div class="row">

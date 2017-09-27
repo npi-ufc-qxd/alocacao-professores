@@ -28,6 +28,7 @@ public class Constants {
 	
 	// Ofertas
 	public static final String OFERTA_CADASTRAR = "/ofertas/cadastrar-oferta";
+	public static final String OFERTA_IMPORTAR= "/ofertas/importar-oferta";
 	public static final String OFERTA_EDITAR = "/ofertas/editar-oferta";
 	public static final String OFERTA_LISTAR = "/ofertas/listar-oferta";
 	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";

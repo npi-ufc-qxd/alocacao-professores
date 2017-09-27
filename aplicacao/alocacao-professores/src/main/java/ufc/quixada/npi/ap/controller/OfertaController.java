@@ -227,14 +227,55 @@ public class OfertaController {
 	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
 	public @ResponseBody List<Oferta> buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
 		Pessoa logada = (Pessoa) auth.getPrincipal();
+		Periodo periodoAtivo = periodoService.periodoAtivo();
+		
 		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodo, logada);
+		List<Oferta> ofertasPeriodoAtivo = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, logada);
+		
+		ofertas.removeAll(ofertasPeriodoAtivo);
+		
 		return ofertas;
 	}
-
+	
 	@RequestMapping(value = "/importar", method = RequestMethod.GET)
+	public ModelAndView importarOfertas(Authentication auth) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_IMPORTAR);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+
+		List<Periodo> periodosConsolidados = periodoService.periodosConsolidados();
+		
+		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+		modelAndView.addObject("periodos", periodosConsolidados);
+		
+		return modelAndView;
+	}
+
+//	@RequestMapping(value = { "/importar" }, method = RequestMethod.POST)
+//	public ModelAndView importarOferta(@ModelAttribute("oferta") @Valid List<Integer> oferta,
+//			BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes,
+//			Authentication auth) {
+//
+//		ofertaValidator.validate(oferta, bindingResult);
+//
+//		if (bindingResult.hasErrors()) {
+//			Pessoa pessoa = (Pessoa) auth.getPrincipal();
+//			modelAndView.setViewName(Constants.OFERTA_IMPORTAR);
+//			modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+//			return modelAndView;
+//		}
+//
+//		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+//		ofertaService.importarOfertas(oferta);
+//		
+//		return modelAndView;
+//	}
+
+	@RequestMapping(value = "/importar-2", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> importarOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
 		return ofertaService.importarOfertas(ofertas);
 	}
+	
 
 	@RequestMapping(value = "/substituicao-ofertas", method = RequestMethod.GET)
 	public @ResponseBody boolean substituirOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
