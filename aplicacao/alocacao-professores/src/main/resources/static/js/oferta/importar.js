@@ -1,5 +1,5 @@
-//var getUrl = window.location;
-//var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+//var token = $("meta[name='_csrf']").attr("content");
+//var header = $("meta[name='_csrf_header']").attr("content");
 
 var _ctx = $("meta[name='ctx']").attr("content");
 var protocol = _ctx.split('//')[0];
@@ -10,50 +10,19 @@ var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
 var idCursoCoordenador = $('input[name=idCursoAtual]').val();
 var idCursoSelecionado = idCursoCoordenador;
 
+var baseUrl = $("meta[name='baseUrl']").attr("content");
+if (baseUrl == null) {
+	baseUrl = "";
+}
+
 $('#btn-modal-importar-ofertas').on('click', function (event) {
-	$('#resultado-ofertas-1').empty();
-	$('#resultado-ofertas-2').empty();
+	$('#resultado-ofertas').empty();
 	$('#sem-resultado-ofertas').empty();
 	$('#modal-importar-ofertas').modal('show');
-	
-});
-
-$('#visulizar-outras-ofertas').on('change', function (event) {
-	$("#ofertas").empty();
-	idCursoSelecionado = $('#visulizar-outras-ofertas').val();
-	$.get(baseUrl + '/ofertas/curso/' + idCursoSelecionado, function() {
-	})
-	.done(function(ofertas) {
-		console.log(ofertas)
-		if(ofertas.length > 0){
-			organizarOfertas(ofertas);
-		}
-	});
 });
 
 $('#btn-exibir-ofertas').click(function() {
-	var periodo = document.getElementById("periodo").selectedIndex;
-	var periodos = document.getElementById("periodo").options;
-	var id = periodos[periodo].value;
-	
-	if(id > 0){
-		$.get(baseUrl + "/ofertas/buscar-ofertas/" + id, function() {
-			
-		})
-		.done(function(ofertas) {
-			limparResultadosImportacao();
-			$('#sem-resultado-ofertas').empty();
-			
-			if(ofertas.length > 0){
-				$.each(ofertas, function(key, oferta) {
-					adicionarResultadoTabela(oferta.id, "ofertas", '#resultado-ofertas', oferta.disciplina.nome, oferta.vagas, oferta.turma.curso.sigla, oferta.turma.semestre, oferta.turno, "ofertas");	
-				});
-			}else{
-				adicionarMensagemSemResultado('#sem-resultado-ofertas');
-			}
-		});
-	}
-	
+	exibirOfertas();
 });
 
 $('#btn-limpar-ofertas').on('click', function (event) {
@@ -69,34 +38,46 @@ $('#btn-substituir-ofertas').on('click', function (event) {
 	substituirOfertas();
 });
 
-var periodos = document.getElementById("periodo");
-var periodo = periodos.options[periodos.selectedIndex].text;
-
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-
-var baseUrl = $("meta[name='baseUrl']").attr("content");
-if(baseUrl == null){
-    baseUrl = "";
-}
-
-function adicionarMensagemSemResultado(coluna){
-	var label = document.createElement('p');
-    label.setAttribute('class','text-center');
-    label.appendChild(document.createTextNode("Não foi encontrado resultado para a sua busca."));
-    $(coluna).append(label);
-}
-
-function adicionarResultadoTabela(id, inputName, idTabela, nomeDisciplina, vagas, siglaCurso, semestre, turno, classe){
-	var semestres = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'QUARTO', 'QUINTO', 'SEXTO', 'SETIMO', 'OITAVO', 'NONO', 'DECIMO'];
+function exibirOfertas() {
+	var periodoSelecionado = document.getElementById("periodo").selectedIndex;
+	var periodos = document.getElementById("periodo").options;
+	var idPeriodo = periodos[periodoSelecionado].value;
 	
+	if(idPeriodo > 0){
+		$.get(baseUrl + "/ofertas/buscar-ofertas/" + idPeriodo, function() {
+		})
+		.done(function(ofertas) {
+			limparResultadosImportacao();
+			
+			if(ofertas.length > 0){
+				$.each(ofertas, function(key, oferta) {
+					adicionarResultadoTabela(oferta.id, "ofertas", "ofertas", '#resultado-ofertas', oferta.disciplina.nome, oferta.vagas, oferta.turma.curso.sigla, oferta.turma.semestre, oferta.turno);	
+				});
+			}else
+				adicionarMensagemSemResultado('#sem-resultado-ofertas');
+		});
+	}
+}
+
+function adicionarColunaTabela(linha, conteudo){
+	var coluna = document.createElement('td');
+	coluna.appendChild(conteudo);
+	
+	linha.appendChild(coluna);
+}
+
+function getNumeroSemestre(semestre){
+	var semestres = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'QUARTO', 'QUINTO', 'SEXTO', 'SETIMO', 'OITAVO', 'NONO', 'DECIMO'];
+	return semestres.indexOf(semestre) + 1;
+}
+
+function adicionarResultadoTabela(id, inputName, classe, idTabela, nomeDisciplina, vagas, siglaCurso, semestre, turno){	
 	var checkbox = document.createElement('input');
-	checkbox.className = classe;
 	checkbox.type = "checkbox";
-	checkbox.name = inputName;
-	checkbox.value = id;
 	checkbox.id = id;
-	checkbox.setAttribute("nome", nomeDisciplina);
+	checkbox.name = inputName;
+	checkbox.className = classe;
+	checkbox.value = id;
 	
 	var label = document.createElement('label')
 	label.htmlFor = id;
@@ -106,79 +87,40 @@ function adicionarResultadoTabela(id, inputName, idTabela, nomeDisciplina, vagas
 	var divTabela = tabela.parent();
 	var corpoTabela = tabela.find('tbody');
 	
-	var linha = document.createElement('tr');
-	
-	var colunaNome = document.createElement('td');
-	var colunaVagas = document.createElement('td');
-	var colunaTurma = document.createElement('td');
-	var colunaTurno = document.createElement('td');
-	
-	var ul = document.createElement('ul');
-	
 	var li = document.createElement('li');
 	li.appendChild(checkbox);
 	li.appendChild(label);
 	li.setAttribute('class', 'checkbox checkbox-success');
 	
+	var ul = document.createElement('ul');	
 	ul.id = 'lista-ofertas';
 	ul.setAttribute('class','list-unstyled');
 	ul.appendChild(li);
 	
-	colunaNome.appendChild(ul);
+	var linha = document.createElement('tr');
 	
-	colunaVagas.appendChild(document.createTextNode(vagas));
-	
-	colunaTurno.appendChild(document.createTextNode(turno));
-	
-	colunaTurma.appendChild(document.createTextNode(siglaCurso + '-' + (semestres.indexOf(semestre) + 1)));
-	
-	linha.appendChild(colunaNome);
-	linha.appendChild(colunaTurma);
-	linha.appendChild(colunaTurno);
-	linha.appendChild(colunaVagas);
+	adicionarColunaTabela(linha, ul);
+	adicionarColunaTabela(linha, document.createTextNode(siglaCurso + '-' + getNumeroSemestre(semestre)));
+	adicionarColunaTabela(linha, document.createTextNode(turno));
+	adicionarColunaTabela(linha, document.createTextNode(vagas));
 	
 	corpoTabela.append(linha);
-	
 	divTabela.removeClass('hidden');
 }
 
-var periodos = document.getElementById("periodo");
-var periodo = periodos.options[periodos.selectedIndex].text;
-
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-
-var baseUrl = $("meta[name='baseUrl']").attr("content");
-if(baseUrl == null){
-    baseUrl = "";
+function adicionarMensagemSemResultado(elemento){
+	$(elemento).removeClass('hidden');
 }
 
 function limparResultadosImportacao(){
 	var tabela = $('#resultado-ofertas');
 	var divTabela = tabela.parent();
 	var corpoTabela = tabela.find('tbody');
+	var semResultadosOfertas = $('#sem-resultado-ofertas');
 	
 	divTabela.addClass('hidden');
-	corpoTabela.empty();
-}
-
-function substituirOfertas(){
-	var ofertas = $("input[name=ofertas]:checked").map(function() {
-		return this.value;
-	}).get().join(",");
-	console.log(ofertas);
-	if(ofertas.length > 0){
-		$.get(baseUrl + "/ofertas/substituicao-ofertas", {ofertas : ofertas}, function() {
-		})
-		.done(function(resultado) {
-			if(resultado === true){
-				$('#modal-substituir-ofertas').modal('toggle');
-				importacaoRealizada(true, false);
-			}else{
-				errorSubstituirOferta();
-			}
-		});
-	}
+	semResultadosOfertas.addClass('hidden');
+	corpoTabela.empty();	
 }
 
 function importarOfertas(){
@@ -191,33 +133,58 @@ function importarOfertas(){
 		})
 		.done(function(retorno) {
 			if(retorno)
-				importacaoRealizada(retorno.importada, retorno.substituir);
+				resultadoImportacao(retorno.importada, retorno.substituir);
 		});
 	}
 }
 
-function importacaoRealizada(importada, substituir) {
+function resultadoImportacao(importada, substituir) {
 	if(!importada && substituir){
-		swal({
-			title : "Erro ao importar oferta(s)",
-			text : "As oferta(as) selecionadas não foram importadas.",
-			type : "error",
-			showcancelButton : false,
-			confirmButtonText : "Ok!",
-			closeOnConfirm : true
-		}, function(isConfirm) {
-		});
-
+		errorImportarOferta();
 	}else if(importada && !substituir){
-		swal({
-			title : "Oferta(as) importadas!",
-			text : "As oferta(as) selecionadas foram importadas.",
-			type : "success",
-			showcancelButton : false,
-			confirmButtonText : "Ok!",
-			closeOnConfirm : true
-		}, function(isConfirm) {
-			location.reload();
+		sucessImportarOferta();
+	}
+}
+
+function sucessImportarOferta() {
+	swal({
+		title : "Oferta(as) importadas!",
+		text : "As oferta(as) selecionadas foram importadas.",
+		type : "success",
+		showcancelButton : false,
+		confirmButtonText : "Ok!",
+		closeOnConfirm : true
+	}, function(isConfirm) {
+		location.reload();
+	});
+}
+
+function errorImportarOferta() {
+	swal({
+		title : "Erro ao importar oferta(s)",
+		text : "As oferta(as) selecionadas não foram importadas.",
+		type : "error",
+		showcancelButton : false,
+		confirmButtonText : "Ok!",
+		closeOnConfirm : true
+	}, function(isConfirm) {
+	});
+}
+
+function substituirOfertas(){
+	var ofertas = $("input[name=ofertas]:checked").map(function() {
+		return this.value;
+	}).get().join(",");
+	
+	if(ofertas.length > 0){
+		$.get(baseUrl + "/ofertas/substituicao-ofertas", {ofertas : ofertas}, function() {
+		})
+		.done(function(resultado) {
+			if(resultado === true){
+				$('#modal-substituir-ofertas').modal('toggle');
+				resultadoImportacao(true, false);
+			}else
+				errorSubstituirOferta();
 		});
 	}
 }
