@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -101,27 +102,34 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/curso/{idCurso}", method = RequestMethod.GET)
-	public @ResponseBody List<Oferta> listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
-		Periodo periodoAtivo = periodoService.periodoAtivo();
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), curso);
-		List<Oferta> ofertasCompartilhadas = ofertaService.buscarOfertasCompartilhadasPorPeriodoAndCurso(periodoAtivo, curso);
-		ofertas.addAll(ofertasCompartilhadas);
+	public @ResponseBody ModelMap listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
+		ModelMap model = new ModelMap();
 
-		return ofertas;
+		Periodo periodoAtivo = periodoService.periodoAtivo();
+
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), curso);
+		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, curso);
+
+		model.addAttribute("ofertas", ofertas);
+		model.addAttribute("compartilhamentos", compartilhamentos);
+
+		return model;
 	}
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public @ResponseBody List<Oferta> listarOfertas(Authentication auth) {
+	public @ResponseBody ModelMap listarOfertas(Authentication auth) {
+		ModelMap model = new ModelMap();
 		Pessoa coordenador = (Pessoa) auth.getPrincipal();
-		Curso cursoCoordenador = cursoService.buscarPorCoordenador(coordenador);
 		Periodo periodoAtivo = periodoService.periodoAtivo();
-		
+		Curso cursoCoordenador = cursoService.buscarPorCoordenador(coordenador);
+
 		List<Oferta> ofertasCurso = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, coordenador);
-		List<Oferta> ofertasCompartilhadas = ofertaService.buscarOfertasCompartilhadasPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
-		
-		ofertasCurso.addAll(ofertasCompartilhadas);
-		
-		return ofertasCurso;
+		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
+
+		model.addAttribute("ofertas", ofertasCurso);
+		model.addAttribute("compartilhamentos", compartilhamentos);
+
+		return model;
 	}	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
@@ -130,6 +138,7 @@ public class OfertaController {
 		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+		modelAndView.addObject("periodoAtivo", periodoService.periodoAtivo());
 		return modelAndView;
 	}
 

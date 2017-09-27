@@ -3,7 +3,9 @@ package ufc.quixada.npi.ap.service;
 import java.util.List;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
+import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
+import ufc.quixada.npi.ap.model.Periodo;
 
 public interface CompartilhamentoService {
 	
@@ -16,4 +18,7 @@ public interface CompartilhamentoService {
 	public void excluir(Integer id);
 	
 	public List<Oferta> listarCompartilhamentoOfertas();
+	
+	public List<Compartilhamento> buscarCompartilhamentosPorPeriodoAndCurso(Periodo periodo, Curso curso);
+	
 }
