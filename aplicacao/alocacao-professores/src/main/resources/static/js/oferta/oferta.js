@@ -214,7 +214,7 @@ function errorSwal(){
 }
 
 //Função que faz a requisição da lista de ofertas e de compartilhamentos quando a página é carregada
-//result = modal(ofertas e compartilhamentos)
+//result = model(ofertas e compartilhamentos)
 $(window).load(function() {
 	$.get(baseUrl + "/ofertas/listar", function() {
 	})
@@ -303,8 +303,43 @@ function organizarOfertas(result) {
 				}
 			});
 		});
-		
-		
+		//deve existir uma maneira melhor para não fazer este ctrl+c ctrl+v mas ainda encontrei
+		$(".sa-btn-excluir-compartilhamento").on("click", function(event){
+			event.preventDefault();
+
+			var botaoExcluir = $(event.currentTarget);
+			var urlExcluir = botaoExcluir.attr("href");
+			
+			swal({
+				title: "Tem certeza?",
+				text: "Você não poderá desfazer essa operação posteriormente!",
+				type: "warning",   
+				showCancelButton: true,
+				cancelButtonText: "Cancelar",
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Sim, desejo excluir!",
+				closeOnConfirm: false
+			}, function(isConfirm){
+				if(isConfirm){
+					var response = $.ajax({
+						url: urlExcluir,
+						type: 'GET',
+						success: function(result){
+							if (result === true){
+								successSwalC();
+							}
+							else{
+								errorSwalC();
+							}
+							
+						},
+						error: function(status, error){
+							errorSwal();
+						}
+					});
+				}
+			});
+		});
 	}
 }
 
@@ -440,6 +475,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			iconeExcluir.setAttribute('class', 'fa fa-close');
 			var buttonExcluir = document.createElement('a');
 			buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
+			//buttonExcluir.setAttribute('th:href', '@{/ofertas/}');
 			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
 			buttonExcluir.appendChild(iconeExcluir);
 			divButton.appendChild(buttonExcluir);
@@ -760,10 +796,10 @@ function importacaoRealizada(importada, substituir) {
 	}
 }
 
-function successSwal(){
+function successSwalC(){
 	swal({
-		title: "Oferta excluída!",
-		text: "A oferta foi excluída.", 
+		title: "Compartilhamento excluído!",
+		text: "O compartilhamento foi excluído.", 
 		type: "success",
 		showcancelButton: false,
 		confirmButtonText: "Ok!",
@@ -784,10 +820,10 @@ function errorSubstituirOferta(){
 	});	
 }
 
-function errorSwal(){
+function errorSwalC(){
 	swal({
 		title: "Erro ao excluir",
-		text: "A oferta não foi excluída.", 
+		text: "O compartilhamento não foi excluído.", 
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",

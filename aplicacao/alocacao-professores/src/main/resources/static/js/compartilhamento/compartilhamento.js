@@ -2,7 +2,7 @@ $('#myTable').dataTable( {
     "iDisplayLength": 100
   } );
 
-$(".sa-btn-excluir").on("click", function(event){
+$(".sa-btn-excluir-compartilhamento").on("click", function(event){
 	event.preventDefault();
 
 	var botaoExcluir = $(event.currentTarget);
