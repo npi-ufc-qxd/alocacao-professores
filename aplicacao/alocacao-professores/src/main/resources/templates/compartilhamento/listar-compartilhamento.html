@@ -40,10 +40,9 @@
 						</thead>
 						<tbody>
 							<tr th:each="oferta : ${ofertas}">
-								<td><a th:if="${oferta} != null"
-									th:text="${oferta.disciplina.nome}" th:href="@{/editar-oferta/{id}(id=${oferta.id})}"
-									data-toggle="tooltip" data-original-title="Detalhes Oferta"
-									class="btn-link"></a></td>
+								<td><span th:if="${oferta} != null"
+									th:text="${oferta.disciplina.nome}" data-toggle="tooltip" data-original-title="Detalhes Oferta"></span>
+								</td>
 								<td th:inline="text">[[${oferta.turma.curso.sigla}]]-[[${oferta.turma.semestre.numero}]]</td>
 								<td th:text="${oferta.vagas}"></td>
 								<td><span class="text-left"><b th:inline="text">[[${oferta.totalVagas}]]</b></span></td>
@@ -80,8 +79,8 @@
 									class="text-left"></span></b></td>
 
 								<td sec:authorize="hasAnyAuthority('DIRECAO')" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" align="center">
-										<a href="#" title="" class="btn btn-warning btn-circle waves-effect waves-light"> <i class="fa fa-pencil"></i></a>
-										<a href="#" title="" class="btn btn-danger  btn-circle waves-effect waves-light sa-warning btn-sm"> <i class="fa fa-close"></i></a>
+									<a th:href="@{/editar-oferta/{id}(id=${oferta.id})}" title="" class="btn btn-warning btn-circle waves-effect waves-light"> <i class="fa fa-pencil"></i></a>
+									<!--<a href="#" title="" class="btn btn-danger  btn-circle waves-effect waves-light sa-warning btn-sm"> <i class="fa fa-close"></i></a> -->
 								</td>
  							</tr>
 						</tbody>
