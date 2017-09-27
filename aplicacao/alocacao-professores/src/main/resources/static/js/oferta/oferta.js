@@ -475,7 +475,6 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			iconeExcluir.setAttribute('class', 'fa fa-close');
 			var buttonExcluir = document.createElement('a');
 			buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
-			//buttonExcluir.setAttribute('th:href', '@{/ofertas/}');
 			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
 			buttonExcluir.appendChild(iconeExcluir);
 			divButton.appendChild(buttonExcluir);
@@ -492,53 +491,6 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 		divButton.appendChild(buttonSolicitarCompartilhamento);
 	}
 
-	
-	/**
-	 * 
-	
-	if(siglaCursoCoordenador != sigla && idCursoSelecionado != idCursoCoordenador) {
-		var iconeShare = document.createElement('i');
-		iconeShare.setAttribute('class', 'fa fa-share-alt');
-		var buttonSolicitarCompartilhamento = document.createElement('a');
-		buttonSolicitarCompartilhamento.href = baseUrl + '/ofertas/'+ idOferta + '/solicitar-compartilhamento';
-		buttonSolicitarCompartilhamento.setAttribute('class', 'btn btn-inverse btn-acoes');
-		buttonSolicitarCompartilhamento.appendChild(iconeShare);
-		divButton.appendChild(buttonSolicitarCompartilhamento);
-	}
-
-	if(siglaCursoCoordenador == sigla) {
-		var iconeEditar = document.createElement('i');
-		iconeEditar.setAttribute('class', 'fa fa-pencil');
-		var buttonEditar = document.createElement('a');
-		buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
-		buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
-		buttonEditar.appendChild(iconeEditar);
-		divButton.appendChild(buttonEditar);
-	} else {
-		divPanel.appendChild(divRibbon);
-		var iconeEditar = document.createElement('i');
-		iconeEditar.setAttribute('class', 'fa fa-pencil');
-		var buttonEditar = document.createElement('a');
-		buttonEditar.href = '#';
-		buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
-		buttonEditar.appendChild(iconeEditar);
-		divButton.appendChild(buttonEditar);
-	}
-
-	if(siglaCursoCoordenador == sigla) {
-		var iconeExcluir = document.createElement('i');
-		iconeExcluir.setAttribute('class', 'fa fa-close');
-		var buttonExcluir = document.createElement('a');
-		buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
-		buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
-		buttonExcluir.appendChild(iconeExcluir);
-		divButton.appendChild(buttonExcluir);
-	}
-
- * 
- */	
-	
-	
 	//Inserindo elementos filhos nos elementos pai
 	pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
 	pTurno.appendChild(document.createTextNode("Turno: " + turno));
