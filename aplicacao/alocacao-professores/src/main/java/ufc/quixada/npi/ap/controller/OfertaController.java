@@ -4,6 +4,7 @@ import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
 import static ufc.quixada.npi.ap.util.Constants.STATUS_ERROR;
 import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -234,16 +235,30 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
-	public @ResponseBody List<Oferta> buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
-		Pessoa logada = (Pessoa) auth.getPrincipal();
-		Periodo periodoAtivo = periodoService.periodoAtivo();
+	public @ResponseBody ModelMap buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
+		ModelMap model = new ModelMap();
 		
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodo, logada);
-		List<Oferta> ofertasPeriodoAtivo = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, logada);
+		Periodo periodoAtivo = periodoService.periodoAtivo();
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso curso = cursoService.buscarPorCoordenador(coordenador);
+		
+		List<Oferta> ofertasImportadas = new ArrayList<>();
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodo, coordenador);
+		List<Oferta> ofertasPeriodoAtivo = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, coordenador);
+		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodo, curso);
+		
+		for (Oferta o : ofertas)
+			for (Oferta oPA : ofertasPeriodoAtivo)
+				if (o.getDisciplina().equals(oPA.getDisciplina()))
+					ofertasImportadas.add(oPA);
 		
 		ofertas.removeAll(ofertasPeriodoAtivo);
 		
-		return ofertas;
+		model.addAttribute("ofertas", ofertas);
+		model.addAttribute("compartilhamentos", compartilhamentos);
+		model.addAttribute("ofertasImportadas", ofertasImportadas);
+		
+		return model;
 	}
 	
 	@RequestMapping(value = "/importar", method = RequestMethod.GET)

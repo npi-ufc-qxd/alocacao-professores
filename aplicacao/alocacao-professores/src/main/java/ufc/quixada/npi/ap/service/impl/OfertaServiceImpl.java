@@ -87,45 +87,50 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Override
 	public Map<String, Object> importarOfertas(List<Integer> ofertas) {
-		List<Oferta> ofertasContidas = new ArrayList<>();
-		boolean contem = false;
-		Periodo periodo = periodoRepository.pediodoAtivo();
-
-		Map<String, Object> resultado = new HashMap<String, Object>();
-
+		boolean contem;
 		boolean adicionado = true;
+		
+		Periodo periodo = periodoRepository.pediodoAtivo();
+		
+		List<Oferta> ofertasContidas = new ArrayList<>();
+		Map<String, Object> resultado = new HashMap<String, Object>();
 
 		for (Integer id : ofertas) {
 			Oferta oferta = ofertaRepository.findOne(id);
+			
 			if (oferta != null) {
 				contem = false;
+				
 				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodo)) {
 					if (o.getDisciplina().equals(oferta.getDisciplina())) {
 						ofertasContidas.add(oferta);
 						contem = true;
 					}
 				}
+				
 				if (!contem) {
 					Oferta newOferta = this.clonarOferta(oferta);
 					newOferta.setPeriodo(periodo);
+					
 					ofertaRepository.save(newOferta);
-					if (adicionado) {
+					
+					if (adicionado)
 						resultado.put("importada", true);
-					}
+					
 					adicionado = false;
 				}
 			}
 		}
 
 		resultado.put("contidas", ofertasContidas);
-		if (adicionado) { 
+		
+		if (adicionado) 
 			resultado.put("importada", false);
-		}
-		if (!ofertasContidas.isEmpty()) {
+		
+		if (!ofertasContidas.isEmpty())
 			resultado.put("substituir", true);
-		} else {
+		else
 			resultado.put("substituir", false);
-		}
 
 		return resultado;
 	}
