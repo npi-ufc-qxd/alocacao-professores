@@ -221,39 +221,5 @@ public class Oferta {
 
 		return totalVagas;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((disciplina == null) ? 0 : disciplina.hashCode());
-		result = prime * result + ((turma == null) ? 0 : turma.hashCode());
-		result = prime * result + ((turno == null) ? 0 : turno.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Oferta other = (Oferta) obj;
-		if (disciplina == null) {
-			if (other.disciplina != null)
-				return false;
-		} else if (!disciplina.equals(other.disciplina))
-			return false;
-		if (turma == null) {
-			if (other.turma != null)
-				return false;
-		} else if (!turma.equals(other.turma))
-			return false;
-		if (turno != other.turno)
-			return false;
-		return true;
-	}
 	
 }

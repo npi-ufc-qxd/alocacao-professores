@@ -33,7 +33,7 @@ function exibirOfertas() {
 		})
 		.done(function(retorno) {
 			var ofertas = retorno.ofertas;
-			var compartilhamentos = retorno.compartilhamentos;
+			var ofertasCompartilhadas = retorno.ofertasCompartilhadas;
 			var ofertasImportadas = retorno.ofertasImportadas;
 			
 			limparResultadosImportacao();
@@ -45,10 +45,9 @@ function exibirOfertas() {
 			}else
 				adicionarMensagemSemResultado('#sem-resultado-ofertas');
 			
-			if(compartilhamentos.length > 0){
-				$.each(compartilhamentos, function(key, compartilhamento) {
-					var oferta = compartilhamento.oferta;
-					adicionarResultadoTabela(oferta.id, "compartilhamentos", "compartilhamentos", '#resultado-compartilhamentos', oferta.disciplina.nome, oferta.vagas, oferta.turma.curso.sigla, oferta.turma.semestre, oferta.turno);	
+			if(ofertasCompartilhadas.length > 0){
+				$.each(ofertasCompartilhadas, function(key, oferta) {
+					adicionarResultadoTabela(oferta.id, "ofertas-compartilhadas", "ofertas-compartilhadas", '#resultado-compartilhamentos', oferta.disciplina.nome, oferta.vagas, oferta.turma.curso.sigla, oferta.turma.semestre, oferta.turno);	
 				});
 			}
 			
@@ -115,7 +114,7 @@ function adicionarResultadoTabela(id, inputName, classe, idTabela, nomeDisciplin
 	li.setAttribute('class', 'checkbox checkbox-success');
 	
 	var ul = document.createElement('ul');	
-	ul.id = 'lista-ofertas';
+	ul.id = 'lista-' + inputName;
 	ul.setAttribute('class','list-unstyled');
 	ul.appendChild(li);
 	
@@ -149,6 +148,7 @@ function limparResultadosImportacao(){
 	
 	limparTabela('#resultado-ofertas');
 	limparTabela('#resultado-compartilhamentos');
+	limparTabela('#resultado-ofertas-importadas');
 	
 	semResultadosOfertas.addClass('hidden');
 }

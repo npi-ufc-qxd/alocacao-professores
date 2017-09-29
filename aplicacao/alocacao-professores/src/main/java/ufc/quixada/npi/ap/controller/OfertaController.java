@@ -4,7 +4,6 @@ import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
 import static ufc.quixada.npi.ap.util.Constants.STATUS_ERROR;
 import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -108,7 +107,7 @@ public class OfertaController {
 
 		Periodo periodoAtivo = periodoService.periodoAtivo();
 
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), curso);
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, curso);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, curso);
 
 		model.addAttribute("ofertas", ofertas);
@@ -120,6 +119,7 @@ public class OfertaController {
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public @ResponseBody ModelMap listarOfertas(Authentication auth) {
 		ModelMap model = new ModelMap();
+		
 		Pessoa coordenador = (Pessoa) auth.getPrincipal();
 		Periodo periodoAtivo = periodoService.periodoAtivo();
 		Curso cursoCoordenador = cursoService.buscarPorCoordenador(coordenador);
@@ -136,10 +136,12 @@ public class OfertaController {
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
-		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		
+		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());		
 		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 		modelAndView.addObject("periodoAtivo", periodoService.periodoAtivo());
+		
 		return modelAndView;
 	}
 
@@ -238,24 +240,15 @@ public class OfertaController {
 	public @ResponseBody ModelMap buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
 		ModelMap model = new ModelMap();
 		
-		Periodo periodoAtivo = periodoService.periodoAtivo();
 		Pessoa coordenador = (Pessoa) auth.getPrincipal();
 		Curso curso = cursoService.buscarPorCoordenador(coordenador);
 		
-		List<Oferta> ofertasImportadas = new ArrayList<>();
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodo, coordenador);
-		List<Oferta> ofertasPeriodoAtivo = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, coordenador);
-		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodo, curso);
-		
-		for (Oferta o : ofertas)
-			for (Oferta oPA : ofertasPeriodoAtivo)
-				if (o.getDisciplina().equals(oPA.getDisciplina()))
-					ofertasImportadas.add(oPA);
-		
-		ofertas.removeAll(ofertasPeriodoAtivo);
+		List<Oferta> ofertas = ofertaService.buscarOfertasNaoImportadasPorPeriodoAndCurso(periodo, curso);
+		List<Oferta> ofertasImportadas = ofertaService.buscarOfertasImportadasPorPeriodoAndCurso(periodo, curso);
+		List<Oferta> ofertasCompartilhadas = ofertaService.buscarOfertasCompartilhadasPorPeriodoAndCurso(periodo, curso);
 		
 		model.addAttribute("ofertas", ofertas);
-		model.addAttribute("compartilhamentos", compartilhamentos);
+		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
 		model.addAttribute("ofertasImportadas", ofertasImportadas);
 		
 		return model;
@@ -274,26 +267,6 @@ public class OfertaController {
 		
 		return modelAndView;
 	}
-
-//	@RequestMapping(value = { "/importar" }, method = RequestMethod.POST)
-//	public ModelAndView importarOferta(@ModelAttribute("oferta") @Valid List<Integer> oferta,
-//			BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes,
-//			Authentication auth) {
-//
-//		ofertaValidator.validate(oferta, bindingResult);
-//
-//		if (bindingResult.hasErrors()) {
-//			Pessoa pessoa = (Pessoa) auth.getPrincipal();
-//			modelAndView.setViewName(Constants.OFERTA_IMPORTAR);
-//			modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
-//			return modelAndView;
-//		}
-//
-//		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
-//		ofertaService.importarOfertas(oferta);
-//		
-//		return modelAndView;
-//	}
 
 	@RequestMapping(value = "/importar-2", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> importarOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
@@ -346,6 +319,5 @@ public class OfertaController {
 		
 		return modelAndView;
 	}
-
 
 }

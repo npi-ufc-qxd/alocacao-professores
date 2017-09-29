@@ -39,13 +39,13 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Override
 	public void salvar(Oferta oferta) throws AlocacaoProfessoresException {
-		Periodo periodoAtivo = periodoRepository.pediodoAtivo();
+		Periodo periodoAtivo = periodoRepository.periodoAtivo();
+		
 		if (periodoAtivo != null) {
 			oferta.setPeriodo(periodoAtivo);
 			ofertaRepository.save(oferta);
-		} else {
+		} else
 			throw new AlocacaoProfessoresException(PERIODO_INVALIDO);
-		}
 	}
 
 	@Override
@@ -72,12 +72,12 @@ public class OfertaServiceImpl implements OfertaService {
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador) {
 		Professor professor = professorRepository.findByPessoa(coordenador);
 		Curso curso = cursoRepository.findByCoordenador(professor);
-		return ofertaRepository.findByPeriodoAndCurso(periodo, curso);
+		return ofertaRepository.findOfertasByPeriodoAndTurma_curso(periodo, curso);
 	}
 	
 	@Override
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Curso curso) {
-		return ofertaRepository.findByPeriodoAndCurso(periodo, curso);
+		return ofertaRepository.findOfertasByPeriodoAndTurma_curso(periodo, curso);
 	}
 	
 	@Override
@@ -86,11 +86,23 @@ public class OfertaServiceImpl implements OfertaService {
 	}
 
 	@Override
+	public List<Oferta> buscarOfertasImportadasPorPeriodoAndCurso(Periodo periodo, Curso curso) {
+		Periodo periodoAtivo = periodoRepository.periodoAtivo();
+		return ofertaRepository.findOfertasImportadasByPeriodoAndCurso(periodo, periodoAtivo, curso);
+	}
+	
+	@Override
+	public List<Oferta> buscarOfertasNaoImportadasPorPeriodoAndCurso(Periodo periodo, Curso curso) {
+		Periodo periodoAtivo = periodoRepository.periodoAtivo();
+		return ofertaRepository.findOfertasNaoImportadasByPeriodoAndCurso(periodo, periodoAtivo, curso);
+	}
+
+	@Override
 	public Map<String, Object> importarOfertas(List<Integer> ofertas) {
 		boolean contem;
 		boolean adicionado = true;
 		
-		Periodo periodo = periodoRepository.pediodoAtivo();
+		Periodo periodo = periodoRepository.periodoAtivo();
 		
 		List<Oferta> ofertasContidas = new ArrayList<>();
 		Map<String, Object> resultado = new HashMap<String, Object>();
@@ -156,7 +168,7 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Override
 	public void substituirOferta(List<Integer> idOfertas) {
-		Periodo periodoAtivo = periodoRepository.pediodoAtivo();
+		Periodo periodoAtivo = periodoRepository.periodoAtivo();
 		List<Oferta> novasOfertas = new ArrayList<>();
 		
 		for (Integer id : idOfertas) {
