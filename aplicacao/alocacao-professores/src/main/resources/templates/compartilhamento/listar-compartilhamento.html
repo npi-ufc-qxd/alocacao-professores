@@ -43,42 +43,42 @@
 						<tbody>
 							<tr th:each="oferta : ${ofertas}">
 								<td><span th:if="${oferta} != null"
-									th:text="${oferta.disciplina.nome}" data-toggle="tooltip" data-original-title="Detalhes Oferta"></span>
+									th:text="${oferta.disciplina.nome}"></span>
 								</td>
 								<td th:inline="text">[[${oferta.turma.curso.sigla}]]-[[${oferta.turma.semestre.numero}]]</td>
 								<td th:text="${oferta.vagas}"></td>
 								<td><span class="text-left"><b th:inline="text">[[${oferta.totalVagas}]]</b></span></td>
 								<td th:text="${oferta.turno}"></td>
-								<td th:with="compartilhamentoCC=${oferta.getCompartilhamentoPorCurso('CC')}"><span
-									th:text="${compartilhamentoCC} ? ${compartilhamentoCC.turma.semestre.descricao}+' Sem.' : ''"
-									class="label label-info"></span> <b><span
-									th:text="${compartilhamentoCC} ? ${compartilhamentoCC.vagas} + ' ' + vagas : ''"
-									class="text-left"></span></b></td>
-						 		<td th:with="compartilhamentoES=${oferta.getCompartilhamentoPorCurso('ES')}"><span
-									th:text="${compartilhamentoES} ? ${compartilhamentoES.turma.semestre.descricao}+' Sem.' : ''"
-									class="label label-info"></span> <b><span
-									th:text="${compartilhamentoES} ? ${compartilhamentoES.vagas} + ' ' + vagas : ''"
-									class="text-left"></span></b></td>
-								<td th:with="compartilhamentoSI=${oferta.getCompartilhamentoPorCurso('SI')}"><span
-									th:text="${compartilhamentoSI} ? ${compartilhamentoSI.turma.semestre.descricao}+' Sem.' : ''"
-									class="label label-info"></span> <b><span
-									th:text="${compartilhamentoSI} ? ${compartilhamentoSI.vagas} + ' ' + vagas : ''"
-									class="text-left"></span></b></td>
-								<td th:with="compartilhamentoRD=${oferta.getCompartilhamentoPorCurso('RD')}"><span
-									th:text="${compartilhamentoRD} ? ${compartilhamentoRD.turma.semestre.descricao}+' Sem.' : ''"
-									class="label label-info"></span> <b><span
-									th:text="${compartilhamentoRD} ? ${compartilhamentoRD.vagas} + ' ' + vagas : ''"
-									class="text-left"></span></b></td>
-								<td th:with="compartilhamentoEC=${oferta.getCompartilhamentoPorCurso('EC')}"><span
-									th:text="${compartilhamentoEC} ? ${compartilhamentoEC.turma.semestre.descricao}+' Sem.' : ''"
-									class="label label-info"></span> <b><span
-									th:text="${compartilhamentoEC} ? ${compartilhamentoEC.vagas} + ' ' + vagas : ''"
-									class="text-left"></span></b></td>
-								<td th:with="compartilhamentoDD=${oferta.getCompartilhamentoPorCurso('DD')}"><span
-									th:text="${compartilhamentoDD} ? ${compartilhamentoDD.turma.semestre.descricao}+' Sem.'  : ''"
-									class="label label-info"></span> <b><span
-									th:text="${compartilhamentoDD} ? ${compartilhamentoDD.vagas} + ' ' + vagas : ''"
-									class="text-left"></span></b></td>
+
+								<td th:with="compartilhamentoCC=${oferta.getCompartilhamentoPorCurso('CC')}">
+									<span th:text="${compartilhamentoCC} ? ${compartilhamentoCC.vagas} + ' ' + vagas : ''" class="label label-info text-vagas"></span>
+									<span th:text="${compartilhamentoCC} ? ${compartilhamentoCC.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span>
+								</td>
+
+						 		<td align="center" th:with="compartilhamentoES=${oferta.getCompartilhamentoPorCurso('ES')}">
+									<span th:text="${compartilhamentoES} ? ${compartilhamentoES.vagas} + ' ' + vagas : ''" class="label label-info text-vagas"></span>
+						 			<span th:text="${compartilhamentoES} ? ${compartilhamentoES.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span> 
+								</td>
+
+								<td align="center" th:with="compartilhamentoSI=${oferta.getCompartilhamentoPorCurso('SI')}">
+									<b><span th:text="${compartilhamentoSI} ? ${compartilhamentoSI.vagas} + ' ' + vagas : ''" class="label label-info text-vags"></span></b>
+									<span th:text="${compartilhamentoSI} ? ${compartilhamentoSI.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span>
+								</td>
+
+								<td align="center" th:with="compartilhamentoRD=${oferta.getCompartilhamentoPorCurso('RD')}">
+									<b><span th:text="${compartilhamentoRD} ? ${compartilhamentoRD.vagas} + ' ' + vagas : ''" class="label label-info text-vags"></span></b>
+									<span th:text="${compartilhamentoRD} ? ${compartilhamentoRD.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span>
+								</td>
+
+								<td align="center" th:with="compartilhamentoEC=${oferta.getCompartilhamentoPorCurso('EC')}">
+									<b><span th:text="${compartilhamentoEC} ? ${compartilhamentoEC.vagas} + ' ' + vagas : ''" class="label label-info text-vagas"></span></b>
+									<span th:text="${compartilhamentoEC} ? ${compartilhamentoEC.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span>
+								</td>
+
+								<td align="center" th:with="compartilhamentoDD=${oferta.getCompartilhamentoPorCurso('DD')}">
+									<b><span th:text="${compartilhamentoDD} ? ${compartilhamentoDD.vagas} + ' ' + vagas : ''" class="label label-info text-vagas"></span></b>
+									<b><span th:text="${compartilhamentoDD} ? ${compartilhamentoDD.turma.semestre.descricao}+' Sem.'  : ''" class="text-semestre"></span></b>
+								</td>
 
 								<td sec:authorize="hasAnyAuthority('DIRECAO')" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" align="center">
 									<a th:href="@{/editar-oferta/{id}(id=${oferta.id})}" title="" class="btn btn-warning btn-circle waves-effect waves-light"> <i class="fa fa-pencil"></i></a>
