@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="base/base">
@@ -10,16 +11,15 @@
 	
 	<section layout:fragment="conteudo">
 		<div class="row bg-title">
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h4 class="page-title">Editar Oferta</h4>
-			</div>
+			<h3 class="box-title m-b-0">Editar Oferta</h3>
 		</div>
+		
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-md-12">
 				<div class="white-box">
 					<form class = "form-horizontal" th:action="@{/ofertas/{id}/editar(id=${oferta.id})}" method="POST" th:object="${oferta}">
 						<div class="form-group">
-							<label class="control-label m-l-10" th:text="${cursoAtual.nome}"></label>
+							<label class="control-label m-l-10 label-detalhes" th:text="${cursoAtual.nome}"></label>
 						</div>
 
 						<div class="form-group" th:classappend="${#fields.hasErrors('turma')} ? has-error">
@@ -124,11 +124,11 @@
 	</section>
 	<section layout:fragment="js">
 		<!-- Select2 Tradução Português Brasileiro -->
-<script th:src="@{/plugins/select2/js/i18n/pt-BR.js}"></script>
-<script type="text/javascript">		
-$(".select2").select2({
-	"language": "pt-BR"
-});
+		<script th:src="@{/plugins/select2/js/i18n/pt-BR.js}"></script>
+		<script type="text/javascript">		
+		$(".select2").select2({
+			"language": "pt-BR"
+		});
 </script>
 	</section>
 </html>

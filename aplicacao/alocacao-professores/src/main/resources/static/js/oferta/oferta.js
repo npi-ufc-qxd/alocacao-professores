@@ -242,8 +242,8 @@ function organizarOfertas(result) {
 				if(newRow%4 === 0) {
 					idNewRow = 'rowPanel'+newRow+semestre;
 				}
-
-				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow, 0);
+				
+				criarPanelsOferta(value.turma.curso.id, value.turma.curso.sigla, value.disciplina.codigo, value.disciplina.nome, value.vagas, value.turno, professores, semestre, numberSemestre, value.id, newRow, idNewRow, -1);
 				existe = true;
 				newRow++;
 				
@@ -401,7 +401,6 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	divCol.setAttribute('class', 'col-lg-4 col-md-4 col-sm-4 col-xs-12 panel-margin');
 	
 	var divPanel = document.createElement('div');
-	divPanel.setAttribute('class', 'panel panel-default');
 	
 	var divRibbon = document.createElement('div');
 	divRibbon.setAttribute('class', 'ribbon ribbon-vertical-r ribbon-success');
@@ -430,6 +429,16 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	var pVagas = document.createElement('p');
 	var pTurno = document.createElement('p');
 	var pProfessores = document.createElement('p');
+	
+	if(idCompartilhamento != -1){
+		divPanel.setAttribute('class', 'panel panel-inverse');
+		pVagas.appendChild(document.createTextNode("Vagas Solicitadas: " + vagas));
+
+	} else {
+		divPanel.setAttribute('class', 'panel panel-default');
+		pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
+	}
+	
 	
 	var divPanelFooter = document.createElement('div');
 	divPanelFooter.setAttribute('class', 'panel-footer');
@@ -463,7 +472,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			divButton.appendChild(buttonExcluir);
 			
 		} else {
-			divPanel.appendChild(divRibbon);
+//			divPanel.appendChild(divRibbon);
 			var iconeEditar = document.createElement('i');
 			iconeEditar.setAttribute('class', 'fa fa-pencil');
 			var buttonEditar = document.createElement('a');
@@ -493,7 +502,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	}
 
 	//Inserindo elementos filhos nos elementos pai
-	pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
+	//pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
 	pTurno.appendChild(document.createTextNode("Turno: " + turno));
 	pProfessores.appendChild(document.createTextNode("Professores: " + professores));
 

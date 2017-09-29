@@ -11,7 +11,7 @@
 <section layout:fragment="conteudo">
 	<div class="row bg-title">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title">Disciplinas</h4>
+			<h3 class="page-title">Disciplinas</h3>
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<a th:href="@{/disciplinas/cadastrar}"
@@ -48,11 +48,13 @@
 										th:href="@{/disciplinas/{id}/editar(id=${disciplina.id})}"
 										class="btn btn-inverse btn-circle waves-effect waves-light"
 										data-toggle="tooltip" data-placement="top" title="Editar"><i
-											class="fa fa-pencil"></i></a> <a
-										th:href="@{/disciplinas/{id}/arquivar(id=${disciplina.id})}"
-										class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-btn-arquivar"
-										data-toggle="tooltip" data-placement="top" title="Arquivar"><i
-											class="fa fa-archive"></i></a></td>
+											class="fa fa-pencil"></i></a> 
+<!-- 											<a -->
+<!-- 										th:href="@{/disciplinas/{id}/arquivar(id=${disciplina.id})}" -->
+<!-- 										class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-btn-arquivar" -->
+<!-- 										data-toggle="tooltip" data-placement="top" title="Arquivar"><i -->
+<!-- 											class="fa fa-archive"></i></a> -->
+											</td>
 								</tr>
 							</tbody>
 						</table>

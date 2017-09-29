@@ -47,11 +47,18 @@
 			
 						<div class = "text-right">
 							<a th:href="@{/ofertas/}" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
-							<button type="submit" name="action" class="btn btn-success waves-effect waves-light">Salvar alteração</button>
+							<button type="submit" name="action" class="btn btn-success waves-effect waves-light">Salvar alterações</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</section>
+	
+	<section layout:fragment="js">
+		<script type="text/javascript">
+			$('#menu-ofertas').addClass('active');
+		</script>
+	</section>
+	
 </html>

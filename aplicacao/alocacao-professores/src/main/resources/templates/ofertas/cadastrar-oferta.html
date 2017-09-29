@@ -11,7 +11,11 @@
 	<section layout:fragment="conteudo">
 		<div class="row bg-title">
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h4 class="page-title"><span th:text="'Cadastrar Oferta '+${periodoAtivo.ano}+'.'+${periodoAtivo.semestre.numero}"></span></h4>
+				<h3 class="page-title">
+					<span th:text="'Cadastrar Oferta '+${periodoAtivo.ano}+
+							'.'+${periodoAtivo.semestre.numero}">
+					</span>
+				</h3>
 			</div>
 		</div>
 		<div class="row">
@@ -20,7 +24,7 @@
 					<form class = "form-horizontal" th:action="@{${'/ofertas/cadastrar'}}" method="POST" th:object="${oferta}">
 
 						<div class="form-group">
-							<label class="control-label m-l-10" th:text="${cursoAtual.nome}"></label>
+							<label class="control-label m-l-10 label-detalhes" th:text="${cursoAtual.nome}"></label>
 						</div>
 
 						<div class="form-group" th:classappend="${#fields.hasErrors('turma')} ? has-error">

@@ -18,7 +18,7 @@
 		    	<a sec:authorize="hasAnyAuthority('DIRECAO')" th:href="@{/periodos/cadastrar}" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Novo Período</a>
 			</div>
 		</div>
-		
+
 		<div class="row">
         <div class="col-sm-12">
           <div class="white-box">         
@@ -32,7 +32,7 @@
                   <th class="text-center">Período Ajuste</th>
                   <th class="text-center">Status</th>
                   <th class="text-center">Ativo</th> 
-                  <th class="text-center">Opções</th> 
+<!--                   <th class="text-center">Opções</th>  -->
                 </tr>
               </thead>
               <tbody>
@@ -43,22 +43,19 @@
                   <td class="text-center"  th:inline="text">[[${#dates.format(periodo.inicioPeriodoAjuste, 'dd/MM/yyyy')}]] - [[${#dates.format(periodo.fimPeriodoAjuste, 'dd/MM/yyyy')}]]</td>
                   <td class="text-center" th:text="${periodo.status}"></td>
                   <td class="text-center" th:text="${periodo.ativo} ? 'Sim' : 'Não' "></td>                                                                                       
-                  <td class="text-center active">
-                    <a data-toggle="tooltip" data-placement="top" title="Detalhes" th:href="@{/periodos/{id}/detalhar(id=${periodo.id})}" class="btn btn-info btn-circle btn-xs waves-effect waves-light ">
-                    	<i class="fa fa-eye "></i>  
-                    </a> 
-                    <a sec:authorize="hasAnyAuthority('DIRECAO')" data-toggle="tooltip" data-placement="top" title="Editar" th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn  btn-warning btn-xs btn-circle">
-                    	<i class="fa fa-pencil"></i>  
-                    </a>
+<!--                   <td class="text-center active"> -->
+<!--                     <a data-toggle="tooltip" data-placement="top" title="Detalhes" th:href="@{/periodos/{id}/detalhar(id=${periodo.id})}" class="btn btn-info btn-circle btn-xs waves-effect waves-light "> -->
+<!--                     	<i class="fa fa-eye "></i>   -->
+<!--                     </a>  -->
+<!--                     <a sec:authorize="hasAnyAuthority('DIRECAO')" data-toggle="tooltip" data-placement="top" title="Editar" th:href="@{/periodos/{id}/editar(id=${periodo.id})}" class="btn  btn-warning btn-xs btn-circle"> -->
+<!--                     	<i class="fa fa-pencil"></i>   -->
+<!--                     </a> -->
                                                           
-                    <a sec:authorize="hasAnyAuthority('DIRECAO')" data-toggle="tooltip" data-placement="top" title="Excluir" th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-circle btn-xs waves-effect waves-light sa-btn-excluir">
-                    	<i class="fa fa-close"></i>  
-                    </a>
-                                        
-                  </td>
-                                                                               					
+<!--                     <a sec:authorize="hasAnyAuthority('DIRECAO')" data-toggle="tooltip" data-placement="top" title="Excluir" th:href="@{/periodos/{id}/excluir(id=${periodo.id})}" class="btn btn-danger btn-circle btn-xs waves-effect waves-light sa-btn-excluir"> -->
+<!--                     	<i class="fa fa-close"></i>   -->
+<!--                     </a> -->
+<!--                   </td> -->
                 </tr>                                   
-
               </tbody>
             </table>
             </div>
