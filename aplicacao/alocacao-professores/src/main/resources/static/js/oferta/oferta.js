@@ -258,7 +258,8 @@ function organizarOfertas(result) {
 					idNewRow = 'rowPanel'+newRow+semestre;
 				}
 				numeroDoSemestreOferta = semestres.indexOf(value.oferta.turma.semestre) + 1;
-				criarPanelsOferta(value.oferta.turma.curso.id, value.oferta.turma.curso.sigla, value.oferta.disciplina.codigo, value.oferta.disciplina.nome, value.oferta.vagas, value.oferta.turno, professores, semestre, numeroDoSemestreOferta, value.oferta.id, newRow, idNewRow, value.id);
+				vagasCompartilhamento = value.oferta.totalVagas - value.oferta.vagas;
+				criarPanelsOferta(value.oferta.turma.curso.id, value.oferta.turma.curso.sigla, value.oferta.disciplina.codigo, value.oferta.disciplina.nome, vagasCompartilhamento, value.oferta.turno, professores, semestre, numeroDoSemestreOferta, value.oferta.id, newRow, idNewRow, value.id);
 				existe = true;
 				newRow++;
 				
