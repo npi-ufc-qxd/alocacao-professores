@@ -102,19 +102,16 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Compartilhamento compartilhamento,
 												@RequestParam(value="turma") Turma turma,
 												@RequestParam(value="vagas") Integer vagas,
-												@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
-													BindingResult bindingResult, ModelAndView modelAndView){
+												ModelAndView modelAndView){
 
-		try{
-			Compartilhamento compartilhamentoNovo = compartilhamentoService.findCompartilhamento(id);
+		try{						
+			compartilhamento.setTurma(turma);
+			compartilhamento.setVagas(vagas);
 			
-			compartilhamentoNovo.setTurma(turma);
-			compartilhamentoNovo.setVagas(vagas);
-			
-			compartilhamentoService.salvar(compartilhamentoNovo);
+			compartilhamentoService.salvar(compartilhamento);
 		} catch(Exception e){
 			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
 			
