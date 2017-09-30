@@ -1,6 +1,7 @@
 package ufc.quixada.npi.ap.service;
 
 import java.util.List;
+import java.util.Map;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
@@ -21,4 +22,5 @@ public interface CompartilhamentoService {
 	
 	public List<Compartilhamento> buscarCompartilhamentosPorPeriodoAndCurso(Periodo periodo, Curso curso);
 	
+	public Map<String, Object> importarOfertasCompartilhadas(List<Integer> compartilhamentos, Periodo periodo, Curso cursoCoordenador);
 }

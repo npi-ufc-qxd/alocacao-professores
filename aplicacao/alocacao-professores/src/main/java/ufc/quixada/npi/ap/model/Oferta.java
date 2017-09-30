@@ -221,5 +221,5 @@ public class Oferta {
 
 		return totalVagas;
 	}
-
+	
 }

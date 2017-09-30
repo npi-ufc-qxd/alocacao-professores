@@ -27,6 +27,10 @@ public interface OfertaService {
 	
 	public List<Oferta> buscarOfertasCompartilhadasPorPeriodoAndCurso(Periodo periodo, Curso curso);
 	
+	public List<Oferta> buscarOfertasImportadasPorPeriodoAndCurso(Periodo periodo, Curso curso);
+	
+	public List<Oferta> buscarOfertasNaoImportadasPorPeriodoAndCurso(Periodo periodo, Curso curso);
+	
 	public Map<String, Object> importarOfertas(List<Integer> ofertas);
 	
 	public void substituirOferta(List<Integer> ofertas);

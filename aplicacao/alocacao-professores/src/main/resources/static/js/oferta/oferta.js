@@ -731,18 +731,19 @@ function adicionarResultado(id, name, coluna1, coluna2, nome, classe, index){
 
 
 function importacaoRealizada(importada, substituir) {
-	if (importada && substituir) {
-		swal({
-			title : "Oferta(as) importadas!",
-			text : "As oferta(as) selecionadas foram importadas.",
-			type : "success",
-			showcancelButton : false,
-			confirmButtonText : "Ok!",
-			closeOnConfirm : true
-		}, function(isConfirm) {
-			$('#modal-substituir-ofertas').modal('show');
-		});
-	}else if(!importada && substituir){
+//	if (importada && !substituir) {
+//		swal({
+//			title : "Oferta(as) importadas!",
+//			text : "As oferta(as) selecionadas foram importadas.",
+//			type : "success",
+//			showcancelButton : false,
+//			confirmButtonText : "Ok!",
+//			closeOnConfirm : true
+//		}, function(isConfirm) {
+//			$('#modal-substituir-ofertas').modal('show');
+//		});
+//	}else 
+	if(!importada && substituir){
 		$('#modal-substituir-ofertas').modal('show');
 	}else if(importada && !substituir){
 		swal({

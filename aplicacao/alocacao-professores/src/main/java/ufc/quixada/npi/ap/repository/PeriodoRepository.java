@@ -14,9 +14,9 @@ import ufc.quixada.npi.ap.model.Periodo;
 public interface PeriodoRepository extends JpaRepository<Periodo, Integer>{
 	
 	@Query("from Periodo WHERE ativo = true")
-	Periodo pediodoAtivo();
+	Periodo periodoAtivo();
 	
 	@Query("FROM Periodo WHERE status = 'CONSOLIDADO' ")
-	List<Periodo> periodosInativos();
+	List<Periodo> periodosConsolidados();
 }
 

@@ -107,7 +107,7 @@ public class OfertaController {
 
 		Periodo periodoAtivo = periodoService.periodoAtivo();
 
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoService.periodoAtivo(), curso);
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, curso);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, curso);
 
 		model.addAttribute("ofertas", ofertas);
@@ -119,6 +119,7 @@ public class OfertaController {
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public @ResponseBody ModelMap listarOfertas(Authentication auth) {
 		ModelMap model = new ModelMap();
+		
 		Pessoa coordenador = (Pessoa) auth.getPrincipal();
 		Periodo periodoAtivo = periodoService.periodoAtivo();
 		Curso cursoCoordenador = cursoService.buscarPorCoordenador(coordenador);
@@ -135,10 +136,12 @@ public class OfertaController {
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
-		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		
+		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());		
 		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 		modelAndView.addObject("periodoAtivo", periodoService.periodoAtivo());
+		
 		return modelAndView;
 	}
 
@@ -234,15 +237,49 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
-	public @ResponseBody List<Oferta> buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
-		Pessoa logada = (Pessoa) auth.getPrincipal();
-		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodo, logada);
-		return ofertas;
+	public @ResponseBody ModelMap buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
+		ModelMap model = new ModelMap();
+		
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso curso = cursoService.buscarPorCoordenador(coordenador);
+		
+		List<Oferta> ofertas = ofertaService.buscarOfertasNaoImportadasPorPeriodoAndCurso(periodo, curso);
+		List<Oferta> ofertasImportadas =  ofertaService.buscarOfertasImportadasPorPeriodoAndCurso(periodo, curso);
+		List<Compartilhamento> ofertasCompartilhadas = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodo, curso);
+		
+		model.addAttribute("ofertas", ofertas);
+		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
+		model.addAttribute("ofertasImportadas", ofertasImportadas);
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/importar", method = RequestMethod.GET)
+	public ModelAndView importarOfertas(Authentication auth) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_IMPORTAR);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+
+		List<Periodo> periodosConsolidados = periodoService.periodosConsolidados();
+		
+		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+		modelAndView.addObject("periodos", periodosConsolidados);
+		
+		return modelAndView;
 	}
 
-	@RequestMapping(value = "/importar", method = RequestMethod.GET)
+	@RequestMapping(value = "/importar-ofertas", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> importarOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
 		return ofertaService.importarOfertas(ofertas);
+	}
+	
+	@RequestMapping(value = "/importar-ofertas-compartilhadas", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> importarOfertasCompartilhadas(@RequestParam("compartilhamentos") List<Integer> compartilhamentos, Authentication auth) {
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso curso = cursoService.buscarPorCoordenador(coordenador);
+		Periodo periodo = periodoService.periodoAtivo();
+		
+		return compartilhamentoService.importarOfertasCompartilhadas(compartilhamentos, periodo, curso);
 	}
 
 	@RequestMapping(value = "/substituicao-ofertas", method = RequestMethod.GET)
@@ -290,6 +327,5 @@ public class OfertaController {
 		
 		return modelAndView;
 	}
-
 
 }
