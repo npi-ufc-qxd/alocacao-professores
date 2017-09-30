@@ -20,7 +20,10 @@
             <!-- /input-group -->
          </li>
          <li>
-            <a sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/ofertas}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Ofertas <span class="fa arrow"></span> </span></a>
+            <a id="menu-ofertas" sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/ofertas}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Ofertas <span class="fa arrow"></span> </span></a>
+         </li>
+         <li>
+            <a sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/empilhamentos}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Empilhamentos <span class="fa arrow"></span> </span></a>
          </li>
          <li>
             <a sec:authorize="hasAnyAuthority('DIRECAO', 'COORDENACAO')" th:href="@{/periodos}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Periodos <span class="fa arrow"></span> </span></a>

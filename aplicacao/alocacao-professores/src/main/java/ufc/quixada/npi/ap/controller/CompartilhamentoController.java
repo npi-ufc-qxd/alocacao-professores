@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -95,26 +96,21 @@ public class CompartilhamentoController {
 			
 			return modelAndView;
 		}
-		
 		modelAndView.addObject("compartilhamento", compartilhamento);
 		
 		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
-												@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
-													BindingResult bindingResult, ModelAndView modelAndView){
-		
-		compartilhamentoValidator.validate(compartilhamento, bindingResult);
-		
-		if (bindingResult.hasErrors()){
-			modelAndView.setViewName(Constants.COMPARTILHAMENTO_EDITAR);
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Compartilhamento compartilhamento,
+												@RequestParam(value="turma") Turma turma,
+												@RequestParam(value="vagas") Integer vagas,
+												ModelAndView modelAndView){
+
+		try{						
+			compartilhamento.setTurma(turma);
+			compartilhamento.setVagas(vagas);
 			
-			return modelAndView;
-		}
-		
-		try{
 			compartilhamentoService.salvar(compartilhamento);
 		} catch(Exception e){
 			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
@@ -122,7 +118,7 @@ public class CompartilhamentoController {
 			return modelAndView;
 		}
 		
-		modelAndView.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
 		
 		return modelAndView;
 	}

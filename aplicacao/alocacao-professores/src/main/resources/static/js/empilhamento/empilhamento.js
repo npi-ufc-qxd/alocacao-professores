@@ -20,7 +20,7 @@ $(".sa-emp-btn-excluir").on("click", function(event){
 				url: urlExcluir,
 				type: 'GET',
 				success: function(result){
-					console.log(result);
+					console.log(urlExcluir);
 					if (result === true){
 						successSwal();
 					}

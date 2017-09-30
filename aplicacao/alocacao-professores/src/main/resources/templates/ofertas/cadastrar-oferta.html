@@ -11,7 +11,11 @@
 	<section layout:fragment="conteudo">
 		<div class="row bg-title">
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h4 class="page-title"><span th:text="'Cadastrar Oferta '+${periodoAtivo.ano}+'.'+${periodoAtivo.semestre.numero}"></span></h4>
+				<h3 class="page-title">
+					<span th:text="'Cadastrar Oferta '+${periodoAtivo.ano}+
+							'.'+${periodoAtivo.semestre.numero}">
+					</span>
+				</h3>
 			</div>
 		</div>
 		<div class="row">
@@ -20,15 +24,15 @@
 					<form class = "form-horizontal" th:action="@{${'/ofertas/cadastrar'}}" method="POST" th:object="${oferta}">
 
 						<div class="form-group">
-							<label class="control-label m-l-10" th:text="${cursoAtual.nome}"></label>
+							<label class="control-label m-l-10 label-detalhes" th:text="${cursoAtual.nome}"></label>
 						</div>
 
 						<div class="form-group" th:classappend="${#fields.hasErrors('turma')} ? has-error">
-							<label for = "turma" class="control-label m-l-10">Turma</label>
+							<label for="turma" class="control-label m-l-10">Turma</label>
 							<div class="col-md-12">
 								<select id="turma" th:field="*{turma}" class = "form-control"  required="required">
-									<option value = "">Selecione uma turma</option>
-									<option th:each = "turma : ${cursoAtual.turmas}" th:value = "${{turma}}" th:text = "${turma.semestre.descricao + ' Semestre - ' + turma.curso.nome}"></option>
+									<option value="">Selecione uma turma</option>
+									<option th:each="turma : ${cursoAtual.turmas}" th:value="${{turma}}" th:text="${turma.semestre.descricao + ' Semestre - ' + turma.curso.nome}"></option>
 								</select>
 								<span th:if="${#fields.hasErrors('turma')}" th:errors="*{turma}" class = "help-block with-errors"></span>
 							</div>

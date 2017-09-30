@@ -10,6 +10,7 @@
 
 .btn-acoes {
 	margin-left: 5px;
+	color: #fff !important;
 }
 
 .modal-resultado-ofertas {
@@ -30,4 +31,23 @@
 
 .visulizar-outras-ofertas {
 	margin-left: -90px;
+}
+
+.title-oferta {
+	margin-right:15px;
+}
+
+.box-cursos{
+	margin-top:5px;
+}
+
+.text-vagas {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.text-semestre {
+    font-size: 10px;
+    font-weight: 500;
+	
 }
