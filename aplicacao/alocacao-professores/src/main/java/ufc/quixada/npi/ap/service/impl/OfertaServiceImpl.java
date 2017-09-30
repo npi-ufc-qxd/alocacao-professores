@@ -96,7 +96,7 @@ public class OfertaServiceImpl implements OfertaService {
 		Periodo periodoAtivo = periodoRepository.periodoAtivo();
 		return ofertaRepository.findOfertasNaoImportadasByPeriodoAndCurso(periodo, periodoAtivo, curso);
 	}
-
+	
 	@Override
 	public Map<String, Object> importarOfertas(List<Integer> ofertas) {
 		boolean contem;
@@ -104,27 +104,29 @@ public class OfertaServiceImpl implements OfertaService {
 		
 		Periodo periodo = periodoRepository.periodoAtivo();
 		
-		List<Oferta> ofertasContidas = new ArrayList<>();
 		Map<String, Object> resultado = new HashMap<String, Object>();
 
 		for (Integer id : ofertas) {
 			Oferta oferta = ofertaRepository.findOne(id);
 			
 			if (oferta != null) {
+				
 				contem = false;
 				
 				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodo)) {
-					if (o.getDisciplina().equals(oferta.getDisciplina())) {
-						ofertasContidas.add(oferta);
+					if (o.getDisciplina().equals(oferta.getDisciplina()) 
+							&& o.getTurma().equals(oferta.getTurma())) {
 						contem = true;
+						break;
 					}
 				}
 				
 				if (!contem) {
-					Oferta newOferta = this.clonarOferta(oferta);
-					newOferta.setPeriodo(periodo);
+					Oferta novaOferta = this.clonarOferta(oferta);
 					
-					ofertaRepository.save(newOferta);
+					novaOferta.setPeriodo(periodo);
+					
+					ofertaRepository.save(novaOferta);
 					
 					if (adicionado)
 						resultado.put("importada", true);
@@ -134,21 +136,15 @@ public class OfertaServiceImpl implements OfertaService {
 			}
 		}
 
-		resultado.put("contidas", ofertasContidas);
-		
 		if (adicionado) 
 			resultado.put("importada", false);
 		
-		if (!ofertasContidas.isEmpty())
-			resultado.put("substituir", true);
-		else
-			resultado.put("substituir", false);
-
 		return resultado;
 	}
-
+	
 	private Oferta clonarOferta(Oferta o) {
 		Oferta oferta = new Oferta();
+		
 		oferta.setDisciplina(o.getDisciplina());
 		oferta.setTurma(o.getTurma());
 		oferta.setTurno(o.getTurno());
@@ -157,15 +153,14 @@ public class OfertaServiceImpl implements OfertaService {
 
 		if (!o.getProfessores().isEmpty()) {
 			List<Professor> professores = new ArrayList<>();
-			for (Professor professor : o.getProfessores()) {
-				professores.add(professor);
-			}
+			professores.addAll(o.getProfessores());
+			
 			oferta.setProfessores(professores);
 		}
 		
 		return oferta;
 	}
-
+	
 	@Override
 	public void substituirOferta(List<Integer> idOfertas) {
 		Periodo periodoAtivo = periodoRepository.periodoAtivo();

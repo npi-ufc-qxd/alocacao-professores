@@ -51,10 +51,10 @@
 								<table class="table table-striped table-bordered" id="resultado-ofertas">
 									<thead>
 										<tr>
-											<th>Nome</th>
-											<th>Turma</th>
-											<th>Turno</th>
-											<th>Vagas</th>
+											<th class="col-md-9">Nome</th>
+											<th class="col-md-1">Turma</th>
+											<th class="col-md-1">Turno</th>
+											<th class="col-md-1">Vagas</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -67,28 +67,33 @@
 							</div>
 							<div class="row table-responsive hidden">
 								<h1 class="text-center">Ofertas compartilhadas</h1>
-								<table class="table table-striped table-bordered" id="resultado-compartilhamentos">
+								<table class="table table-striped table-bordered" id="resultado-ofertas-compartilhadas">
 									<thead>
 										<tr>
-											<th>Nome</th>
-											<th>Turma</th>
-											<th>Turno</th>
-											<th>Vagas</th>
+											<th class="col-md-9">Nome</th>
+											<th class="col-md-1">Turma original</th>
+											<th class="col-md-1">Turma do curso</th>
+											<th class="col-md-1">Turno</th>
+											<th class="col-md-1">Vagas</th>
 										</tr>
 									</thead>
 									<tbody>
 									</tbody>
 								</table>
+								<div class = "col-md-12 text-right">
+									<a th:href="@{/ofertas/}" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+									<button type="button" class="btn btn-success" id="btn-importar-ofertas-compartilhadas">Importar</button>
+								</div>
 							</div>
 							<div class="row table-responsive hidden">
 								<h1 class="text-center">Ofertas já importadas</h1>
 								<table class="table table-striped table-bordered" id="resultado-ofertas-importadas">
 									<thead>
 										<tr>
-											<th>Nome</th>
-											<th>Turma</th>
-											<th>Turno</th>
-											<th>Vagas</th>
+											<th class="col-md-9">Nome</th>
+											<th class="col-md-1">Turma</th>
+											<th class="col-md-1">Turno</th>
+											<th class="col-md-1">Vagas</th>
 										</tr>
 									</thead>
 									<tbody>

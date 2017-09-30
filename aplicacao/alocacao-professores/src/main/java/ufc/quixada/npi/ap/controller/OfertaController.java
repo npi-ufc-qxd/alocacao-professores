@@ -244,8 +244,8 @@ public class OfertaController {
 		Curso curso = cursoService.buscarPorCoordenador(coordenador);
 		
 		List<Oferta> ofertas = ofertaService.buscarOfertasNaoImportadasPorPeriodoAndCurso(periodo, curso);
-		List<Oferta> ofertasImportadas = ofertaService.buscarOfertasImportadasPorPeriodoAndCurso(periodo, curso);
-		List<Oferta> ofertasCompartilhadas = ofertaService.buscarOfertasCompartilhadasPorPeriodoAndCurso(periodo, curso);
+		List<Oferta> ofertasImportadas =  ofertaService.buscarOfertasImportadasPorPeriodoAndCurso(periodo, curso);
+		List<Compartilhamento> ofertasCompartilhadas = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodo, curso);
 		
 		model.addAttribute("ofertas", ofertas);
 		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
@@ -268,11 +268,19 @@ public class OfertaController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/importar-2", method = RequestMethod.GET)
+	@RequestMapping(value = "/importar-ofertas", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> importarOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
 		return ofertaService.importarOfertas(ofertas);
 	}
 	
+	@RequestMapping(value = "/importar-ofertas-compartilhadas", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> importarOfertasCompartilhadas(@RequestParam("compartilhamentos") List<Integer> compartilhamentos, Authentication auth) {
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso curso = cursoService.buscarPorCoordenador(coordenador);
+		Periodo periodo = periodoService.periodoAtivo();
+		
+		return compartilhamentoService.importarOfertasCompartilhadas(compartilhamentos, periodo, curso);
+	}
 
 	@RequestMapping(value = "/substituicao-ofertas", method = RequestMethod.GET)
 	public @ResponseBody boolean substituirOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
