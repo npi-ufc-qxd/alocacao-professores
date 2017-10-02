@@ -217,10 +217,10 @@ function limparResultadosImportacao() {
 	limparTabela('#resultado-ofertas');
 	limparTabela('#resultado-ofertas-compartilhadas');
 	limparTabela('#resultado-ofertas-importadas');
-	
-	divResultados.addClass('hidden');
+	limparTabela('#resultado-ofertas-compartilhadas-importadas');
 	
 	semResultadosOfertas.addClass('hidden');
+	divResultados.addClass('hidden');
 }
 
 function getOfertasSelecionadas(inputName) {
