@@ -22,5 +22,9 @@ public interface CompartilhamentoService {
 	
 	public List<Compartilhamento> buscarCompartilhamentosPorPeriodoAndCurso(Periodo periodo, Curso curso);
 	
+	public List<Compartilhamento> buscarCompartilhamentosNaoImportadosPorPeriodoAndCurso(Periodo periodo, Periodo periodoAtivo, Curso curso);
+	
+	public List<Compartilhamento> buscarCompartilhamentosImportadosPorPeriodoAndCurso(Periodo periodo, Periodo periodoAtivo, Curso curso);
+	
 	public Map<String, Object> importarOfertasCompartilhadas(List<Integer> compartilhamentos, Periodo periodo, Curso cursoCoordenador);
 }

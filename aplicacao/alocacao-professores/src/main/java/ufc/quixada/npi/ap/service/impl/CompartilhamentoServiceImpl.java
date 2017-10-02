@@ -56,6 +56,16 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 	}
 	
 	@Override
+	public List<Compartilhamento> buscarCompartilhamentosNaoImportadosPorPeriodoAndCurso(Periodo periodo, Periodo periodoAtivo, Curso curso) {
+		return compartilhamentoRepository.findCompartilhamentosNaoImportadosByPeriodoAndCurso(periodo, periodoAtivo, curso);
+	}
+	
+	@Override
+	public List<Compartilhamento> buscarCompartilhamentosImportadosPorPeriodoAndCurso(Periodo periodo, Periodo periodoAtivo, Curso curso) {
+		return compartilhamentoRepository.findCompartilhamentosImportadosByPeriodoAndCurso(periodo, periodoAtivo, curso);
+	}
+	
+	@Override
 	public Map<String, Object> importarOfertasCompartilhadas(List<Integer> compartilhamentos, Periodo periodo, Curso cursoCoordenador) {
 		boolean contem;
 		boolean adicionado = true;
@@ -66,7 +76,6 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 			Compartilhamento compartilhamento = compartilhamentoRepository.findOne(id);
 			
 			if (compartilhamento != null) {
-				
 				contem = false;
 				
 				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodo)) {
