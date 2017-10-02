@@ -18,8 +18,6 @@ public interface OfertaService {
 	public List<Oferta> findAllOfertas();
 
 	public void excluir(Integer id);
-
-	public Oferta visualizarOferta(Integer idOferta);
 	
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador);
 	

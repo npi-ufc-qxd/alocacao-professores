@@ -215,7 +215,7 @@ public class OfertaController {
 	@RequestMapping(path = { "/{id}/detalhar" }, method = RequestMethod.GET)
 	public ModelAndView detalharOferta(@PathVariable("id") Integer id, @RequestParam(required = false) String erro) {
 
-		Oferta oferta = ofertaService.visualizarOferta(id);
+		Oferta oferta = ofertaService.findOferta(id);
 
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_DETALHAR);
 		modelAndView.addObject("oferta", oferta);
@@ -295,7 +295,7 @@ public class OfertaController {
 
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 
-		modelAndView.addObject("oferta", ofertaService.visualizarOferta(id));
+		modelAndView.addObject("oferta", ofertaService.findOferta(id));
 		modelAndView.addObject("turmas", cursoService.buscarPorCoordenador(pessoa).getTurmas());
 
 		return modelAndView;
@@ -307,7 +307,7 @@ public class OfertaController {
 
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 
-		modelAndView.addObject("oferta", ofertaService.visualizarOferta(id));
+		modelAndView.addObject("oferta", ofertaService.findOferta(id));
 		modelAndView.addObject("turmas", cursoService.buscarPorCoordenador(pessoa).getTurmas());
 
 		
