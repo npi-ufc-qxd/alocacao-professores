@@ -242,13 +242,16 @@ public class OfertaController {
 		
 		Pessoa coordenador = (Pessoa) auth.getPrincipal();
 		Curso curso = cursoService.buscarPorCoordenador(coordenador);
+		Periodo periodoAtivo = periodoService.periodoAtivo();
 		
 		List<Oferta> ofertas = ofertaService.buscarOfertasNaoImportadasPorPeriodoAndCurso(periodo, curso);
 		List<Oferta> ofertasImportadas =  ofertaService.buscarOfertasImportadasPorPeriodoAndCurso(periodo, curso);
-		List<Compartilhamento> ofertasCompartilhadas = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodo, curso);
+		List<Compartilhamento> ofertasCompartilhadas = compartilhamentoService.buscarCompartilhamentosNaoImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		List<Compartilhamento> ofertasCompartilhadasImportadas = compartilhamentoService.buscarCompartilhamentosImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
 		
 		model.addAttribute("ofertas", ofertas);
 		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
+		model.addAttribute("ofertasCompartilhadasImportadas", ofertasCompartilhadasImportadas);
 		model.addAttribute("ofertasImportadas", ofertasImportadas);
 		
 		return model;
