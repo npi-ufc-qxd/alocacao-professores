@@ -64,11 +64,6 @@ public class OfertaServiceImpl implements OfertaService {
 	}
 
 	@Override
-	public Oferta visualizarOferta(Integer idOferta) {
-		return ofertaRepository.findOne(idOferta);
-	}
-
-	@Override
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador) {
 		Professor professor = professorRepository.findByPessoa(coordenador);
 		Curso curso = cursoRepository.findByCoordenador(professor);
