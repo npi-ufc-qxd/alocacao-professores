@@ -451,30 +451,6 @@ function listarProfessoresOferta(professores) {
 	return professorList;
 }
 
-//não está mais endo usado
-//$('#btn-substituir-ofertas').on('click', function (event) {
-//	substituirOfertas();
-//});
-//
-//function substituirOfertas(){
-//	var ofertas = $("input[name=ofertas]:checked").map(function() {
-//		return this.value;
-//	}).get().join(",");
-//	console.log(ofertas);
-//	if(ofertas.length > 0){
-//		$.get(baseUrl + "/ofertas/substituicao-ofertas", {ofertas : ofertas}, function() {
-//		})
-//		.done(function(resultado) {
-//			if(resultado === true){
-//				$('#modal-substituir-ofertas').modal('toggle');
-//				importacaoRealizada(true, false);
-//			}else{
-//				errorSubstituirOferta();
-//			}
-//		});
-//	}
-//}
-
 function successSwalC(){
 	swal({
 		title: "Compartilhamento excluído!",
@@ -487,18 +463,6 @@ function successSwalC(){
 		location.reload();
 	});
 }
-
-//não está mais sendo usado
-//function errorSubstituirOferta(){
-//	swal({
-//		title: "Erro ao substituir",
-//		text: "A(s) oferta(s) não foi(ram) substituída(s).", 
-//		type: "error",
-//		showcancelButton: false,
-//		confirmButtonText: "Ok",
-//		closeOnConfirm: true
-//	});	
-//}
 
 function errorSwalC(){
 	swal({
