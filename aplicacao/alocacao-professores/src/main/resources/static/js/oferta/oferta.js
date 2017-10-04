@@ -20,17 +20,6 @@ var baseUrl = $("meta[name='baseUrl']").attr("content");
 if(baseUrl == null){
     baseUrl = "";
 }
-//duplicado basta olhar em cima
-var periodos = document.getElementById("periodo");
-var periodo = periodos.options[periodos.selectedIndex].text;
-
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-
-var baseUrl = $("meta[name='baseUrl']").attr("content");
-if(baseUrl == null){
-    baseUrl = "";
-}
 
 $('#visulizar-outras-ofertas').on('change', function (event) {
 	$("#ofertas").empty();
@@ -461,6 +450,7 @@ function listarProfessoresOferta(professores) {
 
 	return professorList;
 }
+
 //não está mais endo usado
 //$('#btn-substituir-ofertas').on('click', function (event) {
 //	substituirOfertas();
@@ -485,164 +475,6 @@ function listarProfessoresOferta(professores) {
 //	}
 //}
 
-//duplicado basta olhar od e baixo
-//$('#btn-exibir-ofertas').click(function() {
-//	var periodo = document.getElementById("periodo").selectedIndex;
-//	var periodos = document.getElementById("periodo").options;
-//	var id = periodos[periodo].value;
-//	
-//	if(id > 0){
-//		$.get(baseUrl + "/ofertas/buscar-ofertas/" + id, function() {
-//			
-//		})
-//		.done(function(ofertas) {
-//			$('#resultado-ofertas-1').empty();
-//			$('#resultado-ofertas-2').empty();
-//			$('#sem-resultado-ofertas').empty();
-//			var index = 2;
-//			if(ofertas.length > 0){
-//				$.each(ofertas, function(key, value) {
-//					adicionarResultado(value.disciplina.id, "ofertas", '#resultado-ofertas-1', '#resultado-ofertas-2', value.disciplina.nome, "ofertas", index);	
-//					index++;
-//				});
-//			}else{
-//				adicionarMensagemSemResultado('#sem-resultado-ofertas');
-//			}
-//		});
-//	}
-//	
-//});
-
-//$('#btn-exibir-ofertas').click(function() {
-//	var periodo = document.getElementById("periodo").selectedIndex;
-//	var periodos = document.getElementById("periodo").options;
-//	var id = periodos[periodo].value;
-//	
-//	if(id > 0){
-//		$.get(baseUrl + "/ofertas/buscar-ofertas/" + id, function() {
-//			
-//		})
-//		.done(function(ofertas) {
-//			limparResultadosImportacao();
-//			var index = 2;
-//			if(ofertas.length > 0){
-//				$.each(ofertas, function(key, value) {
-//					adicionarResultado(value.id, "ofertas", '#resultado-ofertas-1', '#resultado-ofertas-2', value.disciplina.nome, "ofertas", index);	
-//					index++;
-//				});
-//			}else{
-//				adicionarMensagemSemResultado('#sem-resultado-ofertas');
-//			}
-//		});
-//	}
-//	
-//});
-
-//function adicionarMensagemSemResultado(coluna){
-//	var label = document.createElement('p');
-//    label.setAttribute('class','text-center');
-//    label.appendChild(document.createTextNode("Não foi encontrado resultado para a sua busca."));
-//    $(coluna).append(label);
-//}
-//duplicado basta olhar o de cima
-function adicionarMensagemSemResultado(coluna){
-	var label = document.createElement('p');
-    label.setAttribute('class','text-center');
-    label.appendChild(document.createTextNode("Não foi encontrado resultado para a sua busca."));
-    $(coluna).append(label);
-}
-//duplicado batsa olhar o de baixo
-function adicionarResultado(id, name, coluna1, coluna2, nome, classe, index){
-	
-	var checkbox = document.createElement('input');
-	checkbox.className = classe;
-	checkbox.type = "checkbox";
-	checkbox.name = name;
-	checkbox.value = id;
-	checkbox.id = id;
-	checkbox.setAttribute("nome", nome);
-	
-	var label = document.createElement('label')
-	label.htmlFor = id;
-	label.appendChild(document.createTextNode(nome));
-	
-	var lista1 = document.createElement('ul');
-	lista1.id = 'resultado-disciplinas-1';
-	lista1.setAttribute('class','list-unstyled');
-	
-	var lista2 = document.createElement('ul');
-	lista2.id = 'resultado-disciplinas-2';
-	lista2.setAttribute('class','list-unstyled');
-	
-	
-	$(coluna1).append(lista1);
-	$(coluna2).append(lista2);
-	
-	
-	var ul1 = document.getElementById('resultado-disciplinas-1');
-	var ul2 = document.getElementById('resultado-disciplinas-2');
-	
-	var li = document.createElement('li');
-    li.appendChild(checkbox);
-    li.appendChild(label);
-    li.setAttribute('class', 'checkbox checkbox-success');
-    
-	
-	if(index % 2 == 0){
-		ul1.appendChild(li); 
-	}else{
-		ul2.appendChild(li);
-	}
-	
-}
-
-//function adicionarResultado(id, name, coluna1, coluna2, nome, classe, index){
-//	
-//	var checkbox = document.createElement('input');
-//	checkbox.className = classe;
-//	checkbox.type = "checkbox";
-//	checkbox.name = name;
-//	checkbox.value = id;
-//	checkbox.id = id;
-//	checkbox.setAttribute("nome", nome);
-//	
-//	
-//	var label = document.createElement('label')
-//	label.htmlFor = id;
-//	label.appendChild(document.createTextNode(nome));
-//	
-//	if(index === 2){
-//	
-//		var lista1 = document.createElement('ul');
-//		lista1.id = 'resultado-disciplinas-1';
-//		lista1.setAttribute('class','list-unstyled');
-//	
-//		var lista2 = document.createElement('ul');
-//		lista2.id = 'resultado-disciplinas-2';
-//		lista2.setAttribute('class','list-unstyled');
-//	
-//	
-//		$(coluna1).append(lista1);
-//		$(coluna2).append(lista2);
-//	}
-//	
-//	var ul1 = document.getElementById('resultado-disciplinas-1');
-//	var ul2 = document.getElementById('resultado-disciplinas-2');
-//	
-//	var li = document.createElement('li');
-//    li.appendChild(checkbox);
-//    li.appendChild(label);
-//    li.setAttribute('class', 'checkbox checkbox-success');
-//    
-//	
-//	if(index % 2 == 0){
-//		ul1.appendChild(li); 
-//	}else{
-//		ul2.appendChild(li);
-//	}
-//	
-//}
-
 function successSwalC(){
 	swal({
 		title: "Compartilhamento excluído!",
@@ -655,6 +487,7 @@ function successSwalC(){
 		location.reload();
 	});
 }
+
 //não está mais sendo usado
 //function errorSubstituirOferta(){
 //	swal({
