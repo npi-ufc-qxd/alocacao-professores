@@ -10,6 +10,12 @@ var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
 var idCursoCoordenador = $('input[name=idCursoAtual]').val();
 var idCursoSelecionado = idCursoCoordenador;
 
+var periodos = document.getElementById("periodo");
+var periodo = periodos.options[periodos.selectedIndex].text;
+
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+
 var baseUrl = $("meta[name='baseUrl']").attr("content");
 if(baseUrl == null){
     baseUrl = "";
@@ -79,7 +85,7 @@ function organizarOfertas(result) {
 		});
 		
 		criarInforme(semestre, existe);
-		//chama tanto quando for oferta quanto compartilhamento, e identifica pela urlExluir
+		
 		$(".sa-btn-excluir").on("click", function(event){
 			event.preventDefault();
 
@@ -102,10 +108,16 @@ function organizarOfertas(result) {
 						type: 'GET',
 						success: function(result){
 							if (result === true){
-								successSwal(urlExcluir);
+								if(urlExcluir.includes("/ofertas/"))
+									successSwalOferta();
+								else
+									successSwalCompartilhamento();
 							}
 							else{
-								errorSwal(urlExcluir);
+								if(urlExcluir.includes("/ofertas/"))
+									errorSwalOferta();
+								else
+									errorSwalCompartilhamento();
 							}
 							
 						},
@@ -119,18 +131,10 @@ function organizarOfertas(result) {
 	}
 }
 
-function successSwal(urlExcluir){
-	var tem = urlExcluir.includes("/ofertas/");
-	if(tem){
-		title = "Oferta excluída!";
-		text = "A oferta foi excluída.";
-	}else {
-		title = "Compartilhamento excluído!";
-		text = "O compartilhamento foi excluído.";
-	}
+function successSwalOferta(){
 	swal({
-		title: title,
-		text: text, 
+		title: "Oferta excluída!",
+		text: "A oferta foi excluída.",
 		type: "success",
 		showcancelButton: false,
 		confirmButtonText: "Ok!",
@@ -140,18 +144,34 @@ function successSwal(urlExcluir){
 	});
 }
 
-function errorSwal(urlExcluir){
-	var tem = urlExcluir.includes("/ofertas/");
-	if(tem){
-		title = "Oferta excluída!";
-		text = "A oferta foi excluída.";
-	}else {
-		title = "Compartilhamento excluído!";
-		text = "O compartilhamento foi excluído.";
-	}
+function successSwalCompartilhamento(){
+	swal({
+		title: "Compartilhamento excluído!",
+		text: "O compartilhamento foi excluído.", 
+		type: "success",
+		showcancelButton: false,
+		confirmButtonText: "Ok!",
+		closeOnConfirm: true
+	}, function(isConfirm){
+		location.reload();
+	});
+}
+
+function errorSwalOferta(){
 	swal({
 		title: "Erro ao excluir",
-		text: title,
+		text: "A oferta foi excluída.",
+		type: "error",
+		showcancelButton: false,
+		confirmButtonText: "Ok",
+		closeOnConfirm: true
+	});	
+}
+
+function errorSwalCompartilhamento(){
+	swal({
+		title: "Erro ao excluir",
+		text: "O compartilhamento foi excluído.",
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",
