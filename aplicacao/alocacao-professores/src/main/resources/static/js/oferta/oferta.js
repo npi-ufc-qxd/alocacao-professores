@@ -10,12 +10,6 @@ var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
 var idCursoCoordenador = $('input[name=idCursoAtual]').val();
 var idCursoSelecionado = idCursoCoordenador;
 
-var periodos = document.getElementById("periodo");
-var periodo = periodos.options[periodos.selectedIndex].text;
-
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-
 var baseUrl = $("meta[name='baseUrl']").attr("content");
 if(baseUrl == null){
     baseUrl = "";
@@ -30,67 +24,6 @@ $('#visulizar-outras-ofertas').on('change', function (event) {
 		organizarOfertas(results);
 	});
 });
-
-$(".sa-btn-excluir").on("click", function(event){
-	event.preventDefault();
-
-	var botaoExcluir = $(event.currentTarget);
-	var urlExcluir = botaoExcluir.attr("href");
-	
-	swal({
-		title: "Tem certeza?",
-		text: "Você não poderá desfazer essa operação posteriormente!",
-		type: "warning",   
-		showCancelButton: true,
-		cancelButtonText: "Cancelar",
-		confirmButtonColor: "#DD6B55",
-		confirmButtonText: "Sim, desejo excluir!",
-		closeOnConfirm: false
-	}, function(isConfirm){
-		if(isConfirm){
-			var response = $.ajax({
-				url: urlExcluir,
-				type: 'GET',
-				success: function(result){
-					if (result === true){
-						successSwal();
-					}
-					else{
-						errorSwal();
-					}
-					
-				},
-				error: function(status, error){
-					errorSwal();
-				}
-			});
-		}
-	});
-});
-
-function successSwal(){
-	swal({
-		title: "Oferta excluída!",
-		text: "A oferta foi excluída.", 
-		type: "success",
-		showcancelButton: false,
-		confirmButtonText: "Ok!",
-		closeOnConfirm: true
-	}, function(isConfirm){
-		location.reload();
-	});
-}
-
-function errorSwal(){
-	swal({
-		title: "Erro ao excluir",
-		text: "A oferta não foi excluída.", 
-		type: "error",
-		showcancelButton: false,
-		confirmButtonText: "Ok",
-		closeOnConfirm: true
-	});	
-}
 
 //Função que faz a requisição da lista de ofertas e de compartilhamentos quando a página é carregada
 //result = model(ofertas e compartilhamentos)
@@ -146,8 +79,8 @@ function organizarOfertas(result) {
 		});
 		
 		criarInforme(semestre, existe);
-		
-		$(".sa-btn-excluir-oferta").on("click", function(event){
+		//chama tanto quando for oferta quanto compartilhamento, e identifica pela urlExluir
+		$(".sa-btn-excluir").on("click", function(event){
 			event.preventDefault();
 
 			var botaoExcluir = $(event.currentTarget);
@@ -169,47 +102,10 @@ function organizarOfertas(result) {
 						type: 'GET',
 						success: function(result){
 							if (result === true){
-								successSwal();
+								successSwal(urlExcluir);
 							}
 							else{
-								errorSwal();
-							}
-							
-						},
-						error: function(status, error){
-							errorSwal();
-						}
-					});
-				}
-			});
-		});
-		//deve existir uma maneira melhor para não fazer este ctrl+c ctrl+v mas ainda encontrei
-		$(".sa-btn-excluir-compartilhamento").on("click", function(event){
-			event.preventDefault();
-
-			var botaoExcluir = $(event.currentTarget);
-			var urlExcluir = botaoExcluir.attr("href");
-			
-			swal({
-				title: "Tem certeza?",
-				text: "Você não poderá desfazer essa operação posteriormente!",
-				type: "warning",   
-				showCancelButton: true,
-				cancelButtonText: "Cancelar",
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "Sim, desejo excluir!",
-				closeOnConfirm: false
-			}, function(isConfirm){
-				if(isConfirm){
-					var response = $.ajax({
-						url: urlExcluir,
-						type: 'GET',
-						success: function(result){
-							if (result === true){
-								successSwalC();
-							}
-							else{
-								errorSwalC();
+								errorSwal(urlExcluir);
 							}
 							
 						},
@@ -223,6 +119,45 @@ function organizarOfertas(result) {
 	}
 }
 
+function successSwal(urlExcluir){
+	var tem = urlExcluir.includes("/ofertas/");
+	if(tem){
+		title = "Oferta excluída!";
+		text = "A oferta foi excluída.";
+	}else {
+		title = "Compartilhamento excluído!";
+		text = "O compartilhamento foi excluído.";
+	}
+	swal({
+		title: title,
+		text: text, 
+		type: "success",
+		showcancelButton: false,
+		confirmButtonText: "Ok!",
+		closeOnConfirm: true
+	}, function(isConfirm){
+		location.reload();
+	});
+}
+
+function errorSwal(urlExcluir){
+	var tem = urlExcluir.includes("/ofertas/");
+	if(tem){
+		title = "Oferta excluída!";
+		text = "A oferta foi excluída.";
+	}else {
+		title = "Compartilhamento excluído!";
+		text = "O compartilhamento foi excluído.";
+	}
+	swal({
+		title: "Erro ao excluir",
+		text: title,
+		type: "error",
+		showcancelButton: false,
+		confirmButtonText: "Ok",
+		closeOnConfirm: true
+	});	
+}
 
 //Função que cria a estrtura por semestre
 function criarEstrutura(semestre, numberSemestre, sigla) {
@@ -293,7 +228,8 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	var label = document.createElement('label');
 	var bold = document.createElement('b');
 	
-	bold.appendChild(document.createTextNode(sigla+numberSemestre + ' - ' + codigoDisciplina + ' - ' + nomeDisciplina));
+	bold.appendChild(document.createTextNode(sigla+numberSemestre + 
+								' - ' + codigoDisciplina + ' - ' + nomeDisciplina));
 	label.appendChild(bold);
 	
 	var divPanelAction = document.createElement('div');
@@ -317,7 +253,6 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 		divPanel.setAttribute('class', 'panel panel-default');
 		pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
 	}
-	
 	
 	var divPanelFooter = document.createElement('div');
 	divPanelFooter.setAttribute('class', 'panel-footer');
@@ -346,7 +281,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			iconeExcluir.setAttribute('class', 'fa fa-close');
 			var buttonExcluir = document.createElement('a');
 			buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
-			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
+			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir');
 			buttonExcluir.appendChild(iconeExcluir);
 			divButton.appendChild(buttonExcluir);
 			
@@ -364,7 +299,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 			iconeExcluir.setAttribute('class', 'fa fa-close');
 			var buttonExcluir = document.createElement('a');
 			buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
-			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
+			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir');
 			buttonExcluir.appendChild(iconeExcluir);
 			divButton.appendChild(buttonExcluir);
 		
@@ -451,26 +386,3 @@ function listarProfessoresOferta(professores) {
 	return professorList;
 }
 
-function successSwalC(){
-	swal({
-		title: "Compartilhamento excluído!",
-		text: "O compartilhamento foi excluído.", 
-		type: "success",
-		showcancelButton: false,
-		confirmButtonText: "Ok!",
-		closeOnConfirm: true
-	}, function(isConfirm){
-		location.reload();
-	});
-}
-
-function errorSwalC(){
-	swal({
-		title: "Erro ao excluir",
-		text: "O compartilhamento não foi excluído.", 
-		type: "error",
-		showcancelButton: false,
-		confirmButtonText: "Ok",
-		closeOnConfirm: true
-	});	
-}
