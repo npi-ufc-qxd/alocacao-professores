@@ -29,33 +29,31 @@
 					<table id="myTable" class="table table-striped">
 						<thead>
 							<tr>
-								<th>Primeira Turma</th>
-								<th>Primeira Disciplina</th>
-								<th>Segunda Turma</th>
-								<th>Segunda Disciplina</th>
+								<th>Turma</th>
+								<th>Primeira Oferta</th>
+								<th>Segunda Oferta</th>
+								<th>Habilitada</th>
 								<th class="col-md-1"></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="empilhamento : ${empilhamentos}">
+							<tr th:each="restricaoHorario : ${restricaoHorarios}">
 								<td th:inline="text">
-									[[${empilhamento.primeiraTurma.curso.nome}]] -
-									[[${empilhamento.primeiraTurma.semestre}]]</td>
+									[[${restricaoHorario.turma.curso.sigla}]] -
+									[[${restricaoHorario.turma.semestre.numero}]]</td>
 								<td th:inline="text">
-									[[${empilhamento.primeiraDisciplina.nome}]]</td>
+									[[${restricaoHorario.primeiraOferta.disciplina.nome}]]</td>
 								<td th:inline="text">
-									[[${empilhamento.segundaTurma.curso.nome}]] -
-									[[${empilhamento.segundaTurma.semestre}]]</td>
-								<td th:inline="text">
-									[[${empilhamento.segundaDisciplina.nome}]]</td>
+									[[${restricaoHorario.segundaOferta.disciplina.nome}]]</td>
+								<td th:inline= "text">[[${restricaoHorario.habilitada} ? 'Sim' : 'Não']]</td>
 								<td><a
-									th:href="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}"><button
+									th:href="@{/empilhamentos/{id}/editar(id=${restricaoHorario.id})}"><button
 											type="button"
 											class="btn btn-inverse btn-circle waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar">
 											<i class="fa fa-pencil"></i> 
 										</button></a> 
 										
-										<a th:href="@{/empilhamentos/{id}/excluir(id=${empilhamento.id})}" class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-emp-btn-excluir">
+										<a th:href="@{/empilhamentos/{id}/excluir(id=${restricaoHorario.id})}" class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-emp-btn-excluir">
 										<i class="fa fa-close"></i>
 										
 										</a></td>

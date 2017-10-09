@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.EmpilhamentoValidator;
 import ufc.quixada.npi.ap.model.Disciplina;
-import ufc.quixada.npi.ap.model.Empilhamento;
+import ufc.quixada.npi.ap.model.RestricaoHorario;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
@@ -48,10 +48,10 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
-		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
+		List<RestricaoHorario> restricaoHorarios =  empilhamentoService.listarEmpilhamentos();
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR);
-		model.addObject("empilhamentos", empilhamentos);
+		model.addObject("restricaoHorarios", restricaoHorarios);
 		
 		return model;
 	}
@@ -65,13 +65,13 @@ public class EmpilhamentoController {
 		
 		model.addObject("disciplinas", disciplinas);
 		model.addObject("turmas", turmas);
-		model.addObject("empilhamento", new Empilhamento());
+		model.addObject("empilhamento", new RestricaoHorario());
 		
 		return model;
 	}
 	
 	@RequestMapping(path={"/cadastrar"}, method=RequestMethod.POST)
-	public ModelAndView cadastrarEmpilhamento(@ModelAttribute("empilhamento") @Valid Empilhamento empilhamento, BindingResult bindingResult){
+	public ModelAndView cadastrarEmpilhamento(@ModelAttribute("empilhamento") @Valid RestricaoHorario empilhamento, BindingResult bindingResult){
 		empilhamentoValidator.validate(empilhamento, bindingResult);
 		
 		if(bindingResult.hasErrors()){
@@ -99,7 +99,7 @@ public class EmpilhamentoController {
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
 	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
 		List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
-		Empilhamento empilhamento = empilhamentoService.visualizarEmpilhamento(id);
+		RestricaoHorario empilhamento = empilhamentoService.visualizarEmpilhamento(id);
 		
 		ModelAndView modelAndView = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
 		modelAndView.addObject("disciplinasNaoArquivadas", disciplinas);
@@ -110,7 +110,7 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
-												@ModelAttribute("empilhamento") @Valid Empilhamento empilhamento, 
+												@ModelAttribute("empilhamento") @Valid RestricaoHorario empilhamento, 
 													BindingResult bindingResult, ModelAndView modelAndView){
 		
 		empilhamentoValidator.validate(empilhamento, bindingResult);
@@ -139,7 +139,7 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path={"/{id}/detalhar"})
 	public ModelAndView visualizarEmpilhamento(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
-		Empilhamento empilhamento =  empilhamentoService.visualizarEmpilhamento(id);
+		RestricaoHorario empilhamento =  empilhamentoService.visualizarEmpilhamento(id);
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_DETALHAR);
 		model.addObject("empilhamento", empilhamento);

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ufc.quixada.npi.ap.model.Empilhamento;
+import ufc.quixada.npi.ap.model.RestricaoHorario;
 import ufc.quixada.npi.ap.repository.EmpilhamentoRepository;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
 
@@ -16,12 +16,12 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 	private EmpilhamentoRepository empilhamentoRepository;
 	
 	@Override
-	public Empilhamento salvarEmpilhamento(Empilhamento empilhamento) {
+	public RestricaoHorario salvarEmpilhamento(RestricaoHorario empilhamento) {
 		return empilhamentoRepository.save(empilhamento);
 	}
 
 	@Override
-	public List<Empilhamento> listarEmpilhamentos() {
+	public List<RestricaoHorario> listarEmpilhamentos() {
 		return empilhamentoRepository.findAll();
 	}
 
@@ -31,7 +31,7 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 	}
 
 	@Override
-	public Empilhamento visualizarEmpilhamento(Integer idEmpilhamento) {
+	public RestricaoHorario visualizarEmpilhamento(Integer idEmpilhamento) {
 		return empilhamentoRepository.findOne(idEmpilhamento);
 	}
 
