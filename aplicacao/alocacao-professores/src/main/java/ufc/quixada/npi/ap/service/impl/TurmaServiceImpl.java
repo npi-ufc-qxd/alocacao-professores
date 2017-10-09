@@ -16,12 +16,12 @@ public class TurmaServiceImpl implements TurmaService {
 	private TurmaRepository turmaRepository;
 	
 	@Override
-	public List<Turma> listarTurmas() {
+	public List<Turma> buscarTodasTurmas() {
 		return turmaRepository.findAll();
 	}
 
 	@Override
-	public Turma findTurma(Integer id) {
+	public Turma buscarTurma(Integer id) {
 		return turmaRepository.findOne(id);
 	}
 	

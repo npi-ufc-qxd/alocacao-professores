@@ -16,12 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.ufc.quixada.npi.ldap.model.Usuario;
 import br.ufc.quixada.npi.ldap.service.UsuarioService;
-import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
-import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.OfertaService;
 import ufc.quixada.npi.ap.service.PeriodoService;
@@ -43,9 +41,6 @@ public class DirecaoController {
 	private ProfessorService professorService;
 	
 	@Autowired
-	private CompartilhamentoService compartilhamentoService;
-
-	@Autowired
 	private PeriodoService periodoService;
 	
 	@Autowired
@@ -59,15 +54,15 @@ public class DirecaoController {
 	
 	@RequestMapping(path = {"/oferta-campus"}, method = RequestMethod.GET)
 	public String listarCompartilhamentos(Model model){
-		model.addAttribute("periodo", periodoService.periodoAtivo());
-		model.addAttribute("ofertas", compartilhamentoService.listarCompartilhamentoOfertas());
+		model.addAttribute("periodo", periodoService.buscarPeriodoAtivo());
+		model.addAttribute("ofertas", ofertaService.buscarOfertasPeriodoAtivo());
 		return COMPARTILHAMENTO_LISTAR;
 	}
 
 	@RequestMapping(value = "/professores", method = RequestMethod.GET)
 	public ModelAndView listarProfessores() {
 		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_LISTAR);
-		List<Professor> professores = professorService.findAllProfessores();
+		List<Professor> professores = professorService.buscarTodosProfessores();
 		modelAndView.addObject("professores", professores);
 		return modelAndView;
 	}
@@ -79,7 +74,7 @@ public class DirecaoController {
 		List<Usuario> usuarios = usuarioService.getByAffiliation(Constants.AFFILIATION_DOCENTE);
 		
 		for (Usuario usuario : usuarios){
-			Professor professor = pessoaService.findProfessor(usuario.getCpf());
+			Professor professor = pessoaService.buscarProfessor(usuario.getCpf());
 			
 			if (professor == null){
 				Pessoa pessoa = new Pessoa();
@@ -106,11 +101,11 @@ public class DirecaoController {
 	public ModelAndView editarOferta(@PathVariable("id") Integer id) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR_DIRECAO);
 
-		Oferta oferta = ofertaService.findOferta(id);
-		modelAndView.addObject("cursoAtual", oferta.getTurma().getCurso());
-
+		Oferta oferta = ofertaService.buscarOferta(id);
+		
 		modelAndView.addObject("oferta", oferta);
-		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
+		modelAndView.addObject("cursoAtual", oferta.getTurma().getCurso());
+		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
 
 		return modelAndView;
 	}
@@ -118,29 +113,38 @@ public class DirecaoController {
 	@RequestMapping(value = "/editar-oferta/{id}", method = RequestMethod.POST)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id, @ModelAttribute("oferta") Oferta oferta, 
 									BindingResult bindingResult) {
+		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		for(Compartilhamento compartilhamento : oferta.getCompartilhamentos()) {
-			compartilhamentoValidator.validate(compartilhamento, bindingResult);
-		}
-		if (bindingResult.hasErrors()) {
-			oferta = ofertaService.findOferta(id);
-			modelAndView.addObject("cursoAtual", oferta.getTurma().getCurso());
-			modelAndView.addObject("oferta", oferta);
-			modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
-			modelAndView.setViewName("redirect:/editar-oferta/"+oferta.getId());
+		Oferta ofertaSalva = ofertaService.buscarOferta(id);
+		
+		if (ofertaSalva != null){
+			for(Compartilhamento compartilhamento : oferta.getCompartilhamentos()) {
+				compartilhamentoValidator.validate(compartilhamento, bindingResult);
+				
+				if (!ofertaSalva.getId().equals(compartilhamento.getOferta().getId())){
+					modelAndView.setViewName(Constants.PAGINA_ERRO_500);
+					
+					return modelAndView;
+				}
+			}
+			
+			if (bindingResult.hasErrors()) {
+				modelAndView.setViewName(Constants.OFERTA_REDIRECT_EDITAR_DIRECAO + oferta.getId());
+				
+				return modelAndView;
+			}
+			
+			ofertaSalva.setCompartilhamentos(oferta.getCompartilhamentos());
+			
+			ofertaService.salvarOfertaPeriodoAtivo(ofertaSalva);
+
+			modelAndView.setViewName(Constants.OFERTA_REDIRECT_EDITAR_DIRECAO + oferta.getId());
+			
 			return modelAndView;
 		}
-		
-		Oferta ofertaSalva = ofertaService.findOferta(id);
-		ofertaSalva.setCompartilhamentos(oferta.getCompartilhamentos());
-		try {
-			ofertaService.salvar(ofertaSalva);
-		} catch (AlocacaoProfessoresException e) {
-			e.printStackTrace();
-		}
-
-		modelAndView.setViewName("redirect:/editar-oferta/"+oferta.getId());
+	
+		modelAndView.setViewName(Constants.PAGINA_ERRO_500);
 
 		return modelAndView;
 	}

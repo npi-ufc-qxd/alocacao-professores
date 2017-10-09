@@ -6,12 +6,12 @@ import ufc.quixada.npi.ap.model.Empilhamento;
 
 public interface EmpilhamentoService {
 
-	public Empilhamento salvarEmpilhamento(Empilhamento empilhamento);
+	public Empilhamento salvar(Empilhamento empilhamento);
 	
-	public List<Empilhamento> listarEmpilhamentos();
+	public void excluir(Integer idEmpilhamento);
 	
-	public void excluirEmpilhamento(Integer idEmpilhamento);
+	public Empilhamento buscarEmpilhamento(Integer idEmpilhamento);
 	
-	public Empilhamento visualizarEmpilhamento(Integer idEmpilhamento);
+	public List<Empilhamento> buscarTodosEmpilhamentos();
 	
 }

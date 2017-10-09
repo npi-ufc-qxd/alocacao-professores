@@ -7,8 +7,8 @@ import ufc.quixada.npi.ap.model.Pessoa;
 
 public interface CursoService {
 
-	public List<Curso> listar();
+	public List<Curso> buscarTodosCursos();
 	
-	public Curso buscarPorCoordenador(Pessoa pessoa);
+	public Curso buscarCursoPorCoordenador(Pessoa pessoa);
 
 }

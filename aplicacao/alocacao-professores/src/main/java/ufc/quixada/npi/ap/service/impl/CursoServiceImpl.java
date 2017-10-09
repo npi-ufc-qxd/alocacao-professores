@@ -22,14 +22,14 @@ public class CursoServiceImpl implements CursoService {
 	private ProfessorRepository professorRepository;
 
 	@Override
-	public List<Curso> listar() {
+	public List<Curso> buscarTodosCursos() {
 		return cursoRepository.findAll();
 	}
 
 	@Override
-	public Curso buscarPorCoordenador(Pessoa pessoa) {
+	public Curso buscarCursoPorCoordenador(Pessoa pessoa) {
 		Professor coordenador = professorRepository.findByPessoa(pessoa);
-		Curso curso = cursoRepository.findByCoordenador(coordenador);
+		Curso curso = cursoRepository.findCursoByCoordenador(coordenador);
 		return curso;
 	}
 

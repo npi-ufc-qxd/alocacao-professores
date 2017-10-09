@@ -6,6 +6,7 @@ import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Professor;
 
 public interface CursoRepository extends JpaRepository<Curso, Integer>{
-
-	Curso findByCoordenador(Professor coordenador);
+	
+	Curso findCursoByCoordenador(Professor coordenador);
+	
 }

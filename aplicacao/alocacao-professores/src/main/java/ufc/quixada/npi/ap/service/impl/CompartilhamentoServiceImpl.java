@@ -14,8 +14,8 @@ import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.repository.CompartilhamentoRepository;
-import ufc.quixada.npi.ap.repository.OfertaRepository;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
+import ufc.quixada.npi.ap.service.OfertaService;
 
 @Service
 public class CompartilhamentoServiceImpl implements CompartilhamentoService {
@@ -24,19 +24,19 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 	private CompartilhamentoRepository compartilhamentoRepository;
 	
 	@Autowired
-	private OfertaRepository ofertaRepository;
+	private OfertaService ofertaService;
 	
 	@Override
 	public void salvar(Compartilhamento compartilhamento) {
 		compartilhamentoRepository.save(compartilhamento);
 	}
 	
-	public Compartilhamento findCompartilhamento(Integer id){
+	public Compartilhamento buscarCompartilhamento(Integer id){
 		return compartilhamentoRepository.findOne(id);
 	}
 	
 	@Override
-	public List<Compartilhamento> findAllCompartilhamentos() {
+	public List<Compartilhamento> buscarTodosCompartilhamentos() {
 		return compartilhamentoRepository.findAll();
 	}
 	
@@ -45,11 +45,6 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 		compartilhamentoRepository.delete(id);
 	}
 	
-	@Override
-	public List<Oferta> listarCompartilhamentoOfertas() {
-		return ofertaRepository.findByPeriodoAtivoTrue();
-	}
-
 	@Override
 	public List<Compartilhamento> buscarCompartilhamentosPorPeriodoAndCurso(Periodo periodo, Curso curso) {
 		return compartilhamentoRepository.findCompartilhamentosByPeriodoAndCurso(periodo, curso);
@@ -66,7 +61,7 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 	}
 	
 	@Override
-	public Map<String, Object> importarOfertasCompartilhadas(List<Integer> compartilhamentos, Periodo periodo, Curso cursoCoordenador) {
+	public Map<String, Object> importarOfertasCompartilhadas(List<Integer> compartilhamentos, Periodo periodoAtivo, Curso cursoCoordenador) {
 		boolean contem;
 		boolean adicionado = true;
 		
@@ -78,7 +73,7 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 			if (compartilhamento != null) {
 				contem = false;
 				
-				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodo)) {
+				for (Oferta o : ofertaService.buscarOfertaPorPeriodo(periodoAtivo)) {
 					if (o.getDisciplina().equals(compartilhamento.getOferta().getDisciplina()) 
 							&& o.getTurma().equals(compartilhamento.getTurma())) {
 						contem = true;
@@ -89,9 +84,7 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 				if (!contem) {
 					Oferta novaOferta = this.clonarOfertaCompartilhada(compartilhamento);
 					
-					novaOferta.setPeriodo(periodo);
-					
-					ofertaRepository.save(novaOferta);
+					ofertaService.salvarOfertaPeriodoAtivo(novaOferta);
 					
 					if (adicionado)
 						resultado.put("importada", true);

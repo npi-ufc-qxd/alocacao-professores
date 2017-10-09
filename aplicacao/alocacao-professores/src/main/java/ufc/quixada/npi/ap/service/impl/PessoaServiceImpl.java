@@ -24,12 +24,12 @@ public class PessoaServiceImpl implements PessoaService {
 	private PessoaRepository pessoaRepository;
 
 	@Override
-	public Servidor findServidor(String cpf) {
+	public Servidor buscarServidor(String cpf) {
 		return servidorRepository.findByPessoa_cpf(cpf);
 	}
 	
 	@Override
-	public Professor findProfessor(String cpf) {
+	public Professor buscarProfessor(String cpf) {
 		return professorRepository.findByPessoa_cpf(cpf);
 	}
 

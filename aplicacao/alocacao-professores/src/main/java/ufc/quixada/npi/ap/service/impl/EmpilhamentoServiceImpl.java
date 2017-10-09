@@ -16,22 +16,22 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 	private EmpilhamentoRepository empilhamentoRepository;
 	
 	@Override
-	public Empilhamento salvarEmpilhamento(Empilhamento empilhamento) {
+	public Empilhamento salvar(Empilhamento empilhamento) {
 		return empilhamentoRepository.save(empilhamento);
 	}
 
 	@Override
-	public List<Empilhamento> listarEmpilhamentos() {
+	public List<Empilhamento> buscarTodosEmpilhamentos() {
 		return empilhamentoRepository.findAll();
 	}
 
 	@Override
-	public void excluirEmpilhamento(Integer idEmpilhamento) {
+	public void excluir(Integer idEmpilhamento) {
 		empilhamentoRepository.delete(idEmpilhamento);
 	}
 
 	@Override
-	public Empilhamento visualizarEmpilhamento(Integer idEmpilhamento) {
+	public Empilhamento buscarEmpilhamento(Integer idEmpilhamento) {
 		return empilhamentoRepository.findOne(idEmpilhamento);
 	}
 

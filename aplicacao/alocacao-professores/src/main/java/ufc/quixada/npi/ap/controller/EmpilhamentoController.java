@@ -43,12 +43,12 @@ public class EmpilhamentoController {
 	
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas(){
-		return turmaService.listarTurmas();
+		return turmaService.buscarTodasTurmas();
 	}
 	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
-		List<Empilhamento> empilhamentos =  empilhamentoService.listarEmpilhamentos();
+		List<Empilhamento> empilhamentos =  empilhamentoService.buscarTodosEmpilhamentos();
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR);
 		model.addObject("empilhamentos", empilhamentos);
@@ -60,8 +60,8 @@ public class EmpilhamentoController {
 	public ModelAndView cadastrarEmpilhamento(){
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
 		
-		List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
-		List<Turma> turmas = turmaService.listarTurmas();
+		List<Disciplina> disciplinas = disciplinaService.buscarDisciplinasNaoArquivadas();
+		List<Turma> turmas = turmaService.buscarTodasTurmas();
 		
 		model.addObject("disciplinas", disciplinas);
 		model.addObject("turmas", turmas);
@@ -79,7 +79,7 @@ public class EmpilhamentoController {
 			return model;
 		}
 		
-		empilhamentoService.salvarEmpilhamento(empilhamento);
+		empilhamentoService.salvar(empilhamento);
 		
 		ModelAndView modelRetorno = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
 		return modelRetorno;
@@ -88,7 +88,7 @@ public class EmpilhamentoController {
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
 	public @ResponseBody boolean excluirEmpilhamento(@PathVariable(name = "id", required = true) Integer id){
 		try{
-			empilhamentoService.excluirEmpilhamento(id);
+			empilhamentoService.excluir(id);
 		}catch(EmptyResultDataAccessException ex){
 			return false;
 		}
@@ -98,8 +98,8 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
 	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
-		List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
-		Empilhamento empilhamento = empilhamentoService.visualizarEmpilhamento(id);
+		List<Disciplina> disciplinas = disciplinaService.buscarDisciplinasNaoArquivadas();
+		Empilhamento empilhamento = empilhamentoService.buscarEmpilhamento(id);
 		
 		ModelAndView modelAndView = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
 		modelAndView.addObject("disciplinasNaoArquivadas", disciplinas);
@@ -118,14 +118,14 @@ public class EmpilhamentoController {
 		if (bindingResult.hasErrors()){
 			modelAndView.setViewName(Constants.EMPILHAMENTO_EDITAR);
 			
-			List<Disciplina> disciplinas = disciplinaService.listarNaoArquivada();
+			List<Disciplina> disciplinas = disciplinaService.buscarDisciplinasNaoArquivadas();
 			modelAndView.addObject("disciplinasNaoArquivadas	", disciplinas);
 			
 			return modelAndView;
 		}
 		
 		try{
-			empilhamentoService.salvarEmpilhamento(empilhamento);
+			empilhamentoService.salvar(empilhamento);
 		}catch(Exception e){
 			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
 			
@@ -139,7 +139,7 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path={"/{id}/detalhar"})
 	public ModelAndView visualizarEmpilhamento(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
-		Empilhamento empilhamento =  empilhamentoService.visualizarEmpilhamento(id);
+		Empilhamento empilhamento =  empilhamentoService.buscarEmpilhamento(id);
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_DETALHAR);
 		model.addObject("empilhamento", empilhamento);
