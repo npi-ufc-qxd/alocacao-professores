@@ -151,4 +151,13 @@ public class Pessoa implements UserDetails {
 		return false;
 	}
 	
+	public boolean isCoordenacao() {
+		for (Papel p : papeis) {
+			if (p.getNome() == Papel.Tipo.COORDENACAO) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

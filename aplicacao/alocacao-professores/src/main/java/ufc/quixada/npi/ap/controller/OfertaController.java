@@ -40,6 +40,7 @@ import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.ProfessorService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.ap.util.RestricaoDePeriodo;
 import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 import ufc.quixada.npi.ap.validation.OfertaValidator;
 
@@ -134,14 +135,16 @@ public class OfertaController {
 	}	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
+	@RestricaoDePeriodo
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
-		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
+		ModelAndView modelAndView = new ModelAndView();
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		
 		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());		
 		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 		modelAndView.addObject("periodoAtivo", periodoService.periodoAtivo());
 		
+		modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
 		return modelAndView;
 	}
 
@@ -173,6 +176,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
+	@RestricaoDePeriodo
 	public ModelAndView editarOferta(@PathVariable("id") Integer id, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
 
