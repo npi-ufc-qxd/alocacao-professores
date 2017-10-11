@@ -20,6 +20,11 @@ public class CursoServiceImpl implements CursoService {
 	
 	@Autowired
 	private ProfessorRepository professorRepository;
+	
+	@Override
+	public Curso buscarCurso(Integer id) {
+		return cursoRepository.findOne(id);
+	}
 
 	@Override
 	public List<Curso> buscarTodosCursos() {

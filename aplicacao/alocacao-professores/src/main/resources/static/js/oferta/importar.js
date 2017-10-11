@@ -232,10 +232,24 @@ function getOfertasSelecionadas(inputName) {
 }
 
 function resultadoImportacao(resultado) {
-	if(resultado.importada)
-		sucessImportarOferta();
-	else
-		errorImportarOferta();
+	var title, text, type, callbackFunction;
+	
+	if(resultado.importada){
+		title = "Oferta(as) importadas!";
+		text = "As oferta(as) selecionadas foram importadas.";
+		type = "success";
+		callbackFunction = function(isConfirm) {
+			location.reload();
+		}
+	}
+	else{
+		title = 'Erro ao importar oferta(s)';
+		text = "Algumas oferta(as) selecionadas não foram importadas.";
+		type = "error";
+		callbackFunction = function(isConfirm){}
+	}
+	
+	swalMessage(title, text, type, callbackFunction)
 }
 
 function importarOfertas(){
@@ -250,7 +264,6 @@ function importarOfertas(){
 
 function importarOfertasCompartilhadas(inputName){
 	var compartilhamentos = getOfertasSelecionadas("ofertas-compartilhadas");
-	
 	if(compartilhamentos.length > 0) {
 		$.get(baseUrl + "/ofertas/importar-ofertas-compartilhadas", {compartilhamentos : compartilhamentos}, function() {
 		})
@@ -258,27 +271,13 @@ function importarOfertasCompartilhadas(inputName){
 	}
 }
 
-function sucessImportarOferta() {
+function swalMessage(swalTitle, swalText, swalType, confirmCallbackFunction) {
 	swal({
-		title : "Oferta(as) importadas!",
-		text : "As oferta(as) selecionadas foram importadas.",
-		type : "success",
+		title : swalTitle,
+		text : swalText,
+		type : swalType,
 		showcancelButton : false,
 		confirmButtonText : "Ok!",
 		closeOnConfirm : true
-	}, function(isConfirm) {
-		location.reload();
-	});
-}
-
-function errorImportarOferta() {
-	swal({
-		title : 'Erro ao importar oferta(s)',
-		text : "Algumas oferta(as) selecionadas não foram importadas.",
-		type : "error",
-		showcancelButton : false,
-		confirmButtonText : "Ok!",
-		closeOnConfirm : true
-	}, function(isConfirm) {
-	});
+	}, confirmCallbackFunction);
 }
