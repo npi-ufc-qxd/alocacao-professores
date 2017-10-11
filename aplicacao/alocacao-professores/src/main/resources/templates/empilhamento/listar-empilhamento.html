@@ -29,8 +29,9 @@
 					<table id="myTable" class="table table-striped">
 						<thead>
 							<tr>
-								<th>Turma</th>
+								<th>Primeira Turma</th>
 								<th>Primeira Oferta</th>
+								<th>Segunda Turma</th>
 								<th>Segunda Oferta</th>
 								<th>Habilitada</th>
 								<th class="col-md-1"></th>
@@ -39,13 +40,16 @@
 						<tbody>
 							<tr th:each="restricaoHorario : ${restricaoHorarios}">
 								<td th:inline="text">
-									[[${restricaoHorario.turma.curso.sigla}]] -
-									[[${restricaoHorario.turma.semestre.numero}]]</td>
+									[[${restricaoHorario.primeiraOferta.turma.curso.sigla}]] -
+									[[${restricaoHorario.primeiraOferta.turma.semestre.numero}]]</td>
 								<td th:inline="text">
 									[[${restricaoHorario.primeiraOferta.disciplina.nome}]]</td>
 								<td th:inline="text">
+									[[${restricaoHorario.SegundaOferta.turma.curso.sigla}]] -
+									[[${restricaoHorario.SegundaOferta.turma.semestre.numero}]]</td>
+								<td th:inline="text">
 									[[${restricaoHorario.segundaOferta.disciplina.nome}]]</td>
-								<td th:inline= "text">[[${restricaoHorario.habilitada} ? 'Sim' : 'Não']]</td>
+								<td th:inline="text">[[${restricaoHorario.habilitada} ? 'Sim' : 'Não']]</td>
 								<td><a
 									th:href="@{/empilhamentos/{id}/editar(id=${restricaoHorario.id})}"><button
 											type="button"
@@ -54,9 +58,8 @@
 										</button></a> 
 										
 										<a th:href="@{/empilhamentos/{id}/excluir(id=${restricaoHorario.id})}" class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-emp-btn-excluir">
-										<i class="fa fa-close"></i>
-										
-										</a></td>
+										<i class="fa fa-close"></i>		
+								</a></td>
 							</tr>
 						</tbody>
 					</table>

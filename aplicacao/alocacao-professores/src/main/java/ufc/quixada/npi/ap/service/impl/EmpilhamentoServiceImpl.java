@@ -1,19 +1,38 @@
 package ufc.quixada.npi.ap.service.impl;
 
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.RestricaoHorario;
 import ufc.quixada.npi.ap.repository.EmpilhamentoRepository;
+import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
+
 
 @Service
 public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 
 	@Autowired
 	private EmpilhamentoRepository empilhamentoRepository;
+	
+	@Autowired
+	PeriodoRepository periodoRepository;
+	
+	@Override
+	public void salvarEmpilhamentoPeriodoAtivo(RestricaoHorario empilhamento){
+		Periodo periodoAtivo = periodoRepository.periodoAtivo();
+		
+		if (periodoAtivo != null)
+			empilhamento.setPeriodo(periodoAtivo);
+			empilhamentoRepository.save(empilhamento);
+	}
+
 	
 	@Override
 	public RestricaoHorario salvarEmpilhamento(RestricaoHorario empilhamento) {

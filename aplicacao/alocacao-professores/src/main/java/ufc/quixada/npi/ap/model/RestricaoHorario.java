@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 public class RestricaoHorario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@ManyToOne
@@ -45,9 +45,6 @@ public class RestricaoHorario {
 	@Enumerated(EnumType.STRING)
 	private Tipo tipo;
 	
-	@ManyToOne
-	@JoinColumn(name = "turma_id")
-	private Turma turma;
 
 	
 	public Integer getId() {
@@ -97,15 +94,6 @@ public class RestricaoHorario {
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
-
-	public Turma getTurma() {
-		return turma;
-	}
-
-	public void setTurma(Turma turma) {
-		this.turma = turma;
-	}
-	
 	
 
 }
