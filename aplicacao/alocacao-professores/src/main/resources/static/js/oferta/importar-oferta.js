@@ -199,10 +199,6 @@ function adicionarResultadoOfertasCompartilhadasImportadas(compartilhamentos, in
 	});
 }
 
-function adicionarMensagemSemResultado(elemento){
-	$(elemento).removeClass('hidden');
-}
-
 function limparTabela(idTabela) {
 	var tabela = $(idTabela);
 	var corpoTabela = tabela.find('tbody');
@@ -211,7 +207,6 @@ function limparTabela(idTabela) {
 }
 
 function limparResultadosImportacao() {
-	var semResultadosOfertas = $('#sem-resultado-ofertas');
 	var divResultados = $('#resultados');
 	
 	limparTabela('#resultado-ofertas');
@@ -219,7 +214,6 @@ function limparResultadosImportacao() {
 	limparTabela('#resultado-ofertas-importadas');
 	limparTabela('#resultado-ofertas-compartilhadas-importadas');
 	
-	semResultadosOfertas.addClass('hidden');
 	divResultados.addClass('hidden');
 }
 

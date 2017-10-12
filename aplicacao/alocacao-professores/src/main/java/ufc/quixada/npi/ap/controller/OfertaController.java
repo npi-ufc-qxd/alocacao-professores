@@ -253,7 +253,6 @@ public class OfertaController {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_IMPORTAR);
 
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-
 		List<Periodo> periodosConsolidados = periodoService.buscarPeriodosConsolidados();
 		
 		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));

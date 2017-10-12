@@ -1,12 +1,9 @@
 package ufc.quixada.npi.ap.controller;
 
-import static ufc.quixada.npi.ap.util.Constants.COMPARTILHAMENTO_LISTAR;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,13 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 import br.ufc.quixada.npi.ldap.model.Usuario;
 import br.ufc.quixada.npi.ldap.service.UsuarioService;
 import ufc.quixada.npi.ap.model.Compartilhamento;
-import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
-import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.OfertaService;
 import ufc.quixada.npi.ap.service.PeriodoService;
@@ -57,23 +52,26 @@ public class DirecaoController {
 	private CompartilhamentoService compartilhamentoService;
 	
 	@Autowired
-	private CursoService cursoService;
-	
-	@Autowired
 	private TurmaService turmaService;
 	
 	@RequestMapping(path = {"/oferta-campus"}, method = RequestMethod.GET)
-	public String listarCompartilhamentos(Model model){
-		model.addAttribute("periodo", periodoService.buscarPeriodoAtivo());
-		model.addAttribute("ofertas", ofertaService.buscarOfertasPeriodoAtivo());
-		return COMPARTILHAMENTO_LISTAR;
+	public ModelAndView listarCompartilhamentos(){
+		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
+		
+		modelAndView.addObject("periodo", periodoService.buscarPeriodoAtivo());
+		modelAndView.addObject("ofertas", ofertaService.buscarOfertasPeriodoAtivo());
+		
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/professores", method = RequestMethod.GET)
 	public ModelAndView listarProfessores() {
 		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_LISTAR);
+		
 		List<Professor> professores = professorService.buscarTodosProfessores();
+		
 		modelAndView.addObject("professores", professores);
+		
 		return modelAndView;
 	}
 	
@@ -119,13 +117,16 @@ public class DirecaoController {
 
 		return modelAndView;
 	}
+	
+	private boolean validarLista(List<?> lista) {
+		return lista != null && !lista.isEmpty() && !lista.contains(null);
+	}
 
 	@RequestMapping(value = "/editar-compartilhamentos-oferta/", method = RequestMethod.GET)
 	public @ResponseBody boolean editarOferta(@RequestParam("idsCompartilhamentos") List<Integer> idsCompartilhamentos,
 			@RequestParam("idsTurmas") List<Integer> idsTurmas, @RequestParam("vagas") List<Integer> vagasCompartilhamentos) {
 		
-		if (idsCompartilhamentos != null && idsTurmas != null && vagasCompartilhamentos != null
-				&& !idsCompartilhamentos.isEmpty() && !idsTurmas.isEmpty() && !vagasCompartilhamentos.isEmpty() 
+		if (validarLista(idsCompartilhamentos) && validarLista(idsTurmas) && validarLista(vagasCompartilhamentos) 
 				&& idsCompartilhamentos.size() == idsTurmas.size() && idsTurmas.size() == vagasCompartilhamentos.size()){
 		
 			for (int i = 0; i < idsCompartilhamentos.size(); i++){
@@ -134,15 +135,13 @@ public class DirecaoController {
 				int vagas = vagasCompartilhamentos.get(i);
 				
 				Turma turma = turmaService.buscarTurma(idTurma);
-				
 				Compartilhamento compartilhamento = compartilhamentoService.buscarCompartilhamento(idCompartilhamento);
 				
-				if (turma != null && compartilhamento != null && vagas > 0){
+				if (compartilhamento != null && turma != null && vagas > 0){
 					compartilhamento.setVagas(vagas);
 					compartilhamento.setTurma(turma);
 					
 					compartilhamentoService.salvar(compartilhamento);
-					
 				}
 			}
 			
@@ -150,15 +149,5 @@ public class DirecaoController {
 		}
 		
 		return false;
-	}
-	
-	@RequestMapping(path = {"/buscar-turmas/{idCurso}"}, method = RequestMethod.GET)
-	public @ResponseBody List<Turma> buscarCompartilhamentosOferta(@PathVariable("idCurso") Integer idCurso){
-		Curso curso = cursoService.buscarCurso(idCurso);
-		
-		if (curso != null)
-			return curso.getTurmas();
-		
-		return null;
 	}
 }

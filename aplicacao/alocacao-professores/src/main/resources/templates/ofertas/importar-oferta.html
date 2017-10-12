@@ -13,7 +13,6 @@
 		<meta name="ctx" th:content="${#httpServletRequest.getRequestURL()}"></meta>
 	</head>
 	
-	
 	<section layout:fragment="conteudo">
 		<div class="row bg-title">
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -125,11 +124,6 @@
 									</div>
 								</div>
 							</div>
-							<div id="sem-resultado-ofertas" class="row hidden">
-								<div id="" class="col-md-12 alert alert-danger">
-									<p><strong>Nenhum resultado encontrado para a sua busca.</strong></p>
-								</div>
-							</div>
 						</div>
 					</form>
 				</div>
@@ -137,7 +131,7 @@
 		</div>
 	</section>
 	<section layout:fragment="js">
-		<script type="text/javascript" th:src="@{/js/oferta/importar.js}"></script>
+		<script type="text/javascript" th:src="@{/js/oferta/importar-oferta.js}"></script>
 		
 		<!-- Select2 Tradução Português Brasileiro -->
 		<script th:src="@{/plugins/select2/js/i18n/pt-BR.js}"></script>
