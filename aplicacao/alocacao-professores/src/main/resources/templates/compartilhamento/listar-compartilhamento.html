@@ -65,7 +65,7 @@
 									<span th:text="${compartilhamentoSI} ? ${compartilhamentoSI.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span>
 								</td>
 
-								<td align="center" th:with="compartilhamentoRD=${oferta.getCompartilhamentoPorCurso('RD')}">
+								<td align="center" th:with="compartilhamentoRD=${oferta.getCompartilhamentoPorCurso('RC')}">
 									<b><span th:text="${compartilhamentoRD} ? ${compartilhamentoRD.vagas} + ' ' + vagas : ''" class="label label-info text-vags"></span></b>
 									<span th:text="${compartilhamentoRD} ? ${compartilhamentoRD.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span>
 								</td>

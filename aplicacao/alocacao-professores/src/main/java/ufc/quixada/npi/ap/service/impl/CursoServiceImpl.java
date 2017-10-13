@@ -30,6 +30,11 @@ public class CursoServiceImpl implements CursoService {
 	public Curso buscarPorCoordenador(Pessoa pessoa) {
 		Professor coordenador = professorRepository.findByPessoa(pessoa);
 		Curso curso = cursoRepository.findByCoordenador(coordenador);
+		
+		if(null == curso) {
+			curso = cursoRepository.findByViceCoordenador(coordenador);
+		}
+		
 		return curso;
 	}
 

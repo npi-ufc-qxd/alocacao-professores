@@ -110,6 +110,7 @@ public class OfertaController {
 		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, curso);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, curso);
 
+		model.addAttribute("curso", curso);
 		model.addAttribute("ofertas", ofertas);
 		model.addAttribute("compartilhamentos", compartilhamentos);
 
@@ -127,6 +128,7 @@ public class OfertaController {
 		List<Oferta> ofertasCurso = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, coordenador);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
 
+		model.addAttribute("curso", cursoCoordenador);
 		model.addAttribute("ofertas", ofertasCurso);
 		model.addAttribute("compartilhamentos", compartilhamentos);
 
@@ -141,7 +143,7 @@ public class OfertaController {
 		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());		
 		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 		modelAndView.addObject("periodoAtivo", periodoService.periodoAtivo());
-		
+
 		return modelAndView;
 	}
 

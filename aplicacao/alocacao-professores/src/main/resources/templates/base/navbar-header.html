@@ -20,7 +20,7 @@
       <ul class="nav navbar-top-links navbar-right pull-right">
          <!-- .user dropdown -->
          <li class="dropdown m-r-20">
-            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img th:src="@{/plugins/images/users/varun.jpg}" alt="user-img" width="36" class="img-circle" /><b class="hidden-xs" th:inline="text">[[${#authentication.principal.nome}]]</b> </a>
+            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><b class="hidden-xs" th:inline="text">[[${#authentication.principal.nome}]]</b> </a>
             <ul class="dropdown-menu dropdown-user animated flipInY">
                <li><a href="#"><i class="ti-user"></i> Perfil</a></li>
                <li role="separator" class="divider"></li>

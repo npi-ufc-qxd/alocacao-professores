@@ -67,6 +67,11 @@ public class OfertaServiceImpl implements OfertaService {
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador) {
 		Professor professor = professorRepository.findByPessoa(coordenador);
 		Curso curso = cursoRepository.findByCoordenador(professor);
+		
+		if(null == curso) {
+			curso = cursoRepository.findByViceCoordenador(professor);
+		}
+		
 		return ofertaRepository.findOfertasByPeriodoAndTurma_curso(periodo, curso);
 	}
 	

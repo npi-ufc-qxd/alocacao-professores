@@ -1,11 +1,5 @@
 var _ctx = $("meta[name='ctx']").attr("content");
-var protocol = _ctx.split('//')[0];
-var host = _ctx.split('/')[2];
-var baseUrl = protocol + '//' + host;
-
-var baseUrl = $("meta[name='baseUrl']").attr("content");
-if (baseUrl == null)
-	baseUrl = "";
+var baseUrl = "/" + _ctx.split('/')[3];
 
 $('#btn-exibir-ofertas').click(function() {
 	exibirOfertas();
