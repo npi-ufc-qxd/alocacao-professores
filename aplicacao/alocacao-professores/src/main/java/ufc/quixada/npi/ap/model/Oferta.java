@@ -205,10 +205,6 @@ public class Oferta {
 	public Compartilhamento getCompartilhamentoPorCurso(String sigla) {
 		for (Compartilhamento compartilhamento : this.compartilhamentos) {
 			if (compartilhamento.getTurma().getCurso().getSigla().equals(sigla)) {
-				System.out.println(id);
-				System.out.println(sigla);
-				System.out.println(compartilhamento.getId());
-				System.out.println(compartilhamento.getVagas());
 				return compartilhamento;
 			}
 		}
