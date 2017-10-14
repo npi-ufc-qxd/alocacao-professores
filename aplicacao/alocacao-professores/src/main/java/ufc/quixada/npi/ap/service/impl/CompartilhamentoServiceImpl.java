@@ -47,7 +47,7 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 	
 	@Override
 	public List<Compartilhamento> buscarCompartilhamentosPorPeriodoAndCurso(Periodo periodo, Curso curso) {
-		return compartilhamentoRepository.findCompartilhamentosByPeriodoAndCurso(periodo, curso);
+		return compartilhamentoRepository.findCompartilhamentosByOferta_periodoAndTurma_curso(periodo, curso);
 	}
 	
 	@Override

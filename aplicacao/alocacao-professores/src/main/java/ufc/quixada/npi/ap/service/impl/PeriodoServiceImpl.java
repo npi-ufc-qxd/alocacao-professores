@@ -39,6 +39,6 @@ public class PeriodoServiceImpl implements PeriodoService{
 
 	@Override
 	public List<Periodo> buscarPeriodosConsolidados() {
-		return periodoRepository.periodosConsolidados();
+		return periodoRepository.findPeriodosConsolidados();
 	}
 }	

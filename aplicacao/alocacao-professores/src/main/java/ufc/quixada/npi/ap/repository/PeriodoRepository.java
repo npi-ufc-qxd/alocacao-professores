@@ -16,7 +16,7 @@ public interface PeriodoRepository extends JpaRepository<Periodo, Integer>{
 	Periodo findPeriodoByAtivoTrue();
 	
 	@Query("FROM Periodo WHERE status = 'CONSOLIDADO' ")
-	List<Periodo> periodosConsolidados();
+	List<Periodo> findPeriodosConsolidados();
 	
 }
 
