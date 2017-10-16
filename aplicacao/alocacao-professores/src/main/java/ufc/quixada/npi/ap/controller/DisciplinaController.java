@@ -44,7 +44,7 @@ public class DisciplinaController {
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public String listarDisciplinas(Model model) {
-		model.addAttribute("disciplinas", disciplinaService.listarNaoArquivada());
+		model.addAttribute("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
 		return DISCIPLINA_LISTAR;
 	}
 
