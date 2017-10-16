@@ -135,16 +135,15 @@ public class OfertaController {
 	}	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
-	@RestricaoDePeriodo
-	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
-		ModelAndView modelAndView = new ModelAndView();
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
+	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth, RedirectAttributes redirect) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		
-		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());		
+		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
 		modelAndView.addObject("periodoAtivo", periodoService.periodoAtivo());
 		
-		modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
 		return modelAndView;
 	}
 
@@ -176,7 +175,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
-	@RestricaoDePeriodo
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
 
@@ -207,7 +206,6 @@ public class OfertaController {
 		try {
 			ofertaService.salvar(oferta);
 		} catch (AlocacaoProfessoresException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -230,6 +228,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public @ResponseBody boolean excluirOferta(@PathVariable(name = "id", required = true) Integer id) {
 		try {
 			ofertaService.excluir(id);

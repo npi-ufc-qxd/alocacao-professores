@@ -1,7 +1,5 @@
 package ufc.quixada.npi.ap.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -140,27 +138,27 @@ public class Periodo {
 	}
 	
 	public boolean isCoordenacao() {
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Calendar calendar = new GregorianCalendar();
 		Date atual = calendar.getTime();
-		
-		System.out.println("Atual: "+formatter.format(atual));
-		System.out.println("Inicio: "+formatter.format(inicioPeriodoCoordenacao));
-		System.out.println("Fim: "+formatter.format(fimPeriodoCoordenacao));
 		
 		return (atual.after(inicioPeriodoCoordenacao) || atual.equals(inicioPeriodoCoordenacao))
 				&& (atual.before(fimPeriodoCoordenacao) || atual.equals(fimPeriodoCoordenacao));
 	}
 	
 	public boolean isAjuste() {
-		Date atual = new Date();
+		Calendar calendar = new GregorianCalendar();
+		Date atual = calendar.getTime();
+
 		return (atual.after(inicioPeriodoAjuste) || atual.equals(inicioPeriodoAjuste))
 				&& (atual.before(fimPeriodoAjuste) || atual.equals(fimPeriodoAjuste));
 	}
 	
 	public boolean isDirecao() {
-		Date atual = new Date();
-		return atual.after(inicioPeriodoDirecao) && atual.before(fimPeriodoDirecao);
+		Calendar calendar = new GregorianCalendar();
+		Date atual = calendar.getTime();
+		
+		return (atual.after(inicioPeriodoDirecao) || atual.equals(inicioPeriodoDirecao))
+				&& (atual.before(fimPeriodoDirecao) || atual.equals(fimPeriodoDirecao));
 	}
 
 	public enum Status {

@@ -28,6 +28,7 @@ import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.PessoaService;
 import ufc.quixada.npi.ap.service.ProfessorService;
 import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.ap.util.RestricaoDePeriodo;
 import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 
 @Controller
@@ -103,6 +104,7 @@ public class DirecaoController {
 	}
 	
 	@RequestMapping(value = "/editar-oferta/{id}", method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_CAMPUS_REDIRECT_LISTAR)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR_DIRECAO);
 
