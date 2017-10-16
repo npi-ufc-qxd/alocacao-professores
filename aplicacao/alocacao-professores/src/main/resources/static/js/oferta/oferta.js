@@ -109,15 +109,15 @@ function organizarOfertas(result) {
 						success: function(result){
 							if (result === true){
 								if(urlExcluir.includes("/ofertas/"))
-									successSwalOferta();
+									successSwal("Oferta excluída!", "A oferta foi excluída.");
 								else if(urlExcluir.includes("/compartilhamentos/"))
-									successSwalCompartilhamento();
+									successSwal("Compartilhamento excluído!", "O compartilhamento foi excluído.");
 							}
 							else{
 								if(urlExcluir.includes("/ofertas/"))
-									errorSwalOferta();
+									errorSwal("A oferta foi excluída.");
 								else if(urlExcluir.includes("/compartilhamentos/"))
-									errorSwalCompartilhamento();
+									errorSwal("O compartilhamento foi excluído.");
 							}
 							
 						},
@@ -130,24 +130,11 @@ function organizarOfertas(result) {
 		});
 	}
 }
-//monta a msg de sucesso quando for uma oferta
-function successSwalOferta(){
+
+function successSwal(title, text){
 	swal({
-		title: "Oferta excluída!",
-		text: "A oferta foi excluída.",
-		type: "success",
-		showcancelButton: false,
-		confirmButtonText: "Ok!",
-		closeOnConfirm: true
-	}, function(isConfirm){
-		location.reload();
-	});
-}
-//monta a msg de sucesso quando for um compartilhamento
-function successSwalCompartilhamento(){
-	swal({
-		title: "Compartilhamento excluído!",
-		text: "O compartilhamento foi excluído.", 
+		title: title,
+		text: text,
 		type: "success",
 		showcancelButton: false,
 		confirmButtonText: "Ok!",
@@ -157,21 +144,10 @@ function successSwalCompartilhamento(){
 	});
 }
 
-function errorSwalOferta(){
+function errorSwal(text){
 	swal({
 		title: "Erro ao excluir",
-		text: "A oferta foi excluída.",
-		type: "error",
-		showcancelButton: false,
-		confirmButtonText: "Ok",
-		closeOnConfirm: true
-	});	
-}
-
-function errorSwalCompartilhamento(){
-	swal({
-		title: "Erro ao excluir",
-		text: "O compartilhamento foi excluído.",
+		text: text,
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",
