@@ -10,12 +10,12 @@ public interface DisciplinaService {
 	
 	public void editar(Disciplina disciplina);
 	
-	public List<Disciplina> listar();
+	public Disciplina buscarDisciplina(Integer id);
+	
+	public List<Disciplina> buscarTodasDisciplinas();
 
-	public List<Disciplina> listarNaoArquivada();
+	public List<Disciplina> buscarDisciplinasNaoArquivadas();
 	
 	boolean arquivarDisciplina(Integer id);
-	
-	public Disciplina findDisciplina(Integer id);
 	
 }

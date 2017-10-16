@@ -23,7 +23,7 @@ public class ProfessorFormatter implements Formatter<Professor>{
 
 	@Override
 	public Professor parse(String id, Locale locale) throws ParseException {
-		return professorService.findProfessor(Integer.parseInt(id));
+		return professorService.buscarProfessor(Integer.parseInt(id));
 	}
 	
 }

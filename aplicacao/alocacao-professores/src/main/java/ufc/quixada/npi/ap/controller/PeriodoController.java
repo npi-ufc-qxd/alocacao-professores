@@ -28,15 +28,15 @@ import ufc.quixada.npi.ap.validation.PeriodoValidator;
 public class PeriodoController {
 
 	@Autowired
-	PeriodoService periodoService;
+	private PeriodoService periodoService;
 
 	@Autowired
-	PeriodoValidator periodoValidator;
+	private PeriodoValidator periodoValidator;
 
 	@RequestMapping(path = { "", "/" }, method = RequestMethod.GET)
 	public ModelAndView listarPeriodos() {
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_LISTAR);
-		List<Periodo> periodos = periodoService.listaPeriodos();
+		List<Periodo> periodos = periodoService.buscarTodosPeriodos();
 		modelAndView.addObject("periodos", periodos);
 
 		return modelAndView;
@@ -79,7 +79,7 @@ public class PeriodoController {
 	@RequestMapping(path = "/{id}/excluir")
 	public @ResponseBody boolean excluir(@PathVariable("id") Integer id) {
 		try {
-			periodoService.excluir(periodoService.getPeriodo(id));
+			periodoService.excluir(periodoService.buscarPeriodo(id));
 		} catch (EmptyResultDataAccessException ex) {
 			return false;
 		}
@@ -89,7 +89,7 @@ public class PeriodoController {
 	@RequestMapping(path = "/{id}/editar", method = RequestMethod.GET)
 	public ModelAndView editarPeriodo(@PathVariable("id") Integer id, @ModelAttribute("periodo") Periodo periodo) {
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_EDITAR);
-		modelAndView.addObject("periodo", periodoService.getPeriodo(id));
+		modelAndView.addObject("periodo", periodoService.buscarPeriodo(id));
 		return modelAndView;
 	}
 

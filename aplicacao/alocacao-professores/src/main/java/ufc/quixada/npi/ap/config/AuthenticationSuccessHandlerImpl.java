@@ -45,7 +45,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 					break;
 
 				case "DIRECAO":
-					url = "/compatilhamentos/";
+					url = "/oferta-campus/";
 					break;
 
 				default:
