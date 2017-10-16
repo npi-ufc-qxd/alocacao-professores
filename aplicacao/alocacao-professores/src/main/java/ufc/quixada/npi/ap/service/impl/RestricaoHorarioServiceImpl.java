@@ -32,12 +32,14 @@ public class RestricaoHorarioServiceImpl implements RestricaoHorarioService {
 		if (periodoAtivo != null)
 			restricaoHorario.setPeriodo(periodoAtivo);
 			restricaoHorario.setTipo(Tipo.EMPILHAMENTO);
+			restricaoHorario.setHabilitada(true);
 			restricaoHorarioRepository.save(restricaoHorario);
 	}
 	
 	@Override
 	public RestricaoHorario salvarRestricaoHorario(RestricaoHorario restricaoHorario) {
 		restricaoHorario.setTipo(Tipo.EMPILHAMENTO);
+		restricaoHorario.setHabilitada(true);
 		return restricaoHorarioRepository.save(restricaoHorario);
 	}
 

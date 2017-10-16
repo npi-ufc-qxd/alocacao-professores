@@ -22,7 +22,7 @@ public class RestricaoHorario {
 	@ManyToOne
 	private Oferta segundaOferta;
 	
-	private boolean habilitada = true;
+	private boolean habilitada;
 	
 	@ManyToOne
 	@JoinColumn(name = "periodo_id")
