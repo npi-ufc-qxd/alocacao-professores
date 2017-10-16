@@ -28,10 +28,10 @@ import ufc.quixada.npi.ap.validation.PeriodoValidator;
 public class PeriodoController {
 
 	@Autowired
-	PeriodoService periodoService;
+	private PeriodoService periodoService;
 
 	@Autowired
-	PeriodoValidator periodoValidator;
+	private PeriodoValidator periodoValidator;
 
 	@RequestMapping(path = { "", "/" }, method = RequestMethod.GET)
 	public ModelAndView listarPeriodos() {

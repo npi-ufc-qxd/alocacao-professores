@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,28 +19,44 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.validation.EmpilhamentoValidator;
+import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Disciplina;
-import ufc.quixada.npi.ap.model.Empilhamento;
+import ufc.quixada.npi.ap.model.Oferta;
+import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Pessoa;
+import ufc.quixada.npi.ap.model.RestricaoHorario;
 import ufc.quixada.npi.ap.model.Turma;
+import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.DisciplinaService;
-import ufc.quixada.npi.ap.service.EmpilhamentoService;
+import ufc.quixada.npi.ap.service.RestricaoHorarioService;
+import ufc.quixada.npi.ap.service.OfertaService;
+import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.TurmaService;
 
 @Controller
 @RequestMapping(path="/empilhamentos")
-public class EmpilhamentoController {
+public class RestricaoHorarioController {
 
 	@Autowired
-	EmpilhamentoService empilhamentoService;
+	private RestricaoHorarioService empilhamentoService;
 	
 	@Autowired
-	DisciplinaService disciplinaService;
+	private DisciplinaService disciplinaService;
+	
+	@Autowired
+	private OfertaService ofertaService;
+	
+	@Autowired
+	private CursoService cursoService;
+	
+	@Autowired
+	private PeriodoService periodoService;
 	
 	@Autowired 
-	TurmaService turmaService;
+	private TurmaService turmaService;
 	
 	@Autowired
-	EmpilhamentoValidator empilhamentoValidator;
+	private EmpilhamentoValidator empilhamentoValidator;
 	
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas(){
@@ -48,38 +65,46 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(){
-		List<Empilhamento> empilhamentos =  empilhamentoService.buscarTodosEmpilhamentos();
+		List<RestricaoHorario> restricaoHorarios =  empilhamentoService.buscarTodasRestricoesHorario();
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR);
-		model.addObject("empilhamentos", empilhamentos);
+		model.addObject("restricaoHorarios", restricaoHorarios);
 		
 		return model;
 	}
 	
 	@RequestMapping(path={"/cadastrar"}, method=RequestMethod.GET)
-	public ModelAndView cadastrarEmpilhamento(){
+	public ModelAndView cadastrarEmpilhamento(Authentication auth){
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		Curso curso = cursoService.buscarCursoPorCoordenador(coordenador);
 		
-		List<Disciplina> disciplinas = disciplinaService.buscarDisciplinasNaoArquivadas();
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, curso);
 		List<Turma> turmas = turmaService.buscarTodasTurmas();
 		
-		model.addObject("disciplinas", disciplinas);
+		
+		model.addObject("ofertas", ofertas);
 		model.addObject("turmas", turmas);
-		model.addObject("empilhamento", new Empilhamento());
+		model.addObject("restricaoHorario", new RestricaoHorario());
+		model.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
 		
 		return model;
 	}
 	
 	@RequestMapping(path={"/cadastrar"}, method=RequestMethod.POST)
-	public ModelAndView cadastrarEmpilhamento(@ModelAttribute("empilhamento") @Valid Empilhamento empilhamento, BindingResult bindingResult){
-		empilhamentoValidator.validate(empilhamento, bindingResult);
+	public ModelAndView cadastrarEmpilhamento(@ModelAttribute("restricaoHorario") @Valid RestricaoHorario restricaoHorario, BindingResult result, 
+			ModelAndView modelAndView, Authentication auth){
+		empilhamentoValidator.validate(restricaoHorario, result);
 		
-		if(bindingResult.hasErrors()){
-			ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_CADASTRAR);
-			return model;
+		if(result.hasErrors()){
+			Pessoa pessoa = (Pessoa) auth.getPrincipal();
+			modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
+			modelAndView.setViewName(Constants.EMPILHAMENTO_CADASTRAR);
+			return modelAndView;
 		}
 		
-		empilhamentoService.salvar(empilhamento);
+		empilhamentoService.salvarRestricaoHorarioPeriodoAtivo(restricaoHorario);
 		
 		ModelAndView modelRetorno = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
 		return modelRetorno;
@@ -97,20 +122,25 @@ public class EmpilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
-	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id){
-		List<Disciplina> disciplinas = disciplinaService.buscarDisciplinasNaoArquivadas();
-		Empilhamento empilhamento = empilhamentoService.buscarEmpilhamento(id);
+	public ModelAndView editarCompartilhamento(@PathVariable("id") Integer id, Authentication auth){
+		
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		Curso curso = cursoService.buscarCursoPorCoordenador(coordenador);
+		
+		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, curso);
+		RestricaoHorario restricaoHorario = empilhamentoService.buscarRestricaoHorario(id);
 		
 		ModelAndView modelAndView = new ModelAndView(Constants.EMPILHAMENTO_EDITAR);
-		modelAndView.addObject("disciplinasNaoArquivadas", disciplinas);
-		modelAndView.addObject("empilhamento", empilhamento);
+		modelAndView.addObject("ofertas", ofertas);
+		modelAndView.addObject("restricaoHorario", restricaoHorario);
 		
 		return modelAndView;
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
-												@ModelAttribute("empilhamento") @Valid Empilhamento empilhamento, 
+												@ModelAttribute("empilhamento") @Valid RestricaoHorario empilhamento, 
 													BindingResult bindingResult, ModelAndView modelAndView){
 		
 		empilhamentoValidator.validate(empilhamento, bindingResult);
@@ -125,7 +155,7 @@ public class EmpilhamentoController {
 		}
 		
 		try{
-			empilhamentoService.salvar(empilhamento);
+			empilhamentoService.salvarRestricaoHorario(empilhamento);
 		}catch(Exception e){
 			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
 			
@@ -139,7 +169,7 @@ public class EmpilhamentoController {
 	
 	@RequestMapping(path={"/{id}/detalhar"})
 	public ModelAndView visualizarEmpilhamento(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
-		Empilhamento empilhamento =  empilhamentoService.buscarEmpilhamento(id);
+		RestricaoHorario empilhamento =  empilhamentoService.buscarRestricaoHorario(id);
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_DETALHAR);
 		model.addObject("empilhamento", empilhamento);
