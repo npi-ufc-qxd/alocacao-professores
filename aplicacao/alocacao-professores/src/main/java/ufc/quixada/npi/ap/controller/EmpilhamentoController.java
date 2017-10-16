@@ -25,6 +25,7 @@ import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.RestricaoHorario;
+import ufc.quixada.npi.ap.model.RestricaoHorario.Tipo;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.DisciplinaService;
@@ -57,6 +58,8 @@ public class EmpilhamentoController {
 	
 	@Autowired
 	EmpilhamentoValidator empilhamentoValidator;
+	
+	
 	
 	
 	
@@ -107,6 +110,9 @@ public class EmpilhamentoController {
 		}
 		
 		empilhamentoService.salvarEmpilhamentoPeriodoAtivo(restricaoHorario);
+		
+	
+		
 		
 		ModelAndView modelRetorno = new ModelAndView(Constants.EMPILHAMENTO_REDIRECT_LISTAR);
 		return modelRetorno;

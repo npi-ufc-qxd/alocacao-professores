@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.RestricaoHorario;
+import ufc.quixada.npi.ap.model.RestricaoHorario.Tipo;
 import ufc.quixada.npi.ap.repository.EmpilhamentoRepository;
 import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
@@ -30,18 +31,20 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 		
 		if (periodoAtivo != null)
 			empilhamento.setPeriodo(periodoAtivo);
+			empilhamento.setTipo(Tipo.EMPILHAMENTO);
 			empilhamentoRepository.save(empilhamento);
 	}
 
 	
 	@Override
 	public RestricaoHorario salvarEmpilhamento(RestricaoHorario empilhamento) {
+		empilhamento.setTipo(Tipo.EMPILHAMENTO);
 		return empilhamentoRepository.save(empilhamento);
 	}
 
 	@Override
 	public List<RestricaoHorario> listarEmpilhamentos() {
-		return empilhamentoRepository.findAll();
+		return empilhamentoRepository.findByTipo(Tipo.EMPILHAMENTO);
 	}
 
 	@Override
