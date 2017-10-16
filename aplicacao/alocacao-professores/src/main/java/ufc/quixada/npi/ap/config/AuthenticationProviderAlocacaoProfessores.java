@@ -33,7 +33,7 @@ public class AuthenticationProviderAlocacaoProfessores implements Authentication
 		String cpf = authentication.getName();
         String password = (String) authentication.getCredentials();
         
-        Pessoa pessoa = pessoaRepository.findByCpf(cpf);
+        Pessoa pessoa = pessoaRepository.findPessoaByCpf(cpf);
         
         if(pessoa == null) {
         	throw new BadCredentialsException(Constants.LOGIN_INVALIDO);

@@ -23,6 +23,6 @@ public class DisciplinaFormatter implements Formatter<Disciplina> {
 
 	@Override
 	public Disciplina parse(String id, Locale locale) throws ParseException {
-		return disciplinaService.findDisciplina(Integer.parseInt(id));
+		return disciplinaService.buscarDisciplina(Integer.parseInt(id));
 	}
 }

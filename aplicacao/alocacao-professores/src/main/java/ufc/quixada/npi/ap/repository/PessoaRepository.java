@@ -8,6 +8,6 @@ import ufc.quixada.npi.ap.model.Pessoa;
 @Repository
 public interface PessoaRepository extends CrudRepository<Pessoa, Integer> {
 
-	Pessoa findByCpf(String cpf);
+	Pessoa findPessoaByCpf(String cpf);
 
 }
