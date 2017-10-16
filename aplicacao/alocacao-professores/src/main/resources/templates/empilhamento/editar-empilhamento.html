@@ -23,65 +23,38 @@
 		<div class="col-sm-12">
 			<div class="white-box">
 				<form class="form-horizontal"
-					th:action="@{/empilhamentos/{id}/editar(id=${empilhamento.id})}"
-					method="POST" th:object="${empilhamento}">
-					<div class="form-group" th:classappend="${#fields.hasErrors('primeiraDisciplina.id')}? has-error">
-						<label for="disciplinaASelect" class="control-label m-l-10">Disciplina A</label>
+					th:action="@{/empilhamentos/{id}/editar(id=${restricaoHorario.id})}"
+					method="POST" th:object="${restricaoHorario}">
+					<div class="form-group" th:classappend="${#fields.hasErrors('primeiraOferta.id')}? has-error">
+						<label for="disciplinaASelect" class="control-label m-l-10">Primeira Oferta</label>
 						<div class="col-md-12">
-							<select th:field="*{primeiraDisciplina.id}"
+							<select th:field="*{primeiraOferta.id}"
 								id="disciplinaASelect" class="form-control"
 								name="primeiraDisciplina">
 								<option value="">Selecione uma opção</option>
-								<option th:each="disciplina : ${disciplinasNaoArquivadas}"
-									th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+								<option th:each="oferta : ${ofertas}"
+									th:value="${oferta.id}" th:inline="text">[[${oferta.turma.curso.sigla}]]-[[${oferta.turma.semestre.numero}]]
+										[[${oferta.disciplina.nome}]]</option>
 							</select> 
-							<span th:if="${#fields.hasErrors('primeiraDisciplina.id')}"
-								th:errors="*{primeiraDisciplina.id}"
+							<span th:if="${#fields.hasErrors('primeiraOferta.id')}"
+								th:errors="*{primeiraOferta.id}"
 								class="help-block with-errors"></span>
 						</div>
 					</div>
-					<div class="form-group" th:classappend="${#fields.hasErrors('primeiraTurma.id')}? has-error">
-						<label for="turmaASelect" class="control-label m-l-10">Turma A</label>
-						<div class="col-md-12">
-							<select th:field="*{primeiraTurma.id}"
-								id="turmaASelect" class="form-control select2"
-								name="primeiraTurma">
-								<option value="">Selecione uma opção</option>
-								<option th:each="turma : ${turmas}" th:value="${turma.id}"
-									th:inline="text">[[${turma.curso.nome}]] -
-									[[${turma.semestre}]]</option>
-							</select>
-							<span th:if="${#fields.hasErrors('primeiraTurma.id')}"
-								th:errors="*{primeiraTurma.id}" class="help-block with-errors"></span>
-						</div>
-					</div>
-					<div class="form-group" th:classappend="${#fields.hasErrors('segundaDisciplina.id')}? has-error">
-						<label for="disciplinaBSelect" class="control-label m-l-10">Disciplina B</label>
+					<div class="form-group" th:classappend="${#fields.hasErrors('segundaOferta.id')}? has-error">
+						<label for="disciplinaBSelect" class="control-label m-l-10">Segunda Oferta</label>
 						<div class="col-md-12">
 							<select
-								th:field="*{segundaDisciplina.id}" id="disciplinaBSelect"
+								th:field="*{segundaOferta.id}" id="disciplinaBSelect"
 								name="segundaDisciplina" class="form-control select2">
 								<option value="">Selecione uma opção</option>
-								<option th:each="disciplina : ${disciplinasNaoArquivadas}"
-									th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+								<option th:each="oferta : ${ofertas}"
+									th:value="${oferta.id}" th:inline="text">[[${oferta.turma.curso.sigla}]]-[[${oferta.turma.semestre.numero}]]
+										[[${oferta.disciplina.nome}]]</option>
 							</select>
-							<span th:if="${#fields.hasErrors('segundaDisciplina.id')}"
-								th:errors="*{segundaDisciplina.id}"
+							<span th:if="${#fields.hasErrors('segundaOferta.id')}"
+								th:errors="*{segundaOferta.id}"
 								class="help-block with-errors"></span>
-						</div>
-					</div>
-					<div class="form-group" th:classappend="${#fields.hasErrors('segundaTurma.id')}? has-error">
-						<label for="turmaBSelect" class="control-label m-l-10">Turma B</label>
-						<div class="col-md-12">
-							<select th:field="*{segundaTurma.id}"
-								id="turmaBSelect" class="form-control select2"
-								name="segundaTurma">
-								<option value="">Selecione uma opção</option>
-								<option th:each="turma : ${turmas}" th:value="${turma.id}"
-									th:inline="text">[[${turma.curso.nome}]] -
-									[[${turma.semestre}]]</option>
-							</select> <span th:if="${#fields.hasErrors('segundaTurma.id')}"
-								th:errors="*{segundaTurma.id}" class="help-block with-errors"></span>
 						</div>
 					</div>
 					<div class="text-right">

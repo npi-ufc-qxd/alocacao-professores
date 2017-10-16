@@ -1,13 +1,19 @@
 package ufc.quixada.npi.ap.service.impl;
 
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ufc.quixada.npi.ap.model.Empilhamento;
+
+import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.RestricaoHorario;
 import ufc.quixada.npi.ap.repository.EmpilhamentoRepository;
+import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.EmpilhamentoService;
+
 
 @Service
 public class EmpilhamentoServiceImpl implements EmpilhamentoService {
@@ -15,13 +21,26 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 	@Autowired
 	private EmpilhamentoRepository empilhamentoRepository;
 	
+	@Autowired
+	PeriodoRepository periodoRepository;
+	
 	@Override
-	public Empilhamento salvarEmpilhamento(Empilhamento empilhamento) {
+	public void salvarEmpilhamentoPeriodoAtivo(RestricaoHorario empilhamento){
+		Periodo periodoAtivo = periodoRepository.periodoAtivo();
+		
+		if (periodoAtivo != null)
+			empilhamento.setPeriodo(periodoAtivo);
+			empilhamentoRepository.save(empilhamento);
+	}
+
+	
+	@Override
+	public RestricaoHorario salvarEmpilhamento(RestricaoHorario empilhamento) {
 		return empilhamentoRepository.save(empilhamento);
 	}
 
 	@Override
-	public List<Empilhamento> listarEmpilhamentos() {
+	public List<RestricaoHorario> listarEmpilhamentos() {
 		return empilhamentoRepository.findAll();
 	}
 
@@ -31,7 +50,7 @@ public class EmpilhamentoServiceImpl implements EmpilhamentoService {
 	}
 
 	@Override
-	public Empilhamento visualizarEmpilhamento(Integer idEmpilhamento) {
+	public RestricaoHorario visualizarEmpilhamento(Integer idEmpilhamento) {
 		return empilhamentoRepository.findOne(idEmpilhamento);
 	}
 
