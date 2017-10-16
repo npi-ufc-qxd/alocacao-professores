@@ -9,8 +9,7 @@ import ufc.quixada.npi.ap.model.RestricaoHorario;
 import ufc.quixada.npi.ap.model.RestricaoHorario.Tipo;
 
 @Repository
-public interface EmpilhamentoRepository extends JpaRepository<RestricaoHorario, Integer> {
-	
+public interface RestricaoHorarioRepository extends JpaRepository<RestricaoHorario, Integer> {
 	
 	List<RestricaoHorario> findByTipo(Tipo tipo);
 

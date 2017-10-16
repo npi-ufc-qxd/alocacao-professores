@@ -39,7 +39,7 @@ public class CompartilhamentoController {
 	
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas(){
-		return turmaService.listarTurmas();
+		return turmaService.buscarTodasTurmas();
 	}
 	
 	@RequestMapping(path = {"/cadastrar"}, method = RequestMethod.GET)
@@ -89,13 +89,14 @@ public class CompartilhamentoController {
 		
 		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_EDITAR);
 		
-		compartilhamento = compartilhamentoService.findCompartilhamento(id);
+		compartilhamento = compartilhamentoService.buscarCompartilhamento(id);
 		
 		if (compartilhamento == null){
 			modelAndView.setViewName(Constants.COMPARTILHAMENTO_REDIRECT_LISTAR);
 			
 			return modelAndView;
 		}
+		
 		modelAndView.addObject("compartilhamento", compartilhamento);
 		
 		return modelAndView;

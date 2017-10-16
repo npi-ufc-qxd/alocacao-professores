@@ -19,13 +19,13 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	private DisciplinaRepository disciplinaRepository;
 
 	@Override
-	public List<Disciplina> listar() {
+	public List<Disciplina> buscarTodasDisciplinas() {
 		return disciplinaRepository.findAll();
 	}
 
 	@Override
 	public void salvar(Disciplina disciplina) throws Exception {
-		Disciplina disciplinaRecuperada = disciplinaRepository.findByCodigo(disciplina.getCodigo());	
+		Disciplina disciplinaRecuperada = disciplinaRepository.findDisciplinaByCodigo(disciplina.getCodigo());	
 		
 		if(disciplinaRecuperada != null) {
 			throw new AlocacaoProfessorException(DISCIPLINA_CADASTRAR_EXISTENTE);
@@ -43,13 +43,13 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	}
 
 	@Override
-	public List<Disciplina> listarNaoArquivada() {
-		return disciplinaRepository.findByArquivadaFalse();
+	public List<Disciplina> buscarDisciplinasNaoArquivadas() {
+		return disciplinaRepository.findDisciplinaByArquivadaFalse();
 	}
 
 	@Override
 	public boolean arquivarDisciplina(Integer id) {
-		Disciplina disciplina = disciplinaRepository.findById(id);
+		Disciplina disciplina = disciplinaRepository.findOne(id);
 		if (disciplina == null) {
 			return false;
 		}
@@ -60,7 +60,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	}
 
 	@Override
-	public Disciplina findDisciplina(Integer id) {
+	public Disciplina buscarDisciplina(Integer id) {
 		return disciplinaRepository.findOne(id);
 	}
 
