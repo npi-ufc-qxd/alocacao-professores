@@ -241,9 +241,9 @@ public class OfertaController {
 		List<Compartilhamento> ofertasCompartilhadasImportadas = compartilhamentoService.buscarCompartilhamentosImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
 		
 		model.addAttribute("ofertas", ofertas);
+		model.addAttribute("ofertasImportadas", ofertasImportadas);
 		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
 		model.addAttribute("ofertasCompartilhadasImportadas", ofertasCompartilhadasImportadas);
-		model.addAttribute("ofertasImportadas", ofertasImportadas);
 		
 		return model;
 	}
