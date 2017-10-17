@@ -88,7 +88,5 @@ public class Constants {
 	public static final String STATUS_ERROR = "error";
 	public static final String DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
 	public static final String DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
-	public static final String RESTRICAO_PERIODO_COORDENACAO = "Não é possível realizar esta operação fora dos períodos de Coordenação ou Ajuste";
-	public static final String RESTRICAO_PERIODO_DIRECAO = "Não é possível realizar esta operação fora dos períodos de Direção ou Ajuste";
-
+	public static final String RESTRICAO_PERIODO = "Esta operação é restrita por períodos. Por favor verifique as datas do período.";
 }

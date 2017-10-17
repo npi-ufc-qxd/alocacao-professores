@@ -41,6 +41,7 @@ import ufc.quixada.npi.ap.service.ProfessorService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
 import ufc.quixada.npi.ap.util.RestricaoDePeriodo;
+import ufc.quixada.npi.ap.util.RestricaoDePeriodoAjax;
 import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 import ufc.quixada.npi.ap.validation.OfertaValidator;
 
@@ -228,7 +229,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
-	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
+	@RestricaoDePeriodoAjax
 	public @ResponseBody boolean excluirOferta(@PathVariable(name = "id", required = true) Integer id) {
 		try {
 			ofertaService.excluir(id);
@@ -261,6 +262,7 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/importar", method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView importarOfertas(Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_IMPORTAR);
 
@@ -296,6 +298,7 @@ public class OfertaController {
 	
 	
 	@RequestMapping(path = {"/{id}/solicitar-compartilhamento"}, method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView cadastrarCompartilhamento(@PathVariable("id") Integer id, @ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
 		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
 
@@ -333,5 +336,4 @@ public class OfertaController {
 		
 		return modelAndView;
 	}
-
 }

@@ -21,6 +21,8 @@ import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.ap.util.RestricaoDePeriodo;
+import ufc.quixada.npi.ap.util.RestricaoDePeriodoAjax;
 import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 
 
@@ -84,6 +86,7 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id, 
 												@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
 		
@@ -124,6 +127,7 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
+	@RestricaoDePeriodoAjax
 	public @ResponseBody boolean excluirCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
 		try{
 			compartilhamentoService.excluir(id);

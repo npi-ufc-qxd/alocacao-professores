@@ -30,32 +30,38 @@ public class RestricaoDePeriodoAspect {
 	
 	@Around(value = "@annotation(restricaoPeriodo)")
 	public ModelAndView restringirPeriodo(ProceedingJoinPoint joinPoint, RestricaoDePeriodo restricaoPeriodo) throws Throwable {
+		if ( !permitido() ) {
+			ModelAndView view = new ModelAndView(restricaoPeriodo.value());
+			ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+			HttpServletRequest request = requestAttributes.getRequest();
+			HttpServletResponse response = requestAttributes.getResponse();
+			FlashMap flashMap = new FlashMap();
+			FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);
+			flashMap.put(Constants.STATUS_ERROR, Constants.RESTRICAO_PERIODO);
+			flashMapManager.saveOutputFlashMap(flashMap, request, response);
+			return view;
+		}
+		return (ModelAndView) joinPoint.proceed();
+	}
+	
+	@Around(value = "@annotation(RestricaoDePeriodoAjax)")
+	public boolean restringirPeriodoAjax(ProceedingJoinPoint joinPoint) throws Throwable {
+		if( !permitido() )
+			return false;
+		
+		return (boolean) joinPoint.proceed();
+	}
+	
+	private boolean permitido() {
 		Periodo periodoAtivo = periodoService.periodoAtivo();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		
-		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = requestAttributes.getRequest();
-		HttpServletResponse response = requestAttributes.getResponse();
-		FlashMap flashMap = new FlashMap();
-		FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);
+		if( pessoa.isCoordenacao() )
+			return periodoAtivo.isCoordenacao() || periodoAtivo.isAjuste();
+		if( pessoa.isDirecao() )
+			return periodoAtivo.isDirecao() || periodoAtivo.isAjuste();
 		
-		ModelAndView view = new ModelAndView(restricaoPeriodo.value());
-		
-		if( pessoa.isCoordenacao() && !(periodoAtivo.isCoordenacao() || periodoAtivo.isAjuste()) ) {
-			flashMap.put(Constants.STATUS_ERROR, Constants.RESTRICAO_PERIODO_COORDENACAO);
-			flashMapManager.saveOutputFlashMap(flashMap, request, response);
-			return view;
-		}
-		
-		if( pessoa.isDirecao() && !(periodoAtivo.isDirecao() || periodoAtivo.isAjuste()) ) {
-			flashMap.put(Constants.STATUS_ERROR, Constants.RESTRICAO_PERIODO_DIRECAO);
-			flashMapManager.saveOutputFlashMap(flashMap, request, response);
-			return view;
-		}
-		
-		ModelAndView proceed = (ModelAndView) joinPoint.proceed();
-		
-		return proceed;
+		return false;
 	}
 }
