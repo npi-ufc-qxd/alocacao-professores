@@ -156,12 +156,15 @@ public class OfertaController {
 			modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
 			modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
 			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
+			modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
 			
 			return modelAndView;
 		}
 
 		ofertaService.salvarOfertaPeriodoAtivo(oferta);
+		
 		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		
 		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, OFERTA_CADASTRADA);
 		
 		return modelAndView;

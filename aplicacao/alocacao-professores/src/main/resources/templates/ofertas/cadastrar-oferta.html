@@ -69,7 +69,7 @@
 						<div class="form-group" th:classappend="${#fields.hasErrors('mesmoDia')} ? has-error">
 							<label class="control-label m-l-10">Mesmo Dia</label>
 							<div class="col-md-12">
- 								<select class="form-control" th:field="*{mesmoDia}">
+ 								<select class="form-control" th:field="*{mesmoDia}" required="required">
 									<option value="true">SIM</option>
 									<option value="false">NÃO</option>
 								</select> <span th:if="${#fields.hasErrors('mesmoDia')}" th:errors="*{mesmoDia}" class="help-block with-errors"></span>
@@ -106,7 +106,7 @@
  						<div class="form-group" th:classappend= "${#fields.hasErrors('aulasEmLaboratorio')}? has-error">
  							<label class="control-label m-l-10" for="aulasEmLaboratorio">Número de Professores</label>
  							<div class="col-md-12">
- 								<input type="number" id="numeroProfessores" th:field = "*{numeroProfessores}" min="0" class="form-control"/>
+ 								<input type="number" id="numeroProfessores" th:field = "*{numeroProfessores}" min="0" class="form-control" required="required" />
  								<span th:if="${#fields.hasErrors('numeroProfessores')}" th:errors="*{numeroProfessores}" class="help-block with-errors"></span>
  							</div>
  				 		</div>

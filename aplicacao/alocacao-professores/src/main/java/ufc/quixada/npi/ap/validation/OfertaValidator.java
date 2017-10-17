@@ -30,6 +30,8 @@ public class OfertaValidator implements Validator {
 		validateDisciplina(erros, oferta.getDisciplina(), "disciplina", "disciplinaNull");
 		validateTurno(erros, oferta.getTurno(), "turno", "turnoNull");
 		validateVagasValorInvalido(erros, oferta.getVagas(), "vagas", "vagasInvalid");
+		validateAulasEmLaboratorioValorInvalido(erros, oferta.getAulasEmLaboratorio(), "aulasEmLaboratorio", "aulasEmLaboratorioInvalid");
+		validateNumeroProfessoresValorInvalido(erros, oferta.getNumeroProfessores(), "numeroProfessores", "numeroProfessoresInvalid");
 	}
 	
 	private void validateProfessoresNotNull(Errors erros, List<Professor> professores, String campo, String mensagem){
@@ -54,6 +56,16 @@ public class OfertaValidator implements Validator {
 	
 	private void validateVagasValorInvalido(Errors erros, Integer vagas, String campo, String mensagem){
 		if (vagas != null && vagas <= 0)
+			erros.rejectValue(campo, mensagem);
+	}
+	
+	private void validateAulasEmLaboratorioValorInvalido(Errors erros, Integer aulasEmLaboratorio, String campo, String mensagem){
+		if (aulasEmLaboratorio != null && aulasEmLaboratorio < 0)
+			erros.rejectValue(campo, mensagem);
+	}
+	
+	private void validateNumeroProfessoresValorInvalido(Errors erros, Integer numeroProfessores, String campo, String mensagem){
+		if (numeroProfessores != null && numeroProfessores <= 0)
 			erros.rejectValue(campo, mensagem);
 	}
 }
