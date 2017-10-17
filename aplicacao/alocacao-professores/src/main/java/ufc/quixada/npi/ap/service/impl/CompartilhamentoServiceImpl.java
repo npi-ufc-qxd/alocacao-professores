@@ -104,11 +104,15 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 		Oferta ofertaCompartilhada = compartilhamento.getOferta();
 		
 		Oferta oferta = new Oferta();
-		oferta.setDisciplina(ofertaCompartilhada.getDisciplina());
-		oferta.setTurno(ofertaCompartilhada.getTurno());
-		oferta.setObservacao(ofertaCompartilhada.getObservacao());
+		
 		oferta.setTurma(compartilhamento.getTurma());
+		oferta.setDisciplina(ofertaCompartilhada.getDisciplina());
 		oferta.setVagas(compartilhamento.getVagas());
+		oferta.setTurno(ofertaCompartilhada.getTurno());
+		oferta.setHorarioInicio(ofertaCompartilhada.getHorarioInicio());
+		oferta.setAulasEmLaboratorio(ofertaCompartilhada.getAulasEmLaboratorio());
+		oferta.setNumeroProfessores(ofertaCompartilhada.getNumeroProfessores());
+		oferta.setObservacao(ofertaCompartilhada.getObservacao());
 
 		if (!ofertaCompartilhada.getProfessores().isEmpty()) {
 			List<Professor> professores = new ArrayList<>();

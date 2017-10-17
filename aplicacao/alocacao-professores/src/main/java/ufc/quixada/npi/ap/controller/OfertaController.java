@@ -244,9 +244,9 @@ public class OfertaController {
 		List<Compartilhamento> ofertasCompartilhadasImportadas = compartilhamentoService.buscarCompartilhamentosImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
 		
 		model.addAttribute("ofertas", ofertas);
+		model.addAttribute("ofertasImportadas", ofertasImportadas);
 		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
 		model.addAttribute("ofertasCompartilhadasImportadas", ofertasCompartilhadasImportadas);
-		model.addAttribute("ofertasImportadas", ofertasImportadas);
 		
 		return model;
 	}
@@ -280,8 +280,8 @@ public class OfertaController {
 		return compartilhamentoService.importarOfertasCompartilhadas(compartilhamentos, periodoAtivo, curso);
 	}
 	
-	@RequestMapping(path = {"/{id}/solicitar-compartilhamento"}, method = RequestMethod.GET)
-	public ModelAndView cadastrarCompartilhamento(@PathVariable("id") Integer id, @ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
+	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.GET)
+	public ModelAndView cadastrarCompartilhamento(@PathVariable("idOferta") Integer id, @ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
 		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
 
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
@@ -292,8 +292,8 @@ public class OfertaController {
 		return modelAndView;
 	}
 
-	@RequestMapping(path = {"/{id}/solicitar-compartilhamento"}, method = RequestMethod.POST)
-	public ModelAndView cadastrarCompartilhamento(@PathVariable("id") Integer id, @ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth){
+	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.POST)
+	public ModelAndView cadastrarCompartilhamento(@PathVariable("idOferta") Integer id, @ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth){
 		compartilhamentoValidator.validate(compartilhamento, bindingResult);
 
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();

@@ -113,10 +113,13 @@ public class OfertaServiceImpl implements OfertaService {
 	private Oferta clonarOferta(Oferta o) {
 		Oferta oferta = new Oferta();
 		
-		oferta.setDisciplina(o.getDisciplina());
 		oferta.setTurma(o.getTurma());
-		oferta.setTurno(o.getTurno());
+		oferta.setDisciplina(o.getDisciplina());
 		oferta.setVagas(o.getVagas());
+		oferta.setTurno(o.getTurno());
+		oferta.setHorarioInicio(o.getHorarioInicio());
+		oferta.setAulasEmLaboratorio(o.getAulasEmLaboratorio());
+		oferta.setNumeroProfessores(o.getNumeroProfessores());
 		oferta.setObservacao(o.getObservacao());
 
 		if (!o.getProfessores().isEmpty()) {
