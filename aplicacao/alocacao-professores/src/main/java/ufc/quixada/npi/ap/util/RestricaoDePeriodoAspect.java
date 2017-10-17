@@ -53,7 +53,7 @@ public class RestricaoDePeriodoAspect {
 	}
 	
 	private boolean permitido() {
-		Periodo periodoAtivo = periodoService.periodoAtivo();
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		

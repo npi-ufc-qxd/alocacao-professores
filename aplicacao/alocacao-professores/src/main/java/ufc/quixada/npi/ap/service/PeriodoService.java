@@ -8,14 +8,14 @@ public interface PeriodoService {
 
 	void salvar(Periodo periodo);
 	
-	public List<Periodo> listaPeriodos();
-	
-	public Periodo getPeriodo(Integer id);
-	
 	void excluir(Periodo periodo);
 	
-	public Periodo periodoAtivo();
+	public List<Periodo> buscarTodosPeriodos();
 	
-	public List<Periodo> periodosConsolidados();
+	public Periodo buscarPeriodo(Integer id);
+	
+	public Periodo buscarPeriodoAtivo();
+	
+	public List<Periodo> buscarPeriodosConsolidados();
 	
 }

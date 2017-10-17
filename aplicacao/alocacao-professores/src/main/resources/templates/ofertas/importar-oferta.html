@@ -13,7 +13,6 @@
 		<meta name="ctx" th:content="${#httpServletRequest.getRequestURL()}"></meta>
 	</head>
 	
-	
 	<section layout:fragment="conteudo">
 		<div class="row bg-title">
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -75,11 +74,11 @@
 											<button type="button" class="btn btn-success" id="btn-importar-ofertas">Importar</button>
 										</div>
 									</div>
-									<div id="tab-ofertas-compartilhadas" class = "tab-pane fade">
+									<div id="tab-ofertas-compartilhadas" class = "table-responsive tab-pane fade">
 										<table id="resultado-ofertas-compartilhadas" class="table table-striped table-bordered">
 											<thead>
 												<tr>
-													<th class="col-md-8">Nome</th>
+													<th class="col-md-7">Nome</th>
 													<th class="col-md-1">Turma original</th>
 													<th class="col-md-1">Turma do curso</th>
 													<th class="col-md-1">Turno</th>
@@ -94,7 +93,7 @@
 											<button type="button" class="btn btn-success" id="btn-importar-ofertas-compartilhadas">Importar</button>
 										</div>
 									</div>
-									<div id="tab-ofertas-importadas" class = "tab-pane fade">
+									<div id="tab-ofertas-importadas" class = "table-responsive tab-pane fade">
 										<table id="resultado-ofertas-importadas" class="table table-striped table-bordered">
 											<thead>
 												<tr>
@@ -108,7 +107,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div id="tab-ofertas-compartilhadas-importadas" class = "tab-pane fade">
+									<div id="tab-ofertas-compartilhadas-importadas" class = "table-responsive tab-pane fade">
 										<table id="resultado-ofertas-compartilhadas-importadas" class="table table-striped table-bordered">
 											<thead>
 												<tr>
@@ -125,11 +124,6 @@
 									</div>
 								</div>
 							</div>
-							<div id="sem-resultado-ofertas" class="row hidden">
-								<div id="" class="col-md-12 alert alert-danger">
-									<p><strong>Nenhum resultado encontrado para a sua busca.</strong></p>
-								</div>
-							</div>
 						</div>
 					</form>
 				</div>
@@ -137,7 +131,7 @@
 		</div>
 	</section>
 	<section layout:fragment="js">
-		<script type="text/javascript" th:src="@{/js/oferta/importar.js}"></script>
+		<script type="text/javascript" th:src="@{/js/oferta/importar-oferta.js}"></script>
 		
 		<!-- Select2 Tradução Português Brasileiro -->
 		<script th:src="@{/plugins/select2/js/i18n/pt-BR.js}"></script>

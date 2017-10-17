@@ -39,7 +39,7 @@ public class DisciplinaValidator implements Validator {
 	}
 
 	void validateStrings(Errors erros, String object, String field, String message) {	
-		if (object.isEmpty() || !object.matches("[^=+\\\\|\\[{\\]};:'\"<>/@#$%]*")) {
+		if (object.isEmpty() || !object.matches("[^=+\\\\|\\[{\\]};:'\"<>/@#$%åæËÎÏÐðÑ×÷ØÝÞß]*")) {
 			erros.rejectValue(field, field, message);
 		}
 	}

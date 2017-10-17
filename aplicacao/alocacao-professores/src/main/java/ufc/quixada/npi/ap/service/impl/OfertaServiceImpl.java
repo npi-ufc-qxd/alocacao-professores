@@ -1,7 +1,5 @@
 package ufc.quixada.npi.ap.service.impl;
 
-import static ufc.quixada.npi.ap.util.Constants.PERIODO_INVALIDO;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,17 +8,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
-import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
-import ufc.quixada.npi.ap.repository.CursoRepository;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
-import ufc.quixada.npi.ap.repository.PeriodoRepository;
-import ufc.quixada.npi.ap.repository.ProfessorRepository;
 import ufc.quixada.npi.ap.service.OfertaService;
+import ufc.quixada.npi.ap.service.PeriodoService;
 
 @Service
 public class OfertaServiceImpl implements OfertaService {
@@ -29,33 +23,30 @@ public class OfertaServiceImpl implements OfertaService {
 	private OfertaRepository ofertaRepository;
 
 	@Autowired
-	private PeriodoRepository periodoRepository;
-
-	@Autowired
-	private CursoRepository cursoRepository;
-
-	@Autowired
-	private ProfessorRepository professorRepository;
+	private PeriodoService periodoService;
 
 	@Override
-	public void salvar(Oferta oferta) throws AlocacaoProfessoresException {
-		Periodo periodoAtivo = periodoRepository.periodoAtivo();
+	public void salvarOfertaPeriodoAtivo(Oferta oferta){
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
 		
-		if (periodoAtivo != null) {
-			oferta.setPeriodo(periodoAtivo);
-			ofertaRepository.save(oferta);
-		} else
-			throw new AlocacaoProfessoresException(PERIODO_INVALIDO);
+		oferta.setPeriodo(periodoAtivo);
+		
+		ofertaRepository.save(oferta);
 	}
 
 	@Override
-	public Oferta findOferta(Integer id) {
+	public Oferta buscarOferta(Integer id) {
 		return ofertaRepository.findOne(id);
 	}
-
+	
 	@Override
-	public List<Oferta> findAllOfertas() {
-		return ofertaRepository.findAll();
+	public List<Oferta> buscarOfertaPorPeriodo(Periodo periodo) {
+		return ofertaRepository.findOfertaByPeriodo(periodo);
+	}
+	
+	@Override
+	public List<Oferta> buscarOfertasPeriodoAtivo() {
+		return ofertaRepository.findByPeriodoAtivoTrue();
 	}
 
 	@Override
@@ -64,40 +55,24 @@ public class OfertaServiceImpl implements OfertaService {
 	}
 
 	@Override
-	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador) {
-		Professor professor = professorRepository.findByPessoa(coordenador);
-		Curso curso = cursoRepository.findByCoordenador(professor);
-		return ofertaRepository.findOfertasByPeriodoAndTurma_curso(periodo, curso);
-	}
-	
-	@Override
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Curso curso) {
 		return ofertaRepository.findOfertasByPeriodoAndTurma_curso(periodo, curso);
 	}
 	
 	@Override
-	public List<Oferta> buscarOfertasCompartilhadasPorPeriodoAndCurso(Periodo periodo, Curso curso) {
-		return ofertaRepository.findOfertasCompartilhadasByPeriodoAndCurso(periodo, curso);
-	}
-
-	@Override
-	public List<Oferta> buscarOfertasImportadasPorPeriodoAndCurso(Periodo periodo, Curso curso) {
-		Periodo periodoAtivo = periodoRepository.periodoAtivo();
+	public List<Oferta> buscarOfertasImportadasPeriodoAtivoPorPeriodoAndCurso(Periodo periodo, Periodo periodoAtivo, Curso curso) {
 		return ofertaRepository.findOfertasImportadasByPeriodoAndCurso(periodo, periodoAtivo, curso);
 	}
 	
 	@Override
-	public List<Oferta> buscarOfertasNaoImportadasPorPeriodoAndCurso(Periodo periodo, Curso curso) {
-		Periodo periodoAtivo = periodoRepository.periodoAtivo();
+	public List<Oferta> buscarOfertasNaoImportadasPeriodoAtivoPorPeriodoAndCurso(Periodo periodo, Periodo periodoAtivo, Curso curso) {
 		return ofertaRepository.findOfertasNaoImportadasByPeriodoAndCurso(periodo, periodoAtivo, curso);
 	}
 	
 	@Override
-	public Map<String, Object> importarOfertas(List<Integer> ofertas) {
+	public Map<String, Object> importarOfertas(List<Integer> ofertas, Periodo periodoAtivo) {
 		boolean contem;
 		boolean adicionado = true;
-		
-		Periodo periodo = periodoRepository.periodoAtivo();
 		
 		Map<String, Object> resultado = new HashMap<String, Object>();
 
@@ -108,7 +83,7 @@ public class OfertaServiceImpl implements OfertaService {
 				
 				contem = false;
 				
-				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodo)) {
+				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodoAtivo)) {
 					if (o.getDisciplina().equals(oferta.getDisciplina()) 
 							&& o.getTurma().equals(oferta.getTurma())) {
 						contem = true;
@@ -119,9 +94,7 @@ public class OfertaServiceImpl implements OfertaService {
 				if (!contem) {
 					Oferta novaOferta = this.clonarOferta(oferta);
 					
-					novaOferta.setPeriodo(periodo);
-					
-					ofertaRepository.save(novaOferta);
+					this.salvarOfertaPeriodoAtivo(novaOferta);
 					
 					if (adicionado)
 						resultado.put("importada", true);
@@ -140,10 +113,13 @@ public class OfertaServiceImpl implements OfertaService {
 	private Oferta clonarOferta(Oferta o) {
 		Oferta oferta = new Oferta();
 		
-		oferta.setDisciplina(o.getDisciplina());
 		oferta.setTurma(o.getTurma());
-		oferta.setTurno(o.getTurno());
+		oferta.setDisciplina(o.getDisciplina());
 		oferta.setVagas(o.getVagas());
+		oferta.setTurno(o.getTurno());
+		oferta.setHorarioInicio(o.getHorarioInicio());
+		oferta.setAulasEmLaboratorio(o.getAulasEmLaboratorio());
+		oferta.setNumeroProfessores(o.getNumeroProfessores());
 		oferta.setObservacao(o.getObservacao());
 
 		if (!o.getProfessores().isEmpty()) {
@@ -156,28 +132,4 @@ public class OfertaServiceImpl implements OfertaService {
 		return oferta;
 	}
 	
-	@Override
-	public void substituirOferta(List<Integer> idOfertas) {
-		Periodo periodoAtivo = periodoRepository.periodoAtivo();
-		List<Oferta> novasOfertas = new ArrayList<>();
-		
-		for (Integer id : idOfertas) {
-			Oferta oferta = ofertaRepository.findOne(id);
-			
-			if (oferta != null) {
-				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodoAtivo)){
-					if (o.getDisciplina().equals(oferta.getDisciplina())) {
-						ofertaRepository.delete(o);
-						
-						Oferta novaOferta = clonarOferta(o);
-						novaOferta.setPeriodo(periodoAtivo);
-						novasOfertas.add(novaOferta);
-					}
-				}
-			}
-		}
-
-		ofertaRepository.save(novasOfertas);
-	}
-
 }
