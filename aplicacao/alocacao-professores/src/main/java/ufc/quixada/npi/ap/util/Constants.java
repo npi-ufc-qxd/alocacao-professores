@@ -88,5 +88,8 @@ public class Constants {
 	public static final String STATUS_ERROR = "error";
 	public static final String DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
 	public static final String DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
-
+	
+	//Prefixos das mensagens de erro de validação
+	public static final String MSG_ERRO_INVALID = "invalid";
+	public static final String MSG_ERRO_NULL = "null";
 }

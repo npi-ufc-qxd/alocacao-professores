@@ -50,23 +50,32 @@ public class PeriodoController {
 	@RequestMapping(path = "/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") Periodo periodo) {
 		ModelAndView modelAndView = new ModelAndView(Constants.PERIODO_CADASTRAR);
+		
 		modelAndView.addObject("periodo", periodo);
 		modelAndView.addObject("semestres", Semestre.values());
+		
 		return modelAndView;
 	}
 
 	@RequestMapping(path = "/cadastrar", method = RequestMethod.POST)
 	public ModelAndView cadastrarPeriodo(@ModelAttribute("periodo") @Valid Periodo periodo, BindingResult result,
 			ModelAndView modelAndView) {
+		
 		periodoValidator.validate(periodo, result);
+		
 		if (result.hasErrors()) {
 			modelAndView.setViewName(Constants.PERIODO_CADASTRAR);
 			modelAndView.addObject("semestres", Semestre.values());
+			
 			return modelAndView;
 		}
+		
 		modelAndView.setViewName(Constants.PERIODO_REDIRECT_LISTAR);
+		
 		periodo.setStatus(Status.ABERTO);
+		
 		periodoService.salvar(periodo);
+		
 		return modelAndView;
 	}
 
