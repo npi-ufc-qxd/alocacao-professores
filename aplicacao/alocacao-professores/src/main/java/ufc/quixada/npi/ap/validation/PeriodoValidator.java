@@ -11,13 +11,13 @@ import ufc.quixada.npi.ap.util.Constants;
 
 @Named
 public class PeriodoValidator implements org.springframework.validation.Validator{
+	
+	private Date dataAtual = new Date();
 
 	@Override
 	public boolean supports(Class<?> arg0) {		
 		return Periodo.class.isAssignableFrom(arg0);
 	}
-	
-	Date dataAtual = new Date();
 	
 	@Override
 	public void validate(Object objeto, Errors error) {
@@ -71,48 +71,52 @@ public class PeriodoValidator implements org.springframework.validation.Validato
 		if (!error.hasFieldErrors(campo)){
 			if(fimPeriodoCoordenacao == null)
 				error.rejectValue(campo, Constants.MSG_ERRO_NULL);
-			else if (fimPeriodoCoordenacao.before(inicioPeriodoCoordenacao))
+			else if (inicioPeriodoCoordenacao != null && fimPeriodoCoordenacao.before(inicioPeriodoCoordenacao))
 				error.rejectValue(campo, Constants.MSG_ERRO_INVALID);
 		}
 		
 	}
+	
 	private void validateInicioPeriodoDirecao(Errors error, Date fimPeriodoCoordenacao, Date inicioPeriodoDirecao){
 		String campo = "inicioPeriodoDirecao";
 		
 		if (!error.hasFieldErrors(campo)){
 			if(inicioPeriodoDirecao == null)
 				error.rejectValue(campo, Constants.MSG_ERRO_NULL);
-			else if (inicioPeriodoDirecao.before(fimPeriodoCoordenacao))
+			else if (fimPeriodoCoordenacao != null && inicioPeriodoDirecao.before(fimPeriodoCoordenacao))
 				error.rejectValue(campo, Constants.MSG_ERRO_INVALID);
 		}
 	}
+	
 	private void validateFimPeriodoDirecao(Errors error, Date inicioPeriodoDirecao, Date fimPeriodoDirecao){
 		String campo = "fimPeriodoDirecao";
 		
 		if(!error.hasFieldErrors(campo)){
 			if (fimPeriodoDirecao == null)
 				error.rejectValue(campo, Constants.MSG_ERRO_NULL);
-			else if (fimPeriodoDirecao.before(inicioPeriodoDirecao))
+			else if (inicioPeriodoDirecao != null && fimPeriodoDirecao.before(inicioPeriodoDirecao))
 				error.rejectValue(campo, Constants.MSG_ERRO_INVALID);
 		}
 	}
+	
 	private void validateInicioPeriodoAjuste(Errors error, Date fimPeriodoDirecao, Date inicioPeriodoAjuste){
 		String campo = "inicioPeriodoAjuste";
 		
 		if (!error.hasFieldErrors(campo)){
 			if (inicioPeriodoAjuste == null)
 				error.rejectValue(campo, Constants.MSG_ERRO_NULL);
-			else if (inicioPeriodoAjuste.before(fimPeriodoDirecao))
+			else if (fimPeriodoDirecao != null && inicioPeriodoAjuste.before(fimPeriodoDirecao))
 				error.rejectValue(campo, Constants.MSG_ERRO_INVALID);
 		}
 	}
+	
 	private void validateFimPeriodoAjuste(Errors error, Date inicioPeriodoAjuste, Date fimPeriodoAjuste){
 		String campo = "fimPeriodoAjuste";
 		
 		if (!error.hasFieldErrors(campo)){
 			if (fimPeriodoAjuste == null)
 				error.rejectValue(campo, Constants.MSG_ERRO_NULL);
-			else if (fimPeriodoAjuste.before(inicioPeriodoAjuste))
+			else if (inicioPeriodoAjuste != null && fimPeriodoAjuste.before(inicioPeriodoAjuste))
 				error.rejectValue(campo, Constants.MSG_ERRO_INVALID);
 		}
 	}

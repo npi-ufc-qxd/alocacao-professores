@@ -1,93 +1,84 @@
 <!DOCTYPE html>
 
 <html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
-
 	xmlns:th="http://www.thymeleaf.org"
-
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-
 	layout:decorator="base/base">
+	
 	<head>
 		<!-- Date picker plugins css -->
-
 		<link th:href="@{/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css}" rel="stylesheet" type="text/css" />
-		
 		<title>Editar Período | Alocação Professores</title>
 	</head>
+	
 	<section layout:fragment="nome_entidade">
 		<h4 class="page-title">Período</h4>
 	</section>
+	
 	<section layout:fragment="conteudo">
 		<h3 class="box-title">Editar Período</h3>		
 		<div class="white-box">	
-	        <form class="form-horizontal" th:action="@{/periodos/{id}/editar(id=${periodo.id})}" th:object="${periodo}" method="POST">
-	              <div class="form-group">
-	              	<input type="hidden" class="form-control" value="" th:field="*{ano}" th:value="${periodo.ano}"/>
-	              	<input type="hidden" class="form-control" value="" th:field="*{semestre}" th:value="${periodo.semestre}"/>
-	                <label class="col-sm-12">Status</label>
-	                <div class="col-sm-12">                 
-	                  <select class="form-control" th:field="*{status}"   >
-	                    <option th:each="statusOpcao : ${status}"  th:value="${statusOpcao}" th:text="${statusOpcao.Descricao}"> Wireframe  </option>
-	                  </select>       
-	                </div>  
-	              </div>	              
-	              <div class="form-group">
+			<form class="form-horizontal" th:action="@{/periodos/{id}/editar(id=${periodo.id})}" th:object="${periodo}" method="POST">
+				<div class="form-group">
+					<input type="hidden" class="form-control" value="" th:field="*{ano}" th:value="${periodo.ano}"/>
+					<input type="hidden" class="form-control" value="" th:field="*{semestre}" th:value="${periodo.semestre}"/>
+					<label class="col-sm-12">Status</label>
+					<div class="col-sm-12">                 
+						<select class="form-control" th:field="*{status}"   >
+							<option th:each="statusOpcao : ${status}"  th:value="${statusOpcao}" th:text="${statusOpcao.Descricao}"> Wireframe  </option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
 					<div class="col-lg-6 col-md-6">
 						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('inicioPeriodoCoordenacao')}? has-error">
-							<label class="col-md-12 col-lg-12">Início período coordenação</label>
-							<input th:field="*{inicioPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" /> 
-							<span  th:if = "${#fields.hasErrors('inicioPeriodoCoordenacao')}" th:errors = "*{inicioPeriodoCoordenacao}" class="help-block with-errors">
-								<i	class="icon-calender"></i>
-							</span>
+							<label class="col-md-12 col-lg-12">Início Período da Coordenação</label>
+							<input th:field="*{inicioPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<span th:if="${#fields.hasErrors('inicioPeriodoCoordenacao')}" th:errors="*{inicioPeriodoCoordenacao}" class="help-block with-errors"></span>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('fimPeriodoCoordenacao')}? has-error">
-							<label class="col-md-12 col-lg-12">Fim período coordenação</label>
-							<input th:field="*{fimPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" /> 
-							<span  th:if = "${#fields.hasErrors('fimPeriodoCoordenacao')}" th:errors = "*{fimPeriodoCoordenacao}" class="help-block with-errors">
-								<i	class="icon-calender"></i>
-							</span>
+						<div class="input-group col-md-12 col-lg-12"
+							th:classappend="${#fields.hasErrors('fimPeriodoCoordenacao')}? has-error">
+							<label class="col-md-12 col-lg-12">Fim Período da Coordenação</label>
+							<input th:field="*{fimPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<span th:if="${#fields.hasErrors('fimPeriodoCoordenacao')}" th:errors="*{fimPeriodoCoordenacao}" class="help-block with-errors"></span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('inicioPeriodoDirecao')}? has-error">
-							<label class="col-md-12 col-lg-12">Início período direção</label>
+						<div class="input-group col-md-12 col-lg-12"
+							th:classappend="${#fields.hasErrors('inicioPeriodoDirecao')}? has-error">
+							<label class="col-md-12 col-lg-12">Início Período da Direção</label>
 							<input th:field="*{inicioPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
-							<span  th:if = "${#fields.hasErrors('inicioPeriodoDirecao')}" th:errors = "*{inicioPeriodoDirecao}" class="help-block with-errors">
-								<i	class="icon-calender"></i>
-							</span>
+							<span th:if="${#fields.hasErrors('inicioPeriodoDirecao')}" th:errors="*{inicioPeriodoDirecao}" class="help-block with-errors"></span>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('fimPeriodoDirecao')}? has-error">
-							<label class="col-md-12 col-lg-12">Fim período direção</label>
-							<input  th:field="*{fimPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" /> 
-							<span  th:if = "${#fields.hasErrors('fimPeriodoDirecao')}" th:errors = "*{fimPeriodoDirecao}" class="help-block with-errors">
-								<i	class="icon-calender"></i>
-							</span>
+						<div class="input-group col-md-12 col-lg-12"
+							th:classappend="${#fields.hasErrors('fimPeriodoDirecao')}? has-error">
+							<label class="col-md-12 col-lg-12">Fim Período da Direção</label>
+							<input th:field="*{fimPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<span th:if="${#fields.hasErrors('fimPeriodoDirecao')}" th:errors="*{fimPeriodoDirecao}" class="help-block with-errors"></span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('inicioPeriodoAjuste')}? has-error">
-							<label class="col-md-12 col-lg-12">Início período ajuste</label>
-							<input th:field="*{inicioPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" /> 
-							<span  th:if = "${#fields.hasErrors('inicioPeriodoAjuste')}" th:errors = "*{inicioPeriodoAjuste}" class="help-block with-errors">
-								<i	class="icon-calender"></i>
-							</span>
+						<div class="input-group col-md-12 col-lg-12"
+							th:classappend="${#fields.hasErrors('inicioPeriodoAjuste')}? has-error">
+							<label class="col-md-12 col-lg-12">Início Período de Ajuste</label>
+							<input th:field="*{inicioPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<span th:if="${#fields.hasErrors('inicioPeriodoAjuste')}" th:errors="*{inicioPeriodoAjuste}" class="help-block with-errors"></span>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('fimPeriodoAjuste')}? has-error">
-							<label class="col-md-12 col-lg-12">Fim período ajuste</label>
-							<input th:field="*{fimPeriodoAjuste}" type="text" class="form-control datepicker-autoclose"	placeholder="dd/mm/aaaa" /> 
-							<span  th:if = "${#fields.hasErrors('fimPeriodoAjuste')}" th:errors = "*{fimPeriodoAjuste}" class="help-block with-errors">
-								<i	class="icon-calender"></i>
-							</span>
+						<div class="input-group col-md-12 col-lg-12"
+							th:classappend="${#fields.hasErrors('fimPeriodoAjuste')}? has-error">
+							<label class="col-md-12 col-lg-12">Fim Período de Ajuste</label>
+							<input th:field="*{fimPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<span th:if="${#fields.hasErrors('fimPeriodoAjuste')}" th:errors="*{fimPeriodoAjuste}" class="help-block with-errors"></span>
 						</div>
 					</div>
 				</div>
