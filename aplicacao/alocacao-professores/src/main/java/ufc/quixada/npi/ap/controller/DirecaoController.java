@@ -54,6 +54,7 @@ public class DirecaoController {
 	@Autowired
 	private TurmaService turmaService;
 	
+	
 	@RequestMapping(path = {"/oferta-campus"}, method = RequestMethod.GET)
 	public ModelAndView listarCompartilhamentos(){
 		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
@@ -150,4 +151,6 @@ public class DirecaoController {
 		
 		return false;
 	}
+	
+	
 }

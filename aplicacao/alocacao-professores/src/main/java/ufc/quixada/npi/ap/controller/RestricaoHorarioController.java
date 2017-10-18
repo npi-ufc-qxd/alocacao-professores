@@ -64,8 +64,16 @@ public class RestricaoHorarioController {
 	}
 	
 	@RequestMapping(path = {""})
-	public ModelAndView listarEmpilhamentos(){
+	public ModelAndView listarEmpilhamentos(Authentication auth){
 		List<RestricaoHorario> restricaoHorarios =  empilhamentoService.buscarTodasRestricoesHorario();
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		
+		if(pessoa.isDirecao()){
+			ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR_DIRECAO);
+			model.addObject("restricaoHorarios", restricaoHorarios);
+			
+			return model;
+		}
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR);
 		model.addObject("restricaoHorarios", restricaoHorarios);

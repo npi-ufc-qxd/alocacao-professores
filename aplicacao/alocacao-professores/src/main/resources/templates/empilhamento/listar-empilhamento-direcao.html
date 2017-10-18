@@ -6,6 +6,7 @@
 	layout:decorator="base/base">
 
 	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
+	<link th:href="@{/plugins/x-editable/bootstrap3-editable/css/bootstrap-editable.css}" rel="stylesheet" />
 	<title>Listar Empilhamento | Alocação Professores</title>
 
 <section layout:fragment="conteudo">
@@ -49,8 +50,9 @@
 									[[${restricaoHorario.segundaOferta.turma.semestre.numero}]]</td>
 								<td th:inline="text">
 									[[${restricaoHorario.segundaOferta.disciplina.nome}]]</td>
-								<td th:inline="text">[[${restricaoHorario.habilitada} ? 'Sim' : 'Não']]</td>
 								
+                      			<td><a href="#" id="inline-sex" data-type="select" data-pk="1" data-value="" data-title="Habilitada"></a></td>
+                    			
 								<td><a
 									th:href="@{/empilhamentos/{id}/editar(id=${restricaoHorario.id})}"><button
 											type="button"
@@ -69,5 +71,31 @@
 		</div>
 	</div>
 
+
+	<!-- jQuery x-editable -->
+	<script th:src="@{/plugins/moment/moment.js}"></script>
+	<script type="text/javascript" th:src="@{/plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.min.js}"></script>
+	<script type="text/javascript">
+		$(function(){
+ 			$('#inline-sex').editable({
+      			prepend: "not selected",
+      			mode: 'inline',
+      			source: [
+      			{value: 1, text: 'SIM'},
+      			{value: 2, text: 'NÃO'}
+      			],
+      			display: function(value, sourceData) {
+       				var colors = {"": "#98a6ad", 1: "#5fbeaa", 2: "#5d9cec"},
+       				elem = $.grep(sourceData, function(o){return o.value == value;});
+
+       				if(elem.length) {
+         				$(this).text(elem[0].text).css("color", colors[value]);
+       				} else {
+         				$(this).empty();
+       				}
+     			}
+   			});
+		});
+	</script>
 </section>
 </html>
