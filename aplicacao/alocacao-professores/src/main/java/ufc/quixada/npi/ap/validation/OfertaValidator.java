@@ -42,7 +42,7 @@ public class OfertaValidator implements Validator {
 		
 		if (!erros.hasFieldErrors(campo)){
 			if (turma == null)
-				erros.rejectValue(campo, Constants.MSG_ERRO_NULL);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class OfertaValidator implements Validator {
 		
 		if(!erros.hasFieldErrors(campo)){
 			if (disciplina == null)
-				erros.rejectValue(campo, Constants.MSG_ERRO_NULL);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 		}
 	}
 	
@@ -60,9 +60,9 @@ public class OfertaValidator implements Validator {
 		
 		if (!erros.hasFieldErrors(campo)){
 			if (vagas == null)
-				erros.rejectValue(campo, Constants.MSG_ERRO_NULL);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 			else if(vagas <= 0)
-				erros.rejectValue(campo, Constants.MSG_ERRO_INVALID);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
 		}
 	}
 	
@@ -71,7 +71,7 @@ public class OfertaValidator implements Validator {
 		
 		if (!erros.hasFieldErrors(campo)){
 			if (turno == null)
-				erros.rejectValue(campo, Constants.MSG_ERRO_NULL);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class OfertaValidator implements Validator {
 		
 		if (!erros.hasFieldErrors(campo)){
 			if (horarioInicio == null)
-				erros.rejectValue(campo, Constants.MSG_ERRO_NULL);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 		}
 	}
 	
@@ -89,9 +89,9 @@ public class OfertaValidator implements Validator {
 		
 		if (!erros.hasFieldErrors(campo)){
 			if (aulasEmLaboratorio == null)
-				erros.rejectValue(campo, Constants.MSG_ERRO_NULL);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 			else if (aulasEmLaboratorio < 0)
-				erros.rejectValue(campo, Constants.MSG_ERRO_INVALID);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class OfertaValidator implements Validator {
 		
 		if (!erros.hasFieldErrors(campo)){
 			if (professores == null || professores.isEmpty())
-				erros.rejectValue(campo, Constants.MSG_ERRO_NULL);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 		}
 	}
 	
@@ -109,9 +109,9 @@ public class OfertaValidator implements Validator {
 		
 		if (!erros.hasFieldErrors(campo)){
 			if (numeroProfessores == null)
-				erros.rejectValue(campo, Constants.MSG_ERRO_NULL);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 			else if (numeroProfessores <= 0)
-				erros.rejectValue(campo, Constants.MSG_ERRO_INVALID);
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
 		}
 	}
 }

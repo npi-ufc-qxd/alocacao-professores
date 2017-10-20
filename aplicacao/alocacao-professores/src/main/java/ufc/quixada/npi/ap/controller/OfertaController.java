@@ -1,8 +1,11 @@
 package ufc.quixada.npi.ap.controller;
 
-import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
 import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
+import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
+import static ufc.quixada.npi.ap.util.Constants.OFERTA_EDITADA;
+import static ufc.quixada.npi.ap.util.Constants.COMPARTILHAMENTO_SOLICITADO;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,11 +28,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
+import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
-import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.DisciplinaService;
@@ -73,11 +76,6 @@ public class OfertaController {
 	private CompartilhamentoValidator compartilhamentoValidator;
 	
 
-	@ModelAttribute("turmas")
-	public List<Turma> todasTurmas() {
-		return turmaService.buscarTodasTurmas();
-	}
-
 	@ModelAttribute("professores")
 	public List<Professor> todosProfessores() {
 		return professorService.buscarTodosProfessores();
@@ -99,8 +97,226 @@ public class OfertaController {
 
 		return modelAndView;
 	}
+
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
+	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		
+		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
+		modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
+		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());		
+		modelAndView.addObject("turmas", turmaService.buscarTodasTurmas());
+		
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
+	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult,
+			ModelAndView modelAndView, RedirectAttributes redirectAttributes, Authentication auth) {
+
+		ofertaValidator.validate(oferta, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
+			
+			Pessoa pessoa = (Pessoa) auth.getPrincipal();
+			
+			modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
+			modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
+			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
+			modelAndView.addObject("turmas", turmaService.buscarTodasTurmas());
+			
+			return modelAndView;
+		}
+
+		ofertaService.salvarOfertaPeriodoAtivo(oferta);
+		
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		
+		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, OFERTA_CADASTRADA);
+		
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
+	public ModelAndView editarOferta(@PathVariable("id") Integer id, Authentication auth) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
+
+		Oferta oferta = ofertaService.buscarOferta(id);
+		
+		if (oferta == null){
+			modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+			
+			return modelAndView;
+		}
+		
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		Curso cursoCoordenador = cursoService.buscarCursoPorCoordenador(pessoa);
+		List<Disciplina> disciplinas = disciplinaService.buscarDisciplinasNaoArquivadas();
+		
+		modelAndView.addObject("oferta", oferta);
+		modelAndView.addObject("cursoAtual", cursoCoordenador);
+		modelAndView.addObject("disciplinas", disciplinas);
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
+	public ModelAndView editarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, 
+			BindingResult bindingResult, ModelAndView modelAndView, Authentication auth,
+			RedirectAttributes redirectAttributes) {
+
+		ofertaValidator.validate(oferta, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			modelAndView.setViewName(Constants.OFERTA_EDITAR);
+			
+			Pessoa pessoa = (Pessoa) auth.getPrincipal();
+			Curso cursoCoordenador = cursoService.buscarCursoPorCoordenador(pessoa);
+			List<Disciplina> disciplinas = disciplinaService.buscarDisciplinasNaoArquivadas();
+			
+			modelAndView.addObject("oferta", oferta);
+			modelAndView.addObject("cursoAtual", cursoCoordenador);
+			modelAndView.addObject("disciplinas", disciplinas);
+
+			return modelAndView;
+		}
+
+		ofertaService.salvarOfertaPeriodoAtivo(oferta);
+		
+		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, OFERTA_EDITADA);
+
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+
+		return modelAndView;
+	}
+
+	@RequestMapping(path = { "/{id}/detalhar" }, method = RequestMethod.GET)
+	public ModelAndView detalharOferta(@PathVariable("id") Integer id, @RequestParam(required = false) String erro) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_DETALHAR);
+		
+		Oferta oferta = ofertaService.buscarOferta(id);
+		
+		modelAndView.addObject("oferta", oferta);
+		modelAndView.addObject("professores", oferta.getProfessores());
+		modelAndView.addObject("erro", erro);
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
+	public @ResponseBody boolean excluirOferta(@PathVariable(name = "id", required = true) Integer id) {
+		try {
+			ofertaService.excluir(id);
+		} catch (EmptyResultDataAccessException e) {
+			return false;
+		}
+
+		return true;
+	}
 	
-	@RequestMapping(value = "/curso/{idCurso}", method = RequestMethod.GET)
+	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.GET)
+	public ModelAndView solicitarCompartilhamento(@PathVariable("idOferta") Integer id,
+			@ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
+		
+		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+
+		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
+		modelAndView.addObject("turmas", cursoService.buscarCursoPorCoordenador(pessoa).getTurmas());
+
+		return modelAndView;
+	}
+
+	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.POST)
+	public ModelAndView solicitarCompartilhamento(@PathVariable("idOferta") Integer id,
+			@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
+			BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes,
+			Authentication auth){
+		
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso cursoCoordenador = cursoService.buscarCursoPorCoordenador(coordenador);
+		
+		Map<String, Object> mapa = new HashMap<>();
+		mapa.put("compartilhamento", compartilhamento);
+		mapa.put("cursoCoordenador", cursoCoordenador);
+		
+		compartilhamentoValidator.validate(mapa, bindingResult);
+		
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
+			
+			Pessoa pessoa = (Pessoa) auth.getPrincipal();
+			
+			modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
+			modelAndView.addObject("turmas", cursoService.buscarCursoPorCoordenador(pessoa).getTurmas());
+			
+			return modelAndView;
+		}
+
+		compartilhamentoService.salvar(compartilhamento);
+		
+		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, COMPARTILHAMENTO_SOLICITADO);
+		 
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/importar", method = RequestMethod.GET)
+	public ModelAndView importarOfertas(Authentication auth) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_IMPORTAR);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		List<Periodo> periodosConsolidados = periodoService.buscarPeriodosConsolidados();
+		
+		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
+		modelAndView.addObject("periodos", periodosConsolidados);
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/importar-ofertas", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> importarOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		
+		return ofertaService.importarOfertas(ofertas, periodoAtivo);
+	}
+	
+	@RequestMapping(value = "/importar-ofertas-compartilhadas", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> importarOfertasCompartilhadas(@RequestParam("compartilhamentos") List<Integer> compartilhamentos, Authentication auth) {
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso curso = cursoService.buscarCursoPorCoordenador(coordenador);
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		
+		return compartilhamentoService.importarOfertasCompartilhadas(compartilhamentos, periodoAtivo, curso);
+	}
+
+	@RequestMapping(value = "/periodo/{idPeriodo}/buscar-ofertas/", method = RequestMethod.GET)
+	public @ResponseBody ModelMap buscarOfertas(@PathVariable("idPeriodo") Integer idPeriodo, Authentication auth) {
+		ModelMap model = new ModelMap();
+		
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso curso = cursoService.buscarCursoPorCoordenador(coordenador);
+		Periodo periodo = periodoService.buscarPeriodo(idPeriodo);
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		
+		List<Oferta> ofertas = ofertaService.buscarOfertasNaoImportadasPeriodoAtivoPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		List<Oferta> ofertasImportadas =  ofertaService.buscarOfertasImportadasPeriodoAtivoPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		List<Compartilhamento> ofertasCompartilhadas = compartilhamentoService.buscarCompartilhamentosNaoImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		List<Compartilhamento> ofertasCompartilhadasImportadas = compartilhamentoService.buscarCompartilhamentosImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		
+		model.addAttribute("ofertas", ofertas);
+		model.addAttribute("ofertasImportadas", ofertasImportadas);
+		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
+		model.addAttribute("ofertasCompartilhadasImportadas", ofertasCompartilhadasImportadas);
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/curso/{idCurso}/buscar-ofertas}", method = RequestMethod.GET)
 	public @ResponseBody ModelMap listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
 		ModelMap model = new ModelMap();
 
@@ -130,191 +346,5 @@ public class OfertaController {
 		model.addAttribute("compartilhamentos", compartilhamentos);
 
 		return model;
-	}	
-
-	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
-	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
-		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-		
-		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());		
-		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
-		modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
-		
-		return modelAndView;
 	}
-
-	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
-	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult,
-			ModelAndView modelAndView, RedirectAttributes redirectAttributes, Authentication auth) {
-
-		ofertaValidator.validate(oferta, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			Pessoa pessoa = (Pessoa) auth.getPrincipal();
-			
-			modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
-			modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
-			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
-			
-			return modelAndView;
-		}
-
-		ofertaService.salvarOfertaPeriodoAtivo(oferta);
-		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
-		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, OFERTA_CADASTRADA);
-		
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
-	public ModelAndView editarOferta(@PathVariable("id") Integer id, Authentication auth) {
-		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
-
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
-
-		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
-		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
-
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
-	public ModelAndView editarOferta(@PathVariable(name = "id", required = true) Integer id,
-			@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth) {
-
-		ofertaValidator.validate(oferta, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			Pessoa pessoa = (Pessoa) auth.getPrincipal();
-			
-			modelAndView.setViewName(Constants.OFERTA_EDITAR);
-			modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
-			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
-			modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
-
-			return modelAndView;
-		}
-
-		ofertaService.salvarOfertaPeriodoAtivo(oferta);
-
-		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
-
-		return modelAndView;
-	}
-
-	@RequestMapping(path = { "/{id}/detalhar" }, method = RequestMethod.GET)
-	public ModelAndView detalharOferta(@PathVariable("id") Integer id, @RequestParam(required = false) String erro) {
-		Oferta oferta = ofertaService.buscarOferta(id);
-
-		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_DETALHAR);
-		modelAndView.addObject("oferta", oferta);
-		modelAndView.addObject("professores", oferta.getProfessores());
-		modelAndView.addObject("erro", erro);
-
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
-	public @ResponseBody boolean excluirOferta(@PathVariable(name = "id", required = true) Integer id) {
-		try {
-			ofertaService.excluir(id);
-		} catch (EmptyResultDataAccessException e) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
-	public @ResponseBody ModelMap buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
-		ModelMap model = new ModelMap();
-		
-		Pessoa coordenador = (Pessoa) auth.getPrincipal();
-		Curso curso = cursoService.buscarCursoPorCoordenador(coordenador);
-		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
-		
-		List<Oferta> ofertas = ofertaService.buscarOfertasNaoImportadasPeriodoAtivoPorPeriodoAndCurso(periodo, periodoAtivo, curso);
-		List<Oferta> ofertasImportadas =  ofertaService.buscarOfertasImportadasPeriodoAtivoPorPeriodoAndCurso(periodo, periodoAtivo, curso);
-		List<Compartilhamento> ofertasCompartilhadas = compartilhamentoService.buscarCompartilhamentosNaoImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
-		List<Compartilhamento> ofertasCompartilhadasImportadas = compartilhamentoService.buscarCompartilhamentosImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
-		
-		model.addAttribute("ofertas", ofertas);
-		model.addAttribute("ofertasImportadas", ofertasImportadas);
-		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
-		model.addAttribute("ofertasCompartilhadasImportadas", ofertasCompartilhadasImportadas);
-		
-		return model;
-	}
-	
-	@RequestMapping(value = "/importar", method = RequestMethod.GET)
-	public ModelAndView importarOfertas(Authentication auth) {
-		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_IMPORTAR);
-
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-		List<Periodo> periodosConsolidados = periodoService.buscarPeriodosConsolidados();
-		
-		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
-		modelAndView.addObject("periodos", periodosConsolidados);
-		
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/importar-ofertas", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> importarOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
-		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
-		
-		return ofertaService.importarOfertas(ofertas, periodoAtivo);
-	}
-	
-	@RequestMapping(value = "/importar-ofertas-compartilhadas", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> importarOfertasCompartilhadas(@RequestParam("compartilhamentos") List<Integer> compartilhamentos, Authentication auth) {
-		Pessoa coordenador = (Pessoa) auth.getPrincipal();
-		Curso curso = cursoService.buscarCursoPorCoordenador(coordenador);
-		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
-		
-		return compartilhamentoService.importarOfertasCompartilhadas(compartilhamentos, periodoAtivo, curso);
-	}
-	
-	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.GET)
-	public ModelAndView cadastrarCompartilhamento(@PathVariable("idOferta") Integer id, @ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
-		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
-
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-
-		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
-		modelAndView.addObject("turmas", cursoService.buscarCursoPorCoordenador(pessoa).getTurmas());
-
-		return modelAndView;
-	}
-
-	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.POST)
-	public ModelAndView cadastrarCompartilhamento(@PathVariable("idOferta") Integer id, @ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth){
-		compartilhamentoValidator.validate(compartilhamento, bindingResult);
-
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-
-		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
-		modelAndView.addObject("turmas", cursoService.buscarCursoPorCoordenador(pessoa).getTurmas());
-		
-		if (bindingResult.hasErrors()){
-			modelAndView.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
-			
-			return modelAndView;
-		}
-
-		try{
-			compartilhamentoService.salvar(compartilhamento);
-		} catch(Exception e){
-			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
-			
-			return modelAndView;
-		}
-		 
-		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
-		
-		return modelAndView;
-	}
-
 }

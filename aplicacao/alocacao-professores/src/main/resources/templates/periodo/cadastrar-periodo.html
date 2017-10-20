@@ -7,7 +7,6 @@
 	<head>
 		<!-- Date picker plugins css -->
 		<link th:href="@{/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css}" rel="stylesheet" type="text/css" />
-		
 		<title>Cadastrar Período | Alocação Professores</title>
 	</head>
 
@@ -23,12 +22,12 @@
 				<div class="form-group">
 					<div class="col-md-6" th:classappend="${#fields.hasErrors('ano')}? has-error">
 						<label class="col-md-12">Ano</label>
-						<input type="text" class="form-control" th:field="*{ano}" pattern="[0-9]{4}" placeholder="Ex: 2018" />
+						<input type="text" class="form-control" th:field="*{ano}" pattern="[0-9]{4}" placeholder="Ex: 2018" required="required"/>
 						<span th:if="${#fields.hasErrors('ano')}" th:errors="*{ano}" class="help-block with-errors"></span>
 					</div>
 					<div class="col-md-6" th:classappend="${#fields.hasErrors('semestre')}? has-error">
 						<label class="col-md-12">Semestre</label>
-						<select id="semestre" class="form-control" th:field="*{semestre}">
+						<select id="semestre" class="form-control" th:field="*{semestre}" required="required" >
 							<option th:each="semestre : ${semestres}" th:text="${semestre.descricao}" th:value="${semestre}"></option>
 						</select>
 						<span th:if="${#fields.hasErrors('semestre')}" th:errors="*{semestre}" class="help-block with-errors"></span>
@@ -38,7 +37,7 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('inicioPeriodoCoordenacao')}? has-error">
 							<label class="col-md-12 col-lg-12">Início Período da Coordenação</label>
-							<input th:field="*{inicioPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{inicioPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('inicioPeriodoCoordenacao')}" th:errors="*{inicioPeriodoCoordenacao}" class="help-block with-errors"></span>
 						</div>
 					</div>
@@ -46,7 +45,7 @@
 						<div class="input-group col-md-12 col-lg-12"
 							th:classappend="${#fields.hasErrors('fimPeriodoCoordenacao')}? has-error">
 							<label class="col-md-12 col-lg-12">Fim Período da Coordenação</label>
-							<input th:field="*{fimPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{fimPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('fimPeriodoCoordenacao')}" th:errors="*{fimPeriodoCoordenacao}" class="help-block with-errors"></span>
 						</div>
 					</div>
@@ -56,7 +55,7 @@
 						<div class="input-group col-md-12 col-lg-12"
 							th:classappend="${#fields.hasErrors('inicioPeriodoDirecao')}? has-error">
 							<label class="col-md-12 col-lg-12">Início Período da Direção</label>
-							<input th:field="*{inicioPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{inicioPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('inicioPeriodoDirecao')}" th:errors="*{inicioPeriodoDirecao}" class="help-block with-errors"></span>
 						</div>
 					</div>
@@ -64,7 +63,7 @@
 						<div class="input-group col-md-12 col-lg-12"
 							th:classappend="${#fields.hasErrors('fimPeriodoDirecao')}? has-error">
 							<label class="col-md-12 col-lg-12">Fim Período da Direção</label>
-							<input th:field="*{fimPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{fimPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('fimPeriodoDirecao')}" th:errors="*{fimPeriodoDirecao}" class="help-block with-errors"></span>
 						</div>
 					</div>
@@ -74,7 +73,7 @@
 						<div class="input-group col-md-12 col-lg-12"
 							th:classappend="${#fields.hasErrors('inicioPeriodoAjuste')}? has-error">
 							<label class="col-md-12 col-lg-12">Início Período de Ajuste</label>
-							<input th:field="*{inicioPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{inicioPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('inicioPeriodoAjuste')}" th:errors="*{inicioPeriodoAjuste}" class="help-block with-errors"></span>
 						</div>
 					</div>
@@ -82,7 +81,7 @@
 						<div class="input-group col-md-12 col-lg-12"
 							th:classappend="${#fields.hasErrors('fimPeriodoAjuste')}? has-error">
 							<label class="col-md-12 col-lg-12">Fim Período de Ajuste</label>
-							<input th:field="*{fimPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{fimPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('fimPeriodoAjuste')}" th:errors="*{fimPeriodoAjuste}" class="help-block with-errors"></span>
 						</div>
 					</div>

@@ -37,10 +37,10 @@ public class Constants {
 	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
 	public static final String OFERTA_REDIRECT_CADASTRO = "redirect:/ofertas/cadastrar";
 	public static final String OFERTA_REDIRECT_EDITAR_DIRECAO = "redirect:/editar-oferta/";
-	public static final String OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
 	
 	// Compartilhamento
 	public static final String COMPARTILHAMENTO_CADASTRAR = "compartilhamento/cadastrar-compartilhamento";
+	public static final String COMPARTILHAMENTO_CADASTRAR_DIRECAO = "compartilhamento/cadastrar-compartilhamento-direcao";
 	public static final String COMPARTILHAMENTO_EDITAR = "compartilhamento/editar-compartilhamento";
 	public static final String COMPARTILHAMENTO_LISTAR = "compartilhamento/listar-compartilhamento";
 	public static final String COMPARTILHAMENTO_DETALHAR = "compartilhamento/detalhar-compartilhamento";
@@ -81,8 +81,12 @@ public class Constants {
 	public static final String STATUS_SUCCESS = "success";
 	public static final String DISCIPLINA_CADASTAR_TITULO_SUCCESS = "Disciplina cadastrada!";
 	public static final String DISCIPLINA_CADASTRADA = "A disciplina foi cadastrada com sucesso!";
-	public static final String DISCIPLINA_EDITADAR_TITULO_SUCCESS = "Disciplina editada";
-	public static final String DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso";
+	public static final String DISCIPLINA_EDITADAR_TITULO_SUCCESS = "Disciplina editada com sucesso!";
+	public static final String DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso!";
+	public static final String OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
+	public static final String OFERTA_EDITADA = "Oferta editada com sucesso!";
+	public static final String COMPARTILHAMENTO_EDITADO = "Compartilhamento editado com sucesso!";
+	public static final String COMPARTILHAMENTO_SOLICITADO = "Compartilhamento solicitado com sucesso!";
 	
 	//Mensagens Erros
 	public static final String STATUS_ERROR = "error";
@@ -90,6 +94,7 @@ public class Constants {
 	public static final String DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
 	
 	//Prefixos das mensagens de erro de validação
-	public static final String MSG_ERRO_INVALID = "invalid";
-	public static final String MSG_ERRO_NULL = "null";
+	public static final String VALIDACAO_ERRO_INVALID = "invalid";
+	public static final String VALIDACAO_ERRO_NULL = "null";
+	
 }

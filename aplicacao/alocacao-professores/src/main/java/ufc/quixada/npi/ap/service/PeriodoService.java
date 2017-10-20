@@ -8,6 +8,8 @@ public interface PeriodoService {
 
 	void salvar(Periodo periodo);
 	
+	void salvarPeriodoAberto(Periodo periodo);
+	
 	void excluir(Periodo periodo);
 	
 	public List<Periodo> buscarTodosPeriodos();

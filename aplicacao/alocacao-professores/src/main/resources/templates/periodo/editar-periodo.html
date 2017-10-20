@@ -23,8 +23,8 @@
 					<input type="hidden" class="form-control" value="" th:field="*{ano}" th:value="${periodo.ano}"/>
 					<input type="hidden" class="form-control" value="" th:field="*{semestre}" th:value="${periodo.semestre}"/>
 					<label class="col-sm-12">Status</label>
-					<div class="col-sm-12">                 
-						<select class="form-control" th:field="*{status}"   >
+					<div class="col-sm-12">
+						<select class="form-control" th:field="*{status}" required="required">
 							<option th:each="statusOpcao : ${status}"  th:value="${statusOpcao}" th:text="${statusOpcao.Descricao}"> Wireframe  </option>
 						</select>
 					</div>
@@ -33,92 +33,72 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('inicioPeriodoCoordenacao')}? has-error">
 							<label class="col-md-12 col-lg-12">Início Período da Coordenação</label>
-							<input th:field="*{inicioPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{inicioPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required"/>
 							<span th:if="${#fields.hasErrors('inicioPeriodoCoordenacao')}" th:errors="*{inicioPeriodoCoordenacao}" class="help-block with-errors"></span>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12"
-							th:classappend="${#fields.hasErrors('fimPeriodoCoordenacao')}? has-error">
+						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('fimPeriodoCoordenacao')}? has-error">
 							<label class="col-md-12 col-lg-12">Fim Período da Coordenação</label>
-							<input th:field="*{fimPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{fimPeriodoCoordenacao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('fimPeriodoCoordenacao')}" th:errors="*{fimPeriodoCoordenacao}" class="help-block with-errors"></span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12"
-							th:classappend="${#fields.hasErrors('inicioPeriodoDirecao')}? has-error">
+						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('inicioPeriodoDirecao')}? has-error">
 							<label class="col-md-12 col-lg-12">Início Período da Direção</label>
-							<input th:field="*{inicioPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{inicioPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('inicioPeriodoDirecao')}" th:errors="*{inicioPeriodoDirecao}" class="help-block with-errors"></span>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12"
-							th:classappend="${#fields.hasErrors('fimPeriodoDirecao')}? has-error">
+						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('fimPeriodoDirecao')}? has-error" >
 							<label class="col-md-12 col-lg-12">Fim Período da Direção</label>
-							<input th:field="*{fimPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{fimPeriodoDirecao}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('fimPeriodoDirecao')}" th:errors="*{fimPeriodoDirecao}" class="help-block with-errors"></span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12"
-							th:classappend="${#fields.hasErrors('inicioPeriodoAjuste')}? has-error">
+						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('inicioPeriodoAjuste')}? has-error">
 							<label class="col-md-12 col-lg-12">Início Período de Ajuste</label>
-							<input th:field="*{inicioPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{inicioPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('inicioPeriodoAjuste')}" th:errors="*{inicioPeriodoAjuste}" class="help-block with-errors"></span>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<div class="input-group col-md-12 col-lg-12"
-							th:classappend="${#fields.hasErrors('fimPeriodoAjuste')}? has-error">
+						<div class="input-group col-md-12 col-lg-12" th:classappend="${#fields.hasErrors('fimPeriodoAjuste')}? has-error">
 							<label class="col-md-12 col-lg-12">Fim Período de Ajuste</label>
-							<input th:field="*{fimPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" />
+							<input th:field="*{fimPeriodoAjuste}" type="text" class="form-control datepicker-autoclose" placeholder="dd/mm/aaaa" required="required" />
 							<span th:if="${#fields.hasErrors('fimPeriodoAjuste')}" th:errors="*{fimPeriodoAjuste}" class="help-block with-errors"></span>
 						</div>
 					</div>
 				</div>
-	                          
-		          <div class="text-right">                          
-						<a th:href="@{/periodos}">
-							<button type="button" th:href="@{/periodos}" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
-						</a>	
-						<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Salvar alterações</button>
-	              </div> 	              
-	          </form>
+				<div class="text-right">
+					<a th:href="@{/periodos}">
+						<button type="button" th:href="@{/periodos}" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+					</a>
+					<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Salvar alterações</button>
+				</div>
+			</form>
 		</div>	
 	</section>
-		<section layout:fragment="js">
-
-	<!-- Date Picker Plugin JavaScript -->
-
-	<script th:src="@{/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
-
-	<script th:src="@{/plugins/bootstrap-datepicker/locale/bootstrap-datepicker_pt-br_js.js}" charset="UTF-8"></script>
-
-	<script>
-
-		// Date Picker
-
-		jQuery('.datepicker-autoclose').datepicker({
-
-			language : 'pt',
-
-			todayHighlight : true,
-
-			format : 'dd/mm/yyyy',
-
-			todayBtn : true,
-
-			clearBtn : true
-
-		});
-
-	</script>
-
+	<section layout:fragment="js">
+		<!-- Date Picker Plugin JavaScript -->
+		<script th:src="@{/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/plugins/bootstrap-datepicker/locale/bootstrap-datepicker_pt-br_js.js}" charset="UTF-8"></script>
+		<script>
+			// Date Picker
+			jQuery('.datepicker-autoclose').datepicker({
+				language : 'pt',
+				todayHighlight : true,
+				format : 'dd/mm/yyyy',
+				todayBtn : true,
+				clearBtn : true
+			});
+		</script>
 	</section>
 </html>
