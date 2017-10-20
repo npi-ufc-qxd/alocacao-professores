@@ -18,8 +18,8 @@ public class Constants {
 	public static final String PERMISSAO_DIRECAO_COORDENACAO = "hasAnyAuthority('DIRECAO,COORDENACAO')";
 
 	// Mensagens
-	public static final String MENSAGEM_PERMISSAO_NEGADA = "Permissão negada";
-	public static final String LOGIN_INVALIDO = "Usuário e/ou senha inválidos";
+	public static final String MSG_PERMISSAO_NEGADA = "Permissão negada";
+	public static final String MSG_LOGIN_INVALIDO = "Usuário e/ou senha inválidos";
 
 	// Paginas
 	public static final String PAGINA_ERRO_404 = "/error/404";
@@ -73,25 +73,23 @@ public class Constants {
 	public static final String PROFESSOR_REDIRECT_LISTAR = "redirect:/professores";
 	
 	//Exceptions
-	public static final String PERIODO_INVALIDO = "Não há um período válido disponível";
-
-
+	public static final String EXCEPTION_PERIODO_INVALIDO = "Não há um período válido disponível";
 	
 	//Mensagens Sucesso
-	public static final String STATUS_SUCCESS = "success";
-	public static final String DISCIPLINA_CADASTAR_TITULO_SUCCESS = "Disciplina cadastrada!";
-	public static final String DISCIPLINA_CADASTRADA = "A disciplina foi cadastrada com sucesso!";
-	public static final String DISCIPLINA_EDITADAR_TITULO_SUCCESS = "Disciplina editada com sucesso!";
-	public static final String DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso!";
-	public static final String OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
-	public static final String OFERTA_EDITADA = "Oferta editada com sucesso!";
-	public static final String COMPARTILHAMENTO_EDITADO = "Compartilhamento editado com sucesso!";
-	public static final String COMPARTILHAMENTO_SOLICITADO = "Compartilhamento solicitado com sucesso!";
+	public static final String SWAL_STATUS_SUCCESS = "success";
+	public static final String MSG_DISCIPLINA_CADASTRAR_TITULO_SUCCESS = "Disciplina cadastrada!";
+	public static final String MSG_DISCIPLINA_CADASTRADA = "A disciplina foi cadastrada com sucesso!";
+	public static final String MSG_DISCIPLINA_EDITAR_TITULO_SUCCESS = "Disciplina editada com sucesso!";
+	public static final String MSG_DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso!";
+	public static final String MSG_OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
+	public static final String MSG_OFERTA_EDITADA = "Oferta editada com sucesso!";
+	public static final String MSG_COMPARTILHAMENTO_EDITADO = "Compartilhamento editado com sucesso!";
+	public static final String MSG_COMPARTILHAMENTO_SOLICITADO = "Compartilhamento solicitado com sucesso!";
 	
 	//Mensagens Erros
-	public static final String STATUS_ERROR = "error";
-	public static final String DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
-	public static final String DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
+	public static final String SWAL_STATUS_ERROR = "error";
+	public static final String MSG_DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
+	public static final String MSG_DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
 	
 	//Prefixos das mensagens de erro de validação
 	public static final String VALIDACAO_ERRO_INVALID = "invalid";

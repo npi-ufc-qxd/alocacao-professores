@@ -1,9 +1,9 @@
 package ufc.quixada.npi.ap.controller;
 
-import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
-import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
-import static ufc.quixada.npi.ap.util.Constants.OFERTA_EDITADA;
-import static ufc.quixada.npi.ap.util.Constants.COMPARTILHAMENTO_SOLICITADO;
+import static ufc.quixada.npi.ap.util.Constants.SWAL_STATUS_SUCCESS;
+import static ufc.quixada.npi.ap.util.Constants.MSG_OFERTA_CADASTRADA;
+import static ufc.quixada.npi.ap.util.Constants.MSG_OFERTA_EDITADA;
+import static ufc.quixada.npi.ap.util.Constants.MSG_COMPARTILHAMENTO_SOLICITADO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -134,7 +134,7 @@ public class OfertaController {
 		
 		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
 		
-		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, OFERTA_CADASTRADA);
+		redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, MSG_OFERTA_CADASTRADA);
 		
 		return modelAndView;
 	}
@@ -185,7 +185,7 @@ public class OfertaController {
 
 		ofertaService.salvarOfertaPeriodoAtivo(oferta);
 		
-		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, OFERTA_EDITADA);
+		redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, MSG_OFERTA_EDITADA);
 
 		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
 
@@ -258,7 +258,7 @@ public class OfertaController {
 
 		compartilhamentoService.salvar(compartilhamento);
 		
-		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, COMPARTILHAMENTO_SOLICITADO);
+		redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, MSG_COMPARTILHAMENTO_SOLICITADO);
 		 
 		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
 		
@@ -316,7 +316,7 @@ public class OfertaController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/curso/{idCurso}/buscar-ofertas}", method = RequestMethod.GET)
+	@RequestMapping(value = "/curso/{idCurso}/buscar-ofertas/", method = RequestMethod.GET)
 	public @ResponseBody ModelMap listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
 		ModelMap model = new ModelMap();
 

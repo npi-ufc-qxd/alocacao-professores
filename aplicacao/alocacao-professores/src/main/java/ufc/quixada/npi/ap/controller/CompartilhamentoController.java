@@ -1,7 +1,7 @@
 package ufc.quixada.npi.ap.controller;
 
-import static ufc.quixada.npi.ap.util.Constants.COMPARTILHAMENTO_EDITADO;
-import static ufc.quixada.npi.ap.util.Constants.STATUS_SUCCESS;
+import static ufc.quixada.npi.ap.util.Constants.MSG_COMPARTILHAMENTO_EDITADO;
+import static ufc.quixada.npi.ap.util.Constants.SWAL_STATUS_SUCCESS;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -128,7 +128,7 @@ public class CompartilhamentoController {
 		
 		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
 		
-		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, COMPARTILHAMENTO_EDITADO);
+		redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, MSG_COMPARTILHAMENTO_EDITADO);
 		
 		return modelAndView;
 	}

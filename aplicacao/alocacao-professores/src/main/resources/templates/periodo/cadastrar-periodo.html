@@ -22,7 +22,7 @@
 				<div class="form-group">
 					<div class="col-md-6" th:classappend="${#fields.hasErrors('ano')}? has-error">
 						<label class="col-md-12">Ano</label>
-						<input type="text" class="form-control" th:field="*{ano}" pattern="[0-9]{4}" placeholder="Ex: 2018" required="required"/>
+						<input type="text" class="form-control" th:field="*{ano}" pattern="[0-9]{4}" maxlength="4" placeholder="Ex: 2018" required="required"/>
 						<span th:if="${#fields.hasErrors('ano')}" th:errors="*{ano}" class="help-block with-errors"></span>
 					</div>
 					<div class="col-md-6" th:classappend="${#fields.hasErrors('semestre')}? has-error">
