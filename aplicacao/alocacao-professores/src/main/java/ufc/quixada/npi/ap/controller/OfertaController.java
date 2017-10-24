@@ -156,12 +156,15 @@ public class OfertaController {
 			modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
 			modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
 			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
+			modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
 			
 			return modelAndView;
 		}
 
 		ofertaService.salvarOfertaPeriodoAtivo(oferta);
+		
 		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		
 		redirectAttributes.addFlashAttribute(STATUS_SUCCESS, OFERTA_CADASTRADA);
 		
 		return modelAndView;
@@ -173,9 +176,8 @@ public class OfertaController {
 
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
-
-		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
 		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
+		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
 
 		return modelAndView;
 	}
@@ -192,7 +194,6 @@ public class OfertaController {
 			modelAndView.setViewName(Constants.OFERTA_EDITAR);
 			modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
 			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
-			modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
 
 			return modelAndView;
 		}
