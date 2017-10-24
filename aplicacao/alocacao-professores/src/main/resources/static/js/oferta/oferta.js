@@ -24,7 +24,7 @@ if(baseUrl == null){
 $('#visulizar-outras-ofertas').on('change', function (event) {
 	$("#ofertas").empty();
 	idCursoSelecionado = $('#visulizar-outras-ofertas').val();
-	$.get(baseUrl + '/ofertas/curso/' + idCursoSelecionado, function() {
+	$.get(baseUrl + '/ofertas/curso/'+idCursoSelecionado+'/buscar-ofertas/', function() {
 	})
 	.done(function(results) {
 		organizarOfertas(results);

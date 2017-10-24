@@ -1,6 +1,6 @@
 package ufc.quixada.npi.ap.service.impl;
 
-import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_CADASTRAR_EXISTENTE;
+import static ufc.quixada.npi.ap.util.Constants.MSG_DISCIPLINA_CADASTRAR_EXISTENTE;
 
 import java.util.List;
 
@@ -24,16 +24,16 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	}
 
 	@Override
-	public void salvar(Disciplina disciplina) throws Exception {
+	public void salvar(Disciplina disciplina) throws AlocacaoProfessorException {
 		Disciplina disciplinaRecuperada = disciplinaRepository.findDisciplinaByCodigo(disciplina.getCodigo());	
 		
 		if(disciplinaRecuperada != null) {
-			throw new AlocacaoProfessorException(DISCIPLINA_CADASTRAR_EXISTENTE);
+			throw new AlocacaoProfessorException(MSG_DISCIPLINA_CADASTRAR_EXISTENTE);
 		}
 		
 		disciplina.setNome(disciplina.getNome().toUpperCase());
+		
 		disciplinaRepository.save(disciplina);
-
 	}
 	
 	@Override

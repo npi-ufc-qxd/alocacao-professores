@@ -1,10 +1,17 @@
-	package ufc.quixada.npi.ap.validation;
+package ufc.quixada.npi.ap.validation;
+
+import static ufc.quixada.npi.ap.util.Constants.VALIDACAO_ERRO_INVALID;
+import static ufc.quixada.npi.ap.util.Constants.VALIDACAO_ERRO_NULL;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Named;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import ufc.quixada.npi.ap.model.Disciplina;
+import ufc.quixada.npi.ap.util.Constants;
 
 @Named
 public class DisciplinaValidator implements Validator {
@@ -15,46 +22,56 @@ public class DisciplinaValidator implements Validator {
 	}
 
 	@Override
-	public void validate(Object target, Errors errors) {
-		Disciplina disciplina = (Disciplina) target;
-		validateStrings(errors, disciplina.getNome(), "nome", "Preenchimento inválido");
-		validateNomeNull(errors, disciplina.getNome(), "nome", "Preenchimento inválido");
-		validateNotNull(errors, disciplina.getCargaHorariaPratica(), "cargaHorariaPratica", "Preenchimento inválido");
-		validateNotNull(errors, disciplina.getCargaHorariaTeorica(), "cargaHorariaTeorica", "Preenchimento inválido");
-		validateNotNull(errors, disciplina.getCreditos(), "creditos", "Preenchimento inválido");
-		validateCodigoInvalido(errors, disciplina.getCodigo(), "codigo", "codigoInvalid");
-		validateCodigoNotNull(errors, disciplina.getCodigo(), "codigo", "codigoNotNull");
+	public void validate(Object objeto, Errors errors) {
+		Disciplina disciplina = (Disciplina) objeto;
+		
+		validateCodigo(errors, disciplina.getCodigo());
+		validateNome(errors, disciplina.getNome());
+		validateCreditos(errors, disciplina.getCreditos());
+		validateCargaHoraria(errors, disciplina.getCargaHorariaTeorica(), "cargaHorariaTeorica");
+		validateCargaHoraria(errors, disciplina.getCargaHorariaPratica(), "cargaHorariaPratica");
 	}
 	
-	void validateCodigoInvalido(Errors erros, String codigo, String campo, String mensagem){
-		if (!codigo.matches("^[A-Z]{3}\\d{4}$")){
-			erros.rejectValue(campo, mensagem);
-		}
-	}
-	
-	void validateCodigoNotNull(Errors erros, String codigo, String campo, String mensagem){
-		if (codigo == null || codigo.isEmpty() || codigo.equals("")){
-			erros.rejectValue(campo, mensagem);
-		}
-	}
-
-	void validateStrings(Errors erros, String object, String field, String message) {	
-		if (object.isEmpty() || !object.matches("[^=+\\\\|\\[{\\]};:'\"<>/@#$%åæËÎÏÐðÑ×÷ØÝÞß]*")) {
-			erros.rejectValue(field, field, message);
-		}
-	}
-
-	void validateNotNull(Errors erros, Integer object, String field, String message) {
-		if (object < 0 || object.toString().isEmpty()) {
-			erros.rejectValue(field, field, message);
+	private void validateCodigo(Errors erros, String codigo){
+		String campo = "codigo";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (codigo == null || codigo.isEmpty() || codigo.trim().isEmpty())
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+			else if (!codigo.matches("^[A-Z]{3}\\d{4}$"))
+				erros.reject(campo, Constants.VALIDACAO_ERRO_INVALID);
 		}
 	}
 	
-	void validateNomeNull(Errors erros, String object, String field, String message) {
-		String nome = object.substring(0, 1);
-		if(nome.equals(" ")) {
-			erros.rejectValue(field, field, message);
+	private void validateNome(Errors erros, String nome) {
+		String campo = "nome";
+		
+		if(!erros.hasFieldErrors(campo)){
+			if(nome == null || nome.isEmpty() || nome.trim().isEmpty())
+				erros.rejectValue(campo, VALIDACAO_ERRO_NULL);
+			else if (nome.startsWith(" ") || !nome.matches("[a-zA-Zà-úÀ-Ú ]+$"))
+				erros.rejectValue(campo, VALIDACAO_ERRO_INVALID);
 		}
 	}
-
+	
+	private void validateCreditos(Errors erros, Integer creditos) {
+		String campo = "creditos";
+		List<Integer> valoresValidos = Arrays.asList(2, 4, 6, 10);
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (creditos == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+			else if (!valoresValidos.contains(creditos))
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
+		}
+	}
+	
+	private void validateCargaHoraria(Errors erros, Integer cargaHoraria, String campo){
+		if (!erros.hasFieldErrors(campo)){
+			if (cargaHoraria == null)
+				erros.rejectValue(campo, VALIDACAO_ERRO_NULL);
+			else if (cargaHoraria < 0)
+				erros.rejectValue(campo, VALIDACAO_ERRO_INVALID);
+		}
+	}
 }

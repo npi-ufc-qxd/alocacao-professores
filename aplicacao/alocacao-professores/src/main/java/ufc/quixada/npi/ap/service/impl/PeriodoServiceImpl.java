@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Periodo.Status;
 import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.PeriodoService;
 
@@ -17,6 +18,12 @@ public class PeriodoServiceImpl implements PeriodoService{
 	
 	@Override
 	public void salvar(Periodo periodo){
+		periodoRepository.save(periodo);
+	}
+	
+	@Override
+	public void salvarPeriodoAberto(Periodo periodo) {
+		periodo.setStatus(Status.ABERTO);
 		periodoRepository.save(periodo);
 	}
 	

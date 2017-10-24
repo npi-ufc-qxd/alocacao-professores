@@ -1,17 +1,21 @@
 package ufc.quixada.npi.ap.validation;
 
+import java.util.Map;
+
 import javax.inject.Named;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
+import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Turma;
+import ufc.quixada.npi.ap.util.Constants;
 
 @Named
 public class CompartilhamentoValidator implements Validator {
-
+	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return Compartilhamento.class.isAssignableFrom(clazz);
@@ -19,32 +23,44 @@ public class CompartilhamentoValidator implements Validator {
 
 	@Override
 	public void validate(Object objeto, Errors erros) {
-		Compartilhamento compartilhamento = (Compartilhamento) objeto;
+		Map<?,?> mapa = (Map<?,?>) objeto;
 		
-		validateTurma(erros, compartilhamento.getTurma(), "turma.id", "turmaNull");
-		validateOferta(erros, compartilhamento.getOferta(), "oferta.id", "ofertaNull");
-		validateVagasNotNull(erros, compartilhamento.getVagas(), "vagas", "vagasNull");
-		validateVagasValorInvalido(erros, compartilhamento.getVagas(), "vagas", "vagasInvalid");
+		Compartilhamento compartilhamento = (Compartilhamento) mapa.get("compartilhamento");
+		Curso cursoCoordenador = (Curso) mapa.get("cursoCoordenador");
+		
+		validateTurma(erros, compartilhamento.getTurma(), cursoCoordenador);
+		validateOferta(erros, compartilhamento.getOferta());
+		validateVagas(erros, compartilhamento.getVagas());
 	}
 	
-	private void validateTurma(Errors erros, Turma turma, String campo, String mensagem){
-		if (turma == null || turma.getId() == null || turma.getId() <= 0)
-			erros.rejectValue(campo, mensagem);
+	private void validateTurma(Errors erros, Turma turma, Curso cursoCoordenador){
+		String campo = "turma";
+		
+		if(!erros.hasFieldErrors(campo)){
+			if (turma == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+			else if (!cursoCoordenador.getTurmas().contains(turma))
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
+		}
 	}
 	
-	private void validateOferta(Errors erros, Oferta oferta, String campo, String mensagem){
-		if (oferta == null || oferta.getId() == null || oferta.getId() <= 0)
-			erros.rejectValue(campo, mensagem);
+	private void validateOferta(Errors erros, Oferta oferta){
+		String campo = "oferta";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (oferta == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+		}
 	}
 	
-	private void validateVagasNotNull(Errors erros, Integer vagas, String campo, String mensagem){
-		if (vagas == null)
-			erros.rejectValue(campo, mensagem);
+	private void validateVagas(Errors erros, Integer vagas){
+		String campo = "vagas";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (vagas == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+			else if (vagas <= 0)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
+		}
 	}
-	
-	private void validateVagasValorInvalido(Errors erros, Integer vagas, String campo, String mensagem){
-		if (vagas != null && vagas <= 0)
-			erros.rejectValue(campo, mensagem);
-	}
-	
 }

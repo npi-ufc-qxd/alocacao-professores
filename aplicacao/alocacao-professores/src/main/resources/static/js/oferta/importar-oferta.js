@@ -31,7 +31,7 @@ function exibirOfertas() {
 	if(idPeriodo > 0){
 		limparResultadosImportacao();
 		
-		$.get(baseUrl + "/ofertas/buscar-ofertas/" + idPeriodo, function() {
+		$.get(baseUrl + '/ofertas/periodo/'+idPeriodo+'/buscar-ofertas/', function() {
 		})
 		.done(function(retorno) {
 			var ofertas = retorno.ofertas;
