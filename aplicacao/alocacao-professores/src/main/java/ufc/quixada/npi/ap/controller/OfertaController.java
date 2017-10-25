@@ -101,7 +101,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
-	@RestricaoDePeriodo
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
@@ -143,7 +143,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
-	@RestricaoDePeriodo
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
 
@@ -222,7 +222,7 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.GET)
-	@RestricaoDePeriodo
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView solicitarCompartilhamento(@PathVariable("idOferta") Integer id,
 			@ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
 		
@@ -272,7 +272,7 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/importar", method = RequestMethod.GET)
-	@RestricaoDePeriodo
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView importarOfertas(Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_IMPORTAR);
 
@@ -353,10 +353,8 @@ public class OfertaController {
 		model.addAttribute("compartilhamentos", compartilhamentos);
 
 		return model;
-	}	
-
+	}
 	
-
 	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
 	public @ResponseBody ModelMap buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
 		ModelMap model = new ModelMap();
@@ -376,46 +374,5 @@ public class OfertaController {
 		model.addAttribute("ofertasCompartilhadasImportadas", ofertasCompartilhadasImportadas);
 		
 		return model;
-	}
-	
-	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.GET)
-	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
-	public ModelAndView cadastrarCompartilhamento(@PathVariable("idOferta") Integer id, @ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth) {
-		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
-
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-
-		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
-		modelAndView.addObject("turmas", cursoService.buscarCursoPorCoordenador(pessoa).getTurmas());
-
-		return modelAndView;
-	}
-
-	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.POST)
-	public ModelAndView cadastrarCompartilhamento(@PathVariable("idOferta") Integer id, @ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth){
-		compartilhamentoValidator.validate(compartilhamento, bindingResult);
-
-		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-
-		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
-		modelAndView.addObject("turmas", cursoService.buscarCursoPorCoordenador(pessoa).getTurmas());
-		
-		if (bindingResult.hasErrors()){
-			modelAndView.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
-			
-			return modelAndView;
-		}
-
-		try{
-			compartilhamentoService.salvar(compartilhamento);
-		} catch(Exception e){
-			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
-			
-			return modelAndView;
-		}
-		 
-		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
-		
-		return modelAndView;
 	}
 }
