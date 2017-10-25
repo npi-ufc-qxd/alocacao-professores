@@ -65,14 +65,16 @@ public class RestricaoHorarioController {
 	
 	@RequestMapping(path = {""})
 	public ModelAndView listarEmpilhamentos(Authentication auth){
-		List<RestricaoHorario> restricaoHorarios =  empilhamentoService.buscarTodasRestricoesHorario();
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		List<RestricaoHorario> restricaoHorarios =  empilhamentoService.buscarTodasRestricoesHorario();
 		
 		if(pessoa.isDirecao()){
+			
 			ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR_DIRECAO);
 			model.addObject("restricaoHorarios", restricaoHorarios);
 			
 			return model;
+			
 		}
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR);
@@ -147,9 +149,7 @@ public class RestricaoHorarioController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id,
-												@ModelAttribute("empilhamento") @Valid RestricaoHorario empilhamento, 
-													BindingResult bindingResult, ModelAndView modelAndView){
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id, @ModelAttribute("empilhamento") @Valid RestricaoHorario empilhamento, BindingResult bindingResult, ModelAndView modelAndView){
 		
 		empilhamentoValidator.validate(empilhamento, bindingResult);
 		
@@ -175,6 +175,12 @@ public class RestricaoHorarioController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value="/{id}/desabilitar", method = RequestMethod.GET)
+	public @ResponseBody boolean desabilitarEmpilhamento(@PathVariable(name="id", required=true) Integer id){
+		return empilhamentoService.desabilitarEmpilhamento(id);	
+	}
+	
+	
 	@RequestMapping(path={"/{id}/detalhar"})
 	public ModelAndView visualizarEmpilhamento(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){
 		RestricaoHorario empilhamento =  empilhamentoService.buscarRestricaoHorario(id);
@@ -185,5 +191,7 @@ public class RestricaoHorarioController {
 		
 		return model;
 	}
+	
+	
 	
 }

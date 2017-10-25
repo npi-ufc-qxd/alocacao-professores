@@ -58,4 +58,18 @@ public class RestricaoHorarioServiceImpl implements RestricaoHorarioService {
 		return restricaoHorarioRepository.findOne(idRestricaoHorario);
 	}
 
+	@Override
+	public boolean desabilitarEmpilhamento(Integer id) {
+		RestricaoHorario empilhamento = restricaoHorarioRepository.findOne(id);
+		if(empilhamento==null){
+		return false;
+		}
+		empilhamento.setHabilitada(false);
+		restricaoHorarioRepository.save(empilhamento);
+		
+		return true;
+	}
+	
+	
+
 }

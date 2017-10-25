@@ -17,4 +17,6 @@ public interface RestricaoHorarioService {
 	
 	public List<RestricaoHorario> buscarTodasRestricoesHorario();
 	
+	boolean desabilitarEmpilhamento(Integer id);
+	
 }
