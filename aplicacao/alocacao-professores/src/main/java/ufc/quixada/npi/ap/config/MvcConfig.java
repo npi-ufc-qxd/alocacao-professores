@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import ufc.quixada.npi.ap.formatter.DisciplinaFormatter;
+import ufc.quixada.npi.ap.formatter.OfertaFormatter;
 import ufc.quixada.npi.ap.formatter.ProfessorFormatter;
 import ufc.quixada.npi.ap.formatter.TurmaFormatter;
 
@@ -36,5 +37,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 		registry.addFormatter(new ProfessorFormatter());
 		registry.addFormatter(new TurmaFormatter());
 		registry.addFormatter(new DisciplinaFormatter());
+		registry.addFormatter(new OfertaFormatter());
 	}
 }

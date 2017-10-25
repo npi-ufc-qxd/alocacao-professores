@@ -36,13 +36,13 @@ public class AuthenticationProviderAlocacaoProfessores implements Authentication
         Pessoa pessoa = pessoaRepository.findPessoaByCpf(cpf);
         
         if(pessoa == null) {
-        	throw new BadCredentialsException(Constants.LOGIN_INVALIDO);
+        	throw new BadCredentialsException(Constants.MSG_LOGIN_INVALIDO);
         }
         
         Collection<? extends GrantedAuthority> authorities = pessoa.getAuthorities();
         
         if (!usuarioService.autentica(cpf, password) || authorities == null || authorities.isEmpty()) {
-            throw new BadCredentialsException(Constants.LOGIN_INVALIDO);
+            throw new BadCredentialsException(Constants.MSG_LOGIN_INVALIDO);
         }
         
         return new UsernamePasswordAuthenticationToken(pessoa, password, authorities);

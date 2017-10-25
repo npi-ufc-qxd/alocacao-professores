@@ -9,13 +9,15 @@ import org.springframework.validation.Validator;
 
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Oferta;
+import ufc.quixada.npi.ap.model.Oferta.HorarioInicio;
 import ufc.quixada.npi.ap.model.Oferta.Turno;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
+import ufc.quixada.npi.ap.util.Constants;
 
 @Named
 public class OfertaValidator implements Validator {
-
+	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return Oferta.class.isAssignableFrom(clazz);
@@ -25,35 +27,91 @@ public class OfertaValidator implements Validator {
 	public void validate(Object objeto, Errors erros) {
 		Oferta oferta = (Oferta) objeto;
 		
-		validateProfessoresNotNull(erros, oferta.getProfessores(), "professores", "professoresNull");
-		validateTurma(erros, oferta.getTurma(), "turma", "turmaNull");
-		validateDisciplina(erros, oferta.getDisciplina(), "disciplina", "disciplinaNull");
-		validateTurno(erros, oferta.getTurno(), "turno", "turnoNull");
-		validateVagasValorInvalido(erros, oferta.getVagas(), "vagas", "vagasInvalid");
+		validateTurma(erros, oferta.getTurma());
+		validateDisciplina(erros, oferta.getDisciplina());
+		validateVagas(erros, oferta.getVagas());
+		validateTurno(erros, oferta.getTurno());
+		validateHorarioInicio(erros, oferta.getHorarioInicio());
+		validateAulasEmLaboratorio(erros, oferta.getAulasEmLaboratorio());
+		validateProfessores(erros, oferta.getProfessores());
+		validateNumeroProfessores(erros, oferta.getNumeroProfessores());
 	}
 	
-	private void validateProfessoresNotNull(Errors erros, List<Professor> professores, String campo, String mensagem){
-		if (professores == null || professores.isEmpty())
-			erros.rejectValue(campo, mensagem);
+	private void validateTurma(Errors erros, Turma turma){
+		String campo = "turma";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (turma == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+		}
 	}
 	
-	private void validateTurma(Errors erros, Turma turma, String campo, String mensagem){
-		if (turma == null || turma.getId() == null || turma.getId() <= 0)
-			erros.rejectValue(campo, mensagem);
+	private void validateDisciplina(Errors erros, Disciplina disciplina){
+		String campo = "disciplina";
+		
+		if(!erros.hasFieldErrors(campo)){
+			if (disciplina == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+		}
 	}
 	
-	private void validateDisciplina(Errors erros, Disciplina disciplina, String campo, String mensagem){
-		if (disciplina == null || disciplina.getId() == null || disciplina.getId() <= 0)
-			erros.rejectValue(campo, mensagem);
+	private void validateVagas(Errors erros, Integer vagas){
+		String campo = "vagas";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (vagas == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+			else if(vagas <= 0)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
+		}
 	}
 	
-	private void validateTurno(Errors erros, Turno turno, String campo, String mensagem){
-		if (turno == null)
-			erros.rejectValue(campo, mensagem);
+	private void validateTurno(Errors erros, Turno turno){
+		String campo = "turno";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (turno == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+		}
 	}
 	
-	private void validateVagasValorInvalido(Errors erros, Integer vagas, String campo, String mensagem){
-		if (vagas != null && vagas <= 0)
-			erros.rejectValue(campo, mensagem);
+	private void validateHorarioInicio(Errors erros, HorarioInicio horarioInicio){
+		String campo = "horarioInicio";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (horarioInicio == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+		}
+	}
+	
+	private void validateAulasEmLaboratorio(Errors erros, Integer aulasEmLaboratorio){
+		String campo = "aulasEmLaboratorio";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (aulasEmLaboratorio == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+			else if (aulasEmLaboratorio < 0)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
+		}
+	}
+	
+	private void validateProfessores(Errors erros, List<Professor> professores){
+		String campo = "professores";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (professores == null || professores.isEmpty())
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+		}
+	}
+	
+	private void validateNumeroProfessores(Errors erros, Integer numeroProfessores){
+		String campo = "numeroProfessores";
+		
+		if (!erros.hasFieldErrors(campo)){
+			if (numeroProfessores == null)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
+			else if (numeroProfessores <= 0)
+				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
+		}
 	}
 }
