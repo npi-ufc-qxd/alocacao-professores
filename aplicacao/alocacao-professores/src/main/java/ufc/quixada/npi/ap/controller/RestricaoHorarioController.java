@@ -180,6 +180,11 @@ public class RestricaoHorarioController {
 		return empilhamentoService.desabilitarEmpilhamento(id);	
 	}
 	
+	@RequestMapping(value="/{id}/habilitar", method = RequestMethod.GET)
+	public @ResponseBody boolean habilitarEmpilhamento(@PathVariable(name="id", required=true) Integer id){
+		return empilhamentoService.habilitarEmpilhamento(id);	
+	}
+	
 	
 	@RequestMapping(path={"/{id}/detalhar"})
 	public ModelAndView visualizarEmpilhamento(@PathVariable("id") Integer id, @RequestParam(required=false) String erro){

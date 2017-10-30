@@ -19,4 +19,6 @@ public interface RestricaoHorarioService {
 	
 	boolean desabilitarEmpilhamento(Integer id);
 	
+	boolean habilitarEmpilhamento(Integer id);
+	
 }
