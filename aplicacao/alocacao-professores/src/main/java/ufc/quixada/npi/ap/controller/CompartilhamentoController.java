@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodo;
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodoAjax;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Pessoa;
@@ -28,8 +30,6 @@ import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
-import ufc.quixada.npi.ap.util.RestricaoDePeriodo;
-import ufc.quixada.npi.ap.util.RestricaoDePeriodoAjax;
 import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 
 

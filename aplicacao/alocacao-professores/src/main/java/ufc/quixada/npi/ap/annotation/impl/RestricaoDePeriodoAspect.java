@@ -1,4 +1,4 @@
-package ufc.quixada.npi.ap.util;
+package ufc.quixada.npi.ap.annotation.impl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +17,12 @@ import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodo;
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodoAjax;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.service.PeriodoService;
+import ufc.quixada.npi.ap.util.Constants;
 
 @Aspect
 @Component
@@ -44,8 +47,8 @@ public class RestricaoDePeriodoAspect {
 		return (ModelAndView) joinPoint.proceed();
 	}
 	
-	@Around(value = "@annotation(RestricaoDePeriodoAjax)")
-	public boolean restringirPeriodoAjax(ProceedingJoinPoint joinPoint) throws Throwable {
+	@Around(value = "@annotation(restricaoPeriodoAjax)")
+	public boolean restringirPeriodoAjax(ProceedingJoinPoint joinPoint, RestricaoDePeriodoAjax restricaoPeriodoAjax) throws Throwable {
 		if( !permitido() )
 			return false;
 		

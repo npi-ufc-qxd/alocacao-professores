@@ -1,4 +1,4 @@
-package ufc.quixada.npi.ap.util;
+package ufc.quixada.npi.ap.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
