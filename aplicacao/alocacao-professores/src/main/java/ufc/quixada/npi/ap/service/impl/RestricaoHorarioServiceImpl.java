@@ -61,9 +61,7 @@ public class RestricaoHorarioServiceImpl implements RestricaoHorarioService {
 	@Override
 	public boolean desabilitarEmpilhamento(Integer id) {
 		RestricaoHorario empilhamento = restricaoHorarioRepository.findOne(id);
-		if(empilhamento.isHabilitada()==false){
-			return false;
-		}
+		
 		empilhamento.setHabilitada(false);
 		restricaoHorarioRepository.save(empilhamento);
 		
@@ -72,9 +70,7 @@ public class RestricaoHorarioServiceImpl implements RestricaoHorarioService {
 	
 	public boolean habilitarEmpilhamento(Integer id) {
 		RestricaoHorario empilhamento = restricaoHorarioRepository.findOne(id);
-		if(empilhamento.isHabilitada()==true){
-			return false;
-		}
+		
 		empilhamento.setHabilitada(true);
 		restricaoHorarioRepository.save(empilhamento);
 		

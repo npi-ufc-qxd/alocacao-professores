@@ -69,17 +69,13 @@ public class RestricaoHorarioController {
 		List<RestricaoHorario> restricaoHorarios =  empilhamentoService.buscarTodasRestricoesHorario();
 		
 		if(pessoa.isDirecao()){
-			
 			ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR_DIRECAO);
 			model.addObject("restricaoHorarios", restricaoHorarios);
-			
 			return model;
-			
 		}
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR);
-		model.addObject("restricaoHorarios", restricaoHorarios);
-		
+			
 		return model;
 	}
 	
