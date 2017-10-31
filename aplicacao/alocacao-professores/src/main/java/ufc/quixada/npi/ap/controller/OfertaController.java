@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodo;
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodoAjax;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Disciplina;
@@ -99,6 +101,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
@@ -140,12 +143,13 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
 
 		Oferta oferta = ofertaService.buscarOferta(id);
 		
-		if (oferta == null){
+		if (oferta == null) {
 			modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
 			
 			return modelAndView;
@@ -206,6 +210,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
+	@RestricaoDePeriodoAjax
 	public @ResponseBody boolean excluirOferta(@PathVariable(name = "id", required = true) Integer id) {
 		try {
 			ofertaService.excluir(id);
@@ -217,6 +222,7 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView solicitarCompartilhamento(@PathVariable("idOferta") Integer id,
 			@ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
 		
@@ -266,6 +272,7 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/importar", method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView importarOfertas(Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_IMPORTAR);
 
@@ -345,6 +352,27 @@ public class OfertaController {
 		model.addAttribute("ofertas", ofertasCurso);
 		model.addAttribute("compartilhamentos", compartilhamentos);
 
+		return model;
+	}
+	
+	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
+	public @ResponseBody ModelMap buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
+		ModelMap model = new ModelMap();
+		
+		Pessoa coordenador = (Pessoa) auth.getPrincipal();
+		Curso curso = cursoService.buscarCursoPorCoordenador(coordenador);
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		
+		List<Oferta> ofertas = ofertaService.buscarOfertasNaoImportadasPeriodoAtivoPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		List<Oferta> ofertasImportadas =  ofertaService.buscarOfertasImportadasPeriodoAtivoPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		List<Compartilhamento> ofertasCompartilhadas = compartilhamentoService.buscarCompartilhamentosNaoImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		List<Compartilhamento> ofertasCompartilhadasImportadas = compartilhamentoService.buscarCompartilhamentosImportadosPorPeriodoAndCurso(periodo, periodoAtivo, curso);
+		
+		model.addAttribute("ofertas", ofertas);
+		model.addAttribute("ofertasImportadas", ofertasImportadas);
+		model.addAttribute("ofertasCompartilhadas", ofertasCompartilhadas);
+		model.addAttribute("ofertasCompartilhadasImportadas", ofertasCompartilhadasImportadas);
+		
 		return model;
 	}
 }

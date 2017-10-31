@@ -35,6 +35,7 @@ public class Constants {
 	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";
 	public static final String OFERTA_EXCLUIR = "/ofertas/excluir-oferta";
 	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
+	public static final String OFERTA_CAMPUS_REDIRECT_LISTAR = "redirect:/oferta-campus";
 	public static final String OFERTA_REDIRECT_CADASTRO = "redirect:/ofertas/cadastrar";
 	public static final String OFERTA_REDIRECT_EDITAR_DIRECAO = "redirect:/editar-oferta/";
 	
@@ -87,6 +88,10 @@ public class Constants {
 	public static final String MSG_COMPARTILHAMENTO_SOLICITADO = "Compartilhamento solicitado com sucesso!";
 	
 	//Mensagens Erros
+	public static final String STATUS_ERROR = "error";
+	public static final String DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
+	public static final String DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
+	public static final String RESTRICAO_PERIODO = "Esta operação é restrita por períodos. Por favor verifique as datas do período.";
 	public static final String SWAL_STATUS_ERROR = "error";
 	public static final String MSG_DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
 	public static final String MSG_DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
@@ -94,5 +99,4 @@ public class Constants {
 	//Prefixos das mensagens de erro de validação
 	public static final String VALIDACAO_ERRO_INVALID = "invalid";
 	public static final String VALIDACAO_ERRO_NULL = "null";
-	
 }

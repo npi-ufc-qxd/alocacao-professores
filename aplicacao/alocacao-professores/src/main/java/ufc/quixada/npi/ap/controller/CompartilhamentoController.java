@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodo;
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodoAjax;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Pessoa;
@@ -86,6 +88,7 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Integer id, 
 												@ModelAttribute("compartilhamento") Compartilhamento compartilhamento){
 		
@@ -134,6 +137,7 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/excluir"}, method = RequestMethod.GET)
+	@RestricaoDePeriodoAjax
 	public @ResponseBody boolean excluirCompartilhamento(@PathVariable(name = "id", required = true) Integer id){
 		try{
 			compartilhamentoService.excluir(id);

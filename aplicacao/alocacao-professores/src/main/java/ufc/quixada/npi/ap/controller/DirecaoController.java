@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.ufc.quixada.npi.ldap.model.Usuario;
 import br.ufc.quixada.npi.ldap.service.UsuarioService;
+import ufc.quixada.npi.ap.annotation.RestricaoDePeriodo;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Pessoa;
@@ -106,6 +107,7 @@ public class DirecaoController {
 	}
 	
 	@RequestMapping(value = "/editar-oferta/{id}", method = RequestMethod.GET)
+	@RestricaoDePeriodo(Constants.OFERTA_CAMPUS_REDIRECT_LISTAR)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR_DIRECAO);
 
