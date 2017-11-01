@@ -75,6 +75,7 @@ public class RestricaoHorarioController {
 		}
 		
 		ModelAndView model = new ModelAndView(Constants.EMPILHAMENTO_LISTAR);
+		model.addObject("restricaoHorarios", restricaoHorarios);
 			
 		return model;
 	}
