@@ -3,6 +3,7 @@
 
 var _ctx = $("meta[name='ctx']").attr("content");
 var baseUrl = "/" + _ctx.split('/')[3];
+//var baseUrl = "";
 
 //console.log(baseUrl);
 

@@ -96,7 +96,14 @@ public class OfertaController {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
 		modelAndView.addObject("periodo", periodoService.periodoAtivo());
 		modelAndView.addObject("periodos", periodoService.periodosConsolidados());
-		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+
+		Curso cursoAtual = cursoService.buscarPorCoordenador(pessoa);
+
+		if(null  == cursoAtual) {
+			cursoAtual = cursoService.buscarPorSigla("SI");
+		}
+
+		modelAndView.addObject("cursoAtual", cursoAtual);
 
 		return modelAndView;
 	}
@@ -125,7 +132,11 @@ public class OfertaController {
 		Periodo periodoAtivo = periodoService.periodoAtivo();
 		Curso cursoCoordenador = cursoService.buscarPorCoordenador(coordenador);
 
-		List<Oferta> ofertasCurso = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, coordenador);
+		if(null  == cursoCoordenador) {
+			cursoCoordenador = cursoService.buscarPorSigla("SI");
+		}
+		
+		List<Oferta> ofertasCurso = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
 
 		model.addAttribute("curso", cursoCoordenador);

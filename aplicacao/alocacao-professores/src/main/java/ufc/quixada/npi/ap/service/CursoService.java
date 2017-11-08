@@ -11,4 +11,6 @@ public interface CursoService {
 	
 	public Curso buscarPorCoordenador(Pessoa pessoa);
 
+	public Curso buscarPorSigla(String sigla);
+
 }

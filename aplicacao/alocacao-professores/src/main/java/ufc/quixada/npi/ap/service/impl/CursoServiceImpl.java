@@ -38,4 +38,9 @@ public class CursoServiceImpl implements CursoService {
 		return curso;
 	}
 
+	@Override
+	public Curso buscarPorSigla(String sigla) {
+		return cursoRepository.findBySigla(sigla);
+	}
+
 }
