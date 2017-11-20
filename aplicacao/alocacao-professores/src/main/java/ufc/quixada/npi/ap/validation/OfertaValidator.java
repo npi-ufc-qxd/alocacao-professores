@@ -9,7 +9,6 @@ import org.springframework.validation.Validator;
 
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Oferta;
-import ufc.quixada.npi.ap.model.Oferta.HorarioInicio;
 import ufc.quixada.npi.ap.model.Oferta.Turno;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
@@ -31,7 +30,6 @@ public class OfertaValidator implements Validator {
 		validateDisciplina(erros, oferta.getDisciplina());
 		validateVagas(erros, oferta.getVagas());
 		validateTurno(erros, oferta.getTurno());
-		validateHorarioInicio(erros, oferta.getHorarioInicio());
 		validateAulasEmLaboratorio(erros, oferta.getAulasEmLaboratorio());
 		validateProfessores(erros, oferta.getProfessores());
 		validateNumeroProfessores(erros, oferta.getNumeroProfessores());
@@ -74,16 +72,7 @@ public class OfertaValidator implements Validator {
 				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 		}
 	}
-	
-	private void validateHorarioInicio(Errors erros, HorarioInicio horarioInicio){
-		String campo = "horarioInicio";
-		
-		if (!erros.hasFieldErrors(campo)){
-			if (horarioInicio == null)
-				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
-		}
-	}
-	
+
 	private void validateAulasEmLaboratorio(Errors erros, Integer aulasEmLaboratorio){
 		String campo = "aulasEmLaboratorio";
 		
@@ -106,7 +95,6 @@ public class OfertaValidator implements Validator {
 	
 	private void validateNumeroProfessores(Errors erros, Integer numeroProfessores){
 		String campo = "numeroProfessores";
-		
 		if (!erros.hasFieldErrors(campo)){
 			if (numeroProfessores == null)
 				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);

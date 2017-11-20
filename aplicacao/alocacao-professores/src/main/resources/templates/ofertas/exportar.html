@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+
+	<head>
+		<title>Exportar | Alocação Professores</title>
+	</head>
+	
+	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<h3 class="box-title m-b-0">Exportar</h3>
+		</div>
+		
+		<div class="row">
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">Ofertas <div class="panel-action"><a href="#" data-perform="panel-collapse"><i class="ti-plus"></i></a></div></div>
+		
+			<div class="panel-wrapper collapse" aria-expanded="true">
+				<div class="panel-body">
+					<table id="example" class="display">
+					    <thead>
+					        <tr>
+					            <th>ofertada_por</th>
+					            <th>nome</th>
+					            <th>tipo_slot</th>
+					            
+					            <th>compartilha1</th>
+					            <th>disjunto1</th>
+
+					            <th>compartilha2</th>
+					            <th>disjunto2</th>
+
+					            <th>compartilha3</th>
+					            <th>disjunto3</th>
+					            
+					            <th>num_aula_lab</th>
+					            <th>num_profs</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr th:each="oferta : ${ofertas}">
+					            <th th:inline="text"><a th:href="@{/ofertas/{id}/editar(id=${oferta.id})}" class="label label-info"><i class="fa fa-pencil"></i> [[${oferta.turma.curso.sigla}]]-[[${oferta.turma.semestre.numero}]]</a></th>
+					            <th th:if="${oferta.disciplina.apelido ==  null}" th:inline="text"><a th:href="@{/disciplinas/{id}/editar(id=${oferta.disciplina.id})}" class="label label-danger"><i class="fa fa-pencil"></i> [[${oferta.disciplina.nome}]]</a></th>
+					            <th th:unless="${oferta.disciplina.apelido ==  null}" th:inline="text"><a th:href="@{/disciplinas/{id}/editar(id=${oferta.disciplina.id})}" class="label label-info"><i class="fa fa-pencil"></i> [[${oferta.disciplina.apelido}]]</a></th>
+
+<!-- 					            <th th:inline="text">[[${oferta.disciplina.apelido ==  null} ? ${oferta.disciplina.nome} : ${oferta.disciplina.apelido}]]</th> -->
+					            
+					            <th th:inline="text">[[${oferta.slot}]]</th>
+
+					            <th th:inline="text">[[${oferta.getCompartilhamentoIndice(0)}]]</th>
+					            <th th:inline="text">FALSE</th>
+
+					            <th th:inline="text">[[${oferta.getCompartilhamentoIndice(1)}]]</th>
+					            <th th:inline="text">FALSE</th>
+
+					            <th th:inline="text">[[${oferta.getCompartilhamentoIndice(2)}]]</th>
+					            <th th:inline="text">FALSE</th>
+
+					            <th th:inline="text">[[${oferta.aulasEmLaboratorio}]]</th>
+					            <th th:inline="text">[[${oferta.numeroProfessores}]]</th>
+					        </tr>
+					    </tbody>
+					</table>
+		
+		        </div>
+			</div>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">Empilhamentos <div class="panel-action"><a href="#" data-perform="panel-collapse"><i class="ti-plus"></i></a></div></div>
+		
+			<div class="panel-wrapper collapse" aria-expanded="true">
+				<div class="panel-body">
+						<table id="myTable" class="table table-striped">
+							<thead>
+								<tr>
+									<th>Primeira Turma</th>
+									<th>Primeira Disciplina</th>
+									<th>Segunda Turma</th>
+									<th>Segunda Disciplina</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="empilhamento : ${empilhamentos}">
+									<td th:inline="text">[[${empilhamento.primeiraTurma.curso.sigla}]]-[[${empilhamento.primeiraTurma.semestre.numero}]]</td>
+						            <td th:if="${empilhamento.primeiraDisciplina.apelido ==  null}" th:inline="text"><a th:href="@{/disciplinas/{id}/editar(id=${empilhamento.primeiraDisciplina.id})}" class="label label-danger"><i class="fa fa-pencil"></i> [[${empilhamento.primeiraDisciplina.nome}]]</a></td>
+						            <td th:unless="${empilhamento.primeiraDisciplina.apelido ==  null}" th:inline="text"><a th:href="@{/disciplinas/{id}/editar(id=${empilhamento.primeiraDisciplina.id})}" class="label label-info"><i class="fa fa-pencil"></i> [[${empilhamento.primeiraDisciplina.apelido}]]</a></td>
+									
+									<td th:inline="text">[[${empilhamento.segundaTurma.curso.sigla}]]-[[${empilhamento.segundaTurma.semestre.numero}]]</td>
+						            <td th:if="${empilhamento.segundaDisciplina.apelido ==  null}" th:inline="text"><a th:href="@{/disciplinas/{id}/editar(id=${empilhamento.segundaDisciplina.id})}" class="label label-danger"><i class="fa fa-pencil"></i> [[${empilhamento.segundaDisciplina.nome}]]</a></td>
+						            <td th:unless="${empilhamento.segundaDisciplina.apelido ==  null}" th:inline="text"><a th:href="@{/disciplinas/{id}/editar(id=${empilhamento.segundaDisciplina.id})}" class="label label-info"><i class="fa fa-pencil"></i> [[${empilhamento.segundaDisciplina.apelido}]]</a></td>
+
+								</tr>
+							</tbody>
+						</table>
+		
+		        </div>
+			</div>
+		</div>
+</div>
+	</section>
+	<section layout:fragment="js">
+	
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
+
+		<script type="text/javascript">
+
+		$(document).ready(function (){
+		    var table =  $('table').DataTable( {
+				"iDisplayLength": 200,
+		        "language": {
+		            "emptyTable":     "Nenhum registro encontrado",
+		            "info":           "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+		            "infoEmpty":      "Mostrando 0 até 0 de 0 registros",
+		            "infoFiltered":   "(Filtrados de _MAX_ registros)",
+		            "infoPostFix":    "",
+		            "thousands":      ".",
+		            "lengthMenu":     "Mostrar _MENU_ resultados por página",
+		            "loadingRecords": "Carregando...",
+		            "processing":     "Processando...",
+		            "search":         "Pesquisar:",
+		            "zeroRecords":    "Nenhum registro encontrado",
+		            "paginate": {
+		                "first":      "Primeiro",
+		                "last":       "Último",
+		                "next":       "Próximo",
+		                "previous":   "Anterior"
+		            },
+		            "aria": {
+		                "sortAscending":  ": Ordenar colunas de forma crescente",
+		                "sortDescending": ": Ordenar colunas de forma descrescente"
+		            }
+		        },
+	            dom: 'Bfrtip',
+	            buttons: [
+	                'csv'
+	            ]
+	        } );
+
+		});
+		 
+
+		</script>
+	
+	
+	</section>
+</html>

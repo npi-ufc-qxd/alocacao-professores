@@ -30,13 +30,15 @@ public class Constants {
 	public static final String OFERTA_CADASTRAR = "/ofertas/cadastrar-oferta";
 	public static final String OFERTA_IMPORTAR= "/ofertas/importar-oferta";
 	public static final String OFERTA_EDITAR = "/ofertas/editar-oferta";
-	public static final String OFERTA_EDITAR_DIRECAO = "/ofertas/editar-oferta-direcao";
 	public static final String OFERTA_LISTAR = "/ofertas/listar-oferta";
 	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";
 	public static final String OFERTA_EXCLUIR = "/ofertas/excluir-oferta";
 	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
 	public static final String OFERTA_CAMPUS_REDIRECT_LISTAR = "redirect:/oferta-campus";
 	public static final String OFERTA_REDIRECT_CADASTRO = "redirect:/ofertas/cadastrar";
+	public static final String OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
+	public static final String EXPORTAR = "/ofertas/exportar";
+	public static final String OFERTA_EDITAR_DIRECAO = "/ofertas/editar-oferta-direcao";
 	public static final String OFERTA_REDIRECT_EDITAR_DIRECAO = "redirect:/editar-oferta/";
 	
 	// Compartilhamento

@@ -24,6 +24,9 @@ public class Curso {
 
 	@OneToOne
 	private Professor coordenador;
+
+	@OneToOne
+	private Professor viceCoordenador;
 	
 	private String sigla;
 	
@@ -61,6 +64,14 @@ public class Curso {
 
 	public void setCoordenador(Professor coordenador) {
 		this.coordenador = coordenador;
+	}
+
+	public Professor getViceCoordenador() {
+		return viceCoordenador;
+	}
+
+	public void setViceCoordenador(Professor viceCoordenadorVice) {
+		this.viceCoordenador = viceCoordenadorVice;
 	}
 
 	public List<Turma> getTurmas() {

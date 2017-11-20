@@ -31,6 +31,7 @@
 								<tr>
 									<th>Código</th>
 									<th>Disciplina</th>
+									<th>Apelido</th>
 									<th>Créditos</th>
 									<th>Carga horária Teórica</th>
 									<th>Carga horária Prática</th>
@@ -41,6 +42,7 @@
 								<tr th:each="disciplina : ${disciplinas}">
 									<td th:inline="text"><b>[[${disciplina.codigo}]]</b></td>
 									<td th:inline="text">[[${disciplina.nome}]]</td>
+						            <td th:inline="text">[[${disciplina.apelido ==  null} ? '' : ${disciplina.apelido}]]</td>
 									<td th:text="${disciplina.creditos}"></td>
 									<td th:text="${disciplina.cargaHorariaTeorica}"></td>
 									<td th:text="${disciplina.cargaHorariaPratica}"></td>

@@ -1,32 +1,48 @@
 package ufc.quixada.npi.ap.controller;
 
+import static ufc.quixada.npi.ap.util.Constants.EXPORTAR;
+import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
+import static ufc.quixada.npi.ap.util.Constants.SWAL_STATUS_SUCCESS;
+
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.quixada.npi.ldap.model.Usuario;
 import br.ufc.quixada.npi.ldap.service.UsuarioService;
 import ufc.quixada.npi.ap.annotation.RestricaoDePeriodo;
 import ufc.quixada.npi.ap.model.Compartilhamento;
+import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
+import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
+import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.DisciplinaService;
 import ufc.quixada.npi.ap.service.OfertaService;
 import ufc.quixada.npi.ap.service.PeriodoService;
 import ufc.quixada.npi.ap.service.PessoaService;
 import ufc.quixada.npi.ap.service.ProfessorService;
+import ufc.quixada.npi.ap.service.RestricaoHorarioService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
+import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
+import ufc.quixada.npi.ap.validation.OfertaValidator;
 
 @Controller
 public class DirecaoController {
@@ -50,12 +66,43 @@ public class DirecaoController {
 	private DisciplinaService disciplinaService;
 	
 	@Autowired
+	private CompartilhamentoValidator compartilhamentoValidator;
+	
+	@Autowired
+	private RestricaoHorarioService restricaoHorarioService;
+
+	@Autowired
+	private CursoService cursoService;
+
+	@Autowired
+	private OfertaValidator ofertaValidator;
+
 	private CompartilhamentoService compartilhamentoService;
 	
 	@Autowired
 	private TurmaService turmaService;
 	
+	@ModelAttribute("cursos")
+	public List<Curso> todosCursos() {
+		return cursoService.buscarTodosCursos();
+	}
+
+	@ModelAttribute("professores")
+	public List<Professor> todosProfessores() {
+		return professorService.buscarTodosProfessores();
+	}
 	
+	@RequestMapping(path = { "/exportacao" }, method = RequestMethod.GET)
+	public String exportar() {
+		ModelAndView modelAndView = new ModelAndView(EXPORTAR);
+
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		modelAndView.addObject("empilhamentos", restricaoHorarioService.buscarTodasRestricoesHorario());
+		modelAndView.addObject("ofertas", ofertaService.buscarPorPeriodo(periodoAtivo));
+
+		return EXPORTAR;
+	}
+
 	@RequestMapping(path = {"/oferta-campus"}, method = RequestMethod.GET)
 	public ModelAndView listarCompartilhamentos(){
 		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
@@ -64,6 +111,7 @@ public class DirecaoController {
 		modelAndView.addObject("ofertas", ofertaService.buscarOfertasPeriodoAtivo());
 		
 		return modelAndView;
+
 	}
 
 	@RequestMapping(value = "/professores", method = RequestMethod.GET)
@@ -124,6 +172,71 @@ public class DirecaoController {
 	private boolean validarLista(List<?> lista) {
 		return lista != null && !lista.isEmpty() && !lista.contains(null);
 	}
+	
+	@RequestMapping(value = "/direcao/ofertas/cadastrar", method = RequestMethod.GET)
+	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
+		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());		
+		modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/direcao/ofertas/cadastrar", method = RequestMethod.POST)
+	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult,
+			ModelAndView modelAndView, RedirectAttributes redirectAttributes, Authentication auth) {
+
+		ofertaValidator.validate(oferta, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
+			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
+			modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
+
+			return modelAndView;
+		}
+
+		ofertaService.salvarOfertaPeriodoAtivo(oferta);
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, OFERTA_CADASTRADA);
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/direcao/ofertas/{id}/editar", method = RequestMethod.GET)
+	public ModelAndView editarOferta(@PathVariable("id") Integer id, Authentication auth) {
+		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
+
+		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
+		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/direcao/ofertas/{id}/editar", method = RequestMethod.POST)
+	public ModelAndView editarOferta(@PathVariable(name = "id", required = true) Integer id,
+			@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth) {
+
+		ofertaValidator.validate(oferta, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			Pessoa pessoa = (Pessoa) auth.getPrincipal();
+			modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
+			modelAndView.setViewName(Constants.OFERTA_EDITAR);
+			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
+
+			return modelAndView;
+		}
+
+		ofertaService.salvarOfertaPeriodoAtivo(oferta);
+
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+
+		return modelAndView;
+	}
 
 	@RequestMapping(value = "/editar-compartilhamentos-oferta/", method = RequestMethod.GET)
 	public @ResponseBody boolean editarOferta(@RequestParam("idsCompartilhamentos") List<Integer> idsCompartilhamentos,
@@ -153,6 +266,5 @@ public class DirecaoController {
 		
 		return false;
 	}
-	
 	
 }

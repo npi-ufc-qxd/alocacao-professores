@@ -24,7 +24,7 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Autowired
 	private PeriodoService periodoService;
-
+	
 	@Override
 	public void salvarOfertaPeriodoAtivo(Oferta oferta){
 		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
@@ -53,7 +53,7 @@ public class OfertaServiceImpl implements OfertaService {
 	public void excluir(Integer id) {
 		ofertaRepository.delete(id);
 	}
-
+	
 	@Override
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Curso curso) {
 		return ofertaRepository.findOfertasByPeriodoAndTurma_curso(periodo, curso);
@@ -132,4 +132,33 @@ public class OfertaServiceImpl implements OfertaService {
 		return oferta;
 	}
 	
+	@Override
+	public void substituirOferta(List<Integer> idOfertas) {
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		List<Oferta> novasOfertas = new ArrayList<>();
+		
+		for (Integer id : idOfertas) {
+			Oferta oferta = ofertaRepository.findOne(id);
+			
+			if (oferta != null) {
+				for (Oferta o : ofertaRepository.findOfertaByPeriodo(periodoAtivo)){
+					if (o.getDisciplina().equals(oferta.getDisciplina())) {
+						ofertaRepository.delete(o);
+						
+						Oferta novaOferta = clonarOferta(o);
+						novaOferta.setPeriodo(periodoAtivo);
+						novasOfertas.add(novaOferta);
+					}
+				}
+			}
+		}
+
+		ofertaRepository.save(novasOfertas);
+	}
+
+	@Override
+	public List<Oferta> buscarPorPeriodo(Periodo periodo) {
+		return ofertaRepository.findOfertaByPeriodo(periodo);
+	}
+
 }

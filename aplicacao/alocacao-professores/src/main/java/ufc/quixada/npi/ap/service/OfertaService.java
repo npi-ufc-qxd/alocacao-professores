@@ -19,6 +19,8 @@ public interface OfertaService {
 	
 	public List<Oferta> buscarOfertasPeriodoAtivo();
 	
+	public List<Oferta> buscarPorPeriodo(Periodo periodo);
+	
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Curso curso);
 	
 	public List<Oferta> buscarOfertasImportadasPeriodoAtivoPorPeriodoAndCurso(Periodo periodo, Periodo periodoAtivo, Curso curso);
@@ -26,5 +28,7 @@ public interface OfertaService {
 	public List<Oferta> buscarOfertasNaoImportadasPeriodoAtivoPorPeriodoAndCurso(Periodo periodo, Periodo periodoAtivo, Curso curso);
 	
 	public Map<String, Object> importarOfertas(List<Integer> ofertas, Periodo periodoAtivo);
+
+	void substituirOferta(List<Integer> idOfertas);
 	
 }

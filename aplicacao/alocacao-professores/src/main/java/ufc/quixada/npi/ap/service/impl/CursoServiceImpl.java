@@ -15,7 +15,7 @@ public class CursoServiceImpl implements CursoService {
 
 	@Autowired
 	private CursoRepository cursoRepository;
-	
+
 	@Override
 	public Curso buscarCurso(Integer id) {
 		return cursoRepository.findOne(id);
@@ -25,9 +25,19 @@ public class CursoServiceImpl implements CursoService {
 	public List<Curso> buscarTodosCursos() {
 		return cursoRepository.findAll();
 	}
-
-	@Override
+	
 	public Curso buscarCursoPorCoordenador(Pessoa pessoa) {
 		return cursoRepository.findCursoByCoordenador_pessoa(pessoa);
 	}
+
+	@Override
+	public Curso buscarPorSigla(String sigla) {
+		return cursoRepository.findBySigla(sigla);
+	}
+
+	@Override
+	public Curso buscarPorOferta(Integer idOferta) {
+		return cursoRepository.findByOferta(idOferta);
+	}
+
 }

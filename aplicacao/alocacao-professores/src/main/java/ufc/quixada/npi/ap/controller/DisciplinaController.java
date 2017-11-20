@@ -55,8 +55,7 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
-	public ModelAndView cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
-			BindingResult result, RedirectAttributes redirectAttributes, ModelAndView modelAndView) {
+	public ModelAndView cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina, BindingResult result, RedirectAttributes redirectAttributes, ModelAndView modelAndView) {
 		
 		disciplinaValidator.validate(disciplina, result);
 		
@@ -99,7 +98,7 @@ public class DisciplinaController {
 		
 		if (disciplina == null){
 			modelAndView.setViewName(Constants.DISCIPLINA_REDIRECT_LISTAR);
-			
+
 			return modelAndView;
 		}
 		

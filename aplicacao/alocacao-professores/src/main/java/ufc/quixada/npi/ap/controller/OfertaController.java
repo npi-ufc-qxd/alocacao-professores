@@ -93,9 +93,16 @@ public class OfertaController {
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 		
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_LISTAR);
+
+		Curso cursoAtual = cursoService.buscarCursoPorCoordenador(pessoa);
+
+		if(null  == cursoAtual) {
+			cursoAtual = cursoService.buscarPorSigla("SI");
+		}
+
+		modelAndView.addObject("cursoAtual", cursoAtual);
 		modelAndView.addObject("periodo", periodoService.buscarPeriodoAtivo());
 		modelAndView.addObject("periodos", periodoService.buscarPeriodosConsolidados());
-		modelAndView.addObject("cursoAtual", cursoService.buscarCursoPorCoordenador(pessoa));
 
 		return modelAndView;
 	}
@@ -113,10 +120,10 @@ public class OfertaController {
 		
 		return modelAndView;
 	}
+	
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
-	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult,
-			ModelAndView modelAndView, RedirectAttributes redirectAttributes, Authentication auth) {
+	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Authentication auth) {
 
 		ofertaValidator.validate(oferta, bindingResult);
 
@@ -167,9 +174,7 @@ public class OfertaController {
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
-	public ModelAndView editarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, 
-			BindingResult bindingResult, ModelAndView modelAndView, Authentication auth,
-			RedirectAttributes redirectAttributes) {
+	public ModelAndView editarOferta(@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth, RedirectAttributes redirectAttributes) {
 
 		ofertaValidator.validate(oferta, bindingResult);
 
@@ -220,7 +225,7 @@ public class OfertaController {
 
 		return true;
 	}
-	
+
 	@RequestMapping(path = {"/{idOferta}/solicitar-compartilhamento"}, method = RequestMethod.GET)
 	@RestricaoDePeriodo(Constants.OFERTA_REDIRECT_LISTAR)
 	public ModelAndView solicitarCompartilhamento(@PathVariable("idOferta") Integer id,
@@ -284,7 +289,7 @@ public class OfertaController {
 		
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/importar-ofertas", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> importarOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
 		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
@@ -324,7 +329,7 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/curso/{idCurso}/buscar-ofertas/", method = RequestMethod.GET)
-	public @ResponseBody ModelMap listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
+	public @ResponseBody ModelMap listarOfertasPorCurso(@PathVariable("idCurso") Curso curso, Authentication auth) {
 		ModelMap model = new ModelMap();
 
 		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
@@ -332,6 +337,9 @@ public class OfertaController {
 		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, curso);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, curso);
 
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		model.addAttribute("papelDirecao", pessoa.isDirecao());
+		model.addAttribute("curso", curso);
 		model.addAttribute("ofertas", ofertas);
 		model.addAttribute("compartilhamentos", compartilhamentos);
 
@@ -346,15 +354,22 @@ public class OfertaController {
 		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
 		Curso cursoCoordenador = cursoService.buscarCursoPorCoordenador(coordenador);
 
+		if(null  == cursoCoordenador) {
+			cursoCoordenador = cursoService.buscarPorSigla("SI");
+		}
+
 		List<Oferta> ofertasCurso = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
 
+		model.addAttribute("papelDirecao", coordenador.isDirecao());
+		model.addAttribute("curso", cursoCoordenador);
 		model.addAttribute("ofertas", ofertasCurso);
 		model.addAttribute("compartilhamentos", compartilhamentos);
 
 		return model;
-	}
-	
+	}	
+
+
 	@RequestMapping(value = "/buscar-ofertas/{periodo}", method = RequestMethod.GET)
 	public @ResponseBody ModelMap buscarOfertas(@PathVariable("periodo") Periodo periodo, Authentication auth) {
 		ModelMap model = new ModelMap();
@@ -375,4 +390,55 @@ public class OfertaController {
 		
 		return model;
 	}
+
+	@RequestMapping(value = "/substituicao-ofertas", method = RequestMethod.GET)
+	public @ResponseBody boolean substituirOfertas(@RequestParam("ofertas") List<Integer> ofertas) {
+		ofertaService.substituirOferta(ofertas);
+		return true;
+	}
+
+	@RequestMapping(path = {"/{id}/solicitar-compartilhamento"}, method = RequestMethod.GET)
+	public ModelAndView cadastrarCompartilhamento(@PathVariable("id") Integer id, @ModelAttribute("compartilhamento") Compartilhamento compartilhamento, Authentication auth){
+		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_CADASTRAR);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+
+		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
+		
+		if(!pessoa.isDirecao()) {
+			modelAndView.addObject("turmas", cursoService.buscarCursoPorCoordenador(pessoa).getTurmas());
+		}
+
+		return modelAndView;
+	}
+
+	@RequestMapping(path = {"/{id}/solicitar-compartilhamento"}, method = RequestMethod.POST)
+	public ModelAndView cadastrarCompartilhamento(@PathVariable("id") Integer id, @ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth){
+		compartilhamentoValidator.validate(compartilhamento, bindingResult);
+
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+
+		modelAndView.addObject("oferta", ofertaService.buscarOferta(id));
+		
+		if(!pessoa.isDirecao()) {
+			modelAndView.addObject("turmas", cursoService.buscarCursoPorCoordenador(pessoa).getTurmas());
+		}
+
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
+			return modelAndView;
+		}
+
+		try{
+			compartilhamentoService.salvar(compartilhamento);
+		} catch(Exception e){
+			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
+			return modelAndView;
+		}
+		
+		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
+		
+		return modelAndView;
+	}
+
 }

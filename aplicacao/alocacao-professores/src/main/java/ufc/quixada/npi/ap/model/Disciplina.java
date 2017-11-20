@@ -14,6 +14,8 @@ public class Disciplina {
 
 	private String nome;
 
+	private String apelido;
+
 	private String codigo;
 
 	private int creditos;
@@ -38,6 +40,14 @@ public class Disciplina {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getApelido() {
+		return apelido;
+	}
+
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
 	}
 
 	public String getCodigo() {
