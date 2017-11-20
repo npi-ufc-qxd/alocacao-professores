@@ -185,4 +185,9 @@ public class OfertaServiceImpl implements OfertaService {
 		ofertaRepository.save(novasOfertas);
 	}
 
+	@Override
+	public List<Oferta> buscarPorPeriodo(Periodo periodo) {
+		return ofertaRepository.findOfertaByPeriodo(periodo);
+	}
+
 }

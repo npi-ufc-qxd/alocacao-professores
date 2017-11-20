@@ -53,7 +53,7 @@ public class OfertaValidator implements Validator {
 	}
 	
 	private void validateVagasValorInvalido(Errors erros, Integer vagas, String campo, String mensagem){
-		if (vagas != null && vagas <= 0)
+		if (vagas != null && vagas < 0)
 			erros.rejectValue(campo, mensagem);
 	}
 }

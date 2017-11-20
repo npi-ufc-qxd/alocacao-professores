@@ -56,7 +56,7 @@ public class DisciplinaController {
 
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
 	public String cadastrarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina, BindingResult result, RedirectAttributes redirect) {
-		disciplinaValidator.validate(disciplina, result);
+		//disciplinaValidator.validate(disciplina, result);
 		
 		if (result.hasErrors()) {
 			return DISCIPLINA_CADASTRAR;
@@ -84,15 +84,15 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping(value = "/{idDisciplina}/editar", method = RequestMethod.GET)
-	public String editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina, Model model) {
+	public String editarDisciplina(@PathVariable("idDisciplina") Disciplina disciplina, Model model) { 
 		model.addAttribute("disciplina", disciplina);
 		return DISCIPLINA_EDITAR;
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
-	public String editarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina,
-			BindingResult result, RedirectAttributes redirect) throws Exception {
-		disciplinaValidator.validate(disciplina, result);
+	public String editarDisciplina(@ModelAttribute("disciplina") @Valid Disciplina disciplina, BindingResult result, RedirectAttributes redirect) throws Exception {
+		//disciplinaValidator.validate(disciplina, result);
+		
 		if (result.hasErrors()) {
 			return DISCIPLINA_EDITAR;
 		} else {

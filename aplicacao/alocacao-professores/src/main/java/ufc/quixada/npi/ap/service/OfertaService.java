@@ -21,6 +21,8 @@ public interface OfertaService {
 	
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Pessoa coordenador);
 	
+	public List<Oferta> buscarPorPeriodo(Periodo periodo);
+	
 	public List<Oferta> buscarPorPeriodoAndCurso(Periodo periodo, Curso curso);
 	
 	public List<Oferta> buscarOfertasCompartilhadasPorPeriodoAndCurso(Periodo periodo, Curso curso);

@@ -43,4 +43,9 @@ public class CursoServiceImpl implements CursoService {
 		return cursoRepository.findBySigla(sigla);
 	}
 
+	@Override
+	public Curso buscarPorOferta(Integer idOferta) {
+		return cursoRepository.findByOferta(idOferta);
+	}
+
 }

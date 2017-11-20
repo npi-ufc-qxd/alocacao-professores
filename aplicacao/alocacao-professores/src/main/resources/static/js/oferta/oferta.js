@@ -1,15 +1,10 @@
-//var getUrl = window.location;
-//var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-
 var _ctx = $("meta[name='ctx']").attr("content");
 var baseUrl = "/" + _ctx.split('/')[3];
-//var baseUrl = "";
-
-//console.log(baseUrl);
 
 var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
 var idCursoCoordenador = $('input[name=idCursoAtual]').val();
 var idCursoSelecionado = idCursoCoordenador;
+var direcao = false;
 
 $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-1').empty();
@@ -222,6 +217,7 @@ $(window).load(function() {
 //Fun????o que organiza a lista de ofertas por semestre
 function organizarOfertas(result) {
 	semestres = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'QUARTO', 'QUINTO', 'SEXTO', 'SETIMO', 'OITAVO', 'NONO', 'DECIMO'];
+	direcao = result.papelDirecao;
 	for(var i = 0; i <= 9; i++) {
 		var semestre = semestres[i];
 		var numberSemestre = i+1;
@@ -447,54 +443,79 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	var divButton = document.createElement('div');
 	divButton.setAttribute('class', 'pull-right');
 	
-	if(idCursoSelecionado == idCursoCoordenador) {
-
-		if(siglaCursoCoordenador == sigla) {
-			var iconeEditar = document.createElement('i');
-			iconeEditar.setAttribute('class', 'fa fa-pencil');
-			var buttonEditar = document.createElement('a');
-			buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
-			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
-			buttonEditar.appendChild(iconeEditar);
-			divButton.appendChild(buttonEditar);
+	console.log("DIRECAO + " + direcao);
+	
+	if(!direcao) {
+		if(idCursoSelecionado == idCursoCoordenador) {
+			if(siglaCursoCoordenador == sigla) {
+				var iconeEditar = document.createElement('i');
+				iconeEditar.setAttribute('class', 'fa fa-pencil');
+				var buttonEditar = document.createElement('a');
+				buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
+				buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+				buttonEditar.appendChild(iconeEditar);
+				divButton.appendChild(buttonEditar);
+				
+				var iconeExcluir = document.createElement('i');
+				iconeExcluir.setAttribute('class', 'fa fa-close');
+				var buttonExcluir = document.createElement('a');
+				buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
+				buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
+				buttonExcluir.appendChild(iconeExcluir);
+				divButton.appendChild(buttonExcluir);
+				
+			} else {
+	//			divPanel.appendChild(divRibbon);
+				var iconeEditar = document.createElement('i');
+				iconeEditar.setAttribute('class', 'fa fa-pencil');
+				var buttonEditar = document.createElement('a');
+				buttonEditar.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/editar';
+				buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+				buttonEditar.appendChild(iconeEditar);
+				divButton.appendChild(buttonEditar);
+	
+				var iconeExcluir = document.createElement('i');
+				iconeExcluir.setAttribute('class', 'fa fa-close');
+				var buttonExcluir = document.createElement('a');
+				buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
+				buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
+				buttonExcluir.appendChild(iconeExcluir);
+				divButton.appendChild(buttonExcluir);
 			
-			var iconeExcluir = document.createElement('i');
-			iconeExcluir.setAttribute('class', 'fa fa-close');
-			var buttonExcluir = document.createElement('a');
-			buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
-			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
-			buttonExcluir.appendChild(iconeExcluir);
-			divButton.appendChild(buttonExcluir);
-			
-		} else {
-//			divPanel.appendChild(divRibbon);
-			var iconeEditar = document.createElement('i');
-			iconeEditar.setAttribute('class', 'fa fa-pencil');
-			var buttonEditar = document.createElement('a');
-			buttonEditar.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/editar';
-			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
-			buttonEditar.appendChild(iconeEditar);
-			divButton.appendChild(buttonEditar);
-
-			var iconeExcluir = document.createElement('i');
-			iconeExcluir.setAttribute('class', 'fa fa-close');
-			var buttonExcluir = document.createElement('a');
-			buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
-			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
-			buttonExcluir.appendChild(iconeExcluir);
-			divButton.appendChild(buttonExcluir);
-		
+			}
+		} 
+		else if(siglaCursoCoordenador != sigla) {
+			var iconeShare = document.createElement('i');
+			iconeShare.setAttribute('class', 'fa fa-share-alt');
+			var buttonSolicitarCompartilhamento = document.createElement('a');
+			buttonSolicitarCompartilhamento.href = baseUrl + '/ofertas/'+ idOferta + '/solicitar-compartilhamento';
+			buttonSolicitarCompartilhamento.setAttribute('class', 'btn btn-inverse btn-acoes');
+			buttonSolicitarCompartilhamento.appendChild(iconeShare);
+			divButton.appendChild(buttonSolicitarCompartilhamento);
 		}
-	} 
-	else if(siglaCursoCoordenador != sigla) {
-		var iconeShare = document.createElement('i');
-		iconeShare.setAttribute('class', 'fa fa-share-alt');
-		var buttonSolicitarCompartilhamento = document.createElement('a');
-		buttonSolicitarCompartilhamento.href = baseUrl + '/ofertas/'+ idOferta + '/solicitar-compartilhamento';
-		buttonSolicitarCompartilhamento.setAttribute('class', 'btn btn-inverse btn-acoes');
-		buttonSolicitarCompartilhamento.appendChild(iconeShare);
-		divButton.appendChild(buttonSolicitarCompartilhamento);
+	} else {
+		var iconeEditar = document.createElement('i');
+		iconeEditar.setAttribute('class', 'fa fa-pencil');
+		var buttonEditar = document.createElement('a');
+		buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
+		buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+		buttonEditar.setAttribute('data-toggle', 'tooltip');
+		buttonEditar.setAttribute('title', 'Editar Oferta');
+		buttonEditar.appendChild(iconeEditar);
+		divButton.appendChild(buttonEditar);
+		
+		var iconeExcluir = document.createElement('i');
+		iconeExcluir.setAttribute('class', 'fa fa-close');
+		var buttonExcluir = document.createElement('a');
+		buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
+		buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
+		buttonExcluir.setAttribute('data-toggle', 'tooltip');
+		buttonExcluir.setAttribute('title', 'Excluir Oferta');
+		buttonExcluir.appendChild(iconeExcluir);
+		divButton.appendChild(buttonExcluir);
+		
 	}
+	
 
 	//Inserindo elementos filhos nos elementos pai
 	//pVagas.appendChild(document.createTextNode("Vagas: " + vagas));

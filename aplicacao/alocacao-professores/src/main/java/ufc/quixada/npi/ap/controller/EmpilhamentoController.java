@@ -30,16 +30,16 @@ import ufc.quixada.npi.ap.service.TurmaService;
 public class EmpilhamentoController {
 
 	@Autowired
-	EmpilhamentoService empilhamentoService;
+	private EmpilhamentoService empilhamentoService;
 	
 	@Autowired
-	DisciplinaService disciplinaService;
+	private DisciplinaService disciplinaService;
 	
 	@Autowired 
-	TurmaService turmaService;
+	private TurmaService turmaService;
 	
 	@Autowired
-	EmpilhamentoValidator empilhamentoValidator;
+	private EmpilhamentoValidator empilhamentoValidator;
 	
 	@ModelAttribute("turmas")
 	public List<Turma> todasTurmas(){

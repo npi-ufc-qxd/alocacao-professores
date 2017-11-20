@@ -35,7 +35,7 @@ public class Oferta {
 	
 	
 	public enum Turno {
-		MANHA("Manhã"), TARDE("Tarde"), NOITE("Noite");
+		MANHA("Manha"), TARDE("Tarde"), NOITE("Noite"), LIVRE("Livre");
 
 		private String descricao;
 
@@ -47,21 +47,6 @@ public class Oferta {
 			return descricao;
 		}
 	}
-	
-	public enum HorarioInicio{
-		AB("AB"),CD("CD");
-		
-		private String descricao;
-		
-		HorarioInicio(String descricao){
-			this.descricao = descricao;
-		}
-		
-		public String getDescricao(){
-			return descricao;
-		}
-	}
-	
 
 	private String observacao;
 
@@ -80,8 +65,7 @@ public class Oferta {
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
 	
-	@Enumerated(EnumType.STRING)
-	private HorarioInicio horarioInicio;
+	private boolean horarioInicio;
 
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
@@ -156,23 +140,23 @@ public class Oferta {
 	}
 
 	public Integer getAulasEmLaboratorio() {
-		return aulasEmLaboratorio;
+		return aulasEmLaboratorio == null ? 0 : aulasEmLaboratorio;
 	}
 
 	public void setAulasEmLaboratorio(Integer aulasEmLaboratorio) {
 		this.aulasEmLaboratorio = aulasEmLaboratorio;
 	}
 
-	public HorarioInicio getHorarioInicio() {
+	public boolean getHorarioInicio() {
 		return horarioInicio;
 	}
 
-	public void setHorarioInicio(HorarioInicio horarioInicio) {
+	public void setHorarioInicio(boolean horarioInicio) {
 		this.horarioInicio = horarioInicio;
 	}
 	
 	public Integer getNumeroProfessores() {
-		return numeroProfessores;
+		return numeroProfessores == null ? 0 : numeroProfessores;
 	}
 
 	public void setNumeroProfessores(Integer numeroProfessores) {
@@ -210,6 +194,17 @@ public class Oferta {
 		}
 
 		return null;
+	}
+	
+	public String getCompartilhamentoIndice(int indice) {
+		if(getCompartilhamentos().size() == indice + 1) {
+			return "" + getCompartilhamentos().get(indice).getTurma().getCurso().getSigla() + "-" + getCompartilhamentos().get(indice).getTurma().getSemestre().getNumero();
+		}
+		return "";
+	}
+	
+	public String getSlot() {
+		return turno.descricao + " " + (disciplina.getCreditos() / 2) + " aula(s)";
 	}
 
 	public int getTotalVagas() {

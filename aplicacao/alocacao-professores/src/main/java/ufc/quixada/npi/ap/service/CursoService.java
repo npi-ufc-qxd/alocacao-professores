@@ -13,4 +13,6 @@ public interface CursoService {
 
 	public Curso buscarPorSigla(String sigla);
 
+	public Curso buscarPorOferta(Integer idOferta);
+
 }

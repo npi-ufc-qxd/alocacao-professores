@@ -109,7 +109,7 @@ public class OfertaController {
 	}
 	
 	@RequestMapping(value = "/curso/{idCurso}", method = RequestMethod.GET)
-	public @ResponseBody ModelMap listarOfertasPorCurso(@PathVariable("idCurso") Curso curso) {
+	public @ResponseBody ModelMap listarOfertasPorCurso(@PathVariable("idCurso") Curso curso, Authentication auth) {
 		ModelMap model = new ModelMap();
 
 		Periodo periodoAtivo = periodoService.periodoAtivo();
@@ -117,6 +117,8 @@ public class OfertaController {
 		List<Oferta> ofertas = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, curso);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, curso);
 
+		Pessoa pessoa = (Pessoa) auth.getPrincipal();
+		model.addAttribute("papelDirecao", pessoa.isDirecao());
 		model.addAttribute("curso", curso);
 		model.addAttribute("ofertas", ofertas);
 		model.addAttribute("compartilhamentos", compartilhamentos);
@@ -139,6 +141,7 @@ public class OfertaController {
 		List<Oferta> ofertasCurso = ofertaService.buscarPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
 		List<Compartilhamento> compartilhamentos = compartilhamentoService.buscarCompartilhamentosPorPeriodoAndCurso(periodoAtivo, cursoCoordenador);
 
+		model.addAttribute("papelDirecao", coordenador.isDirecao());
 		model.addAttribute("curso", cursoCoordenador);
 		model.addAttribute("ofertas", ofertasCurso);
 		model.addAttribute("compartilhamentos", compartilhamentos);
@@ -190,7 +193,8 @@ public class OfertaController {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR);
 
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
-		modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+		Oferta oferta = ofertaService.findOferta(id);
+		modelAndView.addObject("cursoAtual", cursoService.buscarPorOferta(id));
 
 		modelAndView.addObject("oferta", ofertaService.findOferta(id));
 		modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
@@ -206,7 +210,7 @@ public class OfertaController {
 
 		if (bindingResult.hasErrors()) {
 			Pessoa pessoa = (Pessoa) auth.getPrincipal();
-			modelAndView.addObject("cursoAtual", cursoService.buscarPorCoordenador(pessoa));
+			modelAndView.addObject("cursoAtual", cursoService.buscarPorOferta(id));
 			modelAndView.setViewName(Constants.OFERTA_EDITAR);
 			modelAndView.addObject("disciplinas", disciplinaService.listarNaoArquivada());
 
@@ -216,7 +220,6 @@ public class OfertaController {
 		try {
 			ofertaService.salvar(oferta);
 		} catch (AlocacaoProfessoresException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -312,7 +315,10 @@ public class OfertaController {
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 
 		modelAndView.addObject("oferta", ofertaService.findOferta(id));
-		modelAndView.addObject("turmas", cursoService.buscarPorCoordenador(pessoa).getTurmas());
+		
+		if(!pessoa.isDirecao()) {
+			modelAndView.addObject("turmas", cursoService.buscarPorCoordenador(pessoa).getTurmas());
+		}
 
 		return modelAndView;
 	}
@@ -324,9 +330,11 @@ public class OfertaController {
 		Pessoa pessoa = (Pessoa) auth.getPrincipal();
 
 		modelAndView.addObject("oferta", ofertaService.findOferta(id));
-		modelAndView.addObject("turmas", cursoService.buscarPorCoordenador(pessoa).getTurmas());
-
 		
+		if(!pessoa.isDirecao()) {
+			modelAndView.addObject("turmas", cursoService.buscarPorCoordenador(pessoa).getTurmas());
+		}
+
 		if (bindingResult.hasErrors()){
 			modelAndView.setViewName(Constants.COMPARTILHAMENTO_CADASTRAR);
 			return modelAndView;

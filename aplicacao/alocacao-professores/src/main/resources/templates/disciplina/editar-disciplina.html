@@ -22,19 +22,35 @@
 				<form class="form-horizontal" th:action="@{/disciplinas/editar}"
 					th:object="${disciplina}" method="post">
 
+						<div class="form-group" th:classappend="${#fields.hasErrors('codigo')} ? has-error">
+							<label class="control-label m-l-10">Código da Disciplina</label>
+							<div class="col-md-12">
+								<input class="form-control" type="text" id="codigo" placeholder = "ex: QXD1234" th:field="*{codigo}" required="required" maxlength="12"></input>
+								<span th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="help-block with-errors"></span>
+							</div>
+						</div>
+
 					<div class="form-group"
 						th:classappend="${#fields.hasErrors('nome')} ? has-error">
 						<input type="hidden" th:field="*{id}"></input>
-						<input type="hidden" th:field="*{codigo}"></input>
 						<label class="control-label m-l-10">Nome da Disciplina</label>
 						<div class="col-md-12">
 							<input class="form-control" type="text" id="nome" maxlength="80"
-								th:field="*{nome}" required="required" pattern="[a-zA-Z ]+$"></input> <span
+								th:field="*{nome}" required="required"></input> <span
 								th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
 								class="help-block with-errors"></span>
 
 						</div>
 					</div>
+
+					<div class="form-group" th:classappend="${#fields.hasErrors('apelido')} ? has-error">
+						<label class="control-label m-l-10">Apelido da Disciplina</label>
+						<div class="col-md-12">
+							<input class="form-control" type="text" id="apelido" th:field="*{apelido}"></input>
+							<span th:if="${#fields.hasErrors('apelido')}" th:errors="*{apelido}" class="help-block with-errors"></span>
+						</div>
+					</div>
+					
 					<div class="form-group"
 						th:classappend="${#fields.hasErrors('creditos')} ? has-error">
 						<label class="control-label m-l-10">Créditos</label>
