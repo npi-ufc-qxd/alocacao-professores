@@ -16,12 +16,12 @@ public class ProfessorServiceImpl implements ProfessorService{
 	private ProfessorRepository professorRepository;
 	
 	@Override
-	public Professor findProfessor(Integer id) {
+	public Professor buscarProfessor(Integer id) {
 		return professorRepository.findOne(id);
 	}
 	
 	@Override
-	public List<Professor> findAllProfessores() {
+	public List<Professor> buscarTodosProfessores() {
 		return professorRepository.findAll();
 	}
 	

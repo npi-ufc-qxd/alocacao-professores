@@ -1,6 +1,8 @@
 package ufc.quixada.npi.ap.model;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -133,6 +135,30 @@ public class Periodo {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	
+	public boolean isCoordenacao() {
+		Calendar calendar = new GregorianCalendar();
+		Date atual = calendar.getTime();
+		
+		return (atual.after(inicioPeriodoCoordenacao) || atual.equals(inicioPeriodoCoordenacao))
+				&& (atual.before(fimPeriodoCoordenacao) || atual.equals(fimPeriodoCoordenacao));
+	}
+	
+	public boolean isAjuste() {
+		Calendar calendar = new GregorianCalendar();
+		Date atual = calendar.getTime();
+
+		return (atual.after(inicioPeriodoAjuste) || atual.equals(inicioPeriodoAjuste))
+				&& (atual.before(fimPeriodoAjuste) || atual.equals(fimPeriodoAjuste));
+	}
+	
+	public boolean isDirecao() {
+		Calendar calendar = new GregorianCalendar();
+		Date atual = calendar.getTime();
+		
+		return (atual.after(inicioPeriodoDirecao) || atual.equals(inicioPeriodoDirecao))
+				&& (atual.before(fimPeriodoDirecao) || atual.equals(fimPeriodoDirecao));
 	}
 
 	public enum Status {

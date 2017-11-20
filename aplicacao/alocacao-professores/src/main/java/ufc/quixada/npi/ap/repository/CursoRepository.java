@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import ufc.quixada.npi.ap.model.Curso;
+import ufc.quixada.npi.ap.model.Pessoa;
 import ufc.quixada.npi.ap.model.Professor;
 
 public interface CursoRepository extends JpaRepository<Curso, Integer>{
@@ -13,8 +14,12 @@ public interface CursoRepository extends JpaRepository<Curso, Integer>{
 
 	Curso findByViceCoordenador(Professor coordenador);
 
+	Curso findCursoByCoordenador_pessoa(Pessoa pessoa);
+
 	Curso findBySigla(String sigla);
 
 	@Query("SELECT o.turma.curso FROM Oferta o WHERE o.id = :idOferta")
 	Curso findByOferta(@Param("idOferta") Integer idOferta);
+	
+
 }

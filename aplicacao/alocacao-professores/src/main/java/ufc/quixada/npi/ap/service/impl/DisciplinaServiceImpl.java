@@ -1,6 +1,6 @@
 package ufc.quixada.npi.ap.service.impl;
 
-import static ufc.quixada.npi.ap.util.Constants.DISCIPLINA_CADASTRAR_EXISTENTE;
+import static ufc.quixada.npi.ap.util.Constants.MSG_DISCIPLINA_CADASTRAR_EXISTENTE;
 
 import java.util.List;
 
@@ -19,21 +19,21 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	private DisciplinaRepository disciplinaRepository;
 
 	@Override
-	public List<Disciplina> listar() {
+	public List<Disciplina> buscarTodasDisciplinas() {
 		return disciplinaRepository.findAll();
 	}
 
 	@Override
-	public void salvar(Disciplina disciplina) throws Exception {
-		Disciplina disciplinaRecuperada = disciplinaRepository.findByCodigo(disciplina.getCodigo());	
+	public void salvar(Disciplina disciplina) throws AlocacaoProfessorException {
+		Disciplina disciplinaRecuperada = disciplinaRepository.findDisciplinaByCodigo(disciplina.getCodigo());	
 		
 		if(disciplinaRecuperada != null) {
-			throw new AlocacaoProfessorException(DISCIPLINA_CADASTRAR_EXISTENTE);
+			throw new AlocacaoProfessorException(MSG_DISCIPLINA_CADASTRAR_EXISTENTE);
 		}
 		
 		disciplina.setNome(disciplina.getNome().toUpperCase());
+		
 		disciplinaRepository.save(disciplina);
-
 	}
 	
 	@Override
@@ -43,13 +43,13 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	}
 
 	@Override
-	public List<Disciplina> listarNaoArquivada() {
-		return disciplinaRepository.findByArquivadaFalse();
+	public List<Disciplina> buscarDisciplinasNaoArquivadas() {
+		return disciplinaRepository.findDisciplinaByArquivadaFalse();
 	}
 
 	@Override
 	public boolean arquivarDisciplina(Integer id) {
-		Disciplina disciplina = disciplinaRepository.findById(id);
+		Disciplina disciplina = disciplinaRepository.findOne(id);
 		if (disciplina == null) {
 			return false;
 		}
@@ -60,7 +60,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	}
 
 	@Override
-	public Disciplina findDisciplina(Integer id) {
+	public Disciplina buscarDisciplina(Integer id) {
 		return disciplinaRepository.findOne(id);
 	}
 

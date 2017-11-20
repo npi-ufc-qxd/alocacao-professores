@@ -6,6 +6,6 @@ import ufc.quixada.npi.ap.model.Servidor;
 
 public interface ServidorRepository extends CrudRepository<Servidor, Integer>{
 	
-	Servidor findByPessoa_cpf(String cpf);
+	Servidor findServidorByPessoa_cpf(String cpf);
 	
 }

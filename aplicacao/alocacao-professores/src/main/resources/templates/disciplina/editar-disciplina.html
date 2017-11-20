@@ -5,6 +5,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="base/base">
 
+<<<<<<< HEAD
 <head>
 <title>Editar Disciplina | Alocação Professores</title>
 </head>
@@ -40,7 +41,66 @@
 								th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
 								class="help-block with-errors"></span>
 
+=======
+	<head>
+		<title>Editar Disciplina | Alocação Professores</title>
+	</head>
+	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<h3 class="box-title m-b-0">Editar Disciplina</h3>
+		</div>
+	
+		<div class="row">
+			<div class="col-md-12">
+				<div class="white-box">
+					<!-- Modelo do Formulario -->
+					<form class="form-horizontal" th:action="@{/disciplinas/{id}/editar(id=${disciplina.id})}" th:object="${disciplina}" method="post">
+						<div class="form-group" th:classappend="${#fields.hasErrors('codigo')} ? has-error">
+								<label class="control-label m-l-10">Código da Disciplina</label>
+								<div class="col-md-12">
+									<input type="text" th:field="*{codigo}" class="form-control" pattern="^[A-Z]{3}[0-9]{4}$" maxlength="7" placeholder = "ex: QXD1234" required="required" />
+									<span th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="help-block with-errors"></span>
+								</div>
+							</div>
+							<div class="form-group" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+								<label class="control-label m-l-10">Nome da Disciplina</label>
+								<div class="col-md-12">
+									<input type="text" th:field="*{nome}"  pattern="[a-zA-Z ]+$" maxlength="80" class="form-control" required="required"></input>
+									<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="help-block with-errors"></span>
+								</div>
+							</div>
+							<div class="form-group" th:classappend="${#fields.hasErrors('creditos')} ? has-error">
+								<label class="control-label m-l-10">Créditos</label>
+								<div class="col-md-12">
+									<select class="form-control" th:field="*{creditos}" required="required">
+										<option value="2">2</option>
+										<option value="4">4</option>
+										<option value="6">6</option>
+										<option value="10">10</option>
+									</select>
+									<span th:if="${#fields.hasErrors('creditos')}" th:errors="*{creditos}" class="help-block with-errors"></span>
+								</div>
+							</div>
+							<div class="form-group" th:classappend="${#fields.hasErrors('cargaHorariaTeorica')} ? has-error">
+								<label class="control-label m-l-10">Carga horária teórica</label>
+								<div class="col-md-12">
+									<input type="number" th:field="*{cargaHorariaTeorica}" class="form-control" min="0" required="required"></input>
+									<span th:if="${#fields.hasErrors('cargaHorariaTeorica')}" th:errors="*{cargaHorariaTeorica}" class="help-block with-errors"></span>
+								</div>
+							</div>
+							<div class="form-group" th:classappend="${#fields.hasErrors('cargaHorariaPratica')} ? has-error">
+								<label class="control-label m-l-10">Carga horária prática</label>
+								<div class="col-md-12">
+									<input type="number" th:field="*{cargaHorariaPratica}" class="form-control" min="0" required="required"></input>
+									<span th:if="${#fields.hasErrors('cargaHorariaPratica')}" th:errors="*{cargaHorariaPratica}" class="help-block with-errors"></span>
+								</div>
+							</div>
+						<div class="text-right">
+							<a th:href="@{/disciplinas/}" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+							<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Salvar alterações</button>
+>>>>>>> refs/heads/master
 						</div>
+<<<<<<< HEAD
 					</div>
 
 					<div class="form-group" th:classappend="${#fields.hasErrors('apelido')} ? has-error">
@@ -97,10 +157,12 @@
 							class="btn btn-success waves-effect waves-light m-r-10">Salvar alterações</button>
 					</div>
 				</form>
+=======
+					</form>
+				</div>
+>>>>>>> refs/heads/master
 			</div>
 		</div>
-	</div>
-
-</section>
+	</section>
 </html>
 

@@ -16,7 +16,9 @@
 			</h3>
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-			<a th:href="@{/empilhamentos/cadastrar}" class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i class="fa fa-plus" aria-hidden="true"></i> Novo Empilhamento</a>
+			<a href="/empilhamentos/cadastrar"
+				class="btn btn-success pull-right m-l-20 btn-rounded hidden-xs hidden-sm waves-effect waves-light"><i
+				class="fa fa-plus" aria-hidden="true"></i> Novo Empilhamento</a>
 		</div>
 	</div>
 	<div class="row">
@@ -32,7 +34,7 @@
 								<th>Segunda Turma</th>
 								<th>Segunda Oferta</th>
 								<th>Habilitada</th>
-								<th class="col-md-1"></th>
+								<th class="col-md-2"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -49,16 +51,19 @@
 									[[${restricaoHorario.segundaOferta.disciplina.nome}]]</td>
 								<td th:inline="text">[[${restricaoHorario.habilitada} ? 'Sim' : 'Não']]</td>
 								
-								<td><a
-									th:href="@{/empilhamentos/{id}/editar(id=${restricaoHorario.id})}"><button
-											type="button"
-											class="btn btn-inverse btn-circle waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar">
-											<i class="fa fa-pencil"></i> 
-										</button></a> 
-										
-										<a th:href="@{/empilhamentos/{id}/excluir(id=${restricaoHorario.id})}" class="btn btn-danger btn-circle waves-effect waves-light m-r-10 sa-emp-btn-excluir">
-										<i class="fa fa-close"></i>		
-								</a></td>
+								<td align="center">   
+									   <a th:href="@{/empilhamentos/{id}/editar(id=${restricaoHorario.id})}"><button type="button" class="btn btn-inverse btn-circle waves-effect waves-light" 
+									   data-toggle="tooltip" data-placement="top" title="Editar">
+									   <i class="fa fa-pencil"></i></button></a>
+									   <a th:href="@{/empilhamentos/{id}/desabilitar(id=${restricaoHorario.id})}" th:if="${restricaoHorario.habilitada==true}" class="btn btn-warning btn-circle waves-effect waves-light sa-emp-btn-desabilitar" 
+									   data-toggle="tooltip" data-placement="top" title="Desabilitar">
+									   <i class="fa fa-lock"></i></a>
+									   <a th:href="@{/empilhamentos/{id}/habilitar(id=${restricaoHorario.id})}" th:if="${restricaoHorario.habilitada==false}" class="btn btn-success btn-circle waves-effect waves-light sa-emp-btn-habilitar" 
+									   data-toggle="tooltip" data-placement="top" title="Habilitar">
+									   <i class="fa fa-unlock"></i></a>
+									   <a th:href="@{/empilhamentos/{id}/excluir(id=${restricaoHorario.id})}" class="btn btn-danger btn-circle waves-effect waves-light sa-emp-btn-excluir">
+									   <i class="fa fa-close"></i></a>
+								</td>
 							</tr>
 						</tbody>
 					</table>

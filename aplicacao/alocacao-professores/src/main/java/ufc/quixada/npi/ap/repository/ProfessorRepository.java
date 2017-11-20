@@ -9,8 +9,8 @@ import ufc.quixada.npi.ap.model.Professor;
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, Integer>{
 	
-	Professor findByPessoa(Pessoa pessoa);
+	Professor findProfessorByPessoa(Pessoa pessoa);
 	
-	Professor findByPessoa_cpf(String cpf);
+	Professor findProfessorByPessoa_cpf(String cpf);
 
 }
