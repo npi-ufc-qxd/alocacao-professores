@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ptBR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+	
+	<head>
+		<link rel="icon" type="image/png" sizes="16x16" th:href="@{/plugins/images/favicon.png}"></link>
+		<title>Relatório de Carga Horária | Alocação Professores</title>
+	</head>
+
+	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h4 class="page-title">Professores</h4>
+			</div>
+		</div>
+	
+		<div class="row">
+				<div class="col-sm-12">
+					<div class="white-box">
+						<h3 class="box-title m-b-0">Carga Horária não Cumprida</h3>
+						<div class="table-responsive">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th class="col-md-4">Nome</th>
+											<th class="col-md-2">Apelido</th>
+											<th class="col-md-3">E-Mail</th>
+											<th class="col-md-1">Carga Horária Mínima</th>
+											<th class="col-md-1">Carga Horária Máxima</th>
+											<th class="col-md-1">Carga Horária Atual</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="professor : ${professores}">
+											<td th:text="${professor.pessoa.nome}"></td>
+											<td th:text="${professor.apelido}"></td>
+											<td th:text="${professor.pessoa.email}"></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="white-box">
+						<h3 class="box-title m-b-0">Carga Horária Excedida</h3>
+						<div class="table-responsive">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th class="col-md-4">Nome</th>
+											<th class="col-md-2">Apelido</th>
+											<th class="col-md-3">E-Mail</th>
+											<th class="col-md-1">Carga Horária Máxima</th>
+											<th class="col-md-1">Carga Horária Máxima</th>
+											<th class="col-md-1">Carga Horária Atual</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="professor : ${professores}">
+											<td th:text="${professor.pessoa.nome}"></td>
+											<td th:text="${professor.apelido}"></td>
+											<td th:text="${professor.pessoa.email}"></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="white-box">
+						<h3 class="box-title m-b-0">Carga Horária Normal</h3>
+						<div class="table-responsive">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th class="col-md-4">Nome</th>
+											<th class="col-md-2">Apelido</th>
+											<th class="col-md-3">E-Mail</th>
+											<th class="col-md-1">Carga Horária Mínima</th>
+											<th class="col-md-1">Carga Horária Máxima</th>
+											<th class="col-md-1">Carga Horária Atual</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="professor : ${professores}">
+											<td th:text="${professor.pessoa.nome}"></td>
+											<td th:text="${professor.apelido}"></td>
+											<td th:text="${professor.pessoa.email}"></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+	</section>
+	<section layout:fragment="js">
+		<script th:src="@{/js/ordenacao-tabela.js}"></script>
+	</section>
+</html>

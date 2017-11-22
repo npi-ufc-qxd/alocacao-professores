@@ -41,7 +41,6 @@ import ufc.quixada.npi.ap.service.ProfessorService;
 import ufc.quixada.npi.ap.service.RestricaoHorarioService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
-import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 import ufc.quixada.npi.ap.validation.OfertaValidator;
 
 @Controller
@@ -64,9 +63,6 @@ public class DirecaoController {
 	
 	@Autowired
 	private DisciplinaService disciplinaService;
-	
-	@Autowired
-	private CompartilhamentoValidator compartilhamentoValidator;
 	
 	@Autowired
 	private RestricaoHorarioService restricaoHorarioService;
@@ -151,6 +147,17 @@ public class DirecaoController {
 			}
 			
 		}
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/relatorio-professores", method = RequestMethod.GET)
+	public ModelAndView relatorioCargaHorariaProfessores() {
+		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_RELATORIO_CARGA_HORARIA);
+		
+		List<Professor> professores = professorService.buscarTodosProfessores();
+		
+		modelAndView.addObject("professores", professores);
 		
 		return modelAndView;
 	}
