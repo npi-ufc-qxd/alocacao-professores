@@ -3,6 +3,7 @@ package ufc.quixada.npi.ap.controller;
 import static ufc.quixada.npi.ap.util.Constants.EXPORTAR;
 import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
 import static ufc.quixada.npi.ap.util.Constants.SWAL_STATUS_SUCCESS;
+import static ufc.quixada.npi.ap.util.Constants.MSG_PROFESSOR_EDITADO;
 
 import java.util.List;
 
@@ -267,4 +268,18 @@ public class DirecaoController {
 		return false;
 	}
 	
+	@RequestMapping(value = "/editar-professor/{id}", method = RequestMethod.GET)
+	public ModelAndView editarProfessor(@PathVariable("id") Professor professor) {
+		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_EDITAR);
+		modelAndView.addObject("professor", professor);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/editar-professor", method = RequestMethod.POST)
+	public ModelAndView editarProfessor(@ModelAttribute("professor") Professor professor, RedirectAttributes redirectAttributes) {
+		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_REDIRECT_LISTAR);
+		professorService.salvar(professor);
+		redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, MSG_PROFESSOR_EDITADO);
+		return modelAndView;
+	}
 }
