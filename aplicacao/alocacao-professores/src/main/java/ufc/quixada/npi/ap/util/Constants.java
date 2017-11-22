@@ -75,6 +75,7 @@ public class Constants {
 	// Professor
 	public static final String PROFESSOR_LISTAR = "professor/listar-professores";
 	public static final String PROFESSOR_REDIRECT_LISTAR = "redirect:/professores";
+	public static final String PROFESSOR_EDITAR = "professor/editar-professor";
 	
 	//Exceptions
 	public static final String EXCEPTION_PERIODO_INVALIDO = "Não há um período válido disponível";
@@ -87,6 +88,7 @@ public class Constants {
 	public static final String MSG_DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso!";
 	public static final String MSG_OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
 	public static final String MSG_OFERTA_EDITADA = "Oferta editada com sucesso!";
+	public static final String MSG_PROFESSOR_EDITADO = "Professor editado com sucesso!";
 	public static final String MSG_COMPARTILHAMENTO_EDITADO = "Compartilhamento editado com sucesso!";
 	public static final String MSG_COMPARTILHAMENTO_SOLICITADO = "Compartilhamento solicitado com sucesso!";
 	

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base/base">
+
+	<head>
+		<title>Editar Professor | Alocação Professores</title>
+	</head>
+	
+	<section layout:fragment="conteudo">
+		<div class="row bg-title">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h4 class="page-title">Editar Professor</h4>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<!--label class="control-label m-l-10">INFORMAÇÕES DO PROFESSOR</label-->
+				<div class="white-box">
+					<form  th:action="@{/editar-professor}" method="POST" th:object="${professor}">
+						<input type="hidden" th:field="*{id}" />
+						<input type="hidden" th:field="*{pessoa}" />
+						<div class="form-group">
+							<label for="apelido">Apelido</label>
+							<input class="form-control" id="apelido" type="text" th:field="*{apelido}" />
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label for="carga-horaria-minima">Carga horária mínima</label>
+								<input class="form-control" id="carga-horaria-minima" type="number" th:field="*{cargaHorariaMinima}" />
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="carga-horaria-maxima">Carga horária máxima</label>
+								<input class="form-control" id="carga-horaria-maxima" type="number" th:field="*{cargaHorariaMaxima}" />
+							</div>
+						</div>
+						<div class="text-right">
+							<a th:href="@{/professores}" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+							<button type="submit" class="btn btn-success waves-effect waves-light">Salvar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section layout:fragment="js"></section>
+</html>

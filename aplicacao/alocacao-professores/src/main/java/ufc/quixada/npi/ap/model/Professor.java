@@ -16,6 +16,10 @@ public class Professor {
 	
 	private String apelido;
 	
+	private Integer cargaHorariaMinima;
+	
+	private Integer cargaHorariaMaxima;
+	
 	@OneToOne(optional = false, cascade = CascadeType.MERGE)
 	private Pessoa pessoa;
 
@@ -33,6 +37,22 @@ public class Professor {
 
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
+	}
+	
+	public Integer getCargaHorariaMinima() {
+		return cargaHorariaMinima;
+	}
+	
+	public void setCargaHorariaMinima(Integer cargaHorariaMinima) {
+		this.cargaHorariaMinima = cargaHorariaMinima;
+	}
+	
+	public Integer getCargaHorariaMaxima() {
+		return cargaHorariaMaxima;
+	}
+	
+	public void setCargaHorariaMaxima(Integer cargaHorariaMaxima) {
+		this.cargaHorariaMaxima = cargaHorariaMaxima;
 	}
 	
 	public Pessoa getPessoa() {
