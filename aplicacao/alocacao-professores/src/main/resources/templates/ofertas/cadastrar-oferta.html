@@ -197,7 +197,6 @@
 
  						<div class="form-group" th:classappend="${#fields.hasErrors('horarioInicio')} ? has-error">
  							<div class="col-md-12">
-<<<<<<< HEAD
 								<div class="checkbox checkbox-primary">
 <!-- 								th:field="*{horarioInicio}"  -->
 									<input id="horarioInicio" value="false" type="checkbox" class="js-switch"/>
@@ -206,14 +205,6 @@
  								<span th:if="${#fields.hasErrors('horarioInicio')}" th:errors="*{horarioInicio}" class="help-block with-errors"></span>
 								</div>
 							</div>
-=======
- 								<select id="horarioInicio" th:field="*{horarioInicio}" class = "form-control" required="required">
- 									<option value = "">Selecione um horário de início</option>
- 									<option th:each = "horarioInicio : ${T(ufc.quixada.npi.ap.model.Oferta.HorarioInicio).values()}" th:value = "${horarioInicio}" th:text = "${horarioInicio.descricao}"></option> 
- 								</select>
- 								<span th:if="${#fields.hasErrors('horarioInicio')}" th:errors="*{horarioInicio}" class = "help-block with-errors"></span>
- 							</div>
->>>>>>> refs/heads/master
  						</div>
 
  						<div class = "form-group" th:classappend= "${#fields.hasErrors('aulasEmLaboratorio')}? has-error">
@@ -223,8 +214,6 @@
  								<span th:if = "${#fields.hasErrors('aulasEmLaboratorio')}" th:errors = "*{aulasEmLaboratorio}" class = "help-block with-errors"></span>
  							</div>
  				 		</div>
-<<<<<<< HEAD
-=======
 
 						<div class="form-group" th:classappend="${#fields.hasErrors('professores')} ? has-error">
 							<label for = "professores" class="control-label m-l-10">Professores Sugeridos</label>
@@ -235,7 +224,6 @@
 								<span th:if="${#fields.hasErrors('professores')}" th:errors="*{professores}" class = "help-block with-errors"></span>
 							</div>
 						</div>
->>>>>>> refs/heads/master
 
  						<div class="form-group" th:classappend= "${#fields.hasErrors('numeroProfessores')}? has-error">
  							<label class="control-label m-l-10" for="numeroProfessores">Número de Professores</label>
@@ -279,10 +267,6 @@
 			$(".select2").select2({
 				"language": "pt-BR"
 			});
-<<<<<<< HEAD
-		</script>
-		
-		<script type="text/javascript">
 
 			$('select#cursos').change(function (event) {
 				var id_curso = $("select#cursos option:selected").data("el_id");
@@ -317,8 +301,7 @@
         
 			/*]]>*/
 			}
-=======
->>>>>>> refs/heads/master
+
 		</script>
 	</section>
 </html>

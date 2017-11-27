@@ -19,7 +19,7 @@
 		<div class="row">
 				<div class="col-sm-12">
 					<div class="white-box">
-						<h3 class="box-title m-b-0">Carga Horária não Cumprida</h3>
+						<h3 class="box-title m-b-0">Carga Horária Não Cumprida</h3>
 						<div class="table-responsive">
 							<div class="table-responsive">
 								<table class="table table-striped">
@@ -34,13 +34,13 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="professor : ${professores}">
+										<tr th:each="professor : ${relatorio.professoresCargaHorariaInsuficiente}">
 											<td th:text="${professor.pessoa.nome}"></td>
 											<td th:text="${professor.apelido}"></td>
 											<td th:text="${professor.pessoa.email}"></td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td th:text="${professor.cargaHorariaMinima}"></td>
+											<td th:text="${professor.cargaHorariaMaxima}"></td>
+											<td th:text="${professor.cargaHorariaAtual}"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -61,19 +61,19 @@
 											<th class="col-md-4">Nome</th>
 											<th class="col-md-2">Apelido</th>
 											<th class="col-md-3">E-Mail</th>
-											<th class="col-md-1">Carga Horária Máxima</th>
+											<th class="col-md-1">Carga Horária Mínima</th>
 											<th class="col-md-1">Carga Horária Máxima</th>
 											<th class="col-md-1">Carga Horária Atual</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="professor : ${professores}">
+										<tr th:each="professor : ${relatorio.professoresCargaHorariaExcedida}">
 											<td th:text="${professor.pessoa.nome}"></td>
 											<td th:text="${professor.apelido}"></td>
 											<td th:text="${professor.pessoa.email}"></td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td th:text="${professor.cargaHorariaMinima}"></td>
+											<td th:text="${professor.cargaHorariaMaxima}"></td>
+											<td th:text="${professor.cargaHorariaAtual}"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -100,13 +100,13 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="professor : ${professores}">
+										<tr th:each="professor : ${relatorio.professoresCargaHorariaNormal}">
 											<td th:text="${professor.pessoa.nome}"></td>
 											<td th:text="${professor.apelido}"></td>
 											<td th:text="${professor.pessoa.email}"></td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td th:text="${professor.cargaHorariaMinima}"></td>
+											<td th:text="${professor.cargaHorariaMaxima}"></td>
+											<td th:text="${professor.cargaHorariaAtual}"></td>
 										</tr>
 									</tbody>
 								</table>

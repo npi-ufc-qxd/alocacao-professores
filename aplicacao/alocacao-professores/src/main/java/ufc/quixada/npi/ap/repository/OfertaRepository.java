@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Professor;
 
 @Repository
 public interface OfertaRepository extends JpaRepository<Oferta, Integer> {
@@ -19,6 +20,8 @@ public interface OfertaRepository extends JpaRepository<Oferta, Integer> {
 	List<Oferta> findOfertaByPeriodo(Periodo periodo);
 	
 	List<Oferta> findOfertasByPeriodoAndTurma_curso(Periodo periodo, Curso curso);
+	
+	List<Oferta> findOfertasByPeriodo_AtivoTrueAndProfessores(Professor professor);
 	
 	@Query("SELECT o FROM Oferta AS o, Compartilhamento AS c WHERE o.id = c.oferta.id AND o.periodo = :periodo AND c.turma.curso = :curso")
 	List<Oferta> findOfertasCompartilhadasByPeriodoAndCurso(@Param("periodo") Periodo periodo, @Param("curso") Curso curso);
