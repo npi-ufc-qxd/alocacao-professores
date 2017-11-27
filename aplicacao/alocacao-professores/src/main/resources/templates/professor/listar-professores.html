@@ -41,7 +41,7 @@
 									<td th:text="${professor.apelido}"></td>
 									<td th:text="${professor.pessoa.email}"></td>
 									<td>
-										<a
+										<a th:href="@{/editar-professor/{id}(id=${professor.id})}"
 										class="btn btn-inverse btn-circle waves-effect waves-light"
 										data-toggle="tooltip" data-placement="top" title="Editar"><i
 										class="fa fa-pencil"></i></a>
