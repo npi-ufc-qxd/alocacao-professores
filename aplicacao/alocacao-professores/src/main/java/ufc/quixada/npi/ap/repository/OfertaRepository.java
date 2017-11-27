@@ -30,4 +30,11 @@ public interface OfertaRepository extends JpaRepository<Oferta, Integer> {
 	@Query("SELECT o FROM Oferta AS o WHERE o.turma.curso = :curso AND o.periodo = :periodo AND (o.disciplina.id, o.turma.id) IN "
 			+ "(SELECT o.disciplina.id, o.turma.id FROM Oferta AS o WHERE o.turma.curso = :curso AND o.periodo = :periodoAtivo)")
 	List<Oferta> findOfertasImportadasByPeriodoAndCurso(@Param("periodo") Periodo periodo, @Param("periodoAtivo") Periodo periodoAtivo, @Param("curso") Curso curso);
+	
+	@Query(value = "SELECT SUM(creditos) FROM disciplina AS d "
+			+ "INNER JOIN oferta AS o "
+			+ "ON d.id = o.disciplina_id "
+			+ "WHERE o.periodo_id = :idPeriodo "
+			+ "AND o.turma_id = :idTurma", nativeQuery = true)
+	Integer getTotalCreditosTurmaPorPeriodo(@Param("idPeriodo") Integer idPeriodo, @Param("idTurma") Integer idTurma);
 }

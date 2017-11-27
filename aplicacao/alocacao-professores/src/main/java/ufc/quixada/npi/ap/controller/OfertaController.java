@@ -1,7 +1,9 @@
 package ufc.quixada.npi.ap.controller;
 
 import static ufc.quixada.npi.ap.util.Constants.SWAL_STATUS_SUCCESS;
+import static ufc.quixada.npi.ap.util.Constants.SWAL_STATUS_ERROR;
 import static ufc.quixada.npi.ap.util.Constants.MSG_OFERTA_CADASTRADA;
+import static ufc.quixada.npi.ap.util.Constants.OFERTA_REDIRECT_LISTAR;
 import static ufc.quixada.npi.ap.util.Constants.MSG_OFERTA_EDITADA;
 import static ufc.quixada.npi.ap.util.Constants.MSG_COMPARTILHAMENTO_SOLICITADO;
 
@@ -28,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ufc.quixada.npi.ap.annotation.RestricaoDePeriodo;
 import ufc.quixada.npi.ap.annotation.RestricaoDePeriodoAjax;
+import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Disciplina;
@@ -140,12 +143,13 @@ public class OfertaController {
 			return modelAndView;
 		}
 
-		ofertaService.salvarOfertaPeriodoAtivo(oferta);
-		
-		modelAndView.setViewName(Constants.OFERTA_REDIRECT_LISTAR);
-		
-		redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, MSG_OFERTA_CADASTRADA);
-		
+		try {
+			ofertaService.salvarOferta(oferta);
+			redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, MSG_OFERTA_CADASTRADA);
+		} catch (AlocacaoProfessoresException e) {
+			redirectAttributes.addFlashAttribute(SWAL_STATUS_ERROR, e.getMessage());
+		}
+		modelAndView.setViewName(OFERTA_REDIRECT_LISTAR);
 		return modelAndView;
 	}
 
