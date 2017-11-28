@@ -122,6 +122,15 @@ public class DirecaoController {
 
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/relatorio-carga-horaria-professor", method = RequestMethod.GET)
+	public ModelAndView relatorioCargaHorariaProfessores() {
+		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_RELATORIO_CARGA_HORARIA);
+		
+		modelAndView.addObject("relatorioCargaHoraria", professorService.gerarRelatorioCargaHorariaProfessores());
+
+		return modelAndView;
+	}
 
 	@RequestMapping(value = "/atualizar-professores", method = RequestMethod.GET)
 	public ModelAndView atualizarProfessores() {
@@ -149,15 +158,6 @@ public class DirecaoController {
 			}
 
 		}
-
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/relatorio-professores", method = RequestMethod.GET)
-	public ModelAndView relatorioCargaHorariaProfessores() {
-		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_RELATORIO_CARGA_HORARIA);
-		
-		modelAndView.addObject("relatorio", professorService.gerarRelatorioCargaHorariaProfessores());
 
 		return modelAndView;
 	}

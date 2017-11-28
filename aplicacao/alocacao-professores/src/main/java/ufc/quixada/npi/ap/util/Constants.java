@@ -75,8 +75,8 @@ public class Constants {
 	// Professor
 	public static final String PROFESSOR_LISTAR = "professor/listar-professores";
 	public static final String PROFESSOR_REDIRECT_LISTAR = "redirect:/professores";
-	public static final String PROFESSOR_RELATORIO_CARGA_HORARIA = "professor/relatorio-carga-horaria-professor";
 	public static final String PROFESSOR_EDITAR = "professor/editar-professor";
+	public static final String PROFESSOR_RELATORIO_CARGA_HORARIA = "professor/gerar-relatorio-carga-horaria-professor";
 	
 	//Exceptions
 	public static final String EXCEPTION_PERIODO_INVALIDO = "Não há um período válido disponível";

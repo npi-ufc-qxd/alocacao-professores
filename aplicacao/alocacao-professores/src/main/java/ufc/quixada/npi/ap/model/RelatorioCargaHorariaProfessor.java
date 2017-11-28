@@ -1,6 +1,7 @@
 package ufc.quixada.npi.ap.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RelatorioCargaHorariaProfessor {
@@ -14,27 +15,27 @@ public class RelatorioCargaHorariaProfessor {
 		this.professoresCargaHorariaExcedida = new ArrayList<>();
 	}
 	
-	public void addProfessorCargaHorariaInsuficiente(Professor professor){
+	public void adicionarProfessorCargaHorariaInsuficiente(Professor professor){
 		this.professoresCargaHorariaInsuficiente.add(professor);
 	}
 	
-	public void addProfessorCargaHorariaNormal(Professor professor){
+	public void adicionarProfessorCargaHorariaNormal(Professor professor){
 		this.professoresCargaHorariaNormal.add(professor);
 	}
 	
-	public void addProfessorCargaHorariaExcedida(Professor professor){
+	public void adicionarProfessorCargaHorariaExcedida(Professor professor){
 		this.professoresCargaHorariaExcedida.add(professor);
 	}
 	
 	public List<Professor> getProfessoresCargaHorariaInsuficiente() {
-		return professoresCargaHorariaInsuficiente;
+		return Collections.unmodifiableList(professoresCargaHorariaInsuficiente);
 	}
 	
 	public List<Professor> getProfessoresCargaHorariaNormal() {
-		return professoresCargaHorariaNormal;
+		return Collections.unmodifiableList(professoresCargaHorariaNormal);
 	}
 	
 	public List<Professor> getProfessoresCargaHorariaExcedida() {
-		return professoresCargaHorariaExcedida;
+		return Collections.unmodifiableList(professoresCargaHorariaExcedida);
 	}
 }

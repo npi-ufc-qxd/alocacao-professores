@@ -53,14 +53,14 @@ public class ProfessorServiceImpl implements ProfessorService{
 			
 			professor.setCargaHorariaAtual(cargaHorariaAtual);
 			
-			if (professor.getCargaHorariaAtual() < professor.getCargaHorariaMinima()){
-				relatorio.addProfessorCargaHorariaInsuficiente(professor);
+			if (cargaHorariaAtual < professor.getCargaHorariaMinima()){
+				relatorio.adicionarProfessorCargaHorariaInsuficiente(professor);
 			}
-			else if (professor.getCargaHorariaAtual() > professor.getCargaHorariaMaxima()){
-				relatorio.addProfessorCargaHorariaExcedida(professor);
+			else if (cargaHorariaAtual > professor.getCargaHorariaMaxima()){
+				relatorio.adicionarProfessorCargaHorariaExcedida(professor);
 			}
 			else{
-				relatorio.addProfessorCargaHorariaNormal(professor);
+				relatorio.adicionarProfessorCargaHorariaNormal(professor);
 			}
 		}
 		
