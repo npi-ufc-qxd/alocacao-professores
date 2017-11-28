@@ -6,6 +6,7 @@ import java.util.Map;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Professor;
 
 public interface OfertaService {
 	
@@ -18,6 +19,8 @@ public interface OfertaService {
 	public List<Oferta> buscarOfertaPorPeriodo(Periodo periodo);
 	
 	public List<Oferta> buscarOfertasPeriodoAtivo();
+	
+	public List<Oferta> buscarOfertasPeriodoAtivoPorProfessor(Professor professor);
 	
 	public List<Oferta> buscarPorPeriodo(Periodo periodo);
 	
