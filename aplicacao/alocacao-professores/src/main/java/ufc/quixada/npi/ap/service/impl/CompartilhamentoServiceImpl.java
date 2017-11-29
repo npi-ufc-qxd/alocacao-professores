@@ -108,7 +108,10 @@ public class CompartilhamentoServiceImpl implements CompartilhamentoService {
 		oferta.setTurma(compartilhamento.getTurma());
 		oferta.setDisciplina(ofertaCompartilhada.getDisciplina());
 		oferta.setVagas(compartilhamento.getVagas());
-		oferta.setTurno(ofertaCompartilhada.getTurno());
+		oferta.setTurnoLivre(ofertaCompartilhada.isTurnoLivre());
+		oferta.setTurnoManha(ofertaCompartilhada.isTurnoManha());
+		oferta.setTurnoTarde(ofertaCompartilhada.isTurnoTarde());
+		oferta.setTurnoNoite(ofertaCompartilhada.isTurnoNoite());
 		oferta.setHorarioInicio(ofertaCompartilhada.getHorarioInicio());
 		oferta.setAulasEmLaboratorio(ofertaCompartilhada.getAulasEmLaboratorio());
 		oferta.setNumeroProfessores(ofertaCompartilhada.getNumeroProfessores());

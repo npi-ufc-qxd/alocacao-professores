@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,21 +31,6 @@ public class Oferta {
 	
 	private Integer numeroProfessores;
 	
-	
-	public enum Turno {
-		MANHA("Manha"), TARDE("Tarde"), NOITE("Noite"), LIVRE("Livre");
-
-		private String descricao;
-
-		Turno(String descricao) {
-			this.descricao = descricao;
-		}
-
-		public String getDescricao() {
-			return descricao;
-		}
-	}
-
 	private String observacao;
 
 	@ManyToOne
@@ -62,10 +45,15 @@ public class Oferta {
 	@JoinColumn(name = "periodo_id")
 	private Periodo periodo;
 
-	@Enumerated(EnumType.STRING)
-	private Turno turno;
-	
 	private boolean horarioInicio;
+	
+	private boolean turnoManha;
+	
+	private boolean turnoTarde;
+	
+	private boolean turnoNoite;
+	
+	private boolean turnoLivre;
 
 	@ManyToMany
 	@JoinTable(name = "professor_oferta", joinColumns = @JoinColumn(name = "oferta_id"), inverseJoinColumns = @JoinColumn(name = "professor_id"))
@@ -123,14 +111,6 @@ public class Oferta {
 		this.periodo = periodo;
 	}
 
-	public Turno getTurno() {
-		return turno;
-	}
-
-	public void setTurno(Turno turno) {
-		this.turno = turno;
-	}
-
 	public boolean isMesmoDia() {
 		return mesmoDia;
 	}
@@ -163,7 +143,38 @@ public class Oferta {
 		this.numeroProfessores = numeroProfessores;
 	}
 	
-	
+	public boolean isTurnoManha() {
+		return turnoManha;
+	}
+
+	public void setTurnoManha(boolean turnoManha) {
+		this.turnoManha = turnoManha;
+	}
+
+	public boolean isTurnoTarde() {
+		return turnoTarde;
+	}
+
+	public void setTurnoTarde(boolean turnoTarde) {
+		this.turnoTarde = turnoTarde;
+	}
+
+	public boolean isTurnoNoite() {
+		return turnoNoite;
+	}
+
+	public void setTurnoNoite(boolean turnoNoite) {
+		this.turnoNoite = turnoNoite;
+	}
+
+	public boolean isTurnoLivre() {
+		return turnoLivre;
+	}
+
+	public void setTurnoLivre(boolean turnoLivre) {
+		this.turnoLivre = turnoLivre;
+	}
+
 	public List<Professor> getProfessores() {
 		if (null == this.professores) {
 			this.professores = new ArrayList<>();
@@ -203,9 +214,9 @@ public class Oferta {
 		return "";
 	}
 	
-	public String getSlot() {
+	/*public String getSlot() {
 		return turno.descricao + " " + (disciplina.getCreditos() / 2) + " aula(s)";
-	}
+	}*/
 
 	public int getTotalVagas() {
 		int totalVagas = this.vagas;

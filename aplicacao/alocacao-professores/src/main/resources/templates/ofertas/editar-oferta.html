@@ -25,11 +25,7 @@
 						<div class="form-group" th:classappend="${#fields.hasErrors('turma')} ? has-error">
 							<label for="turma" class="control-label m-l-10">Turma</label>
 							<div class="col-md-12">
-<<<<<<< HEAD
 								<select id="turma" th:field="*{turma}" class = "form-control"  required="required">
-=======
-								<select id="turma" th:field="*{turma}" class = "form-control" required="required">
->>>>>>> refs/heads/master
 									<option value="">Selecione uma turma</option>
 									<option th:each="turma : ${cursoAtual.turmas}" th:value="${{turma}}" th:text="${turma.semestre.descricao + ' Semestre - ' + turma.curso.nome}"></option>
 								</select>
@@ -50,23 +46,31 @@
 						<div class = "form-group" th:classappend= "${#fields.hasErrors('vagas')}? has-error">
 							<label class = "control-label m-l-10" for = "vagas">Número de Vagas</label>
 							<div class = "col-md-12">
-<<<<<<< HEAD
 								<input type = "number" id = "vagas" th:field = "*{vagas}" class = "form-control" min = "0"  required="required" />
-=======
-								<input type = "number" id = "vagas" th:field = "*{vagas}" class = "form-control" min = "1" required="required" />
->>>>>>> refs/heads/master
 								<span th:if = "${#fields.hasErrors('vagas')}" th:errors = "*{vagas}" class = "help-block with-errors"></span>
 							</div>
 				 		</div>
-						
-						<div class="form-group" th:classappend="${#fields.hasErrors('turno')} ? has-error">
-							<label for = "turno" class="control-label m-l-10">Turno</label>
-							<div class="col-md-12">
-								<select id="turno" th:field="*{turno}" class = "form-control" required="required">
-									<option value = "">Selecione um turno</option>
-									<option th:each = "turno : ${T(ufc.quixada.npi.ap.model.Oferta.Turno).values()}" th:value = "${turno}" th:text = "${turno.descricao}"></option>
-								</select>
-								<span th:if="${#fields.hasErrors('turno')}" th:errors="*{turno}" class = "help-block with-errors"></span>
+						<div class="form-group">
+							<label class="control-label m-l-10">Turno</label>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoLivre')} ? has-error">
+									<input type="checkbox" value="true" name="turnoLivre"/>
+									<label for="turnoLivre">Livre</label>
+ 								<span th:if="${#fields.hasErrors('turnoLivre')}" th:errors="*{turnoLivre}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoManha')} ? has-error">
+									<input type="checkbox" value="true" name="turnoManha"/>
+									<label for="turnoManha">Manhã</label>
+ 								<span th:if="${#fields.hasErrors('turnoManha')}" th:errors="*{turnoManha}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoTarde')} ? has-error">
+									<input type="checkbox" value="true" name="turnoTarde"/>
+									<label for="turnoTarde">Tarde</label>
+ 								<span th:if="${#fields.hasErrors('turnoTarde')}" th:errors="*{turnoTarde}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoNoite')} ? has-error">
+									<input type="checkbox" value="true" name="turnoNoite"/>
+									<label for="turnoNoite">Noite</label>
+ 								<span th:if="${#fields.hasErrors('turnoNoite')}" th:errors="*{turnoNoite}" class="help-block with-errors"></span>
 							</div>
 						</div>
 						<div class="form-group" th:classappend="${#fields.hasErrors('mesmoDia')} ? has-error">
@@ -81,7 +85,6 @@
 
  						<div class="form-group" th:classappend="${#fields.hasErrors('horarioInicio')} ? has-error">
  							<div class="col-md-12">
-<<<<<<< HEAD
 								<div class="checkbox checkbox-primary">
 <!-- 								th:field="*{horarioInicio}"  -->
 									<input id="horarioInicio" value="false" type="checkbox" class="js-switch"/>
@@ -90,14 +93,6 @@
  								<span th:if="${#fields.hasErrors('horarioInicio')}" th:errors="*{horarioInicio}" class="help-block with-errors"></span>
 								</div>
 							</div>
-=======
- 								<select id="horarioInicio" th:field="*{horarioInicio}" class = "form-control" required="required">
- 									<option value = "">Selecione um horário de início</option>
- 									<option th:each = "horarioInicio : ${T(ufc.quixada.npi.ap.model.Oferta.HorarioInicio).values()}" th:value = "${horarioInicio}" th:text = "${horarioInicio.descricao}"></option> 
- 								</select>
- 								<span th:if="${#fields.hasErrors('horarioInicio')}" th:errors="*{horarioInicio}" class = "help-block with-errors"></span>
- 							</div>
->>>>>>> refs/heads/master
  						</div>
 
  						<div class = "form-group" th:classappend= "${#fields.hasErrors('aulasEmLaboratorio')}? has-error">
@@ -108,10 +103,6 @@
  							</div>
  				 		</div>
 
-<<<<<<< HEAD
- 						<div class="form-group" th:classappend= "${#fields.hasErrors('aulasEmLaboratorio')}? has-error">
- 							<label class="control-label m-l-10" for="numeroProfessores">Número de Professores da Turma</label>
-=======
 						<div class="form-group" th:classappend="${#fields.hasErrors('professores')} ? has-error">
 							<label for = "professores" class="control-label m-l-10">Professores Sugeridos</label>
 							<div class="col-md-12">
@@ -124,7 +115,6 @@
 
  						<div class="form-group" th:classappend= "${#fields.hasErrors('numeroProfessores')}? has-error">
  							<label class="control-label m-l-10" for="numeroProfessores">Número de Professores</label>
->>>>>>> refs/heads/master
  							<div class="col-md-12">
  								<input type="number" id="numeroProfessores" th:field = "*{numeroProfessores}" min="1" class="form-control" required="required" />
  								<span th:if="${#fields.hasErrors('numeroProfessores')}" th:errors="*{numeroProfessores}" class="help-block with-errors"></span>
@@ -138,17 +128,6 @@
 								<span th:if = "${#fields.hasErrors('observacao')}" th:errors = "*{observacao}" class = "help-block with-errors"></span>
 							</div>
 						</div>
-
-						<div class="form-group" th:classappend="${#fields.hasErrors('professores')} ? has-error">
-							<label for = "professores" class="control-label m-l-10">Professores Sugeridos</label>
-							<div class="col-md-12">
-								<select id="professores" th:field="*{professores}" class = "form-control select2 select2-multiple" multiple="multiple" data-placeholder = "Selecione os professores" >
-									<option th:each = "professor : ${professores}" th:value = "${{professor}}" th:text = "${professor.pessoa.nome}"></option>
-								</select>
-								<span th:if="${#fields.hasErrors('professores')}" th:errors="*{professores}" class = "help-block with-errors"></span>
-							</div>
-						</div>
-
 
 						<div class="text-right">
 							<a th:href="@{/ofertas/}"><button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button></a>
@@ -166,6 +145,8 @@
 		$(".select2").select2({
 			"language": "pt-BR"
 		});
+		
+		
 </script>
 	</section>
 </html>
