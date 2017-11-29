@@ -440,5 +440,10 @@ public class OfertaController {
 		
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/{id}/relacionamentos", method = RequestMethod.GET)
+	public @ResponseBody boolean hasRelacionamentos(@PathVariable("id") Oferta oferta) {
+		return ofertaService.hasCompartilhamentoOuRestricaoHorario(oferta);
+	}
 
 }
