@@ -1,9 +1,9 @@
 package ufc.quixada.npi.ap.controller;
 
 import static ufc.quixada.npi.ap.util.Constants.EXPORTAR;
+import static ufc.quixada.npi.ap.util.Constants.MSG_PROFESSOR_EDITADO;
 import static ufc.quixada.npi.ap.util.Constants.OFERTA_CADASTRADA;
 import static ufc.quixada.npi.ap.util.Constants.SWAL_STATUS_SUCCESS;
-import static ufc.quixada.npi.ap.util.Constants.MSG_PROFESSOR_EDITADO;
 
 import java.util.List;
 
@@ -42,33 +42,29 @@ import ufc.quixada.npi.ap.service.ProfessorService;
 import ufc.quixada.npi.ap.service.RestricaoHorarioService;
 import ufc.quixada.npi.ap.service.TurmaService;
 import ufc.quixada.npi.ap.util.Constants;
-import ufc.quixada.npi.ap.validation.CompartilhamentoValidator;
 import ufc.quixada.npi.ap.validation.OfertaValidator;
 
 @Controller
 public class DirecaoController {
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
-	
+
 	@Autowired
 	private PessoaService pessoaService;
-	
+
 	@Autowired
 	private ProfessorService professorService;
-	
+
 	@Autowired
 	private PeriodoService periodoService;
-	
+
 	@Autowired
 	private OfertaService ofertaService;
-	
+
 	@Autowired
 	private DisciplinaService disciplinaService;
-	
-	@Autowired
-	private CompartilhamentoValidator compartilhamentoValidator;
-	
+
 	@Autowired
 	private RestricaoHorarioService restricaoHorarioService;
 
@@ -79,10 +75,10 @@ public class DirecaoController {
 	private OfertaValidator ofertaValidator;
 
 	private CompartilhamentoService compartilhamentoService;
-	
+
 	@Autowired
 	private TurmaService turmaService;
-	
+
 	@ModelAttribute("cursos")
 	public List<Curso> todosCursos() {
 		return cursoService.buscarTodosCursos();
@@ -92,7 +88,7 @@ public class DirecaoController {
 	public List<Professor> todosProfessores() {
 		return professorService.buscarTodosProfessores();
 	}
-	
+
 	@RequestMapping(path = { "/exportacao" }, method = RequestMethod.GET)
 	public String exportar() {
 		ModelAndView modelAndView = new ModelAndView(EXPORTAR);
@@ -104,13 +100,13 @@ public class DirecaoController {
 		return EXPORTAR;
 	}
 
-	@RequestMapping(path = {"/oferta-campus"}, method = RequestMethod.GET)
-	public ModelAndView listarCompartilhamentos(){
+	@RequestMapping(path = { "/oferta-campus" }, method = RequestMethod.GET)
+	public ModelAndView listarCompartilhamentos() {
 		ModelAndView modelAndView = new ModelAndView(Constants.COMPARTILHAMENTO_LISTAR);
-		
+
 		modelAndView.addObject("periodo", periodoService.buscarPeriodoAtivo());
 		modelAndView.addObject("ofertas", ofertaService.buscarOfertasPeriodoAtivo());
-		
+
 		return modelAndView;
 
 	}
@@ -118,66 +114,76 @@ public class DirecaoController {
 	@RequestMapping(value = "/professores", method = RequestMethod.GET)
 	public ModelAndView listarProfessores() {
 		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_LISTAR);
-		
+
 		List<Professor> professores = professorService.buscarTodosProfessores();
-		
+
 		modelAndView.addObject("professores", professores);
-		
+		modelAndView.addObject("cargaHorariaAtual", professores);
+
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/relatorio-carga-horaria-professor", method = RequestMethod.GET)
+	public ModelAndView relatorioCargaHorariaProfessores() {
+		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_RELATORIO_CARGA_HORARIA);
+		
+		modelAndView.addObject("relatorioCargaHoraria", professorService.gerarRelatorioCargaHorariaProfessores());
+
+		return modelAndView;
+	}
+
 	@RequestMapping(value = "/atualizar-professores", method = RequestMethod.GET)
-	public ModelAndView atualizarProfessores(){
+	public ModelAndView atualizarProfessores() {
 		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_REDIRECT_LISTAR);
-		
+
 		List<Usuario> usuarios = usuarioService.getByAffiliation(Constants.AFFILIATION_DOCENTE);
-		
-		for (Usuario usuario : usuarios){
+
+		for (Usuario usuario : usuarios) {
 			Professor professor = pessoaService.buscarProfessor(usuario.getCpf());
-			
-			if (professor == null){
+
+			if (professor == null) {
 				Pessoa pessoa = new Pessoa();
-				
+
 				pessoa.setCpf(usuario.getCpf());
 				pessoa.setEmail(usuario.getEmail());
 				pessoa.setNome(usuario.getNome());
-				
+
 				pessoa = pessoaService.salvar(pessoa);
-				
+
 				professor = new Professor();
 				professor.setPessoa(pessoa);
 				professor.setApelido(usuario.getNome());
-				
+
 				professorService.salvar(professor);
 			}
-			
+
 		}
-		
+
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/editar-oferta/{id}", method = RequestMethod.GET)
 	@RestricaoDePeriodo(Constants.OFERTA_CAMPUS_REDIRECT_LISTAR)
 	public ModelAndView editarOferta(@PathVariable("id") Integer id) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_EDITAR_DIRECAO);
 
 		Oferta oferta = ofertaService.buscarOferta(id);
-		
+
 		modelAndView.addObject("oferta", oferta);
 		modelAndView.addObject("cursoAtual", oferta.getTurma().getCurso());
 		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
 
 		return modelAndView;
 	}
-	
+
 	private boolean validarLista(List<?> lista) {
 		return lista != null && !lista.isEmpty() && !lista.contains(null);
 	}
-	
+
 	@RequestMapping(value = "/direcao/ofertas/cadastrar", method = RequestMethod.GET)
 	public ModelAndView cadastrarOferta(@ModelAttribute("oferta") Oferta oferta, Authentication auth) {
 		ModelAndView modelAndView = new ModelAndView(Constants.OFERTA_CADASTRAR);
-		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());		
+		modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
 		modelAndView.addObject("periodoAtivo", periodoService.buscarPeriodoAtivo());
 
 		return modelAndView;
@@ -188,7 +194,7 @@ public class DirecaoController {
 			ModelAndView modelAndView, RedirectAttributes redirectAttributes, Authentication auth) {
 
 		ofertaValidator.validate(oferta, bindingResult);
-
+		
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName(Constants.OFERTA_CADASTRAR);
 			modelAndView.addObject("disciplinas", disciplinaService.buscarDisciplinasNaoArquivadas());
@@ -219,7 +225,8 @@ public class DirecaoController {
 
 	@RequestMapping(value = "/direcao/ofertas/{id}/editar", method = RequestMethod.POST)
 	public ModelAndView editarOferta(@PathVariable(name = "id", required = true) Integer id,
-			@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView, Authentication auth) {
+			@ModelAttribute("oferta") @Valid Oferta oferta, BindingResult bindingResult, ModelAndView modelAndView,
+			Authentication auth) {
 
 		ofertaValidator.validate(oferta, bindingResult);
 
@@ -241,42 +248,45 @@ public class DirecaoController {
 
 	@RequestMapping(value = "/editar-compartilhamentos-oferta/", method = RequestMethod.GET)
 	public @ResponseBody boolean editarOferta(@RequestParam("idsCompartilhamentos") List<Integer> idsCompartilhamentos,
-			@RequestParam("idsTurmas") List<Integer> idsTurmas, @RequestParam("vagas") List<Integer> vagasCompartilhamentos) {
-		
-		if (validarLista(idsCompartilhamentos) && validarLista(idsTurmas) && validarLista(vagasCompartilhamentos) 
-				&& idsCompartilhamentos.size() == idsTurmas.size() && idsTurmas.size() == vagasCompartilhamentos.size()){
-		
-			for (int i = 0; i < idsCompartilhamentos.size(); i++){
+			@RequestParam("idsTurmas") List<Integer> idsTurmas,
+			@RequestParam("vagas") List<Integer> vagasCompartilhamentos) {
+
+		if (validarLista(idsCompartilhamentos) && validarLista(idsTurmas) && validarLista(vagasCompartilhamentos)
+				&& idsCompartilhamentos.size() == idsTurmas.size()
+				&& idsTurmas.size() == vagasCompartilhamentos.size()) {
+
+			for (int i = 0; i < idsCompartilhamentos.size(); i++) {
 				int idCompartilhamento = idsCompartilhamentos.get(i);
 				int idTurma = idsTurmas.get(i);
 				int vagas = vagasCompartilhamentos.get(i);
-				
+
 				Turma turma = turmaService.buscarTurma(idTurma);
 				Compartilhamento compartilhamento = compartilhamentoService.buscarCompartilhamento(idCompartilhamento);
-				
-				if (compartilhamento != null && turma != null && vagas > 0){
+
+				if (compartilhamento != null && turma != null && vagas > 0) {
 					compartilhamento.setVagas(vagas);
 					compartilhamento.setTurma(turma);
-					
+
 					compartilhamentoService.salvar(compartilhamento);
 				}
 			}
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	@RequestMapping(value = "/editar-professor/{id}", method = RequestMethod.GET)
 	public ModelAndView editarProfessor(@PathVariable("id") Professor professor) {
 		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_EDITAR);
 		modelAndView.addObject("professor", professor);
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/editar-professor", method = RequestMethod.POST)
-	public ModelAndView editarProfessor(@ModelAttribute("professor") Professor professor, RedirectAttributes redirectAttributes) {
+	public ModelAndView editarProfessor(@ModelAttribute("professor") Professor professor,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView(Constants.PROFESSOR_REDIRECT_LISTAR);
 		professorService.salvar(professor);
 		redirectAttributes.addFlashAttribute(SWAL_STATUS_SUCCESS, MSG_PROFESSOR_EDITADO);

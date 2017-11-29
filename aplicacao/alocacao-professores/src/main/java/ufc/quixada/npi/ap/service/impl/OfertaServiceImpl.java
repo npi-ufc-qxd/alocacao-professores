@@ -63,7 +63,12 @@ public class OfertaServiceImpl implements OfertaService {
 	public List<Oferta> buscarOfertasPeriodoAtivo() {
 		return ofertaRepository.findByPeriodoAtivoTrue();
 	}
-
+	
+	@Override
+	public List<Oferta> buscarOfertasPeriodoAtivoPorProfessor(Professor professor) {
+		return ofertaRepository.findOfertasByPeriodo_AtivoTrueAndProfessores(professor);
+	}
+	
 	@Override
 	public void excluir(Integer id) {
 		ofertaRepository.delete(id);
