@@ -265,6 +265,9 @@ function organizarOfertas(result) {
 			var botaoExcluir = $(event.currentTarget);
 			var urlExcluir = botaoExcluir.attr("href");
 			
+			var ofertaId = urlExcluir.split('/')[3];
+			console.log(ofertaId);
+			
 			swal({
 				title: "Tem certeza?",
 				text: "Voc?? n??o poder?? desfazer essa opera????o posteriormente!",
