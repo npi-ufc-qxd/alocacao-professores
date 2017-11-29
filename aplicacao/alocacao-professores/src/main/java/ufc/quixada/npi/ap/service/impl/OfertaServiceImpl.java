@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
@@ -15,6 +16,8 @@ import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
 import ufc.quixada.npi.ap.service.OfertaService;
 import ufc.quixada.npi.ap.service.PeriodoService;
+
+import static ufc.quixada.npi.ap.util.Constants.MAX_CREDITOS_TURMA;
 
 @Service
 public class OfertaServiceImpl implements OfertaService {
@@ -26,10 +29,22 @@ public class OfertaServiceImpl implements OfertaService {
 	private PeriodoService periodoService;
 	
 	@Override
-	public void salvarOfertaPeriodoAtivo(Oferta oferta){
+	public void salvarOfertaPeriodoAtivo(Oferta oferta) {
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		oferta.setPeriodo(periodoAtivo);
+		ofertaRepository.save(oferta);
+	}
+	
+	public void salvarOferta(Oferta oferta) throws AlocacaoProfessoresException {
 		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
 		
 		oferta.setPeriodo(periodoAtivo);
+		
+		Integer totalCreditos = ofertaRepository.getTotalCreditosTurmaPorPeriodo(periodoAtivo.getId(), oferta.getTurma().getId());
+		Integer novoTotalCreditos = totalCreditos + oferta.getDisciplina().getCreditos();
+		if(novoTotalCreditos > MAX_CREDITOS_TURMA) {
+			throw new AlocacaoProfessoresException("O limite de "+MAX_CREDITOS_TURMA+" créditos para a turma do "+oferta.getTurma().getSemestre().getDescricao()+" semestre foi atingido.");
+		}
 		
 		ofertaRepository.save(oferta);
 	}

@@ -1,6 +1,8 @@
 package ufc.quixada.npi.ap.util;
 
 public class Constants {
+	
+	public static final Integer MAX_CREDITOS_TURMA = 20;
 
 	// LDAP
 	public static final String LDAP_URL = "ldap.url";
