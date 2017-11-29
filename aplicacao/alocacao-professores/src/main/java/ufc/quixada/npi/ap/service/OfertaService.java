@@ -37,4 +37,6 @@ public interface OfertaService {
 
 	void substituirOferta(List<Integer> idOfertas);
 	
+	boolean hasCompartilhamentoOuRestricaoHorario(Oferta oferta);
+	
 }

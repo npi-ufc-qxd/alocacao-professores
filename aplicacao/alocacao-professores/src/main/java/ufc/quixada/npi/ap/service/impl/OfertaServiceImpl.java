@@ -13,7 +13,9 @@ import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Professor;
+import ufc.quixada.npi.ap.repository.CompartilhamentoRepository;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
+import ufc.quixada.npi.ap.repository.RestricaoHorarioRepository;
 import ufc.quixada.npi.ap.service.OfertaService;
 import ufc.quixada.npi.ap.service.PeriodoService;
 
@@ -27,6 +29,12 @@ public class OfertaServiceImpl implements OfertaService {
 
 	@Autowired
 	private PeriodoService periodoService;
+	
+	@Autowired
+	private CompartilhamentoRepository compartilhamentoRepository;
+	
+	@Autowired
+	private RestricaoHorarioRepository restricaoHorarioRepository;
 	
 	@Override
 	public void salvarOfertaPeriodoAtivo(Oferta oferta) {
@@ -179,6 +187,17 @@ public class OfertaServiceImpl implements OfertaService {
 	@Override
 	public List<Oferta> buscarPorPeriodo(Periodo periodo) {
 		return ofertaRepository.findOfertaByPeriodo(periodo);
+	}
+	
+	public boolean hasCompartilhamentoOuRestricaoHorario(Oferta oferta) {
+		long totalCompartilhamentos = compartilhamentoRepository.countByOferta(oferta);
+		long totalRestricaoHorario = restricaoHorarioRepository.countByPrimeiraOfertaOrSegundaOferta(oferta, oferta);
+		
+		if(totalCompartilhamentos > 0 || totalRestricaoHorario > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

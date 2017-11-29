@@ -265,35 +265,53 @@ function organizarOfertas(result) {
 			var botaoExcluir = $(event.currentTarget);
 			var urlExcluir = botaoExcluir.attr("href");
 			
-			swal({
-				title: "Tem certeza?",
-				text: "Voc?? n??o poder?? desfazer essa opera????o posteriormente!",
-				type: "warning",   
-				showCancelButton: true,
-				cancelButtonText: "Cancelar",
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "Sim, desejo excluir!",
-				closeOnConfirm: false
-			}, function(isConfirm){
-				if(isConfirm){
-					var response = $.ajax({
-						url: urlExcluir,
-						type: 'GET',
-						success: function(result){
-							if (result === true){
-								successSwal();
-							}
-							else{
-								errorSwal();
-							}
-							
+			var ofertaId = urlExcluir.split('/')[3];
+			var urlVerificarRelacionamento = baseUrl + '/ofertas/' + ofertaId + '/relacionamentos';
+			var textoConfirmacao = '';
+			
+			$.ajax({
+				url: urlVerificarRelacionamento,
+				type: 'GET',
+				success: function(result){
+					if (result === true){
+						textoConfirmacao = 'Esta oferta possui compartilhamentos e/ou restrições de horarário associados a ela. Deseja continuar a exclusão?';
+					}
+					else{
+						textoConfirmacao = 'Você não poderá desfazer essa operação posteriormente!';
+					}
+					swal({
+						title: "Tem certeza?",
+						text: textoConfirmacao,
+						type: "warning",   
+						showCancelButton: true,
+						cancelButtonText: "Cancelar",
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "Sim, desejo excluir!",
+						closeOnConfirm: false
 						},
-						error: function(status, error){
-							errorSwal();
-						}
+						function(isConfirm) {
+							if(isConfirm) {
+								var response = $.ajax({
+									url: urlExcluir,
+									type: 'GET',
+									success: function(result){
+										if (result === true){
+											successSwal();
+										}
+										else{
+											errorSwal();
+										}
+										
+									},
+									error: function(status, error){
+										errorSwal();
+									}
+								});
+							}
 					});
 				}
 			});
+			
 		});
 		//deve existir uma maneira melhor para n??o fazer este ctrl+c ctrl+v mas ainda encontrei
 		$(".sa-btn-excluir-compartilhamento").on("click", function(event){
@@ -304,7 +322,7 @@ function organizarOfertas(result) {
 			
 			swal({
 				title: "Tem certeza?",
-				text: "Voc?? n??o poder?? desfazer essa opera????o posteriormente!",
+				text: "Você não poderá desfazer essa operação posteriormente!",
 				type: "warning",   
 				showCancelButton: true,
 				cancelButtonText: "Cancelar",
@@ -562,7 +580,7 @@ function criarInforme(semestre, existe) {
 		var bold = document.createElement('b');
 		label.setAttribute('class', 'text-center');
 		
-		bold.appendChild(document.createTextNode("As ofertas ser?o exibidas aqui"));
+		bold.appendChild(document.createTextNode("As ofertas serão exibidas aqui"));
 		label.appendChild(bold);
 		
 		divPanelHeading.appendChild(label);
@@ -582,7 +600,7 @@ function listarProfessoresOferta(professores) {
 			professorList += ' : ' + value.pessoa.nome;	
 		});
 	} else {
-		professorList = 'N??o h?? professores para essa oferta.';
+		professorList = 'Não há professores para essa oferta.';
 	}
 
 	return professorList;
@@ -621,7 +639,6 @@ function substituirOfertas(){
 	var ofertas = $("input[name=ofertas]:checked").map(function() {
 		return this.value;
 	}).get().join(",");
-	//console.log(ofertas);
 	if(ofertas.length > 0){
 		$.get(baseUrl + "/ofertas/substituicao-ofertas", {ofertas : ofertas}, function() {
 		})
@@ -689,7 +706,7 @@ $('#btn-exibir-ofertas').click(function() {
 function adicionarMensagemSemResultado(coluna){
 	var label = document.createElement('p');
     label.setAttribute('class','text-center');
-    label.appendChild(document.createTextNode("N??o foi encontrado resultado para a sua busca."));
+    label.appendChild(document.createTextNode("Não foi encontrado resultado para a sua busca."));
     $(coluna).append(label);
 }
 
@@ -772,8 +789,8 @@ function importacaoRealizada(importada, substituir) {
 
 function successSwalC(){
 	swal({
-		title: "Compartilhamento exclu??do!",
-		text: "O compartilhamento foi exclu??do.", 
+		title: "Compartilhamento excluído!",
+		text: "O compartilhamento foi excluído.", 
 		type: "success",
 		showcancelButton: false,
 		confirmButtonText: "Ok!",
@@ -786,7 +803,7 @@ function successSwalC(){
 function errorSubstituirOferta(){
 	swal({
 		title: "Erro ao substituir",
-		text: "A(s) oferta(s) n??o foi(ram) substitu??da(s).", 
+		text: "A(s) oferta(s) não foi(ram) substituída(s).", 
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",
@@ -797,7 +814,7 @@ function errorSubstituirOferta(){
 function errorSwalC(){
 	swal({
 		title: "Erro ao excluir",
-		text: "O compartilhamento n??o foi exclu??do.", 
+		text: "O compartilhamento não foi excluído.", 
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",
