@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Periodo.Status;
 import ufc.quixada.npi.ap.repository.PeriodoRepository;
 import ufc.quixada.npi.ap.service.PeriodoService;
 
@@ -20,7 +21,13 @@ public class PeriodoServiceImpl implements PeriodoService{
 		periodoRepository.save(periodo);
 	}
 	
-	public List<Periodo> listaPeriodos(){
+	@Override
+	public void salvarPeriodoAberto(Periodo periodo) {
+		periodo.setStatus(Status.ABERTO);
+		periodoRepository.save(periodo);
+	}
+	
+	public List<Periodo> buscarTodosPeriodos(){
 		return periodoRepository.findAll();
 	}
 	
@@ -28,17 +35,17 @@ public class PeriodoServiceImpl implements PeriodoService{
 		periodoRepository.delete(periodo);
 	}
 	
-	public Periodo getPeriodo(Integer id){
+	public Periodo buscarPeriodo(Integer id){
 		return periodoRepository.findOne(id);
 	}
 
 	@Override
-	public Periodo periodoAtivo() {
-		return periodoRepository.periodoAtivo();
+	public Periodo buscarPeriodoAtivo() {
+		return periodoRepository.findPeriodoByAtivoTrue();
 	}
 
 	@Override
-	public List<Periodo> periodosConsolidados() {
-		return periodoRepository.periodosConsolidados();
+	public List<Periodo> buscarPeriodosConsolidados() {
+		return periodoRepository.findPeriodosConsolidados();
 	}
 }	

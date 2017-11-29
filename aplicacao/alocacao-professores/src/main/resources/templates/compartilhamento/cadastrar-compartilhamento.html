@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="white-box">
-			
+					
 					<form class = "form-horizontal" th:action = "@{/ofertas/{id}/solicitar-compartilhamento(id=${oferta.id})}" th:object = "${compartilhamento}" method = "POST">
 						<div class = "form-group">
 							<label for="oferta" class ="control-label">Oferta</label><br/>
@@ -58,7 +58,6 @@
 							<button type = "submit" name = "action" class = "btn btn-success waves-effect waves-light">Cadastrar</button>
 						</div>
 					</form>
-		
 				</div>
 			</div>
 		</div>

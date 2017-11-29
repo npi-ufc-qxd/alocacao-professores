@@ -42,9 +42,11 @@
 						</thead>
 						<tbody>
 							<tr th:each="oferta : ${ofertas}">
-								<td><span th:if="${oferta} != null"
-									th:text="${oferta.disciplina.nome}"></span>
-								</td>
+<!-- 								<td><span th:if="${oferta} != null" th:text="${oferta.disciplina.nome}"></span> </td> -->
+					            <th th:if="${oferta.disciplina.apelido ==  null}" th:inline="text"><a th:href="@{/disciplinas/{id}/editar(id=${oferta.disciplina.id})}"><i class="fa fa-pencil"></i> [[${oferta.disciplina.nome}]]</a></th>
+					            <th th:unless="${oferta.disciplina.apelido ==  null}" th:inline="text"><a th:href="@{/disciplinas/{id}/editar(id=${oferta.disciplina.id})}"><i class="fa fa-pencil"></i> [[${oferta.disciplina.apelido}]]</a></th>
+								
+								
 								<td th:inline="text">[[${oferta.turma.curso.sigla}]]-[[${oferta.turma.semestre.numero}]]</td>
 								<td th:text="${oferta.vagas}"></td>
 								<td><span class="text-left"><b th:inline="text">[[${oferta.totalVagas}]]</b></span></td>
@@ -65,7 +67,7 @@
 									<span th:text="${compartilhamentoSI} ? ${compartilhamentoSI.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span>
 								</td>
 
-								<td align="center" th:with="compartilhamentoRD=${oferta.getCompartilhamentoPorCurso('RD')}">
+								<td align="center" th:with="compartilhamentoRD=${oferta.getCompartilhamentoPorCurso('RC')}">
 									<b><span th:text="${compartilhamentoRD} ? ${compartilhamentoRD.vagas} + ' ' + vagas : ''" class="label label-info text-vags"></span></b>
 									<span th:text="${compartilhamentoRD} ? ${compartilhamentoRD.turma.semestre.descricao}+' Sem.' : ''" class="text-semestre"></span>
 								</td>
@@ -82,7 +84,7 @@
 
 								<td sec:authorize="hasAnyAuthority('DIRECAO')" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" align="center">
 									<a th:href="@{/editar-oferta/{id}(id=${oferta.id})}" title="" class="btn btn-warning btn-circle waves-effect waves-light"> <i class="fa fa-pencil"></i></a>
-									<!--<a href="#" title="" class="btn btn-danger  btn-circle waves-effect waves-light sa-warning btn-sm"> <i class="fa fa-close"></i></a> -->
+									<a th:href="@{ofertas/{id}/excluir(id=${oferta.id})}" title="" class="btn btn-danger  btn-circle waves-effect waves-light sa-warning btn-sm sa-btn-excluir"> <i class="fa fa-close"></i></a>
 								</td>
  							</tr>
 						</tbody>
@@ -103,5 +105,70 @@
 
 	<script th:src="@{/js/ordenacao-tabela.js}"></script>
 	<script th:src="@{/js/compartilhamento/compartilhamento.js}"></script>
+	
+	
+	<script type="text/javascript">
+		$(".sa-btn-excluir").on("click", function(event){
+			event.preventDefault();
+	
+			var botaoExcluir = $(event.currentTarget);
+			var urlExcluir = botaoExcluir.attr("href");
+			
+			swal({
+				title: "Tem certeza?",
+				text: "Voc?? n??o poder?? desfazer essa opera????o posteriormente!",
+				type: "warning",   
+				showCancelButton: true,
+				cancelButtonText: "Cancelar",
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Sim, desejo excluir!",
+				closeOnConfirm: false
+			}, function(isConfirm){
+				if(isConfirm){
+					var response = $.ajax({
+						url: urlExcluir,
+						type: 'GET',
+						success: function(result){
+							if (result === true){
+								successSwal();
+							}
+							else{
+								errorSwal();
+							}
+							
+						},
+						error: function(status, error){
+							errorSwal();
+						}
+					});
+				}
+			});
+		});
+
+		function errorSwal(){
+			swal({
+				title: "Erro ao excluir",
+				text: "A oferta n??o foi exclu??da.", 
+				type: "error",
+				showcancelButton: false,
+				confirmButtonText: "Ok",
+				closeOnConfirm: true
+			});	
+		};
+
+		function successSwal(){
+			swal({
+				title: "Oferta exclu??da!",
+				text: "A oferta foi exclu??da.", 
+				type: "success",
+				showcancelButton: false,
+				confirmButtonText: "Ok!",
+				closeOnConfirm: true
+			}, function(isConfirm){
+				location.reload();
+			});
+		};
+
+	</script>
 </section>
 </html>

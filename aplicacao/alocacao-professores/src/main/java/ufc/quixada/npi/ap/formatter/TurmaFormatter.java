@@ -23,7 +23,7 @@ public class TurmaFormatter implements Formatter<Turma> {
 
 	@Override
 	public Turma parse(String id, Locale locale) throws ParseException {
-		return turmaService.findTurma(Integer.parseInt(id));
+		return turmaService.buscarTurma(Integer.parseInt(id));
 	}
 
 }

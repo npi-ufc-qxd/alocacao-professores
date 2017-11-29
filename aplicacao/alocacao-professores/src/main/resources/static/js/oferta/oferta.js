@@ -1,14 +1,10 @@
-//var getUrl = window.location;
-//var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-
 var _ctx = $("meta[name='ctx']").attr("content");
-var protocol = _ctx.split('//')[0];
-var host = _ctx.split('/')[2];
-var baseUrl = protocol + '//' + host;
+var baseUrl = "/" + _ctx.split('/')[3];
 
 var siglaCursoCoordenador = $('input[name=cursoAtual]').val();
 var idCursoCoordenador = $('input[name=idCursoAtual]').val();
 var idCursoSelecionado = idCursoCoordenador;
+var direcao = false;
 
 $('#btn-modal-importar-ofertas').on('click', function (event) {
 	$('#resultado-ofertas-1').empty();
@@ -37,11 +33,6 @@ var periodo = periodos.options[periodos.selectedIndex].text;
 
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
-
-var baseUrl = $("meta[name='baseUrl']").attr("content");
-if(baseUrl == null){
-    baseUrl = "";
-}
 
 function importarOfertas(){
 	var disciplinas = $("input[name=ofertas]:checked").map(function() {
@@ -91,7 +82,7 @@ $('#btn-exibir-ofertas').click(function() {
 function adicionarMensagemSemResultado(coluna){
 	var label = document.createElement('p');
     label.setAttribute('class','text-center');
-    label.appendChild(document.createTextNode("Não foi encontrado resultado para a sua busca."));
+    label.appendChild(document.createTextNode("N??o foi encontrado resultado para a sua busca."));
     $(coluna).append(label);
 }
 
@@ -147,7 +138,7 @@ $(".sa-btn-excluir").on("click", function(event){
 	
 	swal({
 		title: "Tem certeza?",
-		text: "Você não poderá desfazer essa operação posteriormente!",
+		text: "Voc?? n??o poder?? desfazer essa opera????o posteriormente!",
 		type: "warning",   
 		showCancelButton: true,
 		cancelButtonText: "Cancelar",
@@ -191,8 +182,8 @@ function importacaoRealizada(){
 
 function successSwal(){
 	swal({
-		title: "Oferta excluída!",
-		text: "A oferta foi excluída.", 
+		title: "Oferta exclu??da!",
+		text: "A oferta foi exclu??da.", 
 		type: "success",
 		showcancelButton: false,
 		confirmButtonText: "Ok!",
@@ -205,7 +196,7 @@ function successSwal(){
 function errorSwal(){
 	swal({
 		title: "Erro ao excluir",
-		text: "A oferta não foi excluída.", 
+		text: "A oferta n??o foi exclu??da.", 
 		type: "error",
 		showcancelButton: false,
 		confirmButtonText: "Ok",
@@ -213,24 +204,24 @@ function errorSwal(){
 	});	
 }
 
-//Função que faz a requisição da lista de ofertas e de compartilhamentos quando a página é carregada
+//Fun????o que faz a requisi????o da lista de ofertas e de compartilhamentos quando a p??gina ?? carregada
 //result = model(ofertas e compartilhamentos)
 $(window).load(function() {
 	$.get(baseUrl + "/ofertas/listar", function() {
 	})
 	.done(function(result) {
-		console.log(result);
-			organizarOfertas(result);
+		organizarOfertas(result);
 	});
 });
 
-//Função que organiza a lista de ofertas por semestre
+//Fun????o que organiza a lista de ofertas por semestre
 function organizarOfertas(result) {
 	semestres = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'QUARTO', 'QUINTO', 'SEXTO', 'SETIMO', 'OITAVO', 'NONO', 'DECIMO'];
+	direcao = result.papelDirecao;
 	for(var i = 0; i <= 9; i++) {
 		var semestre = semestres[i];
 		var numberSemestre = i+1;
-		criarEstrutura(semestre, numberSemestre, result.ofertas[0].turma.curso.sigla);
+		criarEstrutura(semestre, numberSemestre, result.curso.sigla);
 		var existe = false;
 		var newRow = 0;
 		var idNewRow = '';
@@ -274,37 +265,55 @@ function organizarOfertas(result) {
 			var botaoExcluir = $(event.currentTarget);
 			var urlExcluir = botaoExcluir.attr("href");
 			
-			swal({
-				title: "Tem certeza?",
-				text: "Você não poderá desfazer essa operação posteriormente!",
-				type: "warning",   
-				showCancelButton: true,
-				cancelButtonText: "Cancelar",
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "Sim, desejo excluir!",
-				closeOnConfirm: false
-			}, function(isConfirm){
-				if(isConfirm){
-					var response = $.ajax({
-						url: urlExcluir,
-						type: 'GET',
-						success: function(result){
-							if (result === true){
-								successSwal();
-							}
-							else{
-								errorSwal();
-							}
-							
+			var ofertaId = urlExcluir.split('/')[3];
+			var urlVerificarRelacionamento = baseUrl + '/ofertas/' + ofertaId + '/relacionamentos';
+			var textoConfirmacao = '';
+			
+			$.ajax({
+				url: urlVerificarRelacionamento,
+				type: 'GET',
+				success: function(result){
+					if (result === true){
+						textoConfirmacao = 'Esta oferta possui compartilhamentos e/ou restrições de horarário associados a ela. Deseja continuar a exclusão?';
+					}
+					else{
+						textoConfirmacao = 'Você não poderá desfazer essa operação posteriormente!';
+					}
+					swal({
+						title: "Tem certeza?",
+						text: textoConfirmacao,
+						type: "warning",   
+						showCancelButton: true,
+						cancelButtonText: "Cancelar",
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "Sim, desejo excluir!",
+						closeOnConfirm: false
 						},
-						error: function(status, error){
-							errorSwal();
-						}
+						function(isConfirm) {
+							if(isConfirm) {
+								var response = $.ajax({
+									url: urlExcluir,
+									type: 'GET',
+									success: function(result){
+										if (result === true){
+											successSwal();
+										}
+										else{
+											errorSwal();
+										}
+										
+									},
+									error: function(status, error){
+										errorSwal();
+									}
+								});
+							}
 					});
 				}
 			});
+			
 		});
-		//deve existir uma maneira melhor para não fazer este ctrl+c ctrl+v mas ainda encontrei
+		//deve existir uma maneira melhor para n??o fazer este ctrl+c ctrl+v mas ainda encontrei
 		$(".sa-btn-excluir-compartilhamento").on("click", function(event){
 			event.preventDefault();
 
@@ -345,7 +354,7 @@ function organizarOfertas(result) {
 }
 
 
-//Função que cria a estrtura por semestre
+//Fun????o que cria a estrtura por semestre
 function criarEstrutura(semestre, numberSemestre, sigla) {
 	//var divContainer = document.createElement('div');
 	//divContainer.setAttribute('class', 'container');
@@ -377,11 +386,11 @@ function criarEstrutura(semestre, numberSemestre, sigla) {
 	}
 }
 
-//Função que divide as ofertas em linhas com quatro ofertas
+//Fun????o que divide as ofertas em linhas com quatro ofertas
 function criarRowsPanel(panel, semestre, newRow, idNewRow) {
 	if(newRow%4 === 0) {
 		var divRow = document.createElement('div');
-		console.log(idNewRow);
+		//console.log(idNewRow);
 		divRow.id = idNewRow;	
 		divRow.setAttribute('class', 'row');
 		
@@ -394,7 +403,7 @@ function criarRowsPanel(panel, semestre, newRow, idNewRow) {
 }
 
 
-//Função que cria o panel para cada oferta
+//Fun????o que cria o panel para cada oferta
 function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vagas, turno, professores, semestre, numberSemestre, idOferta, newRow, idNewRow, idCompartilhamento){
 	//Elementos html criados via Javascript
 	var divCol = document.createElement('div');
@@ -452,54 +461,79 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	var divButton = document.createElement('div');
 	divButton.setAttribute('class', 'pull-right');
 	
-	if(idCursoSelecionado == idCursoCoordenador) {
-
-		if(siglaCursoCoordenador == sigla) {
-			var iconeEditar = document.createElement('i');
-			iconeEditar.setAttribute('class', 'fa fa-pencil');
-			var buttonEditar = document.createElement('a');
-			buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
-			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
-			buttonEditar.appendChild(iconeEditar);
-			divButton.appendChild(buttonEditar);
+	console.log("DIRECAO + " + direcao);
+	
+	if(!direcao) {
+		if(idCursoSelecionado == idCursoCoordenador) {
+			if(siglaCursoCoordenador == sigla) {
+				var iconeEditar = document.createElement('i');
+				iconeEditar.setAttribute('class', 'fa fa-pencil');
+				var buttonEditar = document.createElement('a');
+				buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
+				buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+				buttonEditar.appendChild(iconeEditar);
+				divButton.appendChild(buttonEditar);
+				
+				var iconeExcluir = document.createElement('i');
+				iconeExcluir.setAttribute('class', 'fa fa-close');
+				var buttonExcluir = document.createElement('a');
+				buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
+				buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
+				buttonExcluir.appendChild(iconeExcluir);
+				divButton.appendChild(buttonExcluir);
+				
+			} else {
+	//			divPanel.appendChild(divRibbon);
+				var iconeEditar = document.createElement('i');
+				iconeEditar.setAttribute('class', 'fa fa-pencil');
+				var buttonEditar = document.createElement('a');
+				buttonEditar.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/editar';
+				buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+				buttonEditar.appendChild(iconeEditar);
+				divButton.appendChild(buttonEditar);
+	
+				var iconeExcluir = document.createElement('i');
+				iconeExcluir.setAttribute('class', 'fa fa-close');
+				var buttonExcluir = document.createElement('a');
+				buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
+				buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
+				buttonExcluir.appendChild(iconeExcluir);
+				divButton.appendChild(buttonExcluir);
 			
-			var iconeExcluir = document.createElement('i');
-			iconeExcluir.setAttribute('class', 'fa fa-close');
-			var buttonExcluir = document.createElement('a');
-			buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
-			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
-			buttonExcluir.appendChild(iconeExcluir);
-			divButton.appendChild(buttonExcluir);
-			
-		} else {
-//			divPanel.appendChild(divRibbon);
-			var iconeEditar = document.createElement('i');
-			iconeEditar.setAttribute('class', 'fa fa-pencil');
-			var buttonEditar = document.createElement('a');
-			buttonEditar.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/editar';
-			buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
-			buttonEditar.appendChild(iconeEditar);
-			divButton.appendChild(buttonEditar);
-
-			var iconeExcluir = document.createElement('i');
-			iconeExcluir.setAttribute('class', 'fa fa-close');
-			var buttonExcluir = document.createElement('a');
-			buttonExcluir.href = baseUrl + '/compartilhamentos/' + idCompartilhamento + '/excluir';
-			buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-compartilhamento');
-			buttonExcluir.appendChild(iconeExcluir);
-			divButton.appendChild(buttonExcluir);
-		
+			}
+		} 
+		else if(siglaCursoCoordenador != sigla) {
+			var iconeShare = document.createElement('i');
+			iconeShare.setAttribute('class', 'fa fa-share-alt');
+			var buttonSolicitarCompartilhamento = document.createElement('a');
+			buttonSolicitarCompartilhamento.href = baseUrl + '/ofertas/'+ idOferta + '/solicitar-compartilhamento';
+			buttonSolicitarCompartilhamento.setAttribute('class', 'btn btn-inverse btn-acoes');
+			buttonSolicitarCompartilhamento.appendChild(iconeShare);
+			divButton.appendChild(buttonSolicitarCompartilhamento);
 		}
-	} 
-	else if(siglaCursoCoordenador != sigla) {
-		var iconeShare = document.createElement('i');
-		iconeShare.setAttribute('class', 'fa fa-share-alt');
-		var buttonSolicitarCompartilhamento = document.createElement('a');
-		buttonSolicitarCompartilhamento.href = baseUrl + '/ofertas/'+ idOferta + '/solicitar-compartilhamento';
-		buttonSolicitarCompartilhamento.setAttribute('class', 'btn btn-inverse btn-acoes');
-		buttonSolicitarCompartilhamento.appendChild(iconeShare);
-		divButton.appendChild(buttonSolicitarCompartilhamento);
+	} else {
+		var iconeEditar = document.createElement('i');
+		iconeEditar.setAttribute('class', 'fa fa-pencil');
+		var buttonEditar = document.createElement('a');
+		buttonEditar.href = baseUrl + '/ofertas/'+ idOferta + '/editar';
+		buttonEditar.setAttribute('class', 'btn btn-info btn-acoes');
+		buttonEditar.setAttribute('data-toggle', 'tooltip');
+		buttonEditar.setAttribute('title', 'Editar Oferta');
+		buttonEditar.appendChild(iconeEditar);
+		divButton.appendChild(buttonEditar);
+		
+		var iconeExcluir = document.createElement('i');
+		iconeExcluir.setAttribute('class', 'fa fa-close');
+		var buttonExcluir = document.createElement('a');
+		buttonExcluir.href = baseUrl + '/ofertas/'+ idOferta + '/excluir';
+		buttonExcluir.setAttribute('class', 'btn btn-danger btn-acoes sa-btn-excluir-oferta');
+		buttonExcluir.setAttribute('data-toggle', 'tooltip');
+		buttonExcluir.setAttribute('title', 'Excluir Oferta');
+		buttonExcluir.appendChild(iconeExcluir);
+		divButton.appendChild(buttonExcluir);
+		
 	}
+	
 
 	//Inserindo elementos filhos nos elementos pai
 	//pVagas.appendChild(document.createTextNode("Vagas: " + vagas));
@@ -530,7 +564,7 @@ function criarPanelsOferta(idCurso, sigla, codigoDisciplina, nomeDisciplina, vag
 	criarRowsPanel(divCol, semestre, newRow, idNewRow);	
 }
 
-//Função que cria o panel de informe quando não há nenhuma oferta para determinado semestre
+//Fun????o que cria o panel de informe quando n??o h?? nenhuma oferta para determinado semestre
 function criarInforme(semestre, existe) {
 	if(existe === false) { 
 		var divCol = document.createElement('div');
@@ -557,7 +591,7 @@ function criarInforme(semestre, existe) {
 	}
 }
 
-//Função que transforma em string a lista de professores de uma oferta
+//Fun????o que transforma em string a lista de professores de uma oferta
 function listarProfessoresOferta(professores) {
 	var professorList = '';
 	
@@ -593,11 +627,6 @@ var periodo = periodos.options[periodos.selectedIndex].text;
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 
-var baseUrl = $("meta[name='baseUrl']").attr("content");
-if(baseUrl == null){
-    baseUrl = "";
-}
-
 function limparResultadosImportacao(){
 	$('#resultado-ofertas-1').empty();
 	$('#resultado-ofertas-2').empty();
@@ -610,7 +639,6 @@ function substituirOfertas(){
 	var ofertas = $("input[name=ofertas]:checked").map(function() {
 		return this.value;
 	}).get().join(",");
-	console.log(ofertas);
 	if(ofertas.length > 0){
 		$.get(baseUrl + "/ofertas/substituicao-ofertas", {ofertas : ofertas}, function() {
 		})
@@ -637,7 +665,7 @@ function importarOfertas(){
 				importacaoRealizada(ofertas.importada, ofertas.substituir);
 				$('#modal-importar-ofertas').modal('toggle');
 				limparResultadosImportacao();
-				console.log(ofertas);
+				//console.log(ofertas);
 				var index = 2;
 				$.each(ofertas.contidas, function(key, value) {
 					adicionarResultado(value.id, "ofertas", '#resultado-substituicao-ofertas-1', '#resultado-substituicao-ofertas-2', value.disciplina.nome, "ofertas", index);	

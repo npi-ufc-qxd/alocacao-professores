@@ -1,6 +1,8 @@
 package ufc.quixada.npi.ap.util;
 
 public class Constants {
+	
+	public static final Integer MAX_CREDITOS_TURMA = 20;
 
 	// LDAP
 	public static final String LDAP_URL = "ldap.url";
@@ -18,8 +20,8 @@ public class Constants {
 	public static final String PERMISSAO_DIRECAO_COORDENACAO = "hasAnyAuthority('DIRECAO,COORDENACAO')";
 
 	// Mensagens
-	public static final String MENSAGEM_PERMISSAO_NEGADA = "Permissão negada";
-	public static final String LOGIN_INVALIDO = "Usuário e/ou senha inválidos";
+	public static final String MSG_PERMISSAO_NEGADA = "Permissão negada";
+	public static final String MSG_LOGIN_INVALIDO = "Usuário e/ou senha inválidos";
 
 	// Paginas
 	public static final String PAGINA_ERRO_404 = "/error/404";
@@ -34,12 +36,16 @@ public class Constants {
 	public static final String OFERTA_DETALHAR = "/ofertas/detalhar-oferta";
 	public static final String OFERTA_EXCLUIR = "/ofertas/excluir-oferta";
 	public static final String OFERTA_REDIRECT_LISTAR = "redirect:/ofertas";
+	public static final String OFERTA_CAMPUS_REDIRECT_LISTAR = "redirect:/oferta-campus";
 	public static final String OFERTA_REDIRECT_CADASTRO = "redirect:/ofertas/cadastrar";
 	public static final String OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
+	public static final String EXPORTAR = "/ofertas/exportar";
 	public static final String OFERTA_EDITAR_DIRECAO = "/ofertas/editar-oferta-direcao";
+	public static final String OFERTA_REDIRECT_EDITAR_DIRECAO = "redirect:/editar-oferta/";
 	
 	// Compartilhamento
 	public static final String COMPARTILHAMENTO_CADASTRAR = "compartilhamento/cadastrar-compartilhamento";
+	public static final String COMPARTILHAMENTO_CADASTRAR_DIRECAO = "compartilhamento/cadastrar-compartilhamento-direcao";
 	public static final String COMPARTILHAMENTO_EDITAR = "compartilhamento/editar-compartilhamento";
 	public static final String COMPARTILHAMENTO_LISTAR = "compartilhamento/listar-compartilhamento";
 	public static final String COMPARTILHAMENTO_DETALHAR = "compartilhamento/detalhar-compartilhamento";
@@ -66,26 +72,39 @@ public class Constants {
 	public static final String EMPILHAMENTO_LISTAR = "empilhamento/listar-empilhamento";
 	public static final String EMPILHAMENTO_DETALHAR = "empilhamento/detalhar-empilhamento";
 	public static final String EMPILHAMENTO_REDIRECT_LISTAR = "redirect:/empilhamentos";
+	public static final String EMPILHAMENTO_LISTAR_DIRECAO = "empilhamento/listar-empilhamento-direcao"; 
 	
 	// Professor
 	public static final String PROFESSOR_LISTAR = "professor/listar-professores";
 	public static final String PROFESSOR_REDIRECT_LISTAR = "redirect:/professores";
+	public static final String PROFESSOR_EDITAR = "professor/editar-professor";
+	public static final String PROFESSOR_RELATORIO_CARGA_HORARIA = "professor/gerar-relatorio-carga-horaria-professor";
 	
 	//Exceptions
-	public static final String PERIODO_INVALIDO = "Não há um período válido disponível";
-
-
+	public static final String EXCEPTION_PERIODO_INVALIDO = "Não há um período válido disponível";
 	
 	//Mensagens Sucesso
-	public static final String STATUS_SUCCESS = "success";
-	public static final String DISCIPLINA_CADASTAR_TITULO_SUCCESS = "Disciplina cadastrada!";
-	public static final String DISCIPLINA_CADASTRADA = "A disciplina foi cadastrada com sucesso!";
-	public static final String DISCIPLINA_EDITADAR_TITULO_SUCCESS = "Disciplina editada";
-	public static final String DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso";
+	public static final String SWAL_STATUS_SUCCESS = "success";
+	public static final String MSG_DISCIPLINA_CADASTRAR_TITULO_SUCCESS = "Disciplina cadastrada!";
+	public static final String MSG_DISCIPLINA_CADASTRADA = "A disciplina foi cadastrada com sucesso!";
+	public static final String MSG_DISCIPLINA_EDITAR_TITULO_SUCCESS = "Disciplina editada com sucesso!";
+	public static final String MSG_DISCIPLINA_EDITADA = "A disciplina foi editada com sucesso!";
+	public static final String MSG_OFERTA_CADASTRADA = "Oferta cadastrada com sucesso!";
+	public static final String MSG_OFERTA_EDITADA = "Oferta editada com sucesso!";
+	public static final String MSG_PROFESSOR_EDITADO = "Professor editado com sucesso!";
+	public static final String MSG_COMPARTILHAMENTO_EDITADO = "Compartilhamento editado com sucesso!";
+	public static final String MSG_COMPARTILHAMENTO_SOLICITADO = "Compartilhamento solicitado com sucesso!";
 	
 	//Mensagens Erros
 	public static final String STATUS_ERROR = "error";
 	public static final String DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
 	public static final String DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
-
+	public static final String RESTRICAO_PERIODO = "Esta operação é restrita por períodos. Por favor verifique as datas do período.";
+	public static final String SWAL_STATUS_ERROR = "error";
+	public static final String MSG_DISCIPLINA_CADASTRAR_TITULO_ERROR = "Erro ao cadastrar a disciplina";
+	public static final String MSG_DISCIPLINA_CADASTRAR_EXISTENTE = "Já existe uma disciplina com esse código!";
+	
+	//Prefixos das mensagens de erro de validação
+	public static final String VALIDACAO_ERRO_INVALID = "invalid";
+	public static final String VALIDACAO_ERRO_NULL = "null";
 }

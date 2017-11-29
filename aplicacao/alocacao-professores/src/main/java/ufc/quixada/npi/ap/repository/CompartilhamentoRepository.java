@@ -8,18 +8,20 @@ import org.springframework.data.repository.query.Param;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
+import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 
 public interface CompartilhamentoRepository extends JpaRepository<Compartilhamento, Integer> {
-
-	@Query("SELECT c FROM Compartilhamento c WHERE c.turma.curso = :curso AND c.oferta.periodo = :periodo")
-	List<Compartilhamento> findCompartilhamentosByPeriodoAndCurso(@Param("periodo") Periodo periodo, @Param("curso") Curso curso);
 	
-	@Query("SELECT c FROM Oferta AS o, Compartilhamento AS c WHERE o.id = c.oferta.id AND o.periodo = :periodo AND c.turma.curso = :curso AND (o.disciplina, c.turma) NOT IN "
-			+ "(SELECT o.disciplina, o.turma FROM Oferta AS o WHERE o.turma.curso = :curso AND o.periodo = :periodoAtivo)")
+	long countByOferta(Oferta oferta);
+
+	List<Compartilhamento> findCompartilhamentosByOferta_periodoAndTurma_curso(@Param("periodo") Periodo periodo, @Param("curso") Curso curso);
+	
+	@Query("SELECT c FROM Oferta AS o, Compartilhamento AS c WHERE o.id = c.oferta.id AND o.periodo = :periodo AND c.turma.curso = :curso AND (o.disciplina.id, c.turma.id) NOT IN "
+			+ "(SELECT o.disciplina.id, o.turma.id FROM Oferta AS o WHERE o.turma.curso = :curso AND o.periodo = :periodoAtivo)")
 	List<Compartilhamento> findCompartilhamentosNaoImportadosByPeriodoAndCurso(@Param("periodo") Periodo periodo, @Param("periodoAtivo") Periodo periodoAtivo, @Param("curso") Curso curso);
 	
-	@Query("SELECT c FROM Oferta AS o, Compartilhamento AS c WHERE o.id = c.oferta.id AND o.periodo = :periodo AND c.turma.curso = :curso AND (o.disciplina, c.turma) IN "
-			+ "(SELECT o.disciplina, o.turma FROM Oferta AS o WHERE o.turma.curso = :curso AND o.periodo = :periodoAtivo)")
+	@Query("SELECT c FROM Oferta AS o, Compartilhamento AS c WHERE o.id = c.oferta.id AND o.periodo = :periodo AND c.turma.curso = :curso AND (o.disciplina.id, c.turma.id) IN "
+			+ "(SELECT o.disciplina.id, o.turma.id FROM Oferta AS o WHERE o.turma.curso = :curso AND o.periodo = :periodoAtivo)")
 	List<Compartilhamento> findCompartilhamentosImportadosByPeriodoAndCurso(@Param("periodo") Periodo periodo, @Param("periodoAtivo") Periodo periodoAtivo, @Param("curso") Curso curso);
 }
