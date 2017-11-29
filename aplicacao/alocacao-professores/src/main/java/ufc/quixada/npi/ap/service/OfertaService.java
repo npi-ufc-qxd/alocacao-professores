@@ -3,13 +3,17 @@ package ufc.quixada.npi.ap.service;
 import java.util.List;
 import java.util.Map;
 
+import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
+import ufc.quixada.npi.ap.model.Professor;
 
 public interface OfertaService {
 	
 	public void salvarOfertaPeriodoAtivo(Oferta oferta);
+	
+	public void salvarOferta(Oferta oferta) throws AlocacaoProfessoresException;
 	
 	public void excluir(Integer id);
 
@@ -18,6 +22,8 @@ public interface OfertaService {
 	public List<Oferta> buscarOfertaPorPeriodo(Periodo periodo);
 	
 	public List<Oferta> buscarOfertasPeriodoAtivo();
+	
+	public List<Oferta> buscarOfertasPeriodoAtivoPorProfessor(Professor professor);
 	
 	public List<Oferta> buscarPorPeriodo(Periodo periodo);
 	
