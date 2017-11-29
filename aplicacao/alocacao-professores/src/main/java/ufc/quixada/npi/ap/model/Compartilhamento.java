@@ -16,6 +16,8 @@ public class Compartilhamento {
 	
 	private int vagas;
 	
+	private boolean disjunto; 
+	
 	@ManyToOne
 	@JoinColumn(name = "turma_id")
 	private Turma turma;
@@ -54,6 +56,14 @@ public class Compartilhamento {
 
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
+	}
+	
+	public boolean isDisjunto() {
+		return disjunto;
+	}
+
+	public void setDisjunto(boolean disjunto) {
+		this.disjunto = disjunto;
 	}
 	
 }

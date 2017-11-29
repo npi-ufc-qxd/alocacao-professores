@@ -105,11 +105,13 @@ public class CompartilhamentoController {
 	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Compartilhamento compartilhamento,
 												@RequestParam(value="turma") Turma turma,
 												@RequestParam(value="vagas") Integer vagas,
+												@RequestParam(value="disjunto", required = false) boolean disjunto,
 												ModelAndView modelAndView){
 
 		try{						
 			compartilhamento.setTurma(turma);
 			compartilhamento.setVagas(vagas);
+			compartilhamento.setDisjunto(disjunto);
 			
 			compartilhamentoService.salvar(compartilhamento);
 		} catch(Exception e){
