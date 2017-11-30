@@ -32,7 +32,7 @@
 
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 box-cursos">
 			<select id="visulizar-outras-ofertas" class="form-control visulizar-outras-ofertas">
-				<option sec:authorize="hasAnyAuthority('COORDENACAO')"  th:each="curso : ${cursos}" th:text="${curso.nome}" th:value="${curso.id}" th:selected="${curso.coordenador.pessoa.id == #authentication.principal.id or curso.viceCoordenador.pessoa.id == #authentication.principal.id}"></option>
+				<option sec:authorize="hasAnyAuthority('COORDENACAO')"  th:each="curso : ${cursos}" th:text="${curso.nome}" th:value="${curso.id}"></option>
 				<option sec:authorize="hasAnyAuthority('DIRECAO')" th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome}" th:selected="${curso.id == cursoAtual.id}"></option>
 			</select>
 		</div>
