@@ -8,9 +8,12 @@ import org.springframework.data.repository.query.Param;
 
 import ufc.quixada.npi.ap.model.Compartilhamento;
 import ufc.quixada.npi.ap.model.Curso;
+import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 
 public interface CompartilhamentoRepository extends JpaRepository<Compartilhamento, Integer> {
+	
+	long countByOferta(Oferta oferta);
 
 	List<Compartilhamento> findCompartilhamentosByOferta_periodoAndTurma_curso(@Param("periodo") Periodo periodo, @Param("curso") Curso curso);
 	

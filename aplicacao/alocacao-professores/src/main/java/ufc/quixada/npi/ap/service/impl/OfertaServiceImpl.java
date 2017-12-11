@@ -8,13 +8,18 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ufc.quixada.npi.ap.exception.AlocacaoProfessoresException;
 import ufc.quixada.npi.ap.model.Curso;
 import ufc.quixada.npi.ap.model.Oferta;
 import ufc.quixada.npi.ap.model.Periodo;
 import ufc.quixada.npi.ap.model.Professor;
+import ufc.quixada.npi.ap.repository.CompartilhamentoRepository;
 import ufc.quixada.npi.ap.repository.OfertaRepository;
+import ufc.quixada.npi.ap.repository.RestricaoHorarioRepository;
 import ufc.quixada.npi.ap.service.OfertaService;
 import ufc.quixada.npi.ap.service.PeriodoService;
+
+import static ufc.quixada.npi.ap.util.Constants.MAX_CREDITOS_TURMA;
 
 @Service
 public class OfertaServiceImpl implements OfertaService {
@@ -25,11 +30,29 @@ public class OfertaServiceImpl implements OfertaService {
 	@Autowired
 	private PeriodoService periodoService;
 	
+	@Autowired
+	private CompartilhamentoRepository compartilhamentoRepository;
+	
+	@Autowired
+	private RestricaoHorarioRepository restricaoHorarioRepository;
+	
 	@Override
-	public void salvarOfertaPeriodoAtivo(Oferta oferta){
+	public void salvarOfertaPeriodoAtivo(Oferta oferta) {
+		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
+		oferta.setPeriodo(periodoAtivo);
+		ofertaRepository.save(oferta);
+	}
+	
+	public void salvarOferta(Oferta oferta) throws AlocacaoProfessoresException {
 		Periodo periodoAtivo = periodoService.buscarPeriodoAtivo();
 		
 		oferta.setPeriodo(periodoAtivo);
+		
+		Integer totalCreditos = ofertaRepository.getTotalCreditosTurmaPorPeriodo(periodoAtivo.getId(), oferta.getTurma().getId());
+		Integer novoTotalCreditos = totalCreditos + oferta.getDisciplina().getCreditos();
+		if(novoTotalCreditos > MAX_CREDITOS_TURMA) {
+			throw new AlocacaoProfessoresException("O limite de "+MAX_CREDITOS_TURMA+" créditos para a turma do "+oferta.getTurma().getSemestre().getDescricao()+" semestre foi atingido.");
+		}
 		
 		ofertaRepository.save(oferta);
 	}
@@ -48,7 +71,12 @@ public class OfertaServiceImpl implements OfertaService {
 	public List<Oferta> buscarOfertasPeriodoAtivo() {
 		return ofertaRepository.findByPeriodoAtivoTrue();
 	}
-
+	
+	@Override
+	public List<Oferta> buscarOfertasPeriodoAtivoPorProfessor(Professor professor) {
+		return ofertaRepository.findOfertasByPeriodo_AtivoTrueAndProfessores(professor);
+	}
+	
 	@Override
 	public void excluir(Integer id) {
 		ofertaRepository.delete(id);
@@ -162,6 +190,17 @@ public class OfertaServiceImpl implements OfertaService {
 	@Override
 	public List<Oferta> buscarPorPeriodo(Periodo periodo) {
 		return ofertaRepository.findOfertaByPeriodo(periodo);
+	}
+	
+	public boolean hasCompartilhamentoOuRestricaoHorario(Oferta oferta) {
+		long totalCompartilhamentos = compartilhamentoRepository.countByOferta(oferta);
+		long totalRestricaoHorario = restricaoHorarioRepository.countByPrimeiraOfertaOrSegundaOferta(oferta, oferta);
+		
+		if(totalCompartilhamentos > 0 || totalRestricaoHorario > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

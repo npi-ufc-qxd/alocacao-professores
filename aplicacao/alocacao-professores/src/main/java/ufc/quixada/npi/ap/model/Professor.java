@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Professor {
@@ -19,6 +20,9 @@ public class Professor {
 	private Integer cargaHorariaMinima;
 	
 	private Integer cargaHorariaMaxima;
+	
+	@Transient
+	private Integer cargaHorariaAtual;
 	
 	@OneToOne(optional = false, cascade = CascadeType.MERGE)
 	private Pessoa pessoa;
@@ -63,4 +67,11 @@ public class Professor {
 		this.pessoa = pessoa;
 	}
 	
+	public Integer getCargaHorariaAtual() {
+		return cargaHorariaAtual;
+	}
+	
+	public void setCargaHorariaAtual(Integer cargaHorariaAtual) {
+		this.cargaHorariaAtual = cargaHorariaAtual;
+	}
 }

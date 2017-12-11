@@ -3,20 +3,17 @@ package ufc.quixada.npi.ap.controller;
 import static ufc.quixada.npi.ap.util.Constants.MSG_COMPARTILHAMENTO_EDITADO;
 import static ufc.quixada.npi.ap.util.Constants.SWAL_STATUS_SUCCESS;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,8 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ufc.quixada.npi.ap.annotation.RestricaoDePeriodo;
 import ufc.quixada.npi.ap.annotation.RestricaoDePeriodoAjax;
 import ufc.quixada.npi.ap.model.Compartilhamento;
-import ufc.quixada.npi.ap.model.Curso;
-import ufc.quixada.npi.ap.model.Pessoa;
+import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.service.CompartilhamentoService;
 import ufc.quixada.npi.ap.service.CursoService;
 import ufc.quixada.npi.ap.service.TurmaService;
@@ -108,21 +104,20 @@ public class CompartilhamentoController {
 	}
 	
 	@RequestMapping(path = {"/{id}/editar"}, method = RequestMethod.POST)
-	public ModelAndView editarCompartilhamento(@ModelAttribute("compartilhamento") @Valid Compartilhamento compartilhamento,
-			BindingResult bindingResult, ModelAndView modelAndView, Authentication auth,
-			RedirectAttributes redirectAttributes){
-		
-		Pessoa coordenador = (Pessoa) auth.getPrincipal();
-		Curso cursoCoordenador = cursoService.buscarCursoPorCoordenador(coordenador);
-		
-		Map<String, Object> mapa = new HashMap<>();
-		mapa.put("compartilhamento", compartilhamento);
-		mapa.put("cursoCoordenador", cursoCoordenador);
-		
-		compartilhamentoValidator.validate(mapa, bindingResult);
-		
-		if (bindingResult.hasErrors()){
-			modelAndView.setViewName(Constants.COMPARTILHAMENTO_EDITAR);
+	public ModelAndView editarCompartilhamento(@PathVariable(name = "id", required = true) Compartilhamento compartilhamento,
+												@RequestParam(value="turma") Turma turma,
+												@RequestParam(value="vagas") Integer vagas,
+												@RequestParam(value="disjunto", required = false) boolean disjunto,
+												ModelAndView modelAndView, RedirectAttributes redirectAttributes){
+
+		try{						
+			compartilhamento.setTurma(turma);
+			compartilhamento.setVagas(vagas);
+			compartilhamento.setDisjunto(disjunto);
+			
+			compartilhamentoService.salvar(compartilhamento);
+		} catch(Exception e){
+			modelAndView.setViewName(Constants.PAGINA_ERRO_403);
 			
 			return modelAndView;
 		}

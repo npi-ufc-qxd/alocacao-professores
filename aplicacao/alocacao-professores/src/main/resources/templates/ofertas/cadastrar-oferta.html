@@ -222,7 +222,6 @@
 
  						<div class="form-group" th:classappend="${#fields.hasErrors('horarioInicio')} ? has-error">
  							<div class="col-md-12">
-
 								<div class="checkbox checkbox-primary">
 <!-- 								th:field="*{horarioInicio}"  -->
 									<input id="horarioInicio" value="false" type="checkbox" class="js-switch"/>
@@ -279,10 +278,11 @@
 	<section layout:fragment="js">
 		<!-- Select2 Tradução Português Brasileiro -->
 		<script th:src="@{/plugins/select2/js/i18n/pt-BR.js}"></script>
+
 		<script type="text/javascript">		
 			$(".select2").select2({
 				"language": "pt-BR"
-			});
+
 
 			$('select#cursos').change(function (event) {
 				var id_curso = $("select#cursos option:selected").data("el_id");
@@ -316,8 +316,7 @@
 	        	campoNumeroProf.value = count;
         
 			/*]]>*/
-			}
-						
+
 		</script>
 	</section>
 </html>
