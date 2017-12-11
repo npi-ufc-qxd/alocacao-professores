@@ -144,7 +144,10 @@ public class OfertaServiceImpl implements OfertaService {
 		oferta.setTurma(o.getTurma());
 		oferta.setDisciplina(o.getDisciplina());
 		oferta.setVagas(o.getVagas());
-		oferta.setTurno(o.getTurno());
+		oferta.setTurnoLivre(o.isTurnoLivre());
+		oferta.setTurnoManha(o.isTurnoManha());
+		oferta.setTurnoTarde(o.isTurnoTarde());
+		oferta.setTurnoNoite(o.isTurnoNoite());
 		oferta.setHorarioInicio(o.getHorarioInicio());
 		oferta.setAulasEmLaboratorio(o.getAulasEmLaboratorio());
 		oferta.setNumeroProfessores(o.getNumeroProfessores());

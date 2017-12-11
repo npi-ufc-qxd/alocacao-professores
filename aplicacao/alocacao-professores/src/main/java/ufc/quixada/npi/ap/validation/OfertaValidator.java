@@ -9,7 +9,6 @@ import org.springframework.validation.Validator;
 
 import ufc.quixada.npi.ap.model.Disciplina;
 import ufc.quixada.npi.ap.model.Oferta;
-import ufc.quixada.npi.ap.model.Oferta.Turno;
 import ufc.quixada.npi.ap.model.Professor;
 import ufc.quixada.npi.ap.model.Turma;
 import ufc.quixada.npi.ap.util.Constants;
@@ -29,7 +28,6 @@ public class OfertaValidator implements Validator {
 		validateTurma(erros, oferta.getTurma());
 		validateDisciplina(erros, oferta.getDisciplina());
 		validateVagas(erros, oferta.getVagas());
-		validateTurno(erros, oferta.getTurno());
 		validateAulasEmLaboratorio(erros, oferta.getAulasEmLaboratorio());
 		validateProfessores(erros, oferta.getProfessores());
 		validateNumeroProfessores(erros, oferta.getNumeroProfessores());
@@ -61,15 +59,6 @@ public class OfertaValidator implements Validator {
 				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 			else if(vagas <= 0)
 				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_INVALID);
-		}
-	}
-	
-	private void validateTurno(Errors erros, Turno turno){
-		String campo = "turno";
-		
-		if (!erros.hasFieldErrors(campo)){
-			if (turno == null)
-				erros.rejectValue(campo, Constants.VALIDACAO_ERRO_NULL);
 		}
 	}
 

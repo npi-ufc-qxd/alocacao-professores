@@ -34,13 +34,12 @@
 				 		</div>
 
 						<div class = "col-md-6">
-							<div class="form-group" th:classappend="${#fields.hasErrors('turma')} ? has-error">
+							<div class="form-group">
 								<label for="turma2" class="control-label m-l-10">Escolha uma turma</label>
 								<div class="col-md-12">
 									<select id="turma2" th:field="*{turma}" class = "form-control"  required="required" disabled="disabled">
 										<option value="">Selecione uma turma</option>
 									</select>
-									<span th:if="${#fields.hasErrors('turma')}" th:errors="*{turma}" class = "help-block with-errors"></span>
 								</div>
 							</div>
 
@@ -70,14 +69,27 @@
 							</div>
 				 		</div>
 						
-						<div class="form-group" th:classappend="${#fields.hasErrors('turno')} ? has-error">
-							<label for = "turno" class="control-label m-l-10">Turno</label>
-							<div class="col-md-12">
-								<select id="turno" th:field="*{turno}" class = "form-control" required="required">
-									<option value = "">Selecione um turno</option>
-									<option th:each = "turno : ${T(ufc.quixada.npi.ap.model.Oferta.Turno).values()}" th:value = "${turno}" th:text = "${turno.descricao}"></option>
-								</select>
-								<span th:if="${#fields.hasErrors('turno')}" th:errors="*{turno}" class = "help-block with-errors"></span>
+						<div class="form-group">
+							<label class="control-label m-l-10">Turno</label>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoLivre')} ? has-error">
+									<input type="checkbox" value="true" name="turnoLivre"/>
+									<label for="turnoLivre">Livre</label>
+ 								<span th:if="${#fields.hasErrors('turnoLivre')}" th:errors="*{turnoLivre}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoManha')} ? has-error">
+									<input type="checkbox" value="true" name="turnoManha"/>
+									<label for="turnoManha">Manhã</label>
+ 								<span th:if="${#fields.hasErrors('turnoManha')}" th:errors="*{turnoManha}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoTarde')} ? has-error">
+									<input type="checkbox" value="true" name="turnoTarde"/>
+									<label for="turnoTarde">Tarde</label>
+ 								<span th:if="${#fields.hasErrors('turnoTarde')}" th:errors="*{turnoTarde}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoNoite')} ? has-error">
+									<input type="checkbox" value="true" name="turnoNoite"/>
+									<label for="turnoNoite">Noite</label>
+ 								<span th:if="${#fields.hasErrors('turnoNoite')}" th:errors="*{turnoNoite}" class="help-block with-errors"></span>
 							</div>
 						</div>
 						<div class="form-group" th:classappend="${#fields.hasErrors('mesmoDia')} ? has-error">
@@ -175,14 +187,27 @@
 							</div>
 				 		</div>
 						
-						<div class="form-group" th:classappend="${#fields.hasErrors('turno')} ? has-error">
-							<label for = "turno" class="control-label m-l-10">Turno</label>
-							<div class="col-md-12">
-								<select id="turno" th:field="*{turno}" class = "form-control" required="required">
-									<option value = "">Selecione um turno</option>
-									<option th:each = "turno : ${T(ufc.quixada.npi.ap.model.Oferta.Turno).values()}" th:value = "${turno}" th:text = "${turno.descricao}"></option>
-								</select>
-								<span th:if="${#fields.hasErrors('turno')}" th:errors="*{turno}" class = "help-block with-errors"></span>
+						<div class="form-group">
+							<label class="control-label m-l-10">Turno</label>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoLivre')} ? has-error">
+									<input type="checkbox" value="true" name="turnoLivre"/>
+									<label for="turnoLivre">Livre</label>
+ 								<span th:if="${#fields.hasErrors('turnoLivre')}" th:errors="*{turnoLivre}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoManha')} ? has-error">
+									<input type="checkbox" value="true" name="turnoManha"/>
+									<label for="turnoManha">Manhã</label>
+ 								<span th:if="${#fields.hasErrors('turnoManha')}" th:errors="*{turnoManha}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoTarde')} ? has-error">
+									<input type="checkbox" value="true" name="turnoTarde"/>
+									<label for="turnoTarde">Tarde</label>
+ 								<span th:if="${#fields.hasErrors('turnoTarde')}" th:errors="*{turnoTarde}" class="help-block with-errors"></span>
+							</div>
+							<div class="checkbox checkbox-primary" th:classappend="${#fields.hasErrors('turnoNoite')} ? has-error">
+									<input type="checkbox" value="true" name="turnoNoite"/>
+									<label for="turnoNoite">Noite</label>
+ 								<span th:if="${#fields.hasErrors('turnoNoite')}" th:errors="*{turnoNoite}" class="help-block with-errors"></span>
 							</div>
 						</div>
 						<div class="form-group" th:classappend="${#fields.hasErrors('mesmoDia')} ? has-error">
@@ -241,16 +266,6 @@
 							</div>
 						</div>
 
-						<div class="form-group" th:classappend="${#fields.hasErrors('professores')} ? has-error">
-							<label for = "professores" class="control-label m-l-10">Professores Sugeridos</label>
-							<div class="col-md-12">
-								<select id="professores" th:field="*{professores}" class = "form-control select2 select2-multiple" multiple="multiple" data-placeholder = "Selecione os professores" >
-									<option th:each = "professor : ${professores}" th:value = "${{professor}}" th:text = "${professor.pessoa.nome}"></option>
-								</select>
-								<span th:if="${#fields.hasErrors('professores')}" th:errors="*{professores}" class = "help-block with-errors"></span>
-							</div>
-						</div>
-
 						<div class="text-right">
 							<a th:href="@{/ofertas/}"><button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button></a>
 							<button type="submit" class="btn btn-success waves-effect waves-light">Cadastrar</button>
@@ -267,7 +282,7 @@
 		<script type="text/javascript">		
 			$(".select2").select2({
 				"language": "pt-BR"
-			});
+
 
 			$('select#cursos').change(function (event) {
 				var id_curso = $("select#cursos option:selected").data("el_id");
@@ -301,7 +316,7 @@
 	        	campoNumeroProf.value = count;
         
 			/*]]>*/
-			}
+
 		</script>
 	</section>
 </html>
